@@ -6,13 +6,12 @@ using namespace std;
 
 typedef enum { RIVER, ROAD, GRASS, TREE, MOUNTAIN} TerrainType;
 
-struct River
+struct TerrStruct
 {
 	bool up;
 	bool down;
 	bool left;
 	bool right;
-
 };
 
 class Terrain
@@ -22,13 +21,6 @@ public:
 	~Terrain();
 
 private:
-	string psthName;
+	string pathName;
 	TerrainType type;
-
-
-
 };
-
-Terrain::~Terrain()
-{
-}

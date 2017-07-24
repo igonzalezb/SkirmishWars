@@ -194,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllegroSetup.h" />
+    <ClInclude Include="MapCreator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
