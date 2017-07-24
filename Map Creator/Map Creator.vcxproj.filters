@@ -9,6 +9,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Maps">
+      <UniqueIdentifier>{41ed89b1-a25e-4078-ac4c-4dccf9a267e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -18,9 +21,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Map.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MapViewer.h">
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="Terrain.h">
@@ -37,5 +37,35 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\Resources\maps\BalancedArena.csv">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\BalancedRing.csv">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\BlancedCross.csv">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\IslandWar.csv">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\MystPi.csv">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\Nascar.csv">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\SanFranciscoBridge.csv">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\SnakeArena.csv">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\SuperS.csv">
+      <Filter>Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\WaterWorld.csv">
+      <Filter>Maps</Filter>
+    </None>
   </ItemGroup>
 </Project>

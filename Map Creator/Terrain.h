@@ -4,7 +4,18 @@
 
 using namespace std;
 
-typedef enum { RIVER, ROAD, GRASS, TREE, MOUNTAIN} TerrainType;
+//typedef enum { RIVER, ROAD, PLAIN, FOREST, HILLS, CITIES, FACTORIES, HQ} TerrainType;
+
+#define PLAIN		"t"
+#define RIVER		"r"
+#define ROAD		"a"
+#define FOREST		"f"
+#define HILLS		"h"
+#define HQ(x)		"hq"#x
+#define CITY(x)		"c"#x
+#define FACTORY(x)	"m"#x
+
+
 
 struct TerrStruct
 {
@@ -17,10 +28,18 @@ struct TerrStruct
 class Terrain
 {
 public:
-	Terrain();
-	~Terrain();
+	Terrain(string pathName, string code) 
+	{
+		this->pathName = pathName;
+		this->code = code;
+	}
+
+	~Terrain() { ; }
+
+	void setConnection();
 
 private:
 	string pathName;
-	TerrainType type;
+	string code;
+	TerrStruct connection;
 };

@@ -189,7 +189,6 @@
     <ClCompile Include="AllegroSetup.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.h" />
-    <ClCompile Include="MapViewer.h" />
     <ClCompile Include="Terrain.h" />
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +196,16 @@
     <ClInclude Include="MapCreator.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\maps\BalancedArena.csv" />
+    <None Include="..\Resources\maps\BalancedRing.csv" />
+    <None Include="..\Resources\maps\BlancedCross.csv" />
+    <None Include="..\Resources\maps\IslandWar.csv" />
+    <None Include="..\Resources\maps\MystPi.csv" />
+    <None Include="..\Resources\maps\Nascar.csv" />
+    <None Include="..\Resources\maps\SanFranciscoBridge.csv" />
+    <None Include="..\Resources\maps\SnakeArena.csv" />
+    <None Include="..\Resources\maps\SuperS.csv" />
+    <None Include="..\Resources\maps\WaterWorld.csv" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
