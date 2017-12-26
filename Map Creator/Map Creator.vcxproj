@@ -189,6 +189,7 @@
     <ClCompile Include="AllegroSetup.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.h" />
+    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Terrain.h" />
   </ItemGroup>
   <ItemGroup>

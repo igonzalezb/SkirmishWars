@@ -10,5 +10,6 @@ public:
 	~Map() { ; }
 
 private:
-	//file
+	//file map.csv
+	
 };

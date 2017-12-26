@@ -51,9 +51,9 @@ int main (void)
 	
 //=============================================================================================================================================	
 
-	video* pixar = new video(VIDEO_PATH);
-	pixar->playVideo(display);
-	delete pixar;
+	video* sw_v = new video(VIDEO_PATH);
+	sw_v->playVideo(display);
+	delete sw_v;
 
 	al_destroy_display(display);
 	

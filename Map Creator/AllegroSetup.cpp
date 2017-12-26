@@ -36,7 +36,7 @@ bool allegroStartup(void)
 				al_uninstall_keyboard();
 			}
 			else
-				fprintf(stderr, "ERROR: Failed to to install keyboard\n");
+				fprintf(stderr, "ERROR: Failed to install keyboard\n");
 			al_shutdown_primitives_addon();
 		}
 		else

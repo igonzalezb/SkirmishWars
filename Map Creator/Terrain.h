@@ -4,14 +4,15 @@
 
 using namespace std;
 
-//typedef enum { RIVER, ROAD, PLAIN, FOREST, HILLS, CITIES, FACTORIES, HQ} TerrainType;
+typedef enum { RED, BLUE, YELLOW, GREEEN} TeamColor;
 
+//----- TERRAIN TYPE [CODES] -----
 #define PLAIN		"t"
 #define RIVER		"r"
 #define ROAD		"a"
 #define FOREST		"f"
 #define HILLS		"h"
-#define HQ(x)		"hq"#x
+#define HQ(x)		"q"#x
 #define CITY(x)		"c"#x
 #define FACTORY(x)	"m"#x
 
@@ -28,18 +29,25 @@ struct TerrStruct
 class Terrain
 {
 public:
-	Terrain(string pathName, string code) 
+	Terrain(string pathName, string type, TeamColor team) 
 	{
 		this->pathName = pathName;
-		this->code = code;
+		this->type = type;
+		this->team = team;
 	}
 
 	~Terrain() { ; }
 
+	/////////////////////////////////////////////////////////////////////////////////////
+	//		Set Connection
+	//	Chequea/Setea? que si el terreno esta conectado con otro (Roads & Rivers)
+	////////////////////////////////////////////////////////////////////////////////////
 	void setConnection();
 
 private:
-	string pathName;
-	string code;
+	string pathName; //??
+	
+	string type;
+	TeamColor team;
 	TerrStruct connection;
 };

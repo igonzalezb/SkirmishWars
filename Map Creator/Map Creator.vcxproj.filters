@@ -26,6 +26,9 @@
     <ClCompile Include="Terrain.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllegroSetup.h">
