@@ -194,7 +194,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllegroSetup.h" />
+    <ClInclude Include="Building.h" />
     <ClInclude Include="MapCreator.h" />
+    <ClInclude Include="Unit.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\maps\BalancedArena.csv" />
