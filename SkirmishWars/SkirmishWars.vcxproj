@@ -156,6 +156,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapCreator.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Tiles.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

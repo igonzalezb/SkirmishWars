@@ -2,8 +2,9 @@
 #include <iostream>
 #include <string>
 
-#include "Unit.h"
-#include "Building.h"
+#include "Tiles.h"
+
+
 
 using namespace std;
 
@@ -25,7 +26,7 @@ struct TerrStruct
 	bool right;
 };
 
-class Terrain
+class Terrain: public GenericTile
 {
 public:
 	Terrain(string pathName, string type);
@@ -41,6 +42,7 @@ private:
 	TerrStruct connections;
 	bool fogOfWar; //Empieza en True
 	
-	Unit *currUnit = NULL;
-	Building *currBuilding = NULL;
+
+
+	
 };
