@@ -144,6 +144,20 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AllegroSetup.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Unit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AllegroSetup.h" />
+    <ClInclude Include="Building.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MapCreator.h" />
+    <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Unit.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets" Condition="Exists('..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets')" />

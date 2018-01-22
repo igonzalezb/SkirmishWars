@@ -9,26 +9,42 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Source Files\Model">
-      <UniqueIdentifier>{dc7cee9e-ee55-4866-b2d6-fd662ae4a573}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\View">
-      <UniqueIdentifier>{5eae4431-9854-431c-b5cf-74d164eff3a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Controller">
-      <UniqueIdentifier>{003beea1-8290-4e72-9864-2d06638d0a7f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Model">
-      <UniqueIdentifier>{75237642-c376-4a1a-bde0-40237ea7e707}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\View">
-      <UniqueIdentifier>{f4bf8dac-d073-435a-a0fc-5c6f681fc0e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Controller">
-      <UniqueIdentifier>{292d0f7d-c110-45c1-8c65-0be7933241b7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AllegroSetup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AllegroSetup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapCreator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
