@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="AllegroSetup.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapGraphics.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>
@@ -154,7 +155,7 @@
     <ClInclude Include="AllegroSetup.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="MapCreator.h" />
+    <ClInclude Include="MapGraphics.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Tiles.h" />
     <ClInclude Include="Unit.h" />

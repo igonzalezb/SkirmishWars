@@ -32,13 +32,13 @@ public:
 	Terrain(string pathName, string type);
 	~Terrain() { ; }
 
-	void setConnections(); //Chequea/Setea? que si el terreno esta conectado con otro (Roads & Rivers)
+	void setConnections(); //Setea si el terreno esta conectado con otro (Roads & Rivers) Lo debería llamar 
 
 	void removeFog();
 
 private:
 	string pathName; //?? Seria lo de Allegro, podríamos hacer un XML
-	string type; //?? string o char?
+	char type; //?? string o char?
 	TerrStruct connections;
 	bool fogOfWar; //Empieza en True
 	

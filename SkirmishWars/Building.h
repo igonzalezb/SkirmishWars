@@ -16,6 +16,7 @@ public:
 private:
 	int Health;
 	TeamColor team;
+	char type;
 };
 
 Building::Building()

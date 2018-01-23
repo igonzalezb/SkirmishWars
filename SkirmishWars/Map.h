@@ -1,8 +1,10 @@
 #pragma once
 
+
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_image.h>
 
+#include "Tiles.h"
 typedef enum { RED, BLUE, YELLOW, GREEEN } TeamColor;
 
 
@@ -19,4 +21,8 @@ private:
 	//file map.csv
 	//matriz de terrains + units
 	
+	
+	//std::vector<GenericTile> terrMatrix;
+
+	GenericTile tilesArray[FILAS][COLUMNAS];
 };
