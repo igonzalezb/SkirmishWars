@@ -9,7 +9,7 @@ int main(int argc, char * argv[])
 		FILE * fp = fopen(argv[1], "rb");
 
 		Resources data;
-		
+			
 
 		XML_SetStartElementHandler(P, startTagCallback);	// funcion que va a encontrar cuando aparece un Start tag);
 		XML_SetEndElementHandler(P, endTagCallback);		//funcion que va a encontrar cuando aparece un End tag);

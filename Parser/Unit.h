@@ -11,6 +11,7 @@ struct FP
 	string star;
 	string triangle;
 	string circle;
+	string square;
 };
 
 struct Range
@@ -36,7 +37,7 @@ private:
 	string path;
 	string cost;
 	string mp;
-	string defence;
+	string defense;
 	Range range;
 	
 	FP fpreduced;
@@ -50,7 +51,7 @@ public:
 	void setName(string name);
 	void setCost(string cost);
 	void setMp(string mp);
-	void setDefence(string defence);
+	void setdefense(string defense);
 	void setMinRange(string range);
 	void setMaxRange(string range);
 
@@ -58,11 +59,13 @@ public:
 	void setFpReducedTriangle(string fp);
 	void setFpReducedStar(string fp);
 	void setFpReducedCircle(string fp);
+	void setFpReducedSquare(string fp);
 
 	void setFpNormalMoon(string fp);
 	void setFpNormalTriangle(string fp);
 	void setFpNormalStar(string fp);
 	void setFpNormalCircle(string fp);
+	void setFpNormalSquare(string fp);
 
 	void setPlainCost(string cost);
 	void setRoadCost(string cost);
@@ -72,7 +75,7 @@ public:
 
 	string getMaxRange();
 	string getMinRange();
-	string getDefence();
+	string getdefense();
 	string getMp();
 	string getCost();
 	string getHp();

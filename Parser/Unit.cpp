@@ -33,9 +33,9 @@ void Unit::setMp(string mp)
 	this->mp = mp;
 }
 
-void Unit::setDefence(string defence)
+void Unit::setdefense(string defense)
 {
-	this->defence = defence;
+	this->defense = defense;
 }
 
 void Unit::setMinRange(string range)
@@ -68,6 +68,11 @@ void Unit::setFpReducedCircle(string fp)
 	this->fpreduced.circle = fp;
 }
 
+void Unit::setFpReducedSquare(string fp)
+{
+	this->fpreduced.square = fp;
+}
+
 void Unit::setFpNormalMoon(string fp)
 {
 	this->fpnormal.moon = fp;
@@ -86,6 +91,11 @@ void Unit::setFpNormalStar(string fp)
 void Unit::setFpNormalCircle(string fp)
 {
 	this->fpnormal.circle = fp;
+}
+
+void Unit::setFpNormalSquare(string fp)
+{
+	this->fpnormal.square = fp;
 }
 
 void Unit::setPlainCost(string cost)
@@ -123,9 +133,9 @@ string Unit::getMinRange()
 	return range.min;
 }
 
-string Unit::getDefence()
+string Unit::getdefense()
 {
-	return defence;
+	return defense;
 }
 
 string Unit::getMp()

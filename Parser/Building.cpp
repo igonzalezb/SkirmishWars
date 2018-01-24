@@ -5,6 +5,13 @@ Building::Building()
 {
 }
 
+Building::Building(string hp, string name, string path)
+{
+	this->hp = hp;
+	this->name = name;
+	this->path = path;
+}
+
 Building::~Building()
 {
 }

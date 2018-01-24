@@ -14,6 +14,7 @@ private:
 	string path;
 public:
 	Building();
+	Building(string hp, string name, string path);
 	~Building();
 	void setHp(string hp);
 	void setPath(string path);

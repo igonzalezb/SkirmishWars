@@ -97,6 +97,114 @@ void startTagCallback(void *userData, const XML_Char *name, const XML_Char **att
 			break;
 		}
 	}
+	else if (strcmp(name, "cost") == false)
+	{
+		myData->setFeedState(COST);
+	}
+	else if (strcmp(name, "mp") == false)
+	{
+		myData->setFeedState(MP);
+	}
+	else if (strcmp(name, "defense") == false)
+	{
+		myData->setFeedState(DEFENSE);
+	}
+	else if (strcmp(name, "rangemin") == false)
+	{
+		myData->setFeedState(RANGEMIN);
+	}
+	else if (strcmp(name, "rangemax") == false)
+	{
+		myData->setFeedState(RANGEMAX);
+	}
+	else if (strcmp(name, "plaincost") == false)
+	{
+		myData->setFeedState(PLAINCOST);
+	}
+	else if (strcmp(name, "roadcost") == false)
+	{
+		myData->setFeedState(ROADCOST);
+	}
+	else if (strcmp(name, "forestcost") == false)
+	{
+		myData->setFeedState(FORESTCOST);
+	}
+	else if (strcmp(name, "rivercost") == false)
+	{
+		myData->setFeedState(RIVERCOST);
+	}
+	else if (strcmp(name, "hillscost") == false)
+	{
+		myData->setFeedState(HILLSCOST);
+	}
+	else if (strcmp(name, "fpnormal") == false)
+	{
+		myData->setFeedState(FPNORMAL);
+	}
+	else if (strcmp(name, "fpreduced") == false)
+	{
+		myData->setFeedState(FPREDUCED);
+	}
+	else if (strcmp(name, "moon") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case FPREDUCED:
+			myData->setFeedState(R_MOON);
+			break;
+		case FPNORMAL:
+			myData->setFeedState(N_MOON);
+			break;
+		}
+	}
+	else if (strcmp(name, "star") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case FPREDUCED:
+			myData->setFeedState(R_STAR);
+			break;
+		case FPNORMAL:
+			myData->setFeedState(N_STAR);
+			break;
+		}
+	}
+	else if (strcmp(name, "square") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case FPREDUCED:
+			myData->setFeedState(R_SQUARE);
+			break;
+		case FPNORMAL:
+			myData->setFeedState(N_SQUARE);
+			break;
+		}
+	}
+	else if (strcmp(name, "triangle") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case FPREDUCED:
+			myData->setFeedState(R_TRIANGLE);
+			break;
+		case FPNORMAL:
+			myData->setFeedState(N_TRIANGLE);
+			break;
+		}
+	}
+	else if (strcmp(name, "circle") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case FPREDUCED:
+			myData->setFeedState(R_CIRCLE);
+			break;
+		case FPNORMAL:
+			myData->setFeedState(N_CIRCLE);
+			break;
+		}
+	}
 	else
 		myData->setFeedState(_IGNORE);
 
@@ -141,8 +249,8 @@ void chararacterDataCallback(void *userData, const XML_Char *s, int len)
 	case MP:
 		myData->getLastUnit().setMp(d);	//set path
 		break;
-	case DEFENCE:
-		myData->getLastUnit().setDefence(d);	//set path
+	case DEFENSE:
+		myData->getLastUnit().setdefense(d);	//set path
 		break;
 	case RANGEMIN:
 		myData->getLastUnit().setMinRange(d);	//set path
@@ -165,39 +273,35 @@ void chararacterDataCallback(void *userData, const XML_Char *s, int len)
 	case HILLSCOST:
 		myData->getLastUnit().setHillsCost(d);	//set path
 		break;
-	case FPNORMAL:
-		switch (myData->getFeedSate())
-		{
-		case MOON:
-			myData->getLastUnit().setFpNormalMoon(d);
-			break;
-		case STAR:
-			myData->getLastUnit().setFpNormalStar(d);
-			break;
-		case CIRCLE:
-			myData->getLastUnit().setFpNormalCircle(d);
-			break;
-		case TRIANGLE:
-			myData->getLastUnit().setFpNormalTriangle(d);
-			break;
-		}
+	case N_CIRCLE:
+		myData->getLastUnit().setFpNormalCircle(d);	//set path
 		break;
-	case FPREDUCED:
-		switch (myData->getFeedSate())
-		{
-		case MOON:
-			myData->getLastUnit().setFpReducedMoon(d);
-			break;
-		case STAR:
-			myData->getLastUnit().setFpReducedStar(d);
-			break;
-		case CIRCLE:
-			myData->getLastUnit().setFpReducedCircle(d);
-			break;
-		case TRIANGLE:
-			myData->getLastUnit().setFpReducedTriangle(d);
-			break;
-		}
+	case N_SQUARE:
+		myData->getLastUnit().setFpNormalSquare(d);	//set path
+		break;
+	case N_TRIANGLE:
+		myData->getLastUnit().setFpNormalTriangle(d);	//set path
+		break;
+	case N_MOON:
+		myData->getLastUnit().setFpNormalMoon(d);	//set path
+		break;
+	case N_STAR:
+		myData->getLastUnit().setFpNormalStar(d);	//set path
+		break;
+	case R_CIRCLE:
+		myData->getLastUnit().setFpReducedCircle(d);	//set path
+		break;
+	case R_SQUARE:
+		myData->getLastUnit().setFpReducedSquare(d);	//set path
+		break;
+	case R_TRIANGLE:
+		myData->getLastUnit().setFpReducedTriangle(d);	//set path
+		break;
+	case R_MOON:
+		myData->getLastUnit().setFpReducedMoon(d);	//set path
+		break;
+	case R_STAR:
+		myData->getLastUnit().setFpReducedStar(d);	//set path
 		break;
 	case _IGNORE:
 		break;
@@ -209,23 +313,23 @@ void endTagCallback(void *userData, const XML_Char *name)		//</ >
 {
 	Resources* myData = (Resources*)userData;
 
-	if (strcmp(name, "/resources") == false)
+	if (strcmp(name, "resources") == false)
 	{
 		myData->setFeedState(IDLE);
 	}
-	else if (strcmp(name, "/buildings") == false)
+	else if (strcmp(name, "buildings") == false)
 	{
 		myData->setFeedState(RESOURCES);
 	}
-	else if (strcmp(name, "/terrains") == false)
+	else if (strcmp(name, "terrains") == false)
 	{
 		myData->setFeedState(RESOURCES);
 	}
-	else if (strcmp(name, "/units") == false)
+	else if (strcmp(name, "units") == false)
 	{
 		myData->setFeedState(UNIT);
 	}
-	else if (strcmp(name, "/item") == false)
+	else if (strcmp(name, "item") == false)
 	{
 		switch (myData->getFeedSate())
 		{
@@ -241,7 +345,7 @@ void endTagCallback(void *userData, const XML_Char *name)		//</ >
 		}
 	}
 	
-	else if (strcmp(name, "/name") == false)
+	else if (strcmp(name, "name") == false)
 	{
 		switch (myData->getFeedSate())
 		{
@@ -256,7 +360,7 @@ void endTagCallback(void *userData, const XML_Char *name)		//</ >
 			break;
 		}
 	}
-	else if (strcmp(name, "/hp") == false)
+	else if (strcmp(name, "hp") == false)
 	{
 		switch (myData->getFeedSate())
 		{
@@ -268,7 +372,7 @@ void endTagCallback(void *userData, const XML_Char *name)		//</ >
 			break;
 		}
 	}
-	else if (strcmp(name, "/path") == false)
+	else if (strcmp(name, "path") == false)
 	{
 		switch (myData->getFeedSate())
 		{
@@ -283,7 +387,116 @@ void endTagCallback(void *userData, const XML_Char *name)		//</ >
 			break;
 		}
 	}
+	else if (strcmp(name, "cost") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "mp") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "defense") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "rangemin") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "rangemax") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "plaincost") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "roadcost") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "forestcost") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "hillscost") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "rivercost") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "fpnormal") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "fpreduced") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "moon") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case R_MOON:
+			myData->setFeedState(FPREDUCED);
+			break;
+		case N_MOON:
+			myData->setFeedState(FPNORMAL);
+			break;
+		}
+	}
+	else if (strcmp(name, "star") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case R_STAR:
+			myData->setFeedState(FPREDUCED);
+			break;
+		case N_STAR:
+			myData->setFeedState(FPNORMAL);
+			break;
+		}
+	}
+	else if (strcmp(name, "square") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case R_SQUARE:
+			myData->setFeedState(FPREDUCED);
+			break;
+		case N_SQUARE:
+			myData->setFeedState(FPNORMAL);
+			break;
+		}
+	}
+	else if (strcmp(name, "triangle") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case R_TRIANGLE:
+			myData->setFeedState(FPREDUCED);
+			break;
+		case N_TRIANGLE:
+			myData->setFeedState(FPNORMAL);
+			break;
+		}
+	}
+	else if (strcmp(name, "circle") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case R_CIRCLE:
+			myData->setFeedState(FPREDUCED);
+			break;
+		case N_CIRCLE:
+			myData->setFeedState(FPNORMAL);
+			break;
+		}
+	}
+	
 	else
-		myData->setFeedState(_IGNORE);
+		myData->setFeedState(RESOURCES);
 
 }
