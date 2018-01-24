@@ -56,9 +56,4 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <Xml Include="resources.xml">
-      <Filter>Resources</Filter>
-    </Xml>
-  </ItemGroup>
 </Project>

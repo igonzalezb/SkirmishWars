@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include "video.h"
 
 #define VIDEO_PATH	"Advance Wars.ogv"

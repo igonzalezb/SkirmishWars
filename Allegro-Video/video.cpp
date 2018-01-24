@@ -1,6 +1,5 @@
 #include "video.h"
 
-
 video::video() {}
 
 video::video(char videoPath[])
