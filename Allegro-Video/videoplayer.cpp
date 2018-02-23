@@ -1,4 +1,4 @@
-#include "video.h"
+#include "videoplayer.h"
 
 video::video() {}
 

@@ -22,19 +22,20 @@
     <ProjectGuid>{291EF896-0B3D-4DBA-A015-079B4FBA6C4E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>AllegroVideo</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>StartMenu</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -150,11 +151,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AllegroSetup.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="video.cpp" />
+    <ClCompile Include="videoplayer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="video.h" />
+    <ClInclude Include="AllegroSetup.h" />
+    <ClInclude Include="StartMenu.h" />
+    <ClInclude Include="videoplayer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
