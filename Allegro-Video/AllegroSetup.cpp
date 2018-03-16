@@ -20,9 +20,9 @@ bool allegroStartup(void)
 
 						if (al_init_ttf_addon())
 						{
-							if (!al_init_video_addon())
+							if (al_init_video_addon())
 							{
-								if (!al_install_audio())
+								if (al_install_audio())
 								{
 									return EXIT_SUCCESS;
 								}
