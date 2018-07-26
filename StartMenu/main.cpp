@@ -4,7 +4,7 @@
 int main (void)
 {	
 	StartMenu mainMenu;
-	mainMenu.openGame();
-
+	mainMenu.openApp();
+	
 	return EXIT_SUCCESS;
 }
