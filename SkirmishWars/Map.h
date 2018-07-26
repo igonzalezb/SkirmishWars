@@ -8,7 +8,7 @@
 #include <allegro5\allegro_image.h>
 
 #include "Tiles.h"
-typedef enum { RED, BLUE, YELLOW, GREEEN } TeamColor;
+typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
 
 #define COLUMNA	16
 #define FILA		12

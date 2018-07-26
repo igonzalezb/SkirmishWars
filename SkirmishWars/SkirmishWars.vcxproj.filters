@@ -12,9 +12,45 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{0b88a71c-c8c0-4c54-b0b4-975aa3f5f365}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Maps">
+      <UniqueIdentifier>{00817c5d-4877-4c17-8851-0e9957008233}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Images">
+      <UniqueIdentifier>{1cc0de7d-2d24-49ee-bbf2-6921fcf01cfc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\Resources\maps\BalancedArena.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\BalancedRing.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\BlancedCross.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\IslandWar.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\MystPi.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\Nascar.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\SanFranciscoBridge.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\SnakeArena.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\SuperS.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="..\Resources\maps\WaterWorld.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroSetup.cpp">
@@ -27,6 +63,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="basicXML.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -43,5 +94,25 @@
     <ClInclude Include="MapGraphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="basicXML.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="resources.xml">
+      <Filter>Resources</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
