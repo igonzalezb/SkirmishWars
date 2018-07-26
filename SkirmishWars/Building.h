@@ -7,7 +7,7 @@
 #define CITY(x)		"c"#x
 #define FACTORY(x)	"m"#x
 
-class Building: public GenericTile
+class Building
 {
 public:
 	Building();

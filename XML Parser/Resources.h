@@ -28,9 +28,6 @@ private:
 	list<Building> buildings;
 	list<Terrain> terrains;
 	list<Unit> units;
-	//Building * CurrentBuilding;
-	//Terrain * CurrentTerrain;
-	//Unit * CurrentUnit;
 	State feedState;
 public:
 	Resources();

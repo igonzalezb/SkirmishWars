@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{7B8494E9-3BEA-4985-81C8-3782460115B4}</ProjectGuid>
+    <ProjectGuid>{95E9F6FB-3B9A-476E-8E27-6111AF2CDE00}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Parser</RootNamespace>
+    <RootNamespace>XMLParser</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -77,6 +77,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <Linkage-expat>static</Linkage-expat>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -88,14 +89,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\DriverFTDI</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\DriverFTDI\i386</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ftd2xx.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -105,12 +102,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\DriverFTDI</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\DriverFTDI\i386</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,16 +117,12 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\DriverFTDI</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\DriverFTDI\i386</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ftd2xx.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,16 +134,17 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\DriverFTDI</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\DriverFTDI\i386</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <Xml Include="resources.xml" />
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="basicXML.cpp" />
     <ClCompile Include="Building.cpp" />
@@ -164,29 +156,25 @@
   <ItemGroup>
     <ClInclude Include="basicXML.h" />
     <ClInclude Include="Building.h" />
-    <ClInclude Include="DriverFTDI\ftd2xx.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Unit.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="resources.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets" Condition="Exists('..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets')" />
-    <Import Project="..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets" Condition="Exists('..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets')" />
-    <Import Project="..\..\..\Packages\expat.v140.2.1.0.5\build\native\expat.v140.targets" Condition="Exists('..\..\..\Packages\expat.v140.2.1.0.5\build\native\expat.v140.targets')" />
+    <Import Project="..\..\..\Packages\expat.redist.2.1.0.11\build\native\expat.redist.targets" Condition="Exists('..\..\..\Packages\expat.redist.2.1.0.11\build\native\expat.redist.targets')" />
+    <Import Project="..\..\..\Packages\expat.2.1.0.11\build\native\expat.targets" Condition="Exists('..\..\..\Packages\expat.2.1.0.11\build\native\expat.targets')" />
+    <Import Project="..\..\..\Packages\expat.v140.2.2.5.1\build\native\expat.v140.targets" Condition="Exists('..\..\..\Packages\expat.v140.2.2.5.1\build\native\expat.v140.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets'))" />
-    <Error Condition="!Exists('..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets'))" />
-    <Error Condition="!Exists('..\..\..\Packages\expat.v140.2.1.0.5\build\native\expat.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\expat.v140.2.1.0.5\build\native\expat.v140.targets'))" />
+    <Error Condition="!Exists('..\..\..\Packages\expat.redist.2.1.0.11\build\native\expat.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\expat.redist.2.1.0.11\build\native\expat.redist.targets'))" />
+    <Error Condition="!Exists('..\..\..\Packages\expat.2.1.0.11\build\native\expat.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\expat.2.1.0.11\build\native\expat.targets'))" />
+    <Error Condition="!Exists('..\..\..\Packages\expat.v140.2.2.5.1\build\native\expat.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\expat.v140.2.2.5.1\build\native\expat.v140.targets'))" />
   </Target>
 </Project>

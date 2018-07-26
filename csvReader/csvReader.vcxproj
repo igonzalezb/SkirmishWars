@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,22 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{64551CC3-8B19-4BC0-8813-CE464851E830}</ProjectGuid>
+    <ProjectGuid>{ABD5FB60-4B0B-435D-B8A5-0E1FF92E5480}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>SkirmishWars</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <RootNamespace>csvReader</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -47,7 +47,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -142,39 +142,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AllegroSetup.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="MapGraphics.cpp" />
-    <ClCompile Include="Terrain.cpp" />
-    <ClCompile Include="Unit.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AllegroSetup.h" />
-    <ClInclude Include="Building.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="MapGraphics.h" />
-    <ClInclude Include="Terrain.h" />
-    <ClInclude Include="Tiles.h" />
-    <ClInclude Include="Unit.h" />
+    <None Include="BalancedArena.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets" Condition="Exists('..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets')" />
-    <Import Project="..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets" Condition="Exists('..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets')" />
-    <Import Project="..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets" Condition="Exists('..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" />
-    <Import Project="..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets" Condition="Exists('..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets')" />
   </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets'))" />
-    <Error Condition="!Exists('..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets'))" />
-    <Error Condition="!Exists('..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets'))" />
-    <Error Condition="!Exists('..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets'))" />
-  </Target>
 </Project>

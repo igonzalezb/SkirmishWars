@@ -26,7 +26,7 @@ struct TerrStruct
 	bool right;
 };
 
-class Terrain: public GenericTile
+class Terrain
 {
 public:
 	Terrain(string pathName, string type);

@@ -127,7 +127,7 @@ void StartMenu::dispachMovement(int x, int y)
 		if ((x >= bbx && x <= bbw) && (y >= bby && y <= bbh))
 		{
 			//printf("Move - Opcion: %s\n", Option[i]);
-			al_draw_text(menuFont, al_map_rgb(50, 20, 60), 20.0, (al_get_display_height(display) / 2.5) + j, 0.0, Option[i]);
+			al_draw_text(menuFont, al_map_rgb(70, 50, 90), 20.0, (al_get_display_height(display) / 2.5) + j, 0.0, Option[i]);
 			
 		}
 		else

@@ -3,6 +3,7 @@
 extern "C"{
 #include <expat.h>
 };
+
 #include "Resources.h"
 
 #define BUFF_LEN	10000	//1 000
