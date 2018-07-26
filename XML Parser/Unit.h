@@ -5,6 +5,9 @@
 
 using namespace std;
 
+#include "Building.h"
+//typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
+
 struct FP
 {
 	string moon;
@@ -38,11 +41,14 @@ private:
 	string cost;
 	string mp;
 	string defense;
+	string symbol;
 	Range range;
-	
+	string type;
 	FP fpreduced;
 	FP fpnormal;
 	MovementCost mcost;
+	TeamColor team;
+	bool fogOfWar;
 public:
 	Unit();
 	~Unit();
@@ -54,7 +60,9 @@ public:
 	void setdefense(string defense);
 	void setMinRange(string range);
 	void setMaxRange(string range);
-
+	void setType(string type);
+	void setTeam(TeamColor team);
+	void setSymbol(string symbol);
 	void setFpReducedMoon(string fp);
 	void setFpReducedTriangle(string fp);
 	void setFpReducedStar(string fp);
@@ -81,4 +89,8 @@ public:
 	string getHp();
 	string getPath();
 	string getName();
+	TeamColor getTeam();
+	string getSymbol();
+
+	void removeFog();
 };

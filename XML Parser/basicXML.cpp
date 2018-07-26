@@ -70,6 +70,21 @@ void startTagCallback(void *userData, const XML_Char *name, const XML_Char **att
 			break;
 		}
 	}
+	else if (strcmp(name, "code") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case BUILDING_ITEM:
+			myData->setFeedState(B_TYPE);
+			break;
+		case TERRAIN_ITEM:
+			myData->setFeedState(T_TYPE);
+			break;
+		case UNIT_ITEM:
+			myData->setFeedState(U_TYPE);
+			break;
+		}
+	}
 	else if (strcmp(name, "hp") == false)
 	{
 		switch (myData->getFeedSate())
@@ -100,6 +115,10 @@ void startTagCallback(void *userData, const XML_Char *name, const XML_Char **att
 	else if (strcmp(name, "cost") == false)
 	{
 		myData->setFeedState(COST);
+	}
+	else if (strcmp(name, "symbol") == false)
+	{
+		myData->setFeedState(U_SYMBOL);
 	}
 	else if (strcmp(name, "mp") == false)
 	{
@@ -227,11 +246,16 @@ void chararacterDataCallback(void *userData, const XML_Char *s, int len)
 	case B_HP:
 		myData->getLastBuilding().setHp(d);	//set hp
 		break;
+	case B_TYPE:
+		myData->getLastBuilding().setType(d);
 	case T_NAME:
 		myData->getLastTerrain().setName(d);	//set name
 		break;
 	case T_PATH:
 		myData->getLastTerrain().setPath(d);	//set path
+		break;
+	case T_TYPE:
+		myData->getLastTerrain().setType(d);	//set name
 		break;
 
 	case U_PATH:
@@ -240,6 +264,11 @@ void chararacterDataCallback(void *userData, const XML_Char *s, int len)
 	case U_NAME:
 		myData->getLastUnit().setName(d);	//set path
 		break;
+	case U_SYMBOL:
+		myData->getLastUnit().setSymbol(d);	//set path
+		break;
+	case U_TYPE:
+		myData->getLastUnit().setType(d);
 	case U_HP:
 		myData->getLastUnit().setHp(d);		//set path
 		break;
@@ -360,6 +389,21 @@ void endTagCallback(void *userData, const XML_Char *name)		//</ >
 			break;
 		}
 	}
+	else if (strcmp(name, "code") == false)
+	{
+		switch (myData->getFeedSate())
+		{
+		case B_TYPE:
+			myData->setFeedState(BUILDING_ITEM);
+			break;
+		case T_TYPE:
+			myData->setFeedState(TERRAIN_ITEM);
+			break;
+		case U_TYPE:
+			myData->setFeedState(UNIT_ITEM);
+			break;
+		}
+	}
 	else if (strcmp(name, "hp") == false)
 	{
 		switch (myData->getFeedSate())
@@ -396,6 +440,10 @@ void endTagCallback(void *userData, const XML_Char *name)		//</ >
 		myData->setFeedState(UNIT_ITEM);
 	}
 	else if (strcmp(name, "defense") == false)
+	{
+		myData->setFeedState(UNIT_ITEM);
+	}
+	else if (strcmp(name, "symbol") == false)
 	{
 		myData->setFeedState(UNIT_ITEM);
 	}

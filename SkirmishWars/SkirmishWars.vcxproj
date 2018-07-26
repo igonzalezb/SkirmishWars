@@ -149,17 +149,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapGraphics.cpp" />
-    <ClCompile Include="Terrain.cpp" />
-    <ClCompile Include="Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllegroSetup.h" />
-    <ClInclude Include="Building.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapGraphics.h" />
-    <ClInclude Include="Terrain.h" />
     <ClInclude Include="Tiles.h" />
-    <ClInclude Include="Unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

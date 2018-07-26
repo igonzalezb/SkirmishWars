@@ -3,38 +3,46 @@
         <terrains>
                 <item>
                         <name>Road</name>
+                        <code>a</code>
                         <path>resources/images/road/</path>
                 </item>
                 <item>
                         <name>River</name>
+                        <code>r</code>
                         <path>resources/images/river/</path>
                 </item>
                 <item>
                         <name>Forest</name>
+                        <code>f</code>
                         <path>resources/images/terrain/forest.png</path>
                 </item>
                 <item>
                         <name>Hills</name>
+                        <code>h</code>
                         <path>resources/images/terrain/hills.png</path>
                 </item>
                 <item>
                         <name>Plain</name>
+                        <plain>t</plain>
                         <path>resources/images/terrain/plain.png</path>
                 </item>
         </terrains>
         <buildings>
                 <item>
                         <name>HQ</name>
+                        <code>q</code>
                         <hp>8</hp>
                         <path>resources/images/hq/hq_%d.png</path>
                 </item>
                 <item>
                         <name>City</name>
+                        <code>c</code>
                         <hp>4</hp>
                         <path>resources/images/building/city_%d.png</path>
                 </item>
                 <item>
                         <name>Factory</name>
+                        <code>m</code>
                         <hp>4</hp>
                         <path>resources/images/building/factory_%d.png</path>
                 </item>
@@ -42,11 +50,13 @@
         <units>
                 <item>
                         <name>Mechs</name>
+                        <code>me</code>
                         <path>resources/images/units/mech_%d.png</path>
                         <hp>8</hp>
                         <cost>3</cost>
                         <mp>2</mp>
                         <defense>2</defense>
+                        <symbol>moon</symbol>
                         <rangemin>1</rangemin>
                         <rangemax>1</rangemax>
                         <plaincost>1</plaincost>
@@ -72,10 +82,12 @@
                 </item>
                 <item>
                         <name>Infantry</name>
+                        <code>in</code>
                         <hp>8</hp>
                         <cost>1</cost>
                         <mp>3</mp>
-                        <defense>1</defense>                
+                        <defense>1</defense>
+                        <symbol>moon</symbol>
                         <rangemin>1</rangemin>
                         <rangemax>1</rangemax>
                         <plaincost>1</plaincost>
@@ -102,10 +114,12 @@
                 </item>
                 <item>
                         <name>Rocket</name>
+                        <code>ro</code>
                         <hp>8</hp>
                         <cost>15</cost>
                         <mp>5</mp>
                         <defense>3</defense>
+                        <symbol>square</symbol>
                         
                                 <rangemin>3</rangemin>
                                 <rangemax>5</rangemax>
@@ -135,10 +149,12 @@
                 </item>
                 <item>
                         <name>Recon</name>
+                        <code>re</code>
                         <hp>8</hp>
                         <cost>4</cost>
                         <mp>8</mp>
                         <defense>3</defense>
+                        <symbol>square</symbol>
                         
                                 <rangemin>1</rangemin>
                                 <rangemax>1</rangemax>
@@ -170,10 +186,12 @@
                 </item>
                 <item>
                         <name>APC</name>
+                        <code>ap</code>
                         <hp>8</hp>
                         <cost>5</cost>
                         <mp>6</mp>
                         <defense>4</defense>
+                        <symbol>star</symbol>
                         <rangemin>0</rangemin>
                         <rangemax>0</rangemax>
                         <plaincost>1</plaincost>
@@ -199,10 +217,12 @@
                 </item>
                 <item>
                         <name>AntiAir</name>
+                        <code>aa</code>
                         <hp>8</hp>
                         <cost>8</cost>
                         <mp>6</mp>
                         <defense>4</defense>
+                        <symbol>star</symbol>
                         
                                 <rangemin>1</rangemin>
                                 <rangemax>1</rangemax>
@@ -234,10 +254,12 @@
                 </item>
                 <item>
                         <name>Artillery</name>
+                        <code>ar</code>
                         <hp>8</hp>
                         <cost>6</cost>
                         <mp>5</mp>
                         <defense>4</defense>
+                        <symbol>star</symbol>
                         
                                 <rangemin>2</rangemin>
                                 <rangemax>3</rangemax>
@@ -269,10 +291,12 @@
                 </item>
                 <item>
                         <name>Tank</name>
+                        <code>ta</code>
                         <hp>8</hp>
                         <cost>7</cost>
                         <mp>6</mp>
                         <defense>6</defense>
+                        <symbol>star</symbol>
                         
                                 <rangemin>1</rangemin>
                                 <rangemax>1</rangemax>
@@ -304,10 +328,12 @@
                 </item>
                 <item>
                         <name>MedTank</name>
+                        <code>mt</code>
                         <hp>8</hp>
                         <cost>16</cost>
                         <mp>5</mp>
                         <defense>9</defense>
+                        <symbol>star</symbol>
                         
                                 <rangemin>1</rangemin>
                                 <rangemax>1</rangemax>

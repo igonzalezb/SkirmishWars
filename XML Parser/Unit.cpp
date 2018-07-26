@@ -48,6 +48,23 @@ void Unit::setMaxRange(string range)
 	this->range.max = range;
 }
 
+void Unit::setType(string type)
+{
+	this->type = type;
+}
+
+void Unit::setTeam(TeamColor team)
+{
+	this->team = team;
+	type.append(to_string(team));			//PROBAR!!!!
+	
+}
+
+void Unit::setSymbol(string symbol)
+{
+	this->symbol = symbol;
+}
+
 void Unit::setFpReducedMoon(string fp)
 {
 	this->fpreduced.moon = fp;
@@ -161,4 +178,19 @@ string Unit::getPath()
 string Unit::getName()
 {
 	return name;
+}
+
+TeamColor Unit::getTeam()
+{
+	return team;
+}
+
+string Unit::getSymbol()
+{
+	return symbol;
+}
+
+void Unit::removeFog()
+{
+	fogOfWar = false;
 }

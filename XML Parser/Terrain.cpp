@@ -2,6 +2,8 @@
 
 Terrain::Terrain()
 {
+	fogOfWar = true;
+	connections = { false, false, false, false };
 }
 
 Terrain::~Terrain()
@@ -10,6 +12,11 @@ Terrain::~Terrain()
 void Terrain::setName(string name)
 {
 	this->name = name;
+}
+
+void Terrain::setType(string type)
+{
+	this->type = type;
 }
 
 void Terrain::setPath(string path)
@@ -25,4 +32,14 @@ string Terrain::getPath()
 string Terrain::getName()
 {
 	return name;
+}
+
+string Terrain::getType()
+{
+	return type;
+}
+
+void Terrain::removeFog()
+{
+	fogOfWar = false;
 }
