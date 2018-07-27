@@ -1,6 +1,10 @@
 #include <iostream>
 #include "basicXML.h"
 
+#include "AllegroSetup.h"
+
+#include "MapGraphics.h"
+
 #define XML_PATH	"resources.xml"
 
 int main(int argc, char * argv[])
@@ -15,11 +19,19 @@ int main(int argc, char * argv[])
 	XML_SetCharacterDataHandler(P, chararacterDataCallback);
 	XML_SetUserData(P, &data);
 	readFileToBuffer(P, fp);
-
-
-
-
-
 	fclose(fp);	
+	allegroStartup();
+	MapGraphics graphics;
+	Map map("Nascar.csv");
+	map.generateTilesArray(data.getBuildingList(), data.getTerrainList(), data.getUnitList());
+	graphics.setMap(&map);
+	graphics.loadBitmaps();
+	graphics.showMap();
+
+
+	al_rest(3.0);
+	
+	
+	
 	return EXIT_SUCCESS;
 }

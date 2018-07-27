@@ -20,7 +20,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="..\Resources\maps\BalancedArena.csv">
       <Filter>Resources\Maps</Filter>
     </None>
@@ -51,6 +50,7 @@
     <None Include="..\Resources\maps\WaterWorld.csv">
       <Filter>Resources\Maps</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroSetup.cpp">
@@ -78,6 +78,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Unit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

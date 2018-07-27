@@ -194,3 +194,8 @@ void Unit::removeFog()
 {
 	fogOfWar = false;
 }
+
+string Unit::getType()
+{
+	return type;
+}

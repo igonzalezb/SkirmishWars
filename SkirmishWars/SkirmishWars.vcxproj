@@ -22,13 +22,13 @@
     <ProjectGuid>{64551CC3-8B19-4BC0-8813-CE464851E830}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SkirmishWars</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -71,6 +71,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonPhysfs>true</Allegro_AddonPhysfs>
+    <Allegro_AddonDialog>true</Allegro_AddonDialog>
+    <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonColor>true</Allegro_AddonColor>
+    <Allegro_AddonVideo>true</Allegro_AddonVideo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -163,6 +174,7 @@
     <ClCompile Include="MapGraphics.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Tiles.cpp" />
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -181,8 +193,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets" Condition="Exists('..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets')" />
-    <Import Project="..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets" Condition="Exists('..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets')" />
     <Import Project="..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets" Condition="Exists('..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" />
     <Import Project="..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets" Condition="Exists('..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets')" />
     <Import Project="..\..\..\Packages\expat.redist.2.1.0.11\build\native\expat.redist.targets" Condition="Exists('..\..\..\Packages\expat.redist.2.1.0.11\build\native\expat.redist.targets')" />
@@ -193,8 +203,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\AllegroDeps.1.5.0.1\build\native\AllegroDeps.targets'))" />
-    <Error Condition="!Exists('..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\Allegro.5.2.2.1\build\native\Allegro.targets'))" />
     <Error Condition="!Exists('..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets'))" />
     <Error Condition="!Exists('..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets'))" />
     <Error Condition="!Exists('..\..\..\Packages\expat.redist.2.1.0.11\build\native\expat.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\expat.redist.2.1.0.11\build\native\expat.redist.targets'))" />

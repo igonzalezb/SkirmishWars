@@ -39,6 +39,10 @@ string Terrain::getType()
 	return type;
 }
 
+void Terrain::setConnections()
+{
+}
+
 void Terrain::removeFog()
 {
 	fogOfWar = false;

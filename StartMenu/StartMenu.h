@@ -15,19 +15,14 @@
 #define OPTION_3	"Credits"
 #define OPTION_4	"Quit Game"
 
+#define BACKGROUND_COLOR	146, 132, 247
+#define FONT_COLOR_1		0, 0, 0
+#define FONT_COLOR_2		70, 50, 90
+
 enum OPTIONS
 {
 	START_NEW_GAME, SETTINGS, CREDITS, QUIT_GAME
 };
-
-//struct OptionsList
-//{
-//	const char * Option_1 = "Start New Game";
-//	const char * Option_2 = "Options";
-//	const char * Option_3 = "Credits";
-//	const char * Option_4 = "Quit Game";
-//
-//};
 
 class StartMenu
 {

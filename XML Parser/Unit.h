@@ -91,6 +91,7 @@ public:
 	string getName();
 	TeamColor getTeam();
 	string getSymbol();
+	string getType();
 
 	void removeFog();
 };

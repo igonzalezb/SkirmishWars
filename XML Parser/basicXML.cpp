@@ -356,7 +356,7 @@ void endTagCallback(void *userData, const XML_Char *name)		//</ >
 	}
 	else if (strcmp(name, "units") == false)
 	{
-		myData->setFeedState(UNIT);
+		myData->setFeedState(RESOURCES);
 	}
 	else if (strcmp(name, "item") == false)
 	{

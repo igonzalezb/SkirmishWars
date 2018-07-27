@@ -17,15 +17,16 @@
                         <path>resources/images/terrain/forest.png</path>
                 </item>
                 <item>
+                        <name>Plain</name>
+                        <code>t</code>
+                        <path>resources/images/terrain/plain.png</path>
+                </item>
+                <item>
                         <name>Hills</name>
                         <code>h</code>
                         <path>resources/images/terrain/hills.png</path>
                 </item>
-                <item>
-                        <name>Plain</name>
-                        <plain>t</plain>
-                        <path>resources/images/terrain/plain.png</path>
-                </item>
+                
         </terrains>
         <buildings>
                 <item>

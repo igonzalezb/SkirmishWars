@@ -16,10 +16,20 @@ int main(int argc, char * argv[])
 	XML_SetUserData(P, &data);
 	readFileToBuffer(P, fp);
 
+	fclose(fp);
+
+
+	/*list<Unit>::iterator it = data.getUnitList().begin();
+
+	for (bool j = true; j && (it != data.getUnitList().end()); ++it) {
+		
+		if (strcmp(it->getType().c_str(), "mt") == false) {
+			j = false;
+			printf("Encontre: %s", it->getName().c_str());
+		}
+	}*/
 
 
 
-
-	fclose(fp);	
 	return EXIT_SUCCESS;
 }

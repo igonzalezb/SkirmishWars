@@ -190,6 +190,11 @@ string Unit::getSymbol()
 	return symbol;
 }
 
+string Unit::getType()
+{
+	return type;
+}
+
 void Unit::removeFog()
 {
 	fogOfWar = false;

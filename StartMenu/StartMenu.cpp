@@ -1,7 +1,5 @@
 #include "StartMenu.h"
 
-void dispachClick(int x, int y);
-
 StartMenu::StartMenu()
 {
 	if (allegroStartup())
@@ -91,13 +89,19 @@ int StartMenu::dispachClick(int x, int y)
 {
 	int bbx, bby, bbw, bbh;
 	int click = MAX_OPTIONS + 1;
+#ifdef DEBUG
 	printf("x:%d y:%d\n", x, y);
+#endif // DEBUG
+
 
 	for (int i = 0, j = 0; i< MAX_OPTIONS; i++, j += 100.0)
 	{
 		al_get_text_dimensions(menuFont, Option[i], &bbx, &bby, &bbw, &bbh);
 		
-		//printf(Option[i]);
+#ifdef DEBUG
+		printf(Option[i]);
+#endif // DEBUG
+
 		bbx += 20;
 		bbw += 20;
 		bby += (al_get_display_height(display) / 2.5) + j;
@@ -105,7 +109,10 @@ int StartMenu::dispachClick(int x, int y)
 
 		if ((x >= bbx && x <= bbw) && (y >= bby && y <= bbh))
 		{
+#ifdef DEBUG
 			printf("Click Correcto - Opcion: %s\n", Option[i]);
+#endif // DEBUG
+
 			click = i;
 		}
 	}
@@ -126,31 +133,34 @@ void StartMenu::dispachMovement(int x, int y)
 
 		if ((x >= bbx && x <= bbw) && (y >= bby && y <= bbh))
 		{
-			//printf("Move - Opcion: %s\n", Option[i]);
-			al_draw_text(menuFont, al_map_rgb(70, 50, 90), 20.0, (al_get_display_height(display) / 2.5) + j, 0.0, Option[i]);
+#ifdef DEBUG
+			printf("Move - Opcion: %s\n", Option[i]);
+#endif // DEBUG
+
+			al_draw_text(menuFont, al_map_rgb(FONT_COLOR_2), 20.0, (al_get_display_height(display) / 2.5) + j, 0.0, Option[i]);
 			
 		}
 		else
-			al_draw_text(menuFont, al_map_rgb(0, 0, 0), 20.0, (al_get_display_height(display) / 2.5) + j, 0.0, Option[i]);
+			al_draw_text(menuFont, al_map_rgb(FONT_COLOR_1), 20.0, (al_get_display_height(display) / 2.5) + j, 0.0, Option[i]);
 		al_flip_display();
 	}
 }
 
 void StartMenu::updateMenu()
 {
-	al_clear_to_color(al_map_rgb(146, 132, 247));
+	al_clear_to_color(al_map_rgb(BACKGROUND_COLOR));
 
 	al_draw_scaled_bitmap(menuImage, 0.0, 0.0,
 		al_get_bitmap_width(menuImage), al_get_bitmap_height(menuImage), 0.0,0.0,
 		al_get_display_width(display), al_get_display_height(display), 0);
 
 	for (int i=0, j=0; i< MAX_OPTIONS; i++, j+=100.0)
-		al_draw_text(menuFont, al_map_rgb(0, 0, 0), 20.0, (al_get_display_height(display) / 2.5) + j, 0.0, Option[i]);
+		al_draw_text(menuFont, al_map_rgb(FONT_COLOR_1), 20.0, (al_get_display_height(display) / 2.5) + j, 0.0, Option[i]);
 
 	al_flip_display();
 }
 
-void StartMenu::dispachOption()
+void StartMenu::dispachOption()		//HAY QUE SACAR LOS TEXT Y PONER QUE HAGA LAS ACCIONES
 {
 	switch (optionClicked)
 	{

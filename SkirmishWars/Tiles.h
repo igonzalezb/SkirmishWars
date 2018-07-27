@@ -9,19 +9,24 @@ class GenericTile
 public:
 	GenericTile();
 	~GenericTile();
+	void addBuilding(Building *currBuilding);
+	void removeBuilding(Building *currBuilding);
+	void addTerrain(Terrain *currTerrain);
+	void removeTerrain(Terrain *currTerrain);
+	void addUnit(Unit *currUnit);
+	void removeUnit(Unit *currUnit);
+	void addFog();
+	void removeFog();
+
+	Unit* getUnit();
+	Building* getBuilding();
+	Terrain* getTerrain();
+	
 
 private:
-	//Esto No se bien como hacerlo
 	Unit *currUnit = NULL;
 	Building *currBuilding = NULL;
 	Terrain *currTerrain = NULL;
 	bool fogOfWar;
 };
 
-GenericTile::GenericTile()
-{
-}
-
-GenericTile::~GenericTile()
-{
-}
