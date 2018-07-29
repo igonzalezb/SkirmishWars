@@ -9,6 +9,7 @@ Terrain::Terrain()
 Terrain::~Terrain()
 {
 }
+
 void Terrain::setName(string name)
 {
 	this->name = name;
@@ -39,9 +40,96 @@ string Terrain::getType()
 	return type;
 }
 
-void Terrain::setConnections()
+
+void Terrain::setConnections(int i, int j, string matrix[FILA][COLUMNA])
 {
+	if (!(matrix[i][j].compare("r")) || !(matrix[i][j].compare("a"))) {
+		
+		if ((i - 1 >= 0) && !(matrix[i][j].compare(matrix[i - 1][j])))
+		{
+			connections.up = true;
+		}
+		if ((i + 1 < FILA) && !(matrix[i][j].compare(matrix[i + 1][j])))
+		{
+			connections.down = true;
+		}
+		if (((j - 1) >= 0) && !(matrix[i][j].compare(matrix[i][j-1])))
+		{
+			connections.left = true;
+		}
+		if (((j + 1) < COLUMNA) && !(matrix[i][j].compare(matrix[i][j+1])))
+		{
+			connections.right = true;
+		}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/*if ((i - 2 >= 0) && !(matrix[i][j].compare(matrix[i - 2][j])))
+		{
+			connections.up = true;
+		}
+		if ((i + 2 < FILA) && !(matrix[i][j].compare(matrix[i + 2][j])))
+		{
+			connections.down = true;
+		}
+		if (((j - 2) >= 0) && !(matrix[i][j].compare(matrix[i][j - 2])))
+		{
+			connections.left = true;
+		}
+		if (((j + 2) < COLUMNA) && !(matrix[i][j].compare(matrix[i][j + 2])))
+		{
+			connections.right = true;
+		}*/
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		if (connections.up && connections.down && connections.right && connections.left) {
+			path = path + "x.png";
+		}
+		else if ((!connections.up && connections.down) && (connections.right && connections.left)) {
+			path = path + "t1.png";
+		}
+		else if ((connections.up && connections.down) && (!connections.right && connections.left)) {
+			path = path + "t2.png";
+		}
+		else if ((connections.up && !connections.down) && (connections.right && connections.left)) {
+			path = path + "t3.png";
+		}
+		else if ((connections.up && connections.down) && (connections.right && !connections.left)) {
+			path = path + "t4.png";
+		}
+		else if ((connections.up && connections.down) && !(connections.right && connections.left)) {
+			path = path + "i1.png";
+		}
+		else if (!(connections.up && connections.down) && (connections.right && connections.left)) {
+			path = path + "i2.png";
+		}
+		
+		else if ((!connections.up && connections.down) && (connections.right && !connections.left)) {
+			path = path + "l1.png";
+		}
+		else if ((!connections.up && connections.down) && (!connections.right && connections.left)) {
+			path = path + "l2.png";
+		}
+		else if ((connections.up && !connections.down) && (!connections.right && connections.left)) {
+			path = path + "l3.png";
+		}
+		else if ((connections.up && !connections.down) && (connections.right && !connections.left)) {
+			path = path + "l4.png";
+		}
+
+		else if ((connections.up || connections.down) && (!connections.right && !connections.left)) {
+			path = path + "i1.png";
+		}
+		else if ((!connections.up && !connections.down) && (connections.right || connections.left)) {
+			path = path + "i2.png";
+		}
+
+		else {						
+			path = path + "x1.png";		//ESTO NO TENDRIA QUE ESTAR
+		}
+
+	}
+
 }
+
 
 void Terrain::removeFog()
 {

@@ -5,6 +5,9 @@
 
 using namespace std;
 
+#define COLUMNA		16
+#define FILA		12
+
 //----- TERRAIN TYPE [CODES] -----
 #define PLAIN		"t"
 #define RIVER		"r"
@@ -41,7 +44,7 @@ public:
 	string getName();
 	string getType();
 
-	void setConnections(); //Setea si el terreno esta conectado con otro (Roads & Rivers) Lo debería llamar 
+	void setConnections(int i, int j, string matrix[FILA][COLUMNA]); //Setea si el terreno esta conectado con otro (Roads & Rivers) Lo debería llamar 
 
 	void removeFog();
 

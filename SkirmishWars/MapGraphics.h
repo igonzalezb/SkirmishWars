@@ -28,6 +28,7 @@ public:
 private:
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_BITMAP *bitmapArray[FILA][COLUMNA];
+	ALLEGRO_BITMAP *unitsArray[FILA][COLUMNA];
 	Map *map;
 
 };

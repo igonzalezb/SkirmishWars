@@ -31,6 +31,7 @@ void Map::csvReader()
 			}
 		}
 	}
+
 	lectura.close();
 }
 
@@ -52,8 +53,7 @@ Map::~Map()
 void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units)
 {
 	string matrix2[FILA][COLUMNA];
-	
-
+	string terrainMatrix[FILA][COLUMNA];
 	int pos;
 
 	for (int i = 0; i < (FILA); i++) {
@@ -85,8 +85,10 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 						currTerrain->setType(it->getType());
 						tilesArray[i][j]->addTerrain(currTerrain);
 						encontroTerrain = true;
-
+						terrainMatrix[i][j] = matrix2[i][j];
 					}
+					else
+						terrainMatrix[i][j] = "NULL";
 				}
 			
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,6 +147,13 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 
 		}
 	}
+	
+	for (int i = 0; i < (FILA); i++) {
+		for (int j = 0; j < (COLUMNA); j++) {
+			tilesArray[i][j]->getTerrain()->setConnections(i, j, terrainMatrix);
+		}
+	}
+
 }
 
 GenericTile* Map::getTile(int i, int j)

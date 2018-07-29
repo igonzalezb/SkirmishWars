@@ -11,8 +11,7 @@
 
 //typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
 
-#define COLUMNA		16
-#define FILA		12
+
 
 class Map
 {
