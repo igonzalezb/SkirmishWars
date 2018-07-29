@@ -20,37 +20,37 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\maps\BalancedArena.csv">
-      <Filter>Resources\Maps</Filter>
-    </None>
-    <None Include="..\Resources\maps\BalancedRing.csv">
-      <Filter>Resources\Maps</Filter>
-    </None>
-    <None Include="..\Resources\maps\BlancedCross.csv">
-      <Filter>Resources\Maps</Filter>
-    </None>
-    <None Include="..\Resources\maps\IslandWar.csv">
-      <Filter>Resources\Maps</Filter>
-    </None>
-    <None Include="..\Resources\maps\MystPi.csv">
-      <Filter>Resources\Maps</Filter>
-    </None>
-    <None Include="..\Resources\maps\Nascar.csv">
-      <Filter>Resources\Maps</Filter>
-    </None>
-    <None Include="..\Resources\maps\SanFranciscoBridge.csv">
-      <Filter>Resources\Maps</Filter>
-    </None>
-    <None Include="..\Resources\maps\SnakeArena.csv">
-      <Filter>Resources\Maps</Filter>
-    </None>
-    <None Include="..\Resources\maps\SuperS.csv">
-      <Filter>Resources\Maps</Filter>
-    </None>
-    <None Include="..\Resources\maps\WaterWorld.csv">
-      <Filter>Resources\Maps</Filter>
-    </None>
     <None Include="packages.config" />
+    <None Include="resources\maps\BalancedArena.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="resources\maps\BalancedRing.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="resources\maps\BlancedCross.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="resources\maps\IslandWar.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="resources\maps\MystPi.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="resources\maps\Nascar.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="resources\maps\SanFranciscoBridge.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="resources\maps\SnakeArena.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="resources\maps\SuperS.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
+    <None Include="resources\maps\WaterWorld.csv">
+      <Filter>Resources\Maps</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroSetup.cpp">

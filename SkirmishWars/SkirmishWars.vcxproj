@@ -153,17 +153,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="..\Resources\maps\BalancedArena.csv" />
-    <None Include="..\Resources\maps\BalancedRing.csv" />
-    <None Include="..\Resources\maps\BlancedCross.csv" />
-    <None Include="..\Resources\maps\IslandWar.csv" />
-    <None Include="..\Resources\maps\MystPi.csv" />
-    <None Include="..\Resources\maps\Nascar.csv" />
-    <None Include="..\Resources\maps\SanFranciscoBridge.csv" />
-    <None Include="..\Resources\maps\SnakeArena.csv" />
-    <None Include="..\Resources\maps\SuperS.csv" />
-    <None Include="..\Resources\maps\WaterWorld.csv" />
     <None Include="packages.config" />
+    <None Include="resources\maps\BalancedArena.csv" />
+    <None Include="resources\maps\BalancedRing.csv" />
+    <None Include="resources\maps\BlancedCross.csv" />
+    <None Include="resources\maps\IslandWar.csv" />
+    <None Include="resources\maps\MystPi.csv" />
+    <None Include="resources\maps\Nascar.csv" />
+    <None Include="resources\maps\SanFranciscoBridge.csv" />
+    <None Include="resources\maps\SnakeArena.csv" />
+    <None Include="resources\maps\SuperS.csv" />
+    <None Include="resources\maps\WaterWorld.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroSetup.cpp" />

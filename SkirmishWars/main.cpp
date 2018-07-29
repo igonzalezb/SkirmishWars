@@ -20,6 +20,9 @@ int main(int argc, char * argv[])
 	XML_SetUserData(P, &data);
 	readFileToBuffer(P, fp);
 	fclose(fp);	
+
+
+
 	allegroStartup();
 	MapGraphics graphics;
 	Map map("resources/maps/Nascar.csv");
