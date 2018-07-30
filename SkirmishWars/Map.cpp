@@ -165,9 +165,11 @@ GenericTile* Map::getTile(int i, int j)
 
 void Map::updateFogOfWar()
 {
-	for (int i = 0; i < (FILA); i++) {
+	for (int i = 0; i < (FILA); i++) {		//Falta por Equipo!!!!
 		for (int j = 0; j < (COLUMNA); j++) {
-			if ((tilesArray[i][j]->getUnit() != NULL) || (tilesArray[i][j]->getBuilding() != NULL))		//Falta por Equipo
+			if((tilesArray[i][j]->getBuilding() != NULL))
+				tilesArray[i][j]->removeFog();
+			if ((tilesArray[i][j]->getUnit() != NULL))		
 			{
 				tilesArray[i][j]->removeFog();
 

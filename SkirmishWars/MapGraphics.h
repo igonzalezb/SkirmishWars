@@ -17,7 +17,7 @@
 #define FOG_IMAGE	"resources/images/fog.png"
 
 
-#define NOFOG	//Just for Debug
+//#define NOFOG	//Just for Debug
 
 class MapGraphics
 {
