@@ -32,26 +32,26 @@
                         <name>HQ</name>
                         <code>q</code>
                         <hp>8</hp>
-                        <path>resources/images/hq/hq_1.png</path>
+                        <path>resources/images/hq/hq_%d.png</path>
                 </item>
                 <item>
                         <name>City</name>
                         <code>c</code>
                         <hp>4</hp>
-                        <path>resources/images/building/city_1.png</path>
+                        <path>resources/images/building/city_%d.png</path>
                 </item>
                 <item>
                         <name>Factory</name>
                         <code>m</code>
                         <hp>4</hp>
-                        <path>resources/images/building/factory_1.png</path>
+                        <path>resources/images/building/factory_%d.png</path>
                 </item>
         </buildings>
         <units>
                 <item>
                         <name>Mechs</name>
                         <code>me</code>
-                        <path>resources/images/units/mech_1.png</path>
+                        <path>resources/images/units/mech_%d.png</path>
                         <hp>8</hp>
                         <cost>3</cost>
                         <mp>2</mp>
@@ -110,7 +110,7 @@
                                 <circle>0</circle>
                         </fpreduced>
                         
-                        <path>resources/images/units/infantry_1.png</path>
+                        <path>resources/images/units/infantry_%d.png</path>
                 </item>
                 <item>
                         <name>Rocket</name>
@@ -145,7 +145,7 @@
                                         <circle>10</circle>
                                 </fpreduced>
                         
-                        <path>resources/images/units/rocket_1.png</path>
+                        <path>resources/images/units/rocket_%d.png</path>
                 </item>
                 <item>
                         <name>Recon</name>
@@ -182,7 +182,7 @@
                                         <circle>0</circle>
                                 </fpreduced>
                         
-                        <path>resources/images/units/recon_1.png</path>
+                        <path>resources/images/units/recon_%d.png</path>
                 </item>
                 <item>
                         <name>APC</name>
@@ -213,7 +213,7 @@
                                 <triangle>0</triangle>
                                 <circle>0</circle>
                         </fpreduced>
-                        <path>resources/images/units/apc_1.png</path>
+                        <path>resources/images/units/apc_%d.png</path>
                 </item>
                 <item>
                         <name>AntiAir</name>
@@ -250,7 +250,7 @@
                                         <circle>0</circle>
                                 </fpreduced>
                         
-                        <path>resources/images/units/antiair_1.png</path>
+                        <path>resources/images/units/antiair_%d.png</path>
                 </item>
                 <item>
                         <name>Artillery</name>
@@ -287,7 +287,7 @@
                                         <circle>9</circle>
                                 </fpreduced>
                         
-                        <path>resources/images/units/artillery_1.png</path>
+                        <path>resources/images/units/artillery_%d.png</path>
                 </item>
                 <item>
                         <name>Tank</name>
@@ -324,7 +324,7 @@
                                         <circle>4</circle>
                                 </fpreduced>
                         
-                        <path>resources/images/units/tank_1.png</path>
+                        <path>resources/images/units/tank_%d.png</path>
                 </item>
                 <item>
                         <name>MedTank</name>
@@ -361,7 +361,7 @@
                                         <circle>7</circle>
                                 </fpreduced>
                         
-                        <path>resources/images/units/medtank_1.png</path>
+                        <path>resources/images/units/medtank_%d.png</path>
                 </item>
         </units>
 </resources>

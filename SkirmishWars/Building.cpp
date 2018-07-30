@@ -7,13 +7,18 @@ Building::Building()
 	team = WHITE;
 }
 
-Building::Building(string hp, string name, string path)
+Building::Building(string hp, string name, string path, string type, string team)
 {
 	fogOfWar = true;
-	team = WHITE;
 	this->hp = hp;
 	this->name = name;
-	this->path = path;
+	this->type = type;
+
+	this->team = TeamColor(stoi(team));
+
+	char temp[50];
+	sprintf(temp, path.c_str(), this->team);
+	this->path = temp;
 }
 
 Building::~Building()
@@ -33,6 +38,9 @@ void Building::setHp(string hp)
 void Building::setPath(string path)
 {
 	this->path = path;
+	/*char temp[50];
+	sprintf(temp, path.c_str(),  this->team);
+	this->path = temp;*/
 }
 
 string Building::getPath()

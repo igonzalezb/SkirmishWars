@@ -2,6 +2,8 @@
 
 Unit::Unit()
 {
+	team = RED;
+	fogOfWar = true;
 }
 
 Unit::~Unit()
@@ -16,6 +18,9 @@ void Unit::setHp(string hp)
 void Unit::setPath(string path)
 {
 	this->path = path;
+	/*char temp[50];
+	sprintf(temp, path.c_str(), team);
+	this->path = temp;*/
 }
 
 void Unit::setName(string name)
@@ -57,6 +62,10 @@ void Unit::setTeam(TeamColor team)
 {
 	this->team = team;
 	type.append(to_string(team));			//PROBAR!!!!
+
+	char temp[50];
+	sprintf(temp, path.c_str(), this->team);
+	this->path = temp;
 	
 }
 

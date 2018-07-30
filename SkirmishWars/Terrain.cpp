@@ -6,6 +6,15 @@ Terrain::Terrain()
 	connections = { false, false, false, false };
 }
 
+Terrain::Terrain(string name, string path, string type)
+{
+	fogOfWar = true;
+	connections = { false, false, false, false };
+	this->name = name;
+	this->path = path;
+	this->type = type;
+}
+
 Terrain::~Terrain()
 {
 }

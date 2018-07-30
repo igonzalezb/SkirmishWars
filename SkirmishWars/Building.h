@@ -23,7 +23,7 @@ private:
 
 public:
 	Building();
-	Building(string hp, string name, string path);
+	Building(string hp, string name, string path, string type, string team);
 	~Building();
 	void setHp(string hp);
 	void setPath(string path);

@@ -18,13 +18,15 @@ void Map::csvReader()
 {
 	ifstream lectura;
 	lectura.open(mapName, ios::in);
-
 	if (!lectura.is_open()) std::cout << "ERROR: File Open" << '\n';
 	for (int i = 0; (i < FILA) && lectura.good(); i++) {
 		for (int j = 0; (j < COLUMNA) && lectura.good(); j++) {
-			if (j == (COLUMNA - 1)) {
+			if ((j == (COLUMNA - 1)) && (i != (FILA-1))) {
 				getline(lectura, matrix[i][j], '\n');
 				matrix[i][j].erase(matrix[i][j].size() - 1);
+				if ((matrix[i][j].find(';') != string::npos) || (matrix[i][j].find(' ') != string::npos))
+					matrix[i][j].erase(matrix[i][j].size() - 1);
+
 			}
 			else {
 				getline(lectura, matrix[i][j], ';');
@@ -55,11 +57,11 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 	string matrix2[FILA][COLUMNA];
 	string terrainMatrix[FILA][COLUMNA];
 	int pos;
-
+	string team;
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
 			pos = matrix[i][j].find('+');
-			if (pos != -1) {
+			if (pos != string::npos) {
 				matrix2[i][j] = matrix[i][j].substr(0, pos);
 			}
 			else
@@ -69,6 +71,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 
 			if ((matrix2[i][j].length()) > 1)
 			{
+				team = matrix2[i][j].back();
 				matrix2[i][j].erase(1);
 			}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,10 +82,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 					if (strcmp(it->getType().c_str(), matrix2[i][j].c_str()) == false) {
 						k = false;
 						printf("Encontre: %s\n", it->getName().c_str());
-						Terrain *currTerrain = new Terrain;
-						currTerrain->setName(it->getName());
-						currTerrain->setPath(it->getPath());
-						currTerrain->setType(it->getType());
+						Terrain *currTerrain = new Terrain(it->getName(), it->getPath(), it->getType());;
 						tilesArray[i][j]->addTerrain(currTerrain);
 						encontroTerrain = true;
 						terrainMatrix[i][j] = matrix2[i][j];
@@ -99,10 +99,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 					if (strcmp(it2->getType().c_str(), matrix2[i][j].c_str()) == false) {
 						k = false;
 						printf("Encontre: %s\n", it2->getName().c_str());
-						Building *currBuilding = new Building;
-						currBuilding->setName(it2->getName());
-						currBuilding->setPath(it2->getPath());
-						currBuilding->setType(it2->getType());
+						Building *currBuilding = new Building(it2->getHp(),it2->getName(), it2->getPath(), it2->getType(), team);
 						tilesArray[i][j]->addBuilding(currBuilding);
 					}
 				}
@@ -126,6 +123,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 
 			if ((matrix2[i][j].length()) > 2)
 			{
+				team = matrix2[i][j].back();
 				matrix2[i][j].erase(2);
 			}
 
@@ -136,9 +134,11 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 					if (strcmp(it3->getType().c_str(), matrix2[i][j].c_str()) == false) {
 						k = false;
 						printf("Encontre: %s\n", it3->getName().c_str());
-						Unit *currUnit = new Unit;
+						Unit *currUnit = new Unit();
 						currUnit->setName(it3->getName());
+						currUnit->setTeam(TeamColor(stoi(team)));
 						currUnit->setPath(it3->getPath());
+						currUnit->setTeam(TeamColor(stoi(team)));
 						currUnit->setType(it3->getType());
 						tilesArray[i][j]->addUnit(currUnit);
 					}

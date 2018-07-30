@@ -29,13 +29,13 @@ class Terrain
 private:
 	string name;
 	string path;
-
 	string type;
 	TerrStruct connections;
 	bool fogOfWar; //Empieza en True
 
 public:
 	Terrain();
+	Terrain(string name, string path, string type);
 	~Terrain();
 	void setPath(string path);
 	void setName(string name);
