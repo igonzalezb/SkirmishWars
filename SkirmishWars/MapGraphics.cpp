@@ -42,13 +42,10 @@ void MapGraphics::loadBitmaps()
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
 
-			/*if (map->getTile(i, j)->getUnit() != NULL)
-				unitsArray[i][j] = al_load_bitmap(map->getTile(i, j)->getUnit()->getPath().c_str());
-			else
-				unitsArray[i][j] = NULL;*/
-
-
-			if (!(map->getTile(i, j)->getFog())) {		//despues rechequear lo del fog segun el equipo
+#ifndef NOFOG
+			if (!(map->getTile(i, j)->getFog())) {
+#endif // NOFOG
+				//despues rechequear lo del fog segun el equipo
 				if (map->getTile(i, j)->getUnit() != NULL)
 					unitsArray[i][j] = al_load_bitmap(map->getTile(i, j)->getUnit()->getPath().c_str());
 				else
@@ -60,13 +57,16 @@ void MapGraphics::loadBitmaps()
 					bitmapArray[i][j] = al_load_bitmap(map->getTile(i, j)->getTerrain()->getPath().c_str());
 				if (!bitmapArray[i][j] && !unitsArray[i][j])
 					printf("Failed to load Bitmap [%d][%d]\n", i, j);
-			}
+#ifndef NOFOG
+		}
 
 			else
 			{
 				unitsArray[i][j] = NULL;
 				bitmapArray[i][j] = al_load_bitmap(FOG_IMAGE);
 			}
+#endif // NOFOG
+
 		}
 	}
 }

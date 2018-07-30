@@ -167,40 +167,30 @@ void Map::updateFogOfWar()
 {
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
-
-
-			
 			if ((tilesArray[i][j]->getUnit() != NULL) || (tilesArray[i][j]->getBuilding() != NULL))		//Falta por Equipo
 			{
 				tilesArray[i][j]->removeFog();
 
 				if ((i - 1 >= 0))
 				{
-					//connections.up = true;
 					tilesArray[i - 1][j]->removeFog();
 				}
 				if ((i + 1 < FILA))
 				{
-					//connections.down = true;
 					tilesArray[i + 1][j]->removeFog();
 				}
 				if (((j - 1) >= 0))
 				{
-					//connections.left = true;
 					tilesArray[i][j - 1]->removeFog();
 				}
 				if (((j + 1) < COLUMNA))
 				{
-					//connections.right = true;
 					tilesArray[i][j + 1]->removeFog();
 				}
 
 
 
 			}
-
-
-
 		}
 	}
 }

@@ -25,7 +25,7 @@ int main(int argc, char * argv[])
 
 	allegroStartup();
 	MapGraphics graphics;
-	Map map("resources/maps/Nascar.csv");
+	Map map("resources/maps/BlancedCross.csv");
 	map.generateTilesArray(data.getBuildingList(), data.getTerrainList(), data.getUnitList());
 	graphics.setMap(&map);
 	graphics.loadBitmaps();

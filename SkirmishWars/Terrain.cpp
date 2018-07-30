@@ -61,24 +61,6 @@ void Terrain::setConnections(int i, int j, string matrix[FILA][COLUMNA])
 		{
 			connections.right = true;
 		}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/*if ((i - 2 >= 0) && !(matrix[i][j].compare(matrix[i - 2][j])))
-		{
-			connections.up = true;
-		}
-		if ((i + 2 < FILA) && !(matrix[i][j].compare(matrix[i + 2][j])))
-		{
-			connections.down = true;
-		}
-		if (((j - 2) >= 0) && !(matrix[i][j].compare(matrix[i][j - 2])))
-		{
-			connections.left = true;
-		}
-		if (((j + 2) < COLUMNA) && !(matrix[i][j].compare(matrix[i][j + 2])))
-		{
-			connections.right = true;
-		}*/
-////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		if (connections.up && connections.down && connections.right && connections.left) {
 			path = path + "x.png";
@@ -121,7 +103,6 @@ void Terrain::setConnections(int i, int j, string matrix[FILA][COLUMNA])
 		else if ((!connections.up && !connections.down) && (connections.right || connections.left)) {
 			path = path + "i2.png";
 		}
-
 		else {						
 			path = path + "x.png";
 		}

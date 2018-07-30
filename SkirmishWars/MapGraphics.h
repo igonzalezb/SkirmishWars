@@ -16,6 +16,9 @@
 #define T_WIDTH		al_get_display_width(display)/COLUMNA
 #define FOG_IMAGE	"resources/images/fog.png"
 
+
+#define NOFOG	//Just for Debug
+
 class MapGraphics
 {
 public:
