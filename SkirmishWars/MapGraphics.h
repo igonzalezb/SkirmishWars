@@ -14,7 +14,7 @@
 
 #define T_HEIGHT	al_get_display_height(display)/FILA
 #define T_WIDTH		al_get_display_width(display)/COLUMNA
-
+#define FOG_IMAGE	"resources/images/fog.png"
 
 class MapGraphics
 {

@@ -38,6 +38,11 @@ void GenericTile::removeFog()
 	fogOfWar = false;
 }
 
+bool GenericTile::getFog()
+{
+	return fogOfWar;
+}
+
 Unit * GenericTile::getUnit()
 {
 	return currUnit;

@@ -123,7 +123,7 @@ void Terrain::setConnections(int i, int j, string matrix[FILA][COLUMNA])
 		}
 
 		else {						
-			path = path + "x1.png";		//ESTO NO TENDRIA QUE ESTAR
+			path = path + "x.png";
 		}
 
 	}

@@ -17,7 +17,7 @@ public:
 	void removeUnit(Unit *currUnit);
 	void addFog();
 	void removeFog();
-
+	bool getFog();
 	Unit* getUnit();
 	Building* getBuilding();
 	Terrain* getTerrain();

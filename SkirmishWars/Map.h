@@ -24,7 +24,7 @@ public:
 	
 	void generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units);
 	GenericTile* getTile(int i, int j);
-
+	void updateFogOfWar();
 
 
 private:
