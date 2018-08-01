@@ -37,7 +37,7 @@ void MapGraphics::showMap()
 	al_flip_display();
 }
 
-void MapGraphics::loadBitmaps()
+void MapGraphics::loadBitmaps(Map * map)
 {
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
@@ -71,7 +71,7 @@ void MapGraphics::loadBitmaps()
 	}
 }
 
-void MapGraphics::setMap(Map * map)
-{
-	this->map = map;
-}
+//void MapGraphics::setMap(Map * map)
+//{
+//	this->map = map;
+//}

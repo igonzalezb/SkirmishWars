@@ -27,8 +27,8 @@ int main(int argc, char * argv[])
 	MapGraphics graphics;
 	Map map("resources/maps/MystPi.csv");
 	map.generateTilesArray(data.getBuildingList(), data.getTerrainList(), data.getUnitList());
-	graphics.setMap(&map);
-	graphics.loadBitmaps();
+	//graphics.setMap(&map);
+	graphics.loadBitmaps(&map);
 	graphics.showMap();
 
 	getchar();

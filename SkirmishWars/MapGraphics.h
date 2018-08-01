@@ -25,13 +25,13 @@ public:
 	MapGraphics();
 	~MapGraphics();
 	void showMap();
-	void loadBitmaps();
-	void setMap(Map *map);
+	void loadBitmaps(Map *map);
+	//void setMap(Map *map);
 
 private:
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_BITMAP *bitmapArray[FILA][COLUMNA];
 	ALLEGRO_BITMAP *unitsArray[FILA][COLUMNA];
-	Map *map;
+	//Map *map;
 
 };
