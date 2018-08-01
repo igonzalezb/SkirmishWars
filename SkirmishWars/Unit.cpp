@@ -6,6 +6,23 @@ Unit::Unit()
 	fogOfWar = true;
 }
 
+Unit::Unit(list<Unit>::iterator it)
+{
+	name = it->getName();
+	hp = it->getHp();
+	path = it->getPath();
+	cost = it->getCost();
+	mp = it->getMp();
+	defense = it->getdefense();
+	symbol = it->getSymbol();
+	range = it->getRange();
+	type = it->getType();
+	fpreduced = it->getFpReduced();
+	mcost = it->getMc();
+
+
+}
+
 Unit::~Unit()
 {
 }
@@ -149,14 +166,9 @@ void Unit::setHillsCost(string cost)
 	this->mcost.hills = cost;
 }
 
-string Unit::getMaxRange()
+Range Unit::getRange()
 {
-	return range.max;
-}
-
-string Unit::getMinRange()
-{
-	return range.min;
+	return range;
 }
 
 string Unit::getdefense()
@@ -207,4 +219,19 @@ void Unit::removeFog()
 string Unit::getType()
 {
 	return type;
+}
+
+FP Unit::getFpReduced()
+{
+	return fpreduced;
+}
+
+FP Unit::getFpNormal()
+{
+	return fpnormal;
+}
+
+MovementCost Unit::getMc()
+{
+	return mcost;
 }

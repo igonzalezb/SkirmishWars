@@ -82,7 +82,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 					if (strcmp(it->getType().c_str(), matrix2[i][j].c_str()) == false) {
 						k = false;
 						printf("Encontre: %s\n", it->getName().c_str());
-						Terrain *currTerrain = new Terrain(it->getName(), it->getPath(), it->getType());;
+						Terrain *currTerrain = new Terrain(it->getName(), it->getPath(), it->getType());
 						tilesArray[i][j]->addTerrain(currTerrain);
 						encontroTerrain = true;
 						terrainMatrix[i][j] = matrix2[i][j];
@@ -134,12 +134,8 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 					if (strcmp(it3->getType().c_str(), matrix2[i][j].c_str()) == false) {
 						k = false;
 						printf("Encontre: %s\n", it3->getName().c_str());
-						Unit *currUnit = new Unit();
-						currUnit->setName(it3->getName());
+						Unit *currUnit = new Unit(it3);
 						currUnit->setTeam(TeamColor(stoi(team)));
-						currUnit->setPath(it3->getPath());
-						currUnit->setTeam(TeamColor(stoi(team)));
-						currUnit->setType(it3->getType());
 						tilesArray[i][j]->addUnit(currUnit);
 					}
 				}

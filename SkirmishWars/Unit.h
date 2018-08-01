@@ -48,9 +48,11 @@ private:
 	FP fpnormal;
 	MovementCost mcost;
 	TeamColor team;
+
 	bool fogOfWar;
 public:
 	Unit();
+	Unit(list<Unit>::iterator it);
 	~Unit();
 	void setHp(string hp);
 	void setPath(string path);
@@ -58,6 +60,8 @@ public:
 	void setCost(string cost);
 	void setMp(string mp);
 	void setdefense(string defense);
+
+
 	void setMinRange(string range);
 	void setMaxRange(string range);
 	void setType(string type);
@@ -81,8 +85,7 @@ public:
 	void setForestCost(string cost);
 	void setHillsCost(string cost);
 
-	string getMaxRange();
-	string getMinRange();
+	Range getRange();
 	string getdefense();
 	string getMp();
 	string getCost();
@@ -92,5 +95,8 @@ public:
 	TeamColor getTeam();
 	string getSymbol();
 	string getType();
+	FP getFpReduced();
+	FP getFpNormal();
+	MovementCost getMc();
 	void removeFog();
 };
