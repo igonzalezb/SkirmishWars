@@ -172,6 +172,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapGraphics.cpp" />
+    <ClCompile Include="PlayerInfo.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Tiles.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="Building.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapGraphics.h" />
+    <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Tiles.h" />
