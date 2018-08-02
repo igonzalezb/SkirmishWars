@@ -150,7 +150,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 		}
 	}
 
-	updateFogOfWar();
+	updateFogOfWar();		//FIJARSE DONDE TIENE QUE IR!
 
 }
 

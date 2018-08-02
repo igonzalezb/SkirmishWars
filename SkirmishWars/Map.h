@@ -22,7 +22,11 @@ public:
 	void csvReader();
 	void setMapPath(string mapName);
 	
+
+	//FUNCIONA PERO HABRIA QUE MEJORARLA
 	void generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units);
+	
+	
 	GenericTile* getTile(int i, int j);
 	void updateFogOfWar();
 
@@ -34,5 +38,5 @@ private:
 	string matrix[FILA][COLUMNA];	//Con los Codigos
 	
 
-	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles
+	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
 };
