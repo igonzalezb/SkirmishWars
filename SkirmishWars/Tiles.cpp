@@ -8,6 +8,12 @@ GenericTile::GenericTile()
 
 GenericTile::~GenericTile()
 {
+	if (currBuilding != NULL)
+		delete currBuilding;
+	if (currUnit != NULL)
+		delete currUnit;
+	if (currTerrain != NULL)
+		delete currTerrain;
 }
 
 void GenericTile::addUnit(Unit *currUnit)

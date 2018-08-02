@@ -15,9 +15,6 @@
     <Filter Include="Resources\Maps">
       <UniqueIdentifier>{00817c5d-4877-4c17-8851-0e9957008233}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\Images">
-      <UniqueIdentifier>{1cc0de7d-2d24-49ee-bbf2-6921fcf01cfc}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
