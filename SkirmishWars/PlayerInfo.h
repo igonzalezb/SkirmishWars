@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
+#include <string>
 
+using namespace std;
 
 class Player
 {
@@ -13,8 +15,10 @@ public:
 	int getTeam();
 
 private:
+	string name;
 	int money;
 	int team;	//TeamNumber
+	int ip;
 
 };
 
