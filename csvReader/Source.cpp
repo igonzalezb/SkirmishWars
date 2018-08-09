@@ -40,7 +40,7 @@ int main() {
 
 	int i = 5; //[i][j]=posicion de la nave
 	int j = 5;
-	int n = 3; //n=MP de la nave
+	int n = 7; //n=MP de la nave
 	int TMC = 1;
 	int count = 0;
 
@@ -54,7 +54,10 @@ int main() {
 			matrix2[p][q] = false;
 		}
 	}
+
 	matrix[i - 1][j] = 100;
+	matrix[i - 1][j-1] = 100;
+	matrix[i + 3][j] = 100;
 	matrix[i][j] = 0;
 
 
@@ -69,7 +72,9 @@ int main() {
 	printf("\n");
 	printf("\n");
 
-	funcion(matrix, matrix2, i, j, 3);
+	funcion(matrix, matrix2, i, j, n);
+	
+	
 	for (int p = 0; p < FILA; p++)
 	{
 		for (int q = 0; q < COLUMNA; q++)
@@ -87,7 +92,7 @@ int main() {
 
 
 void funcion(int matrix[FILA][COLUMNA], bool(&matrix2)[FILA][COLUMNA], int i, int j, int MP) {
-	if ((i < FILA) && (j < COLUMNA) && (MP >= 0))
+	if ((0 <= i) && (i < FILA) && (0 <= i) && (j < COLUMNA) && (MP >= 0))
 	{
 		MP -= matrix[i][j];
 		if (MP >= 0) {

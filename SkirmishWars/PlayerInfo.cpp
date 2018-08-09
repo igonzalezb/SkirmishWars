@@ -29,3 +29,8 @@ int Player::getTeam()
 {
 	return team;
 }
+
+bool Player::doIStart()
+{
+	return (rand() % MAX_PLAYERS);
+}

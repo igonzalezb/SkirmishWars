@@ -20,18 +20,32 @@ MapGraphics::~MapGraphics()
 	}
 }
 
-void MapGraphics::showMap()
+void MapGraphics::showMap(Map * map)
 {
-	for (int i = 0; i < (FILA) ; i++) {
+	
+
+	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
 
 			al_draw_scaled_bitmap(bitmapArray[i][j], 0.0, 0.0,
 				al_get_bitmap_width(bitmapArray[i][j]), al_get_bitmap_height(bitmapArray[i][j]),
 				j*T_WIDTH, i* T_HEIGHT, T_WIDTH, T_HEIGHT, 0);
-			if(unitsArray[i][j] != NULL)
+			if (unitsArray[i][j] != NULL) {
 				al_draw_scaled_bitmap(unitsArray[i][j], 0.0, 0.0,
 					al_get_bitmap_width(unitsArray[i][j]), al_get_bitmap_height(unitsArray[i][j]),
-					j*T_WIDTH, i* T_HEIGHT, T_WIDTH, T_HEIGHT, 0);
+					j*T_WIDTH, i* T_HEIGHT, T_WIDTH / 1.3, T_HEIGHT / 1.3, 0);
+				bool canMove[FILA][COLUMNA];
+				map->possibleMoves(map->getTile(i, j)->getUnit(), i, j, canMove);
+				for (int p = 0; p < (FILA); p++) {
+					for (int q = 0; q < (COLUMNA); q++) {
+						if (canMove[p][q])
+							al_draw_rectangle(j*T_WIDTH, i* T_HEIGHT,
+							(j*T_WIDTH) + al_get_bitmap_width(unitsArray[i][j]),
+								(i* T_HEIGHT) + al_get_bitmap_height(unitsArray[i][j]),
+								al_color_name("green"), 5.0);
+					}
+				}
+			}
 		}
 	}
 	al_flip_display();

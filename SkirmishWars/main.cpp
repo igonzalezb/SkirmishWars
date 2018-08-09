@@ -1,11 +1,16 @@
 #include <iostream>
-#include "basicXML.h"
+#include <ctime>
 
+#include "basicXML.h"
 #include "AllegroSetup.h"
 
 #include "MapGraphics.h"
 
 #define XML_PATH	"resources.xml"
+
+using namespace std;
+
+
 
 int main(int argc, char * argv[])
 {
@@ -21,15 +26,15 @@ int main(int argc, char * argv[])
 	readFileToBuffer(P, fp);
 	fclose(fp);	
 
-
+	srand(time(NULL));
 
 	allegroStartup();
 	MapGraphics graphics;
-	Map map("resources/maps/MystPi.csv");
+	Map map;
 	map.generateTilesArray(data.getBuildingList(), data.getTerrainList(), data.getUnitList());
 	//graphics.setMap(&map);
 	graphics.loadBitmaps(&map);
-	graphics.showMap();
+	graphics.showMap(&map);
 
 	getchar();
 	

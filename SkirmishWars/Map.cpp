@@ -2,14 +2,18 @@
 
 using namespace std;
 
-Map::Map(string mapName)
+void funcion(int matrixCost[FILA][COLUMNA], bool(&canMove)[FILA][COLUMNA], int i, int j, int MP);
+
+
+Map::Map()
 {
-	this->mapName = mapName;
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
 			tilesArray[i][j] = new GenericTile;
 		}
 	}
+
+	randomMap();
 
 	csvReader();
 }
@@ -43,6 +47,45 @@ void Map::setMapPath(string mapName)
 	csvReader();
 }
 
+void Map::randomMap()
+{
+	int map = rand() % MAX_MAPS;
+	
+	switch (map)
+	{
+	case 0:
+		mapName = MAP_0;
+		break;
+	case 1:
+		mapName = MAP_1;
+		break;
+	case 2:
+		mapName = MAP_2;
+		break;
+	case 3:
+		mapName = MAP_3;
+		break;
+	case 4:
+		mapName = MAP_4;
+		break;
+	case 5:
+		mapName = MAP_5;
+		break;
+	case 6:
+		mapName = MAP_6;
+		break;
+	case 7:
+		mapName = MAP_7;
+		break;
+	case 8:
+		mapName = MAP_8;
+		break;
+	case 9:
+		mapName = MAP_9;
+		break;
+	}
+}
+
 Map::~Map()
 {
 	for (int i = 0; i < (FILA); i++) {
@@ -55,7 +98,7 @@ Map::~Map()
 void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units)
 {
 	string matrix2[FILA][COLUMNA];
-	string terrainMatrix[FILA][COLUMNA];
+
 	int pos;
 	string team;
 	for (int i = 0; i < (FILA); i++) {
@@ -81,7 +124,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 
 					if (strcmp(it->getType().c_str(), matrix2[i][j].c_str()) == false) {
 						k = false;
-						printf("Encontre: %s\n", it->getName().c_str());
+						//printf("Encontre: %s\n", it->getName().c_str());
 						Terrain *currTerrain = new Terrain(it->getName(), it->getPath(), it->getType());
 						tilesArray[i][j]->addTerrain(currTerrain);
 						encontroTerrain = true;
@@ -98,7 +141,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 
 					if (strcmp(it2->getType().c_str(), matrix2[i][j].c_str()) == false) {
 						k = false;
-						printf("Encontre: %s\n", it2->getName().c_str());
+						//printf("Encontre: %s\n", it2->getName().c_str());
 						Building *currBuilding = new Building(it2->getHp(),it2->getName(), it2->getPath(), it2->getType(), team);
 						tilesArray[i][j]->addBuilding(currBuilding);
 					}
@@ -133,7 +176,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 
 					if (strcmp(it3->getType().c_str(), matrix2[i][j].c_str()) == false) {
 						k = false;
-						printf("Encontre: %s\n", it3->getName().c_str());
+						//printf("Encontre: %s\n", it3->getName().c_str());
 						Unit *currUnit = new Unit(it3);
 						currUnit->setTeam(TeamColor(stoi(team)));
 						tilesArray[i][j]->addUnit(currUnit);
@@ -154,6 +197,55 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 
 }
 
+void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COLUMNA])
+{
+
+	int matrixCost[FILA][COLUMNA];
+	
+	for (int p = 0; p < FILA; p++)
+	{
+		for (int q = 0; q < COLUMNA; q++)
+		{
+			if (getTile(p, q)->getFog()) {
+				matrixCost[p][q] = CANNOT_MOVE;
+			}
+			else if (terrainMatrix[p][q] == "a")
+				matrixCost[p][q] = stoi(currUnit->getMc().road);
+			else if (terrainMatrix[p][q] == "r")
+				matrixCost[p][q] = stoi(currUnit->getMc().river);
+			else if (terrainMatrix[p][q] == "f")
+				matrixCost[p][q] = stoi(currUnit->getMc().forest);
+			else if (terrainMatrix[p][q] == "h")
+				matrixCost[p][q] = stoi(currUnit->getMc().hills);
+			else if (terrainMatrix[p][q] == "t")
+				matrixCost[p][q] = stoi(currUnit->getMc().plain);
+			else if (terrainMatrix[p][q] == "NULL")
+				matrixCost[p][q] = 1;	//Quiere decir que hay un factory o city. LE PUSE 1 PERO NO ME ACUERDO
+
+			canMove[p][q] = false;	//La seteo toda en false al principio
+		}
+	}
+
+	matrixCost[i][j] = 0;	//Seteo el lugar donde estoy en 0 (VER!!)
+	int mp = stoi(currUnit->getMp());
+	funcion(matrixCost, canMove, i, j, mp);
+
+}
+
+
+void funcion(int matrixCost[FILA][COLUMNA], bool(&canMove)[FILA][COLUMNA], int i, int j, int MP) {
+	if ((0 <= i) && (i < FILA) && (0 <= i) && (j < COLUMNA) && (MP >= 0))
+	{
+		MP -= matrixCost[i][j];
+		if (MP >= 0) {
+			canMove[i][j] = true;
+			funcion(matrixCost, canMove, i - 1, j, MP);
+			funcion(matrixCost, canMove, i + 1, j, MP);
+			funcion(matrixCost, canMove, i, j + 1, MP);
+			funcion(matrixCost, canMove, i, j - 1, MP);
+		}
+	}
+}
 GenericTile* Map::getTile(int i, int j)
 {
 	return tilesArray[i][j];
@@ -185,9 +277,6 @@ void Map::updateFogOfWar()
 				{
 					tilesArray[i][j + 1]->removeFog();
 				}
-
-
-
 			}
 		}
 	}

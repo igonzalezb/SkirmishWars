@@ -8,6 +8,7 @@
 #include <allegro5\allegro_primitives.h>
 #include <allegro5\allegro_font.h>
 #include <allegro5\allegro_ttf.h>
+#include <allegro5\allegro_color.h>
 
 #include "Map.h"
 
@@ -17,14 +18,14 @@
 #define FOG_IMAGE	"resources/images/fog.png"
 
 
-#define NOFOG	//Just for Debug
+//#define NOFOG	//Just for Debug
 
 class MapGraphics
 {
 public:
 	MapGraphics();
 	~MapGraphics();
-	void showMap();
+	void showMap(Map * map);
 	void loadBitmaps(Map *map);
 	//void setMap(Map *map);
 

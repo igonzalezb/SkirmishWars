@@ -2,7 +2,10 @@
 #include <iostream>
 #include <string>
 
+#define MAX_PLAYERS	2
+
 using namespace std;
+
 
 class Player
 {
@@ -13,6 +16,7 @@ public:
 	int getMoney();
 	void setTeam(int team);
 	int getTeam();
+	bool doIStart();
 
 private:
 	string name;

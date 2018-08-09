@@ -49,11 +49,16 @@ private:
 	MovementCost mcost;
 	TeamColor team;
 
+	
+
+
+
 	bool fogOfWar;
 public:
 	Unit();
 	Unit(list<Unit>::iterator it);
 	~Unit();
+
 	void setHp(string hp);
 	void setPath(string path);
 	void setName(string name);
