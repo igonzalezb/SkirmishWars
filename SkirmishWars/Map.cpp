@@ -71,7 +71,10 @@ void Map::randomMap()
 	case 5:
 		mapName = MAP_5;
 		break;
-	case 6:
+	default:
+		mapName = MAP_0;
+		break;
+	/*case 6:
 		mapName = MAP_6;
 		break;
 	case 7:
@@ -82,8 +85,10 @@ void Map::randomMap()
 		break;
 	case 9:
 		mapName = MAP_9;
-		break;
+		break;*/
 	}
+
+	printf("%s\n", mapName.c_str());
 }
 
 Map::~Map()
@@ -193,7 +198,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 		}
 	}
 
-	updateFogOfWar();		//FIJARSE DONDE TIENE QUE IR!
+	
 
 }
 
@@ -226,7 +231,10 @@ void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COL
 		}
 	}
 
+
+
 	matrixCost[i][j] = 0;	//Seteo el lugar donde estoy en 0 (VER!!)
+
 	int mp = stoi(currUnit->getMp());
 	funcion(matrixCost, canMove, i, j, mp);
 
@@ -234,7 +242,7 @@ void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COL
 
 
 void funcion(int matrixCost[FILA][COLUMNA], bool(&canMove)[FILA][COLUMNA], int i, int j, int MP) {
-	if ((0 <= i) && (i < FILA) && (0 <= i) && (j < COLUMNA) && (MP >= 0))
+	if ((0 <= i) && (i < FILA) && (0 <= j) && (j < COLUMNA) && (MP >= 0))
 	{
 		MP -= matrixCost[i][j];
 		if (MP >= 0) {
@@ -251,13 +259,11 @@ GenericTile* Map::getTile(int i, int j)
 	return tilesArray[i][j];
 }
 
-void Map::updateFogOfWar()
+void Map::updateFogOfWar(int myTeam)
 {
-	for (int i = 0; i < (FILA); i++) {		//Falta por Equipo!!!!
+	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
-			if((tilesArray[i][j]->getBuilding() != NULL))
-				tilesArray[i][j]->removeFog();
-			if ((tilesArray[i][j]->getUnit() != NULL))		
+			if (((tilesArray[i][j]->getUnit() != NULL) && (tilesArray[i][j]->getUnit()->getTeam() == myTeam)) || ((tilesArray[i][j]->getBuilding() != NULL) && (tilesArray[i][j]->getBuilding()->getTeam() == myTeam)))
 			{
 				tilesArray[i][j]->removeFog();
 

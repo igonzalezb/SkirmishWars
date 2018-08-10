@@ -4,6 +4,8 @@
 #include "basicXML.h"
 #include "AllegroSetup.h"
 
+#include "PlayerInfo.h"
+
 #include "MapGraphics.h"
 
 #define XML_PATH	"resources.xml"
@@ -28,10 +30,15 @@ int main(int argc, char * argv[])
 
 	srand(time(NULL));
 
+	Player me;
+
 	allegroStartup();
 	MapGraphics graphics;
 	Map map;
 	map.generateTilesArray(data.getBuildingList(), data.getTerrainList(), data.getUnitList());
+	map.updateFogOfWar(me.getTeam());		//FIJARSE DONDE TIENE QUE IR!
+
+
 	//graphics.setMap(&map);
 	graphics.loadBitmaps(&map);
 	graphics.showMap(&map);

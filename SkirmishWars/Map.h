@@ -11,17 +11,22 @@
 
 //typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
 
-#define MAP_0	"resources/maps/WaterWorld.csv"
-#define MAP_1	"resources/maps/BalancedArena.csv"
-#define MAP_2	"resources/maps/BalancedRing.csv"
-#define MAP_3	"resources/maps/BlancedCross.csv"	
-#define MAP_4	"resources/maps/IslandWar.csv"
-#define MAP_5	"resources/maps/MystPi.csv"	
-#define MAP_6	"resources/maps/Nascar.csv"
-#define MAP_7	"resources/maps/SanFranciscoBridge.csv"
-#define MAP_8	"resources/maps/SnakeArena.csv"
-#define MAP_9	"resources/maps/SuperS.csv"
 
+//Mapa 0, 3, 5, 8 no anda
+
+
+
+#define MAP_0	"resources/maps/BalancedArena.csv"
+#define MAP_1	"resources/maps/BalancedRing.csv"
+#define MAP_2	"resources/maps/IslandWar.csv"
+#define MAP_3	"resources/maps/Nascar.csv"
+#define MAP_4	"resources/maps/SanFranciscoBridge.csv"
+#define MAP_5	"resources/maps/SuperS.csv"
+///////////////////////////////////////////////////////////////////////////
+#define MAP_6	"resources/maps/WaterWorld.csv"
+#define MAP_7	"resources/maps/SnakeArena.csv"
+#define MAP_8	"resources/maps/MystPi.csv"	
+#define MAP_9	"resources/maps/BlancedCross.csv"
 
 #define MAX_MAPS	10
 #define CANNOT_MOVE	100
@@ -40,7 +45,7 @@ public:
 	void possibleMoves(Unit *currUnit, int i, int j, bool(&canMove)[FILA][COLUMNA]);
 	
 	GenericTile* getTile(int i, int j);
-	void updateFogOfWar();
+	void updateFogOfWar(int myTeam);
 
 
 private:
