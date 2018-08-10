@@ -71,10 +71,8 @@ void Map::randomMap()
 	case 5:
 		mapName = MAP_5;
 		break;
-	default:
-		mapName = MAP_0;
-		break;
-	/*case 6:
+//////////////////////////////////////////
+	case 6:
 		mapName = MAP_6;
 		break;
 	case 7:
@@ -85,7 +83,7 @@ void Map::randomMap()
 		break;
 	case 9:
 		mapName = MAP_9;
-		break;*/
+		break;
 	}
 
 	printf("%s\n", mapName.c_str());

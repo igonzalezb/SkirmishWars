@@ -28,7 +28,7 @@
 #define MAP_8	"resources/maps/MystPi.csv"	
 #define MAP_9	"resources/maps/BlancedCross.csv"
 
-#define MAX_MAPS	10
+#define MAX_MAPS	6
 #define CANNOT_MOVE	100
 class Map
 {
