@@ -23,6 +23,6 @@ private:
 	int money;
 	int team;	//TeamNumber
 	int ip;
-
+	bool myTurn;
 };
 

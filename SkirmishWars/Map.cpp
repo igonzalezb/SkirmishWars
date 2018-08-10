@@ -13,6 +13,9 @@ Map::Map()
 		}
 	}
 
+	/*tableMatrix[0][0].golpe = 0;
+	tableMatrix[0][0].dado = 0;*/
+
 	randomMap();
 
 	csvReader();
@@ -284,4 +287,41 @@ void Map::updateFogOfWar(int myTeam)
 			}
 		}
 	}
+}
+
+void Map::attack(coordenadas attacker, coordenadas defender)
+{
+	string symbol = tilesArray[defender.i][defender.j]->getUnit()->getSymbol();
+	int numero, inicialDamage;
+	if (stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getHp()) < 5)
+	{
+		if (symbol == "moon")
+			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().moon);
+		else if(symbol == "star")
+			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().star);
+		else if (symbol == "square")
+			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().square);
+		else if (symbol == "triangle")
+			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().triangle);
+		else if (symbol == "circle")
+			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().circle);
+	}
+	else
+	{
+		if (symbol == "moon")
+			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().moon);
+		else if (symbol == "star")
+			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().star);
+		else if (symbol == "square")
+			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().square);
+		else if (symbol == "triangle")
+			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().triangle);
+		else if (symbol == "circle")
+			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().circle);
+	}
+
+
+	inicialDamage = numero - stoi(tilesArray[defender.i][defender.j]->getUnit()->getdefense());
+
+
 }

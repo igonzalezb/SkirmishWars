@@ -38,8 +38,6 @@ int main(int argc, char * argv[])
 	map.generateTilesArray(data.getBuildingList(), data.getTerrainList(), data.getUnitList());
 	map.updateFogOfWar(me.getTeam());		//FIJARSE DONDE TIENE QUE IR!
 
-
-	//graphics.setMap(&map);
 	graphics.loadBitmaps(&map);
 	graphics.showMap(&map);
 

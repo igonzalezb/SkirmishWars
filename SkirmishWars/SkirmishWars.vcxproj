@@ -164,6 +164,7 @@
     <None Include="resources\maps\SnakeArena.csv" />
     <None Include="resources\maps\SuperS.csv" />
     <None Include="resources\maps\WaterWorld.csv" />
+    <None Include="resources\terrainDefenseModifiers.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroSetup.cpp" />

@@ -30,6 +30,27 @@
 
 #define MAX_MAPS	6
 #define CANNOT_MOVE	100
+
+
+enum tabla
+{
+	M_HQ, CI_FA, FORR, PLA, RO_RI
+};
+
+struct modifiers
+{
+	int golpe;
+	int dado;
+};
+
+
+struct coordenadas
+{
+	int i;
+	int j;
+};
+
+
 class Map
 {
 public:
@@ -47,6 +68,8 @@ public:
 	GenericTile* getTile(int i, int j);
 	void updateFogOfWar(int myTeam);
 
+	void attack(coordenadas attacker, coordenadas defender);
+
 
 private:
 	//file map.csv
@@ -56,6 +79,7 @@ private:
 	
 	string terrainMatrix[FILA][COLUMNA];
 
-
+	modifiers tableMatrix[14][5];
+	
 	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
 };

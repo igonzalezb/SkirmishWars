@@ -48,6 +48,9 @@
     <None Include="resources\maps\WaterWorld.csv">
       <Filter>Resources\Maps</Filter>
     </None>
+    <None Include="resources\terrainDefenseModifiers.csv">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroSetup.cpp">
