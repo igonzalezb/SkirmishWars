@@ -8,13 +8,14 @@
 #include <allegro5\allegro_image.h>
 
 #include "Tiles.h"
+#include "csvHandler.h"
 
 //typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
 
 
 //Mapa 0, 3, 5, 8 no anda
 
-
+#define ATTACK_TABLE "resources/terrainDefenseModifiers.csv"
 
 #define MAP_0	"resources/maps/BalancedArena.csv"
 #define MAP_1	"resources/maps/BalancedRing.csv"
@@ -56,7 +57,7 @@ class Map
 public:
 	Map();
 	~Map();
-	void csvReader();
+	//void csvReader();
 	void setMapPath(string mapName);
 	void randomMap();
 
@@ -70,12 +71,16 @@ public:
 
 	void attack(coordenadas attacker, coordenadas defender);
 
-
+	void generateDefenseModifiersTable();
 private:
 	//file map.csv
 	string mapName;
 	//matriz de terrains + units
-	string matrix[FILA][COLUMNA];	//Con los Codigos
+
+	csvFile *mapFile;
+	csvFile *defenseModifiers;
+	
+	//string matrix[FILA][COLUMNA];	//Con los Codigos
 	
 	string terrainMatrix[FILA][COLUMNA];
 

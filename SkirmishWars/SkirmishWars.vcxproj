@@ -170,6 +170,8 @@
     <ClCompile Include="AllegroSetup.cpp" />
     <ClCompile Include="basicXML.cpp" />
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="csvHandler.cpp" />
+    <ClCompile Include="csvHandler.h" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapGraphics.cpp" />
