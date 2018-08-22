@@ -12,9 +12,6 @@
 
 //typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
 
-
-//Mapa 0, 3, 5, 8 no anda
-
 #define ATTACK_TABLE "resources/terrainDefenseModifiers.csv"
 
 #define MAP_0	"resources/maps/BalancedArena.csv"

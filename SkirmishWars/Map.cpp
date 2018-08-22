@@ -334,7 +334,7 @@ void Map::attack(coordenadas attacker, coordenadas defender)
 	else
 		finalDamage = tableMatrix[13 - inicialDamage][terr].golpe;
 
-
+	//Hay que seguirla pero creo que el calculo esta bien.
 
 
 }
