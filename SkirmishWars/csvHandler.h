@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -8,7 +9,7 @@ class csvFile
 {
 public:
 	csvFile();
-	csvFile(string fileName, int i, int j);
+	csvFile(string fileName, int rows, int cols);
 	~csvFile();
 	void readFile();
 	string** getMatrix();

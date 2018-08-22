@@ -5,11 +5,11 @@ csvFile::csvFile()
 {
 }
 
-csvFile::csvFile(string fileName, int i, int j)
+csvFile::csvFile(string fileName, int rows, int cols)
 {
 	this->fileName = fileName;
-	rows = i;
-	cols = j;
+	this->rows = rows;
+	this->cols = cols;
 	matrix = new string*[rows];
 	for (int p = 0; p<rows; p++) {
 		matrix[p] = new string[cols];
@@ -48,7 +48,7 @@ string ** csvFile::getMatrix()
 
 csvFile::~csvFile()
 {
-	/*for (int i = 0; i < rows; ++i)
+	for (int i = 0; i < rows; ++i)
 		delete[] matrix[i];
-	delete[] matrix;*/
+	delete[] matrix;
 }

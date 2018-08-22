@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include<fstream>
 #include <string>
 
 #include <allegro5\allegro.h>
@@ -54,11 +53,8 @@ class Map
 public:
 	Map();
 	~Map();
-	//void csvReader();
 	void setMapPath(string mapName);
 	void randomMap();
-
-	//FUNCIONA PERO HABRIA QUE MEJORARLA
 	void generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units);
 
 	void possibleMoves(Unit *currUnit, int i, int j, bool(&canMove)[FILA][COLUMNA]);
@@ -69,16 +65,12 @@ public:
 	void attack(coordenadas attacker, coordenadas defender);
 
 	void generateDefenseModifiersTable();
-private:
-	//file map.csv
-	string mapName;
-	//matriz de terrains + units
 
+private:
+	string mapName;
 	csvFile *mapFile;
 	csvFile *defenseModifiers;
-	
-	//string matrix[FILA][COLUMNA];	//Con los Codigos
-	
+		
 	string terrainMatrix[FILA][COLUMNA];
 
 	modifiers tableMatrix[14][5];

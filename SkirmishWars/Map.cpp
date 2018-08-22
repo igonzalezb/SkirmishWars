@@ -21,29 +21,6 @@ Map::Map()
 
 	generateDefenseModifiersTable();
 }
-//
-//void Map::csvReader()
-//{
-//	ifstream lectura;
-//	lectura.open(mapName, ios::in);
-//	if (!lectura.is_open()) std::cout << "ERROR: File Open" << '\n';
-//	for (int i = 0; (i < FILA) && lectura.good(); i++) {
-//		for (int j = 0; (j < COLUMNA) && lectura.good(); j++) {
-//			if ((j == (COLUMNA - 1)) && (i != (FILA-1))) {
-//				getline(lectura, matrix[i][j], '\n');
-//				matrix[i][j].erase(matrix[i][j].size() - 1);
-//				if ((matrix[i][j].find(';') != string::npos) || (matrix[i][j].find(' ') != string::npos))
-//					matrix[i][j].erase(matrix[i][j].size() - 1);
-//
-//			}
-//			else {
-//				getline(lectura, matrix[i][j], ';');
-//			}
-//		}
-//	}
-//
-//	lectura.close();
-//}
 
 void Map::setMapPath(string mapName)
 {
@@ -90,17 +67,6 @@ void Map::randomMap()
 	}
 
 	printf("%s\n", mapName.c_str());
-}
-
-Map::~Map()
-{
-	for (int i = 0; i < (FILA); i++) {
-		for (int j = 0; j < (COLUMNA); j++) {
-			delete tilesArray[i][j];
-		}
-	}
-	delete mapFile;
-	delete defenseModifiers;
 }
 
 void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units)
@@ -327,7 +293,17 @@ void Map::attack(coordenadas attacker, coordenadas defender)
 
 	dice = rand() % 7 + 1;
 
-	int terr;
+	int terr;	//Falta cargarla para saber en que terreno estoy
+
+	switch (defender)
+	{
+	default:
+		break;
+	}
+
+
+
+
 
 	if (dice >= tableMatrix[13 - inicialDamage][terr].dado)
 		finalDamage = tableMatrix[13 - inicialDamage][terr].golpe + tableMatrix[13 - inicialDamage][terr].dado;
@@ -352,4 +328,15 @@ void Map::generateDefenseModifiersTable()
 			tableMatrix[i][j].dado = stoi(temp.c_str());
 		}
 	}
+}
+
+Map::~Map()
+{
+	for (int i = 0; i < (FILA); i++) {
+		for (int j = 0; j < (COLUMNA); j++) {
+			delete tilesArray[i][j];
+		}
+	}
+	delete mapFile;
+	delete defenseModifiers;
 }
