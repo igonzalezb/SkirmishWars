@@ -20,7 +20,6 @@ Map::Map()
 	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
 
 	generateDefenseModifiersTable();
-	//csvReader();
 }
 //
 //void Map::csvReader()
