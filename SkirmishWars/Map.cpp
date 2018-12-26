@@ -295,11 +295,11 @@ void Map::attack(coordenadas attacker, coordenadas defender)
 
 	int terr;	//Falta cargarla para saber en que terreno estoy
 
-	switch (defender)
+	/*switch (defender)
 	{
 	default:
 		break;
-	}
+	}*/
 
 
 
