@@ -16,6 +16,7 @@ using namespace std;
 
 int main() {
 
+////csvReader///////////////////////////////////////////////
 	/*ifstream lectura;
 	lectura.open("BalancedArena.csv", ios::in);
 	string matrix[FILA][COLUMNA];
@@ -34,13 +35,14 @@ int main() {
 	}
 	lectura.close();*/
 
+///////////////////////////////////////////////////////////
 
 	int matrix[FILA][COLUMNA];
 	bool matrix2[FILA][COLUMNA];
 
 	int i = 5; //[i][j]=posicion de la nave
 	int j = 5;
-	int n = 7; //n=MP de la nave
+	int n = 3; //n=MP de la nave
 	int TMC = 1;
 	int count = 0;
 
@@ -60,26 +62,28 @@ int main() {
 	matrix[i + 3][j] = 100;
 	matrix[i][j] = 0;
 
-
+////Imprimo la matriz real con los costos de movimiento de cada lugar////
 	for (int p = 0; p < FILA; p++)
 	{
 		for (int q = 0; q < COLUMNA; q++)
 		{
-			printf("%i||", matrix[p][q]);
+			printf("%3i||", matrix[p][q]);
 		}
 		printf("\n");
 	}
 	printf("\n");
 	printf("\n");
 
+//////////////////////////////////////////////////////////////////////
+	
 	funcion(matrix, matrix2, i, j, n);
 	
-	
+///////////Imprimo matriz booleana con TRUE donde me puedo mover///////////////////////////////////////////////////////////	
 	for (int p = 0; p < FILA; p++)
 	{
 		for (int q = 0; q < COLUMNA; q++)
 		{
-			printf("%i||", matrix2[p][q]);
+			printf("%3i||", matrix2[p][q]);
 		}
 		printf("\n");
 	}
@@ -90,7 +94,7 @@ int main() {
 }
 
 
-
+////FUNCION QUE CHEQUEA MOVIMIENTOS POSIBLES SEGUN LOS MP(MOVEMENT POINTS)/////
 void funcion(int matrix[FILA][COLUMNA], bool(&matrix2)[FILA][COLUMNA], int i, int j, int MP) {
 	if ((0 <= i) && (i < FILA) && (0 <= i) && (j < COLUMNA) && (MP >= 0))
 	{
