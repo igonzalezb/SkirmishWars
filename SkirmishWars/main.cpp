@@ -30,11 +30,13 @@ int main(int argc, char * argv[])
 
 	srand(time(NULL));
 
-	Player me;
-
 	allegroStartup();
+	
+	Player me;
+		
 	MapGraphics graphics;
 	Map map;
+	
 	map.generateTilesArray(data.getBuildingList(), data.getTerrainList(), data.getUnitList());
 	map.updateFogOfWar(me.getTeam());		//FIJARSE DONDE TIENE QUE IR!
 
