@@ -57,6 +57,7 @@ void MapGraphics::showMap(Map * map)
 			al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton), 0.0,
 			purchaselist[i].c_str());
 	}
+
 	bool canMove[FILA][COLUMNA];
 
 	for (int i = 0; i < (FILA); i++) {
@@ -130,6 +131,45 @@ void MapGraphics::loadBitmaps(Map * map)
 
 		}
 	}
+}
+
+int MapGraphics::dispachClick(int x, int y)
+{
+	if ((0.0 < x < M_WIDTH) && (0.0 < y < M_HEIGHT))	
+	{
+		//Se cliqueo dentro del mapa
+
+	}
+
+	else if ((M_WIDTH < x < al_get_display_width(display)) && 
+		(al_get_font_line_height(menuFont) * 2 < y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton))))
+	{
+		//Se apreto ATTACK
+		return 0;
+	}
+	else if ((M_WIDTH < x < al_get_display_width(display)) && 
+		((al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton)) < y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton))))
+	{
+		//Se apreto PURCHASE
+		return 0;
+	}
+		
+		
+	for (int i = 0; i < 9; i++) 
+	{
+		if((M_WIDTH + 10 < x < al_get_display_width(display))
+			&& ((al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) 
+				< y < 
+				(al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) + al_get_font_line_height(menuFont)))
+		{
+			// Se apreto para comprar la unidad de numero i de la lista
+			return 0;
+		}
+	
+	
+	}
+
+	return 0;
 }
 
 //void MapGraphics::setMap(Map * map)

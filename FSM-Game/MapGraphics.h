@@ -12,13 +12,6 @@
 
 #include "Map.h"
 
-#define M_HEIGHT	al_get_display_height(display)
-#define M_WIDTH		(al_get_display_width(display)*3.0/4.0)
-#define R_WIDTH		al_get_display_width(display)/4.0
-#define T_HEIGHT	M_HEIGHT/FILA
-#define T_WIDTH		M_WIDTH/COLUMNA
-#define FOG_IMAGE	"resources/images/fog.png"
-#define FONT_MENU	"resources/BAUHS93.otf"
 
 #define NOFOG	//Just for Debug
 
@@ -30,6 +23,8 @@ public:
 	void showMap(Map * map);
 	void loadBitmaps(Map *map);
 	//void setMap(Map *map);
+
+	int dispachClick(int x, int y);
 
 private:
 	ALLEGRO_DISPLAY *display = NULL;
