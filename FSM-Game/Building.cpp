@@ -7,10 +7,10 @@ Building::Building()
 	team = WHITE;
 }
 
-Building::Building(string hp, string name, string path, string type, string team)
+Building::Building(string cp, string name, string path, string type, string team)
 {
 	fogOfWar = true;
-	this->hp = hp;
+	this->cp = cp;
 	this->name = name;
 	this->type = type;
 
@@ -30,9 +30,9 @@ void Building::setName(string name)
 	this->name = name;
 }
 
-void Building::setHp(string hp)
+void Building::setCp(string cp)
 {
-	this->hp = hp;
+	this->cp = cp;
 }
 
 void Building::setPath(string path)
@@ -48,9 +48,9 @@ string Building::getPath()
 	return path;
 }
 
-string Building::getHp()
+string Building::getCp()
 {
-	return hp;
+	return cp;
 }
 
 string Building::getName()

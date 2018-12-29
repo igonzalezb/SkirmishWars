@@ -14,7 +14,7 @@ typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
 class Building
 {
 private:
-	string hp;
+	string cp;
 	string name;
 	string path;
 	string type;
@@ -23,12 +23,12 @@ private:
 
 public:
 	Building();
-	Building(string hp, string name, string path, string type, string team);
+	Building(string cp, string name, string path, string type, string team);
 	~Building();
-	void setHp(string hp);
+	void setCp(string cp);
 	void setPath(string path);
 	void setName(string name);
-	string getHp();
+	string getCp();
 	string getPath();
 	string getName();
 	void setTeam(TeamColor team);

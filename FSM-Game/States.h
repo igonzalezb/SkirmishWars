@@ -6,6 +6,8 @@
 #define DEBUG true
 
 #include "genericState.h"
+//#include "PlayerInfo.h"
+//#include "Map.h"
 
 //VER si usar idle
 /*

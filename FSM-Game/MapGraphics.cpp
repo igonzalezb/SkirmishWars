@@ -39,6 +39,7 @@ MapGraphics::~MapGraphics()
 
 void MapGraphics::showMap(Map * map)
 {
+	al_clear_to_color(al_map_rgb(0.0, 170.0, 0.0));
 	al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, 0.0, 0.0, "TIMER 00:00:00");
 	al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, al_get_font_line_height(menuFont), 0.0, "MONEY: $5");
 	
@@ -50,20 +51,10 @@ void MapGraphics::showMap(Map * map)
 		al_get_bitmap_width(purchaseButton), al_get_bitmap_height(purchaseButton),
 		M_WIDTH, al_get_font_line_height(menuFont)*2 + al_get_bitmap_height(attackButton), R_WIDTH, M_HEIGHT / 6.0, 0);
 
-	string purchaselist[9] = {
-		"Mechs: $3",
-		"Infantry: $1", 
-		"Rocket: $15",
-		"Recon: $4", 
-		"APC: $5", 
-		"AntiAir: $8", 
-		"Artillery: $6", 
-		"Tank: $7", 
-		"MedTank: $16"};
 
 	for (int i = 0; i < 9; i++) {
 		al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10,
-			al_get_font_line_height(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton), 0.0,
+			al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton), 0.0,
 			purchaselist[i].c_str());
 	}
 	bool canMove[FILA][COLUMNA];

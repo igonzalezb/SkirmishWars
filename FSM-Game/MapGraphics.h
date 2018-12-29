@@ -18,7 +18,7 @@
 #define T_HEIGHT	M_HEIGHT/FILA
 #define T_WIDTH		M_WIDTH/COLUMNA
 #define FOG_IMAGE	"resources/images/fog.png"
-#define FONT_MENU	"resources/BAUHS93.TTF"
+#define FONT_MENU	"resources/BAUHS93.otf"
 
 #define NOFOG	//Just for Debug
 
@@ -38,6 +38,17 @@ private:
 	ALLEGRO_BITMAP *attackButton;
 	ALLEGRO_BITMAP *purchaseButton;
 	ALLEGRO_FONT *menuFont;
+
+	string purchaselist[9] = {
+		"Mechs: $3",
+		"Infantry: $1",
+		"Rocket: $15",
+		"Recon: $4",
+		"APC: $5",
+		"AntiAir: $8",
+		"Artillery: $6",
+		"Tank: $7",
+		"MedTank: $16" };
 	//Map *map;
 
 };

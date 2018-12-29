@@ -1,26 +1,49 @@
 
 #include "States.h"
-//#include "Screen.h"
+#include "Game.h"
+#include "usefulInfo.h"
 #include "Events.h"
 #include <fstream>
 #include <sstream>
-#include "Game.h"
 
 /////////////////////////////// ST_GameIdle ///////////////////////////////
 
 genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Moving();
+	Info->gameInterface->playerMe->setMoney(5);
 
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i,j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i,j)->getBuilding()) != NULL))
+			{
+				Info->gameInterface->myMap->getTile(i,j)->getUnit()->setHp(8);
+			}
+		}
+	}
 	//COMPLETAR 
-
 	return ret;
 }
 
 genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouMoving();
- 
+	Info->gameInterface->playerYou->setMoney(5);
+
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+			{
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+			}
+		}
+	}
 	//COMPLETAR
 
 	return ret;
@@ -29,7 +52,19 @@ genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 genericState* ST_GameIdle::on_RYouStart(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Moving();
+	Info->gameInterface->playerMe->setMoney(5);
 
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+			{
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+			}
+		}
+	}
 	//COMPLETAR
 
 	return ret;
@@ -38,7 +73,19 @@ genericState* ST_GameIdle::on_RYouStart(genericEvent *ev, usefulInfo * Info)
 genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->playerYou->setMoney(5);
 
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+			{
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+			}
+		}
+	}
 	//COMPLETAR
 
 	return ret;
@@ -59,6 +106,7 @@ genericState* ST_Moving::on_Move(genericEvent *ev, usefulInfo * Info)
 genericState* ST_Moving::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Attacking();
+
 
 	//COMPLETAR 
 
@@ -85,8 +133,25 @@ genericState* ST_Moving::on_LastMove(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
-	genericState *ret = (genericState *) new ST_YouPlay();
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->cities)+1)*5);
 
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL)&&
+				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
+			{
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				{
+					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+				}
+			}
+		}
+	}
 	//COMPLETAR 
 
 	return ret;
@@ -135,8 +200,25 @@ genericState* ST_Attacking::on_LastAttack(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_Attacking::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
-	genericState *ret = (genericState *) new ST_YouPlay();
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->cities) + 1) * 5);
 
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
+				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
+			{
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				{
+					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+				}
+			}
+		}
+	}
 	//COMPLETAR 
 
 	return ret;
@@ -165,8 +247,25 @@ genericState* ST_Purchasing::on_Purchase(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_Purchasing::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
-	genericState *ret = (genericState *) new ST_YouPlay();
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->cities) + 1) * 5);
 
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
+				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
+			{
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				{
+					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+				}
+			}
+		}
+	}
 	//COMPLETAR 
 
 	return ret;
@@ -256,7 +355,24 @@ genericState* ST_YouMoving::on_LastMove(genericEvent *ev, usefulInfo * Info)
 genericState* ST_YouMoving::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Moving();
+	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->cities) + 1) * 5);
 
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
+				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+			{
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				{
+					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+				}
+			}
+		}
+	}
 	//COMPLETAR 
 
 	return ret;
@@ -307,8 +423,25 @@ genericState* ST_YouAttacking::on_LastAttack(genericEvent *ev, usefulInfo * Info
 genericState* ST_YouAttacking::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Moving();
-
-	//COMPLETAR 
+	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->cities)+1)*5); // se suma 1 porque el HQ tambien aporta $5 al inicio de cada jugada
+	
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
+				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+			{
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				{
+					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+				}
+			}
+		}
+	}
+//COMPLETAR 
 
 	return ret;
 }
@@ -338,7 +471,24 @@ genericState* ST_YouPurchasing::on_RPurchase(genericEvent *ev, usefulInfo * Info
 genericState* ST_YouPurchasing::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Moving();
+	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->cities)+1)*5);
 
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
+				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+			{
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				{
+					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+				}
+			}
+		}
+	}
 	//COMPLETAR 
 
 	return ret;

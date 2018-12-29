@@ -35,7 +35,8 @@ struct MovementCost
 class Unit
 {
 private:
-	string hp;
+	//string hp;
+	int hp;
 	string name;
 	string path;
 	string cost;
@@ -49,7 +50,7 @@ private:
 	MovementCost mcost;
 	TeamColor team;
 
-	
+
 
 
 
@@ -59,7 +60,7 @@ public:
 	Unit(list<Unit>::iterator it);
 	~Unit();
 
-	void setHp(string hp);
+	void setHp(int hp);
 	void setPath(string path);
 	void setName(string name);
 	void setCost(string cost);
@@ -94,7 +95,7 @@ public:
 	string getdefense();
 	string getMp();
 	string getCost();
-	string getHp();
+	int getHp();
 	string getPath();
 	string getName();
 	TeamColor getTeam();

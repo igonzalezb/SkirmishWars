@@ -9,7 +9,7 @@ Unit::Unit()
 Unit::Unit(list<Unit>::iterator it)
 {
 	name = it->getName();
-	hp = it->getHp();
+	hp = 8;
 	path = it->getPath();
 	cost = it->getCost();
 	mp = it->getMp();
@@ -19,16 +19,15 @@ Unit::Unit(list<Unit>::iterator it)
 	type = it->getType();
 	fpreduced = it->getFpReduced();
 	mcost = it->getMc();
-
-
 }
 
 Unit::~Unit()
 {
 }
 
-void Unit::setHp(string hp)
+void Unit::setHp(int hp)
 {
+
 	this->hp = hp;
 }
 
@@ -83,7 +82,7 @@ void Unit::setTeam(TeamColor team)
 	char temp[50];
 	sprintf(temp, path.c_str(), this->team);
 	this->path = temp;
-	
+
 }
 
 void Unit::setSymbol(string symbol)
@@ -186,7 +185,7 @@ string Unit::getCost()
 	return cost;
 }
 
-string Unit::getHp()
+int Unit::getHp()
 {
 	return hp;
 }

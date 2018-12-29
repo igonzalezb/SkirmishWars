@@ -12,27 +12,19 @@ public:
 	//Hay que agrgarle los punteros a las otras fuentes al constructor
 	//y pasar el constructor a un .cpp
 
-	/*
-	usefulInfo(UserEventSource *UsEvSrc, TimeoutEventSource *TOEvSrc, NetworkEventSource *NETEvSrc, FileSystem *FileSys, SoftwareEventSource *SoftSrc)
-	:userSrc(UsEvSrc), timeoutSrc(TOEvSrc), networkSrc(NETEvSrc), fileInterface(FileSys), softwareSrc(SoftSrc) {
-	networkInterface = networkSrc->networkInterface;
-	userInterface = userSrc->terminal;
-	softwareSrc->fileInterface = fileInterface;
-
-	}
-	*/
-	usefulInfo(GameEventSource *NETEvSrc) :gameSrc(NETEvSrc)
+	
+	usefulInfo(GameEventSource *UsEvSrc,GameEventSource *GameEvSrc)
+		//:userSrc(UsEvSrc),gameSrc(GameEvSrc)
 	{
 		gameInterface = gameSrc->gameInterface;
+		//userInterface = userSrc->user;
 	}
-
-	GameEventSource* gameSrc;	//TODO: ponerle getters quizas? quedaria mas prolijo o es al pedo??
-									//UserEventSource* userSrc;
-									//TimeoutEventSource* timeoutSrc;
-									//SoftwareEventSource* softwareSrc;
+	
+	GameEventSource* gameSrc;
+	//UserEventSource* userSrc;
 
 	Game *gameInterface;
-
+	//Input *userInterface;
 private:
 
 };

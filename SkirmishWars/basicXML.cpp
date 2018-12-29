@@ -244,7 +244,7 @@ void chararacterDataCallback(void *userData, const XML_Char *s, int len)
 		myData->getLastBuilding().setPath(d);	//set path
 		break;
 	case B_HP:
-		myData->getLastBuilding().setHp(d);	//set hp
+		myData->getLastBuilding().setCp(d);	//set hp
 		break;
 	case B_TYPE:
 		myData->getLastBuilding().setType(d);
