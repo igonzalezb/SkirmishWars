@@ -203,6 +203,7 @@
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Tiles.cpp" />
     <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="userInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllegroSetup.h" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Tiles.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="usefulInfo.h" />
+    <ClInclude Include="userInput.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

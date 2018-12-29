@@ -23,6 +23,10 @@ public:
 	bool isThereEvent();
 	genericEvent* insertEvent();
 	Game *gameInterface;
+
+	eventCode dispachClick(int x, int y);
+
+
 private:
 
 };

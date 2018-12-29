@@ -4,6 +4,7 @@
 #include "Events.h"
 #include <fstream>
 #include <sstream>
+#include "Game.h"
 
 /////////////////////////////// ST_GameIdle ///////////////////////////////
 

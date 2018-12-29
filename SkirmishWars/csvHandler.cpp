@@ -48,7 +48,7 @@ string ** csvFile::getMatrix()
 
 csvFile::~csvFile()
 {
-	for (int i = 0; i < rows; ++i)
+	/*for (int i = 0; i < rows; ++i)
 		delete[] matrix[i];
-	delete[] matrix;
+	delete[] matrix;*/
 }

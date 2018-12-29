@@ -2,12 +2,29 @@
 
 MapGraphics::MapGraphics()
 {
-	display = al_create_display(800, 600);
+	display = al_create_display(1000, 600);
 	if (!display)
 	{
 		printf("Failed to create display!\n");
 	}
 	
+	attackButton = al_load_bitmap("resources/images/AttackButton.png");
+	if(!attackButton)
+	{
+		printf("Failed to create attack button!\n");
+	}
+
+	purchaseButton = al_load_bitmap("resources/images/purchase.png");
+	if (!purchaseButton)
+	{
+		printf("Failed to create purchase button!\n");
+	}
+
+	menuFont = al_load_font(FONT_MENU, 30, 0);
+	if (!menuFont) {
+		fprintf(stderr, "failed to create menuFont!\n");
+	}
+
 }
 
 MapGraphics::~MapGraphics()
@@ -22,6 +39,33 @@ MapGraphics::~MapGraphics()
 
 void MapGraphics::showMap(Map * map)
 {
+	al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, 0.0, 0.0, "TIMER 00:00:00");
+	al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, al_get_font_line_height(menuFont), 0.0, "MONEY: $5");
+	
+	al_draw_scaled_bitmap(attackButton, 0.0, 0.0,
+		al_get_bitmap_width(attackButton), al_get_bitmap_height(attackButton),
+		M_WIDTH, al_get_font_line_height(menuFont)*2, R_WIDTH, M_HEIGHT / 6.0, 0);
+
+	al_draw_scaled_bitmap(purchaseButton, 0.0, 0.0,
+		al_get_bitmap_width(purchaseButton), al_get_bitmap_height(purchaseButton),
+		M_WIDTH, al_get_font_line_height(menuFont)*2 + al_get_bitmap_height(attackButton), R_WIDTH, M_HEIGHT / 6.0, 0);
+
+	string purchaselist[9] = {
+		"Mechs: $3",
+		"Infantry: $1", 
+		"Rocket: $15",
+		"Recon: $4", 
+		"APC: $5", 
+		"AntiAir: $8", 
+		"Artillery: $6", 
+		"Tank: $7", 
+		"MedTank: $16"};
+
+	for (int i = 0; i < 9; i++) {
+		al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10,
+			al_get_font_line_height(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton), 0.0,
+			purchaselist[i].c_str());
+	}
 	bool canMove[FILA][COLUMNA];
 
 	for (int i = 0; i < (FILA); i++) {
@@ -55,6 +99,11 @@ void MapGraphics::showMap(Map * map)
 			}
 		}
 	}
+
+	
+
+	
+
 	al_flip_display();
 }
 
