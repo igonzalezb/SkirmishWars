@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-
+#include "Map.h"
 #define MAX_PLAYERS	2
 
 using namespace std;
@@ -17,6 +17,8 @@ public:
 	void setTeam(int team);
 	int getTeam();
 	bool doIStart();
+	void setAmmountOfCities(Map* myMap);
+	int getAmmountOfCities();
 
 private:
 	string name;

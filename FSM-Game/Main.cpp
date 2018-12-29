@@ -65,3 +65,9 @@ int main()
 	} while (FSM.getCurrentState()->getLastEvent() != END_PLAYING);
 	//while (FSM.getCurrentState()->getLastEvent() != QUIT); //ver bien si este QUIT queda el mismo o si hay que cambiarlo
 }
+
+
+
+
+
+

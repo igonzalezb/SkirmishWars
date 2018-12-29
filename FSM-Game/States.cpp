@@ -134,7 +134,8 @@ genericState* ST_Moving::on_LastMove(genericEvent *ev, usefulInfo * Info)
 genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->cities)+1)*5);
+	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
+	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities())+1)*5);
 
 	int i = 0, j = 0;
 	for (i = 0; i < FILA; i++)
@@ -201,7 +202,8 @@ genericState* ST_Attacking::on_LastAttack(genericEvent *ev, usefulInfo * Info)
 genericState* ST_Attacking::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->cities) + 1) * 5);
+	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
+	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
 
 	int i = 0, j = 0;
 	for (i = 0; i < FILA; i++)
@@ -248,7 +250,8 @@ genericState* ST_Purchasing::on_Purchase(genericEvent *ev, usefulInfo * Info)
 genericState* ST_Purchasing::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->cities) + 1) * 5);
+	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
+	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
 
 	int i = 0, j = 0;
 	for (i = 0; i < FILA; i++)
@@ -355,7 +358,8 @@ genericState* ST_YouMoving::on_LastMove(genericEvent *ev, usefulInfo * Info)
 genericState* ST_YouMoving::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Moving();
-	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->cities) + 1) * 5);
+	Info->gameInterface->playerMe->setAmmountOfCities(Info->gameInterface->myMap);
+	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->getAmmountOfCities()) + 1) * 5);
 
 	int i = 0, j = 0;
 	for (i = 0; i < FILA; i++)
@@ -423,7 +427,8 @@ genericState* ST_YouAttacking::on_LastAttack(genericEvent *ev, usefulInfo * Info
 genericState* ST_YouAttacking::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Moving();
-	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->cities)+1)*5); // se suma 1 porque el HQ tambien aporta $5 al inicio de cada jugada
+	Info->gameInterface->playerMe->setAmmountOfCities(Info->gameInterface->myMap);
+	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->getAmmountOfCities()) + 1) * 5);// se suma 1 porque el HQ tambien aporta $5 al inicio de cada jugada
 	
 	int i = 0, j = 0;
 	for (i = 0; i < FILA; i++)
@@ -471,7 +476,8 @@ genericState* ST_YouPurchasing::on_RPurchase(genericEvent *ev, usefulInfo * Info
 genericState* ST_YouPurchasing::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Moving();
-	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->cities)+1)*5);
+	Info->gameInterface->playerMe->setAmmountOfCities(Info->gameInterface->myMap);
+	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->getAmmountOfCities()) + 1) * 5);
 
 	int i = 0, j = 0;
 	for (i = 0; i < FILA; i++)

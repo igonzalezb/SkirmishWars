@@ -3,8 +3,8 @@
 
 Building::Building()
 {
-	fogOfWar = true;
-	team = WHITE;
+	fogOfWar = true;	
+	team = WHITE;	
 }
 
 Building::Building(string cp, string name, string path, string type, string team)
