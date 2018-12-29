@@ -6,7 +6,7 @@
 //#include <boost\date_time\posix_time\posix_time.hpp>
 using namespace std;
 
-//CAMBIAAAAAAAAAAAR TODO ESTE ARCHIVO ADAPTANDO PARA EL GAAAAAMEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//CAMBIAAAAAAAAAAAR TODO ESTE ARCHIVO ADAPTANDO PARA EL GAAAAAMEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 /*****  GAME EVENT SOURCE  *****/
 
 

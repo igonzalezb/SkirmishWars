@@ -7,8 +7,9 @@ using namespace std;
 
 typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
 
+
 //#define HQ(x)		"q"#x
-///#define CITY(x)		"c"#x
+//#define CITY(x)		"c"#x
 //#define FACTORY(x)	"m"#x
 
 class Building
