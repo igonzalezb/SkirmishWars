@@ -11,7 +11,7 @@
 #include <allegro5\allegro_color.h>
 
 #include "Map.h"
-
+#include "genericEvent.h"
 
 #define NOFOG	//Just for Debug
 
@@ -24,7 +24,9 @@ public:
 	void loadBitmaps(Map *map);
 	//void setMap(Map *map);
 
-	int dispachClick(int x, int y);
+	ALLEGRO_DISPLAY* getDisplay();
+
+	eventCode dispatchClick(int x, int y);
 
 private:
 	ALLEGRO_DISPLAY *display = NULL;

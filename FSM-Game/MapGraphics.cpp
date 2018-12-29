@@ -133,11 +133,65 @@ void MapGraphics::loadBitmaps(Map * map)
 	}
 }
 
-int MapGraphics::dispachClick(int x, int y)
+ALLEGRO_DISPLAY* MapGraphics::getDisplay()
+{
+	return display;
+}
+
+eventCode MapGraphics::dispatchClick(int x, int y)
 {
 	if ((0.0 < x < M_WIDTH) && (0.0 < y < M_HEIGHT))	
 	{
 		//Se cliqueo dentro del mapa
+		for (int i = 0; i < (FILA); i++) {
+			for (int j = 0; j < (COLUMNA); j++) {
+			
+				if (((T_WIDTH * j) < x < ((T_WIDTH * j) + T_WIDTH)) && 
+					((T_HEIGHT * i) < y < ((T_HEIGHT * i) + T_HEIGHT)))
+				{
+					//Se cliqueo en la posicion ij (i:fila. j:col)
+					switch (i)
+					{
+					case 0:
+					{
+						switch (j)
+						{
+						case 0: return A1; break;
+						case 1: return A1; break;
+							
+						case 2:return A1; break;
+							break;
+						case 3:return A1; break;
+							break;
+						case 4:return A1; break;
+							break;
+						case 5:return A1; break;
+							break;
+						case 6:return A1; break;
+							break;
+						case 7:return A1; break;
+							break;
+						case 8:return A1; break;
+						case 9:return A1; break;
+						case 10:return A1; break;
+						case 11:return A1; break;
+						case 12:return A1; break;
+						case 13:return A1; break;
+						case 14:return A1; break;
+						case 15:return A1; break;
+						
+						default:
+							break;
+						}
+						break;
+					me escuchas? bancame
+					default:
+						break;
+					}
+				}
+			
+			}
+		}
 
 	}
 
@@ -145,13 +199,13 @@ int MapGraphics::dispachClick(int x, int y)
 		(al_get_font_line_height(menuFont) * 2 < y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton))))
 	{
 		//Se apreto ATTACK
-		return 0;
+		return ATTACK;
 	}
 	else if ((M_WIDTH < x < al_get_display_width(display)) && 
 		((al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton)) < y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton))))
 	{
 		//Se apreto PURCHASE
-		return 0;
+		return PURCHASE;
 	}
 		
 		
