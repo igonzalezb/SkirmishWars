@@ -73,7 +73,7 @@ private:
 		
 	string terrainMatrix[FILA][COLUMNA];
 
-	modifiers tableMatrix[14][5];	//Tabla de Modifiers para el ataque
+	modifiers tableMatrix[14][5];
 	
 	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
 };

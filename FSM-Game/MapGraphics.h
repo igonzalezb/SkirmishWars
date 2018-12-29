@@ -12,11 +12,13 @@
 
 #include "Map.h"
 
-
-#define T_HEIGHT	al_get_display_height(display)/FILA
-#define T_WIDTH		al_get_display_width(display)/COLUMNA
+#define M_HEIGHT	al_get_display_height(display)
+#define M_WIDTH		(al_get_display_width(display)*3.0/4.0)
+#define R_WIDTH		al_get_display_width(display)/4.0
+#define T_HEIGHT	M_HEIGHT/FILA
+#define T_WIDTH		M_WIDTH/COLUMNA
 #define FOG_IMAGE	"resources/images/fog.png"
-
+#define FONT_MENU	"resources/BAUHS93.TTF"
 
 #define NOFOG	//Just for Debug
 
@@ -33,6 +35,9 @@ private:
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_BITMAP *bitmapArray[FILA][COLUMNA];
 	ALLEGRO_BITMAP *unitsArray[FILA][COLUMNA];
+	ALLEGRO_BITMAP *attackButton;
+	ALLEGRO_BITMAP *purchaseButton;
+	ALLEGRO_FONT *menuFont;
 	//Map *map;
 
 };
