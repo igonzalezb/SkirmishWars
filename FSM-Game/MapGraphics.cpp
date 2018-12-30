@@ -168,6 +168,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return A10; break;
 						case 10:return A11; break;
 						case 11:return A12; break;
+						case 12:return A13; break;
+						case 13:return A14; break;
+						case 14:return A15; break;
+						case 15:return A16; break;
 						default:
 							break;
 						}
@@ -189,6 +193,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return B10; break;
 						case 10:return B11; break;
 						case 11:return B12; break;
+						case 12:return B13; break;
+						case 13:return B14; break;
+						case 14:return B15; break;
+						case 15:return B16; break;
 						default: break;
 						}
 						break;
@@ -209,6 +217,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return C10; break;
 						case 10:return C11; break;
 						case 11:return C12; break;
+						case 12:return C13; break;
+						case 13:return C14; break;
+						case 14:return C15; break;
+						case 15:return C16; break;
 						default: break;
 						}
 						break;
@@ -229,6 +241,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return D10; break;
 						case 10:return D11; break;
 						case 11:return D12; break;
+						case 12:return D13; break;
+						case 13:return D14; break;
+						case 14:return D15; break;
+						case 15:return D16; break;
 						default: break;
 						}
 						break;
@@ -249,6 +265,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return E10; break;
 						case 10:return E11; break;
 						case 11:return E12; break;
+						case 12:return E13; break;
+						case 13:return E14; break;
+						case 14:return E15; break;
+						case 15:return E16; break;
 						default: break;
 						}
 						break;
@@ -269,6 +289,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return F10; break;
 						case 10:return F11; break;
 						case 11:return F12; break;
+						case 12:return F13; break;
+						case 13:return F14; break;
+						case 14:return F15; break;
+						case 15:return F16; break;
 						default: break;
 						}
 						break;
@@ -289,6 +313,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return G10; break;
 						case 10:return G11; break;
 						case 11:return G12; break;
+						case 12:return G13; break;
+						case 13:return G14; break;
+						case 14:return G15; break;
+						case 15:return G16; break;
 						default: break;
 						}
 						break;
@@ -309,6 +337,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return H10; break;
 						case 10:return H11; break;
 						case 11:return H12; break;
+						case 12:return H13; break;
+						case 13:return H14; break;
+						case 14:return H15; break;
+						case 15:return H16; break;
 						default: break;
 						}
 						break;
@@ -329,6 +361,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return I10; break;
 						case 10:return I11; break;
 						case 11:return I12; break;
+						case 12:return I13; break;
+						case 13:return I14; break;
+						case 14:return I15; break;
+						case 15:return I16; break;
 						default: break;
 						}
 						break;
@@ -349,6 +385,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return J10; break;
 						case 10:return J11; break;
 						case 11:return J12; break;
+						case 12:return J13; break;
+						case 13:return J14; break;
+						case 14:return J15; break;
+						case 15:return J16; break;
 						default: break;
 						}
 						break;
@@ -369,6 +409,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return K10; break;
 						case 10:return K11; break;
 						case 11:return K12; break;
+						case 12:return K13; break;
+						case 13:return K14; break;
+						case 14:return K15; break;
+						case 15:return K16; break;
 						default: break;
 						}
 						break;
@@ -389,86 +433,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						case 9:return L10; break;
 						case 10:return L11; break;
 						case 11:return L12; break;
-						default: break;
-						}
-						break;
-					}
-					case 12:
-					{
-						switch (j)
-						{
-						case 0:return M1; break;
-						case 1:return M2; break;
-						case 2:return M3; break;
-						case 3:return M4; break;
-						case 4:return M5; break;
-						case 5:return M6; break;
-						case 6:return M7; break;
-						case 7:return M8; break;
-						case 8:return M9; break;
-						case 9:return M10; break;
-						case 10:return M11; break;
-						case 11:return M12; break;
-						default: break;
-						}
-						break;
-					}
-					case 13:
-					{
-						switch (j)
-						{
-						case 0:return N1; break;
-						case 1:return N2; break;
-						case 2:return N3; break;
-						case 3:return N4; break;
-						case 4:return N5; break;
-						case 5:return N6; break;
-						case 6:return N7; break;
-						case 7:return N8; break;
-						case 8:return N9; break;
-						case 9:return N10; break;
-						case 10:return N11; break;
-						case 11:return N12; break;
-						default: break;
-						}
-						break;
-					}
-					case 14:
-					{
-						switch (j)
-						{
-						case 0:return O1; break;
-						case 1:return O2; break;
-						case 2:return O3; break;
-						case 3:return O4; break;
-						case 4:return O5; break;
-						case 5:return O6; break;
-						case 6:return O7; break;
-						case 7:return O8; break;
-						case 8:return O9; break;
-						case 9:return O10; break;
-						case 10:return O11; break;
-						case 11:return O12; break;
-						default: break;
-						}
-						break;
-					}
-					case 15:
-					{
-						switch (j)
-						{
-						case 0:return P1; break;
-						case 1:return P2; break;
-						case 2:return P3; break;
-						case 3:return P4; break;
-						case 4:return P5; break;
-						case 5:return P6; break;
-						case 6:return P7; break;
-						case 7:return P8; break;
-						case 8:return P9; break;
-						case 9:return P10; break;
-						case 10:return P11; break;
-						case 11:return P12; break;
+						case 12:return L13; break;
+						case 13:return L14; break;
+						case 14:return L15; break;
+						case 15:return L16; break;
 						default: break;
 						}
 						break;
