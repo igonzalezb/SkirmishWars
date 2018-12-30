@@ -140,13 +140,13 @@ ALLEGRO_DISPLAY* MapGraphics::getDisplay()
 
 eventCode MapGraphics::dispatchClick(int x, int y)
 {
-	if ((0.0 < x < M_WIDTH) && (0.0 < y < M_HEIGHT))	
+	if ((0.0 < x < M_WIDTH) && (0.0 < y < M_HEIGHT))
 	{
 		//Se cliqueo dentro del mapa
 		for (int i = 0; i < (FILA); i++) {
-			for (int j = 0; j < (COLUMNA); j++) {  
-			
-				if (((T_WIDTH * j) < x < ((T_WIDTH * j) + T_WIDTH)) && 
+			for (int j = 0; j < (COLUMNA); j++) {
+
+				if (((T_WIDTH * j) < x < ((T_WIDTH * j) + T_WIDTH)) &&
 					((T_HEIGHT * i) < y < ((T_HEIGHT * i) + T_HEIGHT)))
 				{
 					//Se cliqueo en la posicion ij (i:fila(16). j:col(12))
@@ -442,11 +442,12 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						break;
 					}
 					default: break;
-				}
-			
-			}
-		}
+					}
 
+				}
+			}
+
+		}
 	}
 
 	else if ((M_WIDTH < x < al_get_display_width(display)) && 
