@@ -464,7 +464,7 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 	}
 		
 		
-	for (int i = 0; i < 9; i++) 
+	for (int i = 1; i <= 9; i++) 
 	{
 		if((M_WIDTH + 10 < x < al_get_display_width(display))
 			&& ((al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) 
@@ -472,13 +472,24 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 				(al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) + al_get_font_line_height(menuFont)))
 		{
 			// Se apreto para comprar la unidad de numero i de la lista
-			return 0;
+			switch (i)
+			{
+			case 1: return OPT_1; break;
+			case 2: return OPT_2; break;
+			case 3: return OPT_3; break;
+			case 4: return OPT_4; break;
+			case 5: return OPT_5; break;
+			case 6: return OPT_6; break;
+			case 7: return OPT_7; break;
+			case 8: return OPT_8; break;
+			case 9: return OPT_9; break;
+			}
 		}
 	
 	
 	}
 
-	return 0;
+	return NO_EV;
 }
 
 //void MapGraphics::setMap(Map * map)
