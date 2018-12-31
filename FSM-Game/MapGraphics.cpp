@@ -140,16 +140,19 @@ ALLEGRO_DISPLAY* MapGraphics::getDisplay()
 
 eventCode MapGraphics::dispatchClick(int x, int y)
 {
-	if ((0.0 < x < M_WIDTH) && (0.0 < y < M_HEIGHT))	
+	if ((0.0 < x < M_WIDTH) && (0.0 < y < M_HEIGHT))
 	{
 		//Se cliqueo dentro del mapa
 		for (int i = 0; i < (FILA); i++) {
-			for (int j = 0; j < (COLUMNA); j++) {  
-			
-				if (((T_WIDTH * j) < x < ((T_WIDTH * j) + T_WIDTH)) && 
+			for (int j = 0; j < (COLUMNA); j++) {
+
+				if (((T_WIDTH * j) < x < ((T_WIDTH * j) + T_WIDTH)) &&
 					((T_HEIGHT * i) < y < ((T_HEIGHT * i) + T_HEIGHT)))
 				{
 					//Se cliqueo en la posicion ij (i:fila(16). j:col(12))
+#ifdef DEBUG
+					printf("Se apreto la fila: %d, columna %d/n", i, j);
+#endif // DEBUG
 					switch (i)
 					{
 					case 0:
@@ -442,28 +445,35 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 						break;
 					}
 					default: break;
-				}
-			
-			}
-		}
+					}
 
+				}
+			}
+
+		}
 	}
 
 	else if ((M_WIDTH < x < al_get_display_width(display)) && 
 		(al_get_font_line_height(menuFont) * 2 < y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton))))
 	{
 		//Se apreto ATTACK
+#ifdef DEBUG
+		printf("Se apreto Attack/n");
+#endif // DEBUG
 		return ATTACK;
 	}
 	else if ((M_WIDTH < x < al_get_display_width(display)) && 
 		((al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton)) < y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton))))
 	{
 		//Se apreto PURCHASE
+#ifdef DEBUG
+		printf("Se apreto Purchase/n");
+#endif // DEBUG
 		return PURCHASE;
 	}
 		
 		
-	for (int i = 0; i < 9; i++) 
+	for (int i = 1; i <= 9; i++) 
 	{
 		if((M_WIDTH + 10 < x < al_get_display_width(display))
 			&& ((al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) 
@@ -471,16 +481,30 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 				(al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) + al_get_font_line_height(menuFont)))
 		{
 			// Se apreto para comprar la unidad de numero i de la lista
-			return 0;
+			switch (i)
+			{
+			case 1: return OPT_1; break;
+			case 2: return OPT_2; break;
+			case 3: return OPT_3; break;
+			case 4: return OPT_4; break;
+			case 5: return OPT_5; break;
+			case 6: return OPT_6; break;
+			case 7: return OPT_7; break;
+			case 8: return OPT_8; break;
+			case 9: return OPT_9; break;
+			}
+
+#ifdef DEBUG
+			printf("Se apreto la opcion %d para comprar/n", i);
+#endif // DEBUG
+
 		}
 	
 	
 	}
+#ifdef DEBUG
+	printf("No se apreto nada relevante/n");
+#endif // DEBUG
 
-	return 0;
+	return NO_EV;		//VER!!!!!
 }
-
-//void MapGraphics::setMap(Map * map)
-//{
-//	this->map = map;
-//}

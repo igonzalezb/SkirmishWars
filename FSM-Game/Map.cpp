@@ -66,7 +66,12 @@ void Map::randomMap()
 		break;
 	}
 
+#ifdef DEBUG
 	printf("%s\n", mapName.c_str());
+#endif // DEBUG
+
+
+	
 }
 
 void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units)

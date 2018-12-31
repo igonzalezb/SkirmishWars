@@ -19,7 +19,7 @@
 #define MAP_3	"resources/maps/Nascar.csv"
 #define MAP_4	"resources/maps/SanFranciscoBridge.csv"
 #define MAP_5	"resources/maps/SuperS.csv"
-///////////////////////////////////////////////////////////////////////////
+///////ESTOS DE ABAJO NO ANDAN NOSE PORQUE////////////////////////////////////////////////////////////////////
 #define MAP_6	"resources/maps/WaterWorld.csv"
 #define MAP_7	"resources/maps/SnakeArena.csv"
 #define MAP_8	"resources/maps/MystPi.csv"	
