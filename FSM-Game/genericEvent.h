@@ -36,7 +36,6 @@ typedef enum {
 	L1, L2, L3, L4, L5, L6, L7, L8, L9, L10, L11, L12, L13, L14, L15, L16,
 
 	//Opciones de compra presionadas
-
 	OPT_1, OPT_2, OPT_3, OPT_4, OPT_5, OPT_6, OPT_7, OPT_8, OPT_9
 
 } eventCode;
