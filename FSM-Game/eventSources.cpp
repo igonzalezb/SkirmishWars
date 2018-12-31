@@ -12,7 +12,6 @@ using namespace std;
 
 GameEventSource::GameEventSource(Game *_gameInterface)
 {
-
 }
 
 
@@ -23,27 +22,13 @@ genericEvent * GameEventSource::insertEvent()
 	//COMPLETAR
 }
 
+
 bool GameEventSource::isThereEvent()
-{
-	//COMPLETAR
-}
-
-
-UserEventSource::UserEventSource()
-{
-	graphics = new MapGraphics;
-	event_queue = al_create_event_queue();
-	if (!event_queue) {
-		fprintf(stderr, "failed to create event_quieue!\n");
-	}
-}
-
-bool UserEventSource::isThereEvent()
 {
 	bool redraw = false;
 	bool ret = false;
 
-	al_register_event_source(event_queue, al_get_display_event_source(graphics->getDisplay()));
+	al_register_event_source(event_queue, al_get_display_event_source(display));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_mouse_event_source());
 
@@ -64,7 +49,7 @@ bool UserEventSource::isThereEvent()
 			if (ev.mouse.button == 1)		//Para usar solo el click izquierdo
 			{
 				evCode = dispachClick(ev.mouse.x, ev.mouse.y);
-
+				ret = true;
 				/*if (optionClicked < MAX_OPTIONS)
 				do_exit = true;*/
 
@@ -95,17 +80,13 @@ bool UserEventSource::isThereEvent()
 
 }
 
-eventCode UserEventSource::dispachClick(int x, int y)
+eventCode GameEventSource::dispachClick(int x, int y)
 {
 	
-}
 
 
-genericEvent * UserEventSource::insertEvent()
-{
-	genericEvent * ret;
 
-	//COMPLETAR
+	return eventCode();
 }
 
 
