@@ -150,6 +150,9 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 					((T_HEIGHT * i) < y < ((T_HEIGHT * i) + T_HEIGHT)))
 				{
 					//Se cliqueo en la posicion ij (i:fila(16). j:col(12))
+#ifdef DEBUG
+					printf("Se apreto la fila: %d, columna %d/n", i, j);
+#endif // DEBUG
 					switch (i)
 					{
 					case 0:
@@ -454,12 +457,18 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 		(al_get_font_line_height(menuFont) * 2 < y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton))))
 	{
 		//Se apreto ATTACK
+#ifdef DEBUG
+		printf("Se apreto Attack/n");
+#endif // DEBUG
 		return ATTACK;
 	}
 	else if ((M_WIDTH < x < al_get_display_width(display)) && 
 		((al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton)) < y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton))))
 	{
 		//Se apreto PURCHASE
+#ifdef DEBUG
+		printf("Se apreto Purchase/n");
+#endif // DEBUG
 		return PURCHASE;
 	}
 		
@@ -484,15 +493,18 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 			case 8: return OPT_8; break;
 			case 9: return OPT_9; break;
 			}
+
+#ifdef DEBUG
+			printf("Se apreto la opcion %d para comprar/n", i);
+#endif // DEBUG
+
 		}
 	
 	
 	}
+#ifdef DEBUG
+	printf("No se apreto nada relevante/n");
+#endif // DEBUG
 
-	return NO_EV;
+	return NO_EV;		//VER!!!!!
 }
-
-//void MapGraphics::setMap(Map * map)
-//{
-//	this->map = map;
-//}

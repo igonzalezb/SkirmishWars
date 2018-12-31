@@ -65,14 +65,10 @@ bool UserEventSource::isThereEvent()
 			{
 				evCode = dispachClick(ev.mouse.x, ev.mouse.y);
 
-				/*if (optionClicked < MAX_OPTIONS)
-				do_exit = true;*/
-
+				if (evCode == NO_EV)	//RET?????? VER!
+					ret = false;
 			}
 			break;
-			/*case ALLEGRO_EVENT_MOUSE_AXES:
-			dispachMovement(ev.mouse.x, ev.mouse.y);
-			break;*/
 		case ALLEGRO_EVENT_KEY_UP:
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 				evCode = QUIT;
