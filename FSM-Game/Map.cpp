@@ -188,6 +188,7 @@ void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COL
 			if (getTile(p, q)->getFog()) {
 				matrixCost[p][q] = CANNOT_MOVE;
 			}
+			/*
 			else if (terrainMatrix[p][q] == "a")
 				matrixCost[p][q] = stoi(currUnit->getMc().road);
 			else if (terrainMatrix[p][q] == "r")
@@ -200,7 +201,22 @@ void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COL
 				matrixCost[p][q] = stoi(currUnit->getMc().plain);
 			else if (terrainMatrix[p][q] == "NULL")
 				matrixCost[p][q] = 1;	//Quiere decir que hay un factory o city. LE PUSE 1 PERO NO ME ACUERDO
+				*/
 
+			//CAMBIO lo comentado de arriba por esto de abajo, usando la info del terreno que tiene el tile:
+			else if (((tilesArray[p][q])->getTerrain()->getType) == "a")
+				matrixCost[p][q] = stoi(currUnit->getMc().road);
+			else if (((tilesArray[p][q])->getTerrain()->getType) == "r")
+				matrixCost[p][q] = stoi(currUnit->getMc().river);
+			else if (((tilesArray[p][q])->getTerrain()->getType) == "f")
+				matrixCost[p][q] = stoi(currUnit->getMc().forest);
+			else if (((tilesArray[p][q])->getTerrain()->getType) == "h")
+				matrixCost[p][q] = stoi(currUnit->getMc().hills);
+			else if (((tilesArray[p][q])->getTerrain()->getType) == "t")
+				matrixCost[p][q] = stoi(currUnit->getMc().plain);
+			else if (((tilesArray[p][q])->getTerrain()->getType) == "NULL")
+
+			//////
 			canMove[p][q] = false;	//La seteo toda en false al principio
 		}
 	}
