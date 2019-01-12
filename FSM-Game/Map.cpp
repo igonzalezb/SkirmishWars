@@ -204,17 +204,24 @@ void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COL
 				*/
 
 			//CAMBIO lo comentado de arriba por esto de abajo, usando la info del terreno que tiene el tile:
-			else if (((tilesArray[p][q])->getTerrain()->getType) == "a")
+			else if (((tilesArray[p][q])->getBuilding()) != NULL)															//VER SI EL NULL VA ASI O SI VA CON COMILLAS "NULL" (?)
 				matrixCost[p][q] = stoi(currUnit->getMc().road);
-			else if (((tilesArray[p][q])->getTerrain()->getType) == "r")
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "a"))
+				matrixCost[p][q] = stoi(currUnit->getMc().road);
+			//else if (((tilesArray[p][q])->getTerrain()->getType) == "r")
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "r"))
 				matrixCost[p][q] = stoi(currUnit->getMc().river);
-			else if (((tilesArray[p][q])->getTerrain()->getType) == "f")
+			//else if (((tilesArray[p][q])->getTerrain()->getType) == "f")
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "f"))
 				matrixCost[p][q] = stoi(currUnit->getMc().forest);
-			else if (((tilesArray[p][q])->getTerrain()->getType) == "h")
+			//else if (((tilesArray[p][q])->getTerrain()->getType) == "h")
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "h"))
 				matrixCost[p][q] = stoi(currUnit->getMc().hills);
-			else if (((tilesArray[p][q])->getTerrain()->getType) == "t")
+			//else if (((tilesArray[p][q])->getTerrain()->getType) == "t")
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "t"))
 				matrixCost[p][q] = stoi(currUnit->getMc().plain);
 			else if (((tilesArray[p][q])->getTerrain()->getType) == "NULL")
+				matrixCost[p][q] = 1;	//Quiere decir que hay un factory o city. LE PUSE 1 PERO NO ME ACUERDO
 
 			//////
 			canMove[p][q] = false;	//La seteo toda en false al principio
