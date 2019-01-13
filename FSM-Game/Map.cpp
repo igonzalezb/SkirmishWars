@@ -287,39 +287,52 @@ void Map::updateFogOfWar(int myTeam)
 void Map::attack(coordenadas attacker, coordenadas defender)
 {
 	string symbol = tilesArray[defender.i][defender.j]->getUnit()->getSymbol();
-	int numero, inicialDamage, dice, finalDamage;
+	int firepower, inicialDamage, die, finalDamage;
 	//if (stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getHp()) < 5)
-	if (tilesArray[attacker.i][attacker.j]->getUnit()->getHp() < 5)
+	if (tilesArray[attacker.i][attacker.j]->getUnit()->getHp() < 5) //menor a 5 significa REDUCED
 	{
 		if (symbol == "moon")
-			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().moon);
+			firepower = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().moon);
 		else if(symbol == "star")
-			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().star);
+			firepower = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().star);
 		else if (symbol == "square")
-			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().square);
+			firepower = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().square);
 		else if (symbol == "triangle")
-			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().triangle);
+			firepower = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().triangle);
 		else if (symbol == "circle")
-			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().circle);
+			firepower = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().circle);
 	}
 	else
 	{
 		if (symbol == "moon")
-			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().moon);
+			firepower = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().moon);
 		else if (symbol == "star")
-			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().star);
+			firepower = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().star);
 		else if (symbol == "square")
-			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().square);
+			firepower = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().square);
 		else if (symbol == "triangle")
-			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().triangle);
+			firepower = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().triangle);
 		else if (symbol == "circle")
-			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().circle);
+			firepower = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpNormal().circle);
 	}
 
 
-	inicialDamage = numero - stoi(tilesArray[defender.i][defender.j]->getUnit()->getdefense());
+	inicialDamage = firepower - stoi(tilesArray[defender.i][defender.j]->getUnit()->getdefense());
 
-	dice = rand() % 7 + 1;
+	// HACER aca el crossreference entre el inicial damage y el terreno en el que esta el defender.
+	// finalDamage = ...
+
+	die = rand() % 7 + 1;
+
+	if (die <= dieOnChart)
+	{
+		finalDamage++;
+	}
+
+	tilesArray[defender.i][defender.j]->getUnit()->setHp((tilesArray[defender.i][defender.j]->getUnit()->getHp()) - finalDamage);
+
+	//mostrar la carta que tenga arriba el HP nuevo del defender, porque cambio su HP.
+	//if HP < 5 : dar vuelta la carta y ahora esta REDUCED.
 
 	//int terr;	//Falta cargarla para saber en que terreno estoy
 
@@ -333,7 +346,7 @@ void Map::attack(coordenadas attacker, coordenadas defender)
 
 
 
-	//if (dice >= tableMatrix[13 - inicialDamage][terr].dado)
+	//if (die >= tableMatrix[13 - inicialDamage][terr].dado)
 	//	finalDamage = tableMatrix[13 - inicialDamage][terr].golpe + tableMatrix[13 - inicialDamage][terr].dado;
 	//else
 	//	finalDamage = tableMatrix[13 - inicialDamage][terr].golpe;
