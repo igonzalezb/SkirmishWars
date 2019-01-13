@@ -20,8 +20,7 @@ private:
 	string path;
 	string type;
 	TeamColor team;
-	bool 
-		;
+	//bool 		;
 
 public:
 	Building();

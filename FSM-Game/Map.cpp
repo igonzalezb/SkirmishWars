@@ -121,7 +121,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 					if (strcmp(it2->getType().c_str(), matrix2[i][j].c_str()) == false) {
 						k = false;
 						//printf("Encontre: %s\n", it2->getName().c_str());
-						Building *currBuilding = new Building(it2->getHp(),it2->getName(), it2->getPath(), it2->getType(), team);
+						Building *currBuilding = new Building(it2->getCp(),it2->getName(), it2->getPath(), it2->getType(), team);
 						tilesArray[i][j]->addBuilding(currBuilding);
 					}
 				}
@@ -206,19 +206,15 @@ void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COL
 			//CAMBIO lo comentado de arriba por esto de abajo, usando la info del terreno que tiene el tile:
 			else if (((tilesArray[p][q])->getBuilding()) != NULL)															//VER SI EL NULL VA ASI O SI VA CON COMILLAS "NULL" (?)
 				matrixCost[p][q] = stoi(currUnit->getMc().road);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "a"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (terrainMatrix[p][q] == "a"))
 				matrixCost[p][q] = stoi(currUnit->getMc().road);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "r"))
-			//else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "r"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (terrainMatrix[p][q] == "r"))
 				matrixCost[p][q] = stoi(currUnit->getMc().river);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "f"))
-			//else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "f"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (terrainMatrix[p][q] == "f"))
 				matrixCost[p][q] = stoi(currUnit->getMc().forest);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "h"))
-			//else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "h"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (terrainMatrix[p][q] == "h"))
 				matrixCost[p][q] = stoi(currUnit->getMc().hills);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "t"))
-			//else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "t"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (terrainMatrix[p][q] == "t"))
 				matrixCost[p][q] = stoi(currUnit->getMc().plain);
 			//else if (((tilesArray[p][q])->getTerrain()->getType()) == "NULL") //ESTO LO CAMBIO POR UN ELSE
 			else
@@ -238,11 +234,13 @@ void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COL
 
 }
 
-void funcion(int matrixCost[FILA][COLUMNA], bool(&canMove)[FILA][COLUMNA], int i, int j, int MP) {
+void funcion(int matrixCost[FILA][COLUMNA], bool(&canMove)[FILA][COLUMNA], int i, int j, int MP) //CHEQUEAR SI ESTO FUNCIONA
+{
 	if ((0 <= i) && (i < FILA) && (0 <= j) && (j < COLUMNA) && (MP >= 0))
 	{
 		MP -= matrixCost[i][j];
-		if (MP >= 0) {
+		if (MP >= 0) 
+		{
 			canMove[i][j] = true;
 			funcion(matrixCost, canMove, i - 1, j, MP);
 			funcion(matrixCost, canMove, i + 1, j, MP);
@@ -290,7 +288,8 @@ void Map::attack(coordenadas attacker, coordenadas defender)
 {
 	string symbol = tilesArray[defender.i][defender.j]->getUnit()->getSymbol();
 	int numero, inicialDamage, dice, finalDamage;
-	if (stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getHp()) < 5)
+	//if (stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getHp()) < 5)
+	if (tilesArray[attacker.i][attacker.j]->getUnit()->getHp() < 5)
 	{
 		if (symbol == "moon")
 			numero = stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getFpReduced().moon);
