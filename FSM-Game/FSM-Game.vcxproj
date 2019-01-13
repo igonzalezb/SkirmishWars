@@ -240,6 +240,8 @@
     <Import Project="..\..\..\Packages\expat.2.1.0.11\build\native\expat.targets" Condition="Exists('..\..\..\Packages\expat.2.1.0.11\build\native\expat.targets')" />
     <Import Project="..\..\..\Packages\expat.v140.2.2.6\build\native\expat.v140.targets" Condition="Exists('..\..\..\Packages\expat.v140.2.2.6\build\native\expat.v140.targets')" />
     <Import Project="..\..\..\Packages\expat.v140.2.2.5.1\build\native\expat.v140.targets" Condition="Exists('..\..\..\Packages\expat.v140.2.2.5.1\build\native\expat.v140.targets')" />
+    <Import Project="..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" />
+    <Import Project="..\packages\Allegro.5.2.4.0\build\native\Allegro.targets" Condition="Exists('..\packages\Allegro.5.2.4.0\build\native\Allegro.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -251,5 +253,7 @@
     <Error Condition="!Exists('..\..\..\Packages\expat.2.1.0.11\build\native\expat.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\expat.2.1.0.11\build\native\expat.targets'))" />
     <Error Condition="!Exists('..\..\..\Packages\expat.v140.2.2.6\build\native\expat.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\expat.v140.2.2.6\build\native\expat.v140.targets'))" />
     <Error Condition="!Exists('..\..\..\Packages\expat.v140.2.2.5.1\build\native\expat.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\expat.v140.2.2.5.1\build\native\expat.v140.targets'))" />
+    <Error Condition="!Exists('..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets'))" />
+    <Error Condition="!Exists('..\packages\Allegro.5.2.4.0\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Allegro.5.2.4.0\build\native\Allegro.targets'))" />
   </Target>
 </Project>

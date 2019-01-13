@@ -79,7 +79,7 @@ private:
 	csvFile *mapFile;
 	csvFile *defenseModifiers;
 		
-	string terrainMatrix[FILA][COLUMNA];
+	string terrainMatrix[FILA][COLUMNA]; //ESTO LO SACO Y USAMOS DIRECTAMENTE LA INFO QUE ESTA ADENTRO DEL TILE
 
 	modifiers tableMatrix[14][5];
 	

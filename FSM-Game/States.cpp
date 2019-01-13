@@ -18,7 +18,8 @@ genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 	{
 		for (j = 0; j < COLUMNA; j++)
 		{
-			if (((Info->gameInterface->myMap->getTile(i,j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i,j)->getBuilding()) != NULL))
+			//if (((Info->gameInterface->myMap->getTile(i,j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i,j)->getBuilding()) != NULL))
+			if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
 			{
 				Info->gameInterface->myMap->getTile(i,j)->getUnit()->setHp(8);
 			}
@@ -38,7 +39,8 @@ genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 	{
 		for (j = 0; j < COLUMNA; j++)
 		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+			//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+			if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 			}
@@ -59,7 +61,8 @@ genericState* ST_GameIdle::on_RYouStart(genericEvent *ev, usefulInfo * Info)
 	{
 		for (j = 0; j < COLUMNA; j++)
 		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+			//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+			if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 			}
@@ -80,7 +83,8 @@ genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 	{
 		for (j = 0; j < COLUMNA; j++)
 		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+			//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+			if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 			}

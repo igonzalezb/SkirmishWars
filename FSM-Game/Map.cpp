@@ -208,17 +208,17 @@ void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COL
 				matrixCost[p][q] = stoi(currUnit->getMc().road);
 			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "a"))
 				matrixCost[p][q] = stoi(currUnit->getMc().road);
-			//else if (((tilesArray[p][q])->getTerrain()->getType) == "r")
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "r"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "r"))
+			//else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "r"))
 				matrixCost[p][q] = stoi(currUnit->getMc().river);
-			//else if (((tilesArray[p][q])->getTerrain()->getType) == "f")
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "f"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "f"))
+			//else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "f"))
 				matrixCost[p][q] = stoi(currUnit->getMc().forest);
-			//else if (((tilesArray[p][q])->getTerrain()->getType) == "h")
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "h"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "h"))
+			//else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "h"))
 				matrixCost[p][q] = stoi(currUnit->getMc().hills);
-			//else if (((tilesArray[p][q])->getTerrain()->getType) == "t")
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "t"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType) == "t"))
+			//else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (((tilesArray[p][q])->getTerrain()->getType()) == "t"))
 				matrixCost[p][q] = stoi(currUnit->getMc().plain);
 			//else if (((tilesArray[p][q])->getTerrain()->getType()) == "NULL") //ESTO LO CAMBIO POR UN ELSE
 			else
@@ -234,7 +234,7 @@ void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COL
 	matrixCost[i][j] = 0;	//Seteo el lugar donde estoy en 0 (VER!!)
 
 	//int mp = stoi(currUnit->getMp());
-	funcion(matrixCost, canMove, i, j, stoi(currUnit->getMp()));
+	funcion(matrixCost, canMove, i, j, stoi(currUnit->getMp()));       
 
 }
 
