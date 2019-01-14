@@ -319,12 +319,12 @@ void Map::attack(coordenadas attacker, coordenadas defender)
 
 	inicialDamage = firepower - stoi(tilesArray[defender.i][defender.j]->getUnit()->getdefense());
 
-	// HACER aca el crossreference entre el inicial damage y el terreno en el que esta el defender.
+	// HACER aca el crossreference entre el inicial damage y el terreno en el que esta el defender!!!!!!!!!!!!!!!
 	// finalDamage = ...
 
 	die = rand() % 7 + 1;
 
-	if (die <= dieOnChart)
+	if (die <= dieOnChart)// ESE DIE ON CHART tendria que estar como info en la clase de la UNIT. HACERLO!!
 	{
 		finalDamage++;
 	}
