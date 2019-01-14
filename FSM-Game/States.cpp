@@ -25,6 +25,7 @@ genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 			}
 		}
 	}
+
 	//COMPLETAR 
 	return ret;
 }
@@ -98,9 +99,23 @@ genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 
 /////////////////////////////// ST_Moving ///////////////////////////////
 
-genericState* ST_Moving::on_Move(genericEvent *ev, usefulInfo * Info)
+genericState* ST_Moving::on_Move(genericEvent *ev, usefulInfo * Info) //en un lugar ya estan guardadas las coordenadas origen y destino del movimiento
 {
 	genericState *ret = (genericState *) new ST_Moving();
+
+	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit())!=NULL)&&
+		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit())->getTeam())==(Info->gameInterface->playerMe->getTeam())))
+	{
+		Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getDefender.j)->getUnit()), Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j);
+		if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender.i][Info->gameInterface->getDefender.j])==1)
+		{
+			Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender.i, Info->gameInterface->getDefender.j)->setUnit(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit());
+			Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->setUnit(NULL);
+		}
+		else {
+			//COMPLETAR:ver si se pone algo aca
+		}
+	}
 
 	//COMPLETAR 
 
@@ -322,6 +337,23 @@ genericState* ST_Purchasing::on_Pass(genericEvent *ev, usefulInfo * Info)
 genericState* ST_YouMoving::on_RMove(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouMoving();
+
+
+	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit()) != NULL) &&
+		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit())->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+	{
+		Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getDefender.j)->getUnit()), Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j);
+		if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender.i][Info->gameInterface->getDefender.j]) == 1)
+		{
+			Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender.i, Info->gameInterface->getDefender.j)->setUnit(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit());
+			Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->setUnit(NULL);
+		}
+		else 
+		{
+			//COMPLETAR: TIRAR ERROR O VER QUE SE HACE
+		}
+	}
+
 
 	//COMPLETAR 
 

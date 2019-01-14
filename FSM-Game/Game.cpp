@@ -56,7 +56,23 @@ void Game::purchase(Player* player,string newUnit) //!!!PREVIAMENTE tienen que h
 }
 
 /////////////////////////////////// PASAR LAS SIGUIENTES FUNCIONES ACA
-void setAttacker();
-void setDefender();
-coordenadas getAttacker();
-coordenadas getDefender();
+void Game::setAttacker()
+{
+	//COMPLETAR
+}
+
+void Game::setDefender()
+{
+	//COMPLETAR
+}
+
+coordenadas Game::getAttacker()
+{
+	return attacker;
+}
+
+coordenadas Game::getDefender()
+{
+	return defender;
+}
+

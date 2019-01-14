@@ -54,6 +54,11 @@ Unit * GenericTile::getUnit()
 	return currUnit;
 }
 
+void GenericTile::setUnit(Unit* newUnit)
+{
+	currUnit = newUnit;
+}
+
 Building * GenericTile::getBuilding()
 {
 	return currBuilding;
