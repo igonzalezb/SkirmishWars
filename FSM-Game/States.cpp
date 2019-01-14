@@ -120,6 +120,9 @@ genericState* ST_Moving::on_Purchase(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Purchasing();
 
+	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
+	Info->gameInterface->purchase(Info->gameInterface->playerMe, newUnit);
+
 	//COMPLETAR 
 
 	return ret;
@@ -203,6 +206,9 @@ genericState* ST_Attacking::on_Purchase(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Purchasing();
 
+	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
+	Info->gameInterface->purchase(Info->gameInterface->playerMe, newUnit);
+
 	//COMPLETAR 
 
 	return ret;
@@ -271,9 +277,12 @@ genericState* ST_Attacking::on_Timeout(genericEvent *ev, usefulInfo * Info)
 
 /////////////////////////////// ST_Purchasing ///////////////////////////////
 
-genericState* ST_Purchasing::on_Purchase(genericEvent *ev, usefulInfo * Info)
+genericState* ST_Purchasing::on_Purchase(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
 {
 	genericState *ret = (genericState *) new ST_Purchasing();
+
+	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
+	Info->gameInterface->purchase(Info->gameInterface->playerMe, newUnit);
 
 	//COMPLETAR 
 
@@ -306,47 +315,6 @@ genericState* ST_Purchasing::on_Pass(genericEvent *ev, usefulInfo * Info)
 
 	return ret;
 }
-
-/*
-genericState* ST_Purchasing::on_Timeout(genericEvent *ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_YouMoving();
-
-	//COMPLETAR 
-
-	return ret;
-}*/
-
-/////////////////////////////// ST_YouPlay ///////////////////////////////
-/*
-genericState* ST_YouPlay::on_IPlay(genericEvent *ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_Moving();
-
-	//COMPLETAR 
-
-	return ret;
-}
-
-genericState* ST_YouPlay::on_RPass(genericEvent *ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_Moving();
-
-	//COMPLETAR 
-
-	return ret;
-}
-*/
-
-/*
-genericState* ST_YouPlay::on_Timeout(genericEvent *ev, usefulInfo * Info)
-{
-genericState *ret = (genericState *) new ST_IPlay();
-
-//COMPLETAR
-
-return ret;
-}*/
 
 
 /////////////////////////////// ST_YouMoving ///////////////////////////////
@@ -390,6 +358,9 @@ genericState* ST_YouMoving::on_RAttack(genericEvent *ev, usefulInfo * Info)
 genericState* ST_YouMoving::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouPurchasing();
+
+	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
+	Info->gameInterface->purchase(Info->gameInterface->playerYou, newUnit);
 
 	//COMPLETAR 
 
@@ -478,6 +449,9 @@ genericState* ST_YouAttacking::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouPurchasing();
 
+	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
+	Info->gameInterface->purchase(Info->gameInterface->playerYou, newUnit);
+
 	//COMPLETAR 
 
 	return ret;
@@ -536,6 +510,9 @@ return ret;
 genericState* ST_YouPurchasing::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouPurchasing();
+
+	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
+	Info->gameInterface->purchase(Info->gameInterface->playerYou, newUnit);
 
 	//COMPLETAR 
 
