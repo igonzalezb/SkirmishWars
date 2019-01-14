@@ -107,10 +107,9 @@ genericState* ST_Moving::on_Move(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-genericState* ST_Moving::on_Attack(genericEvent *ev, usefulInfo * Info)
-{
+genericState* ST_Moving::on_Attack(genericEvent *ev, usefulInfo * Info)//Se entra aca al presionar boton ATTACK en pantalla. Todavia no se hizo el ataque.
+{																	//El ataque se hace despues, una vez que ya se entro a este estado por primera vez.
 	genericState *ret = (genericState *) new ST_Attacking();
-
 
 	//COMPLETAR 
 
@@ -175,11 +174,19 @@ genericState* ST_Moving::on_Timeout(genericEvent *ev, usefulInfo * Info)
 
 
 /////////////////////////////// ST_Attacking ///////////////////////////////
-
+//si se apretan los tiles, guardar la info en attacker y defender. Cuando se presione el boton ATTACK, recien ahi GENERAR EVENTO ATTACK! (ver donde se hacen estas cosas)
 genericState* ST_Attacking::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Attacking();
 
+	if ((Info->gameInterface->myMap->getAttacker().i != NULL) && 
+		(Info->gameInterface->myMap->getAttacker().j != NULL)&& 
+		(Info->gameInterface->myMap->getDefender().i != NULL)&&
+		(Info->gameInterface->myMap->getDefender().j != NULL))
+	{
+		Info->gameInterface->myMap->attack();
+	}
+	//ver donde iria el COUNTER-ATTACK (ver si se agrega un estado o algo)
 	//COMPLETAR 
 
 	return ret;
@@ -198,6 +205,14 @@ genericState* ST_Attacking::on_LastAttack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Purchasing();
 
+	if ((Info->gameInterface->myMap->getAttacker().i != NULL) &&
+		(Info->gameInterface->myMap->getAttacker().j != NULL) &&
+		(Info->gameInterface->myMap->getDefender().i != NULL) &&
+		(Info->gameInterface->myMap->getDefender().j != NULL))
+	{
+		Info->gameInterface->myMap->attack();
+	}
+	//ver donde iria el COUNTER-ATTACK (ver si se agrega un estado o algo)
 	//COMPLETAR 
 
 	return ret;
@@ -335,6 +350,17 @@ genericState* ST_YouMoving::on_RAttack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouAttacking();
 
+	//HACER: leer el mensaje que me llega del ataque y cargar el tile atacante y el defendido en attacker y defender
+
+	if ((Info->gameInterface->myMap->getAttacker().i != NULL) &&
+		(Info->gameInterface->myMap->getAttacker().j != NULL) &&
+		(Info->gameInterface->myMap->getDefender().i != NULL) &&
+		(Info->gameInterface->myMap->getDefender().j != NULL))
+	{
+		Info->gameInterface->myMap->attack();
+	}
+	//ver donde iria el COUNTER-ATTACK (ver si se agrega un estado o algo)
+
 	//COMPLETAR 
 
 	return ret;
@@ -403,6 +429,17 @@ return ret;
 genericState* ST_YouAttacking::on_RAttack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouAttacking();
+
+	//HACER: leer el mensaje que me llega del ataque y cargar el tile atacante y el defendido en attacker y defender
+
+	if ((Info->gameInterface->myMap->getAttacker().i != NULL) &&
+		(Info->gameInterface->myMap->getAttacker().j != NULL) &&
+		(Info->gameInterface->myMap->getDefender().i != NULL) &&
+		(Info->gameInterface->myMap->getDefender().j != NULL))
+	{
+		Info->gameInterface->myMap->attack();
+	}
+	//ver donde iria el COUNTER-ATTACK (ver si se agrega un estado o algo)
 
 	//COMPLETAR 
 
