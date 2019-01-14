@@ -26,7 +26,14 @@ public:
 	//coordinates  attacker; //POR AHORA ESTAS DOS LINEAS ESTAN EN MAP.H. VER SI QUEDAN AHI O SI SE SACAN Y SE PONEN ACA O DONDE!
 	//coordinates defender;
 
-private:
+	void captureProperty(Player* pAttacker, Player* pDefender);
+	void setAttacker();
+	void setDefender();
+	coordenadas getAttacker();
+	coordenadas getDefender();
 
+private:
+	coordenadas attacker;
+	coordenadas defender;
 };
 #endif // !GAME_H

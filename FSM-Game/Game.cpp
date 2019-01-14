@@ -15,11 +15,11 @@ Game::~Game()
 
 void Game::captureProperty(Player* pAttacker, Player* pDefender)
 {
-	if (((myMap->getTile(attacker.i, attacker.j)->getUnit()->getTeam()) == (pAttacker->getTeam())) && //ACA PONER PLAYER ATTACKER
+	if (((myMap->getTile(attacker.i, attacker.j)->getUnit()->getTeam()) == (pAttacker->getTeam())) && 
 		(((myMap->getTile(attacker.i, attacker.j)->getUnit()->getType().compare("infantry")) == 0) || //VER si esto y la linea de abajo estan bien o no
 		((myMap->getTile(attacker.i, attacker.j)->getUnit()->getType().compare("mech")) == 0))&&
 		((myMap->getTile(defender.i,defender.j)->getBuilding())!= NULL)&&
-		((myMap->getTile(defender.i, defender.j)->getBuilding()->getTeam()) ==(pDefender->getTeam())))//ACA PONER PLAYER DEFENDER
+		((myMap->getTile(defender.i, defender.j)->getBuilding()->getTeam()) != (pAttacker->getTeam())))
 	{
 		if ((myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp()) < 5)//Si la unidad que conquista esta reducida
 		{
@@ -36,10 +36,16 @@ void Game::captureProperty(Player* pAttacker, Player* pDefender)
 		//en el tile donde estaba antes el building del oponente, poner el mismo building pero de mi equipo.
 		myMap->getTile(defender.i, defender.j)->getBuilding()->setTeam(myMap->getTile(attacker.i, attacker.j)->getUnit()->getTeam());
 	}
+	attacker.i = NULL;
+	attacker.j = NULL;
+	defender.i = NULL;
+	defender.j = NULL;
 }
 
-string building("city");
-int iguales = building.compare("city");
+void purchase()
+{
+
+}
 
 /////////////////////////////////// PASAR LAS SIGUIENTES FUNCIONES ACA
 void setAttacker();

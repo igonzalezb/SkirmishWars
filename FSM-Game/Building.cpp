@@ -7,7 +7,8 @@ Building::Building()
 	team = WHITE;	
 }
 
-Building::Building(string cp, string name, string path, string type, string team)
+//Building::Building(string cp, string name, string path, string type, string team)
+Building::Building(int cp, string name, string path, string type, string team)
 {
 	fogOfWar = true;
 	this->cp = cp;
@@ -30,7 +31,8 @@ void Building::setName(string name)
 	this->name = name;
 }
 
-void Building::setCp(string cp)
+//void Building::setCp(string cp)
+void Building::setCp(int cp)
 {
 	this->cp = cp;
 }

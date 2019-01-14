@@ -288,7 +288,7 @@ void Map::updateFogOfWar(int myTeam)
 void Map::attack()
 {
 	string symbol = tilesArray[defender.i][defender.j]->getUnit()->getSymbol();
-	int firepower, inicialDamage, die, finalDamage;
+	int firepower, inicialDamage, die, finalDamage, dieOnChart;
 	//if (stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getHp()) < 5)
 	if (tilesArray[attacker.i][attacker.j]->getUnit()->getHp() < 5) //menor a 5 significa REDUCED
 	{
@@ -322,8 +322,23 @@ void Map::attack()
 
 	// HACER aca el crossreference entre el inicial damage y el terreno en el que esta el defender!!!!!!!!!!!!!!!
 	// finalDamage = ...
+	// dieOnChart =.... (ESTAS DOS VARIABLES SALEN DE ENTRAR A LA TABLA ESA CON EL FINAL DAMAGE Y EL TERRENO DEL DEFENDER)
 
-	die = rand() % 7 + 1;
+	die = rand() % 7 + 1; //VERIFICAR si esto tira un valor random entre 1 y 6.
+
+	switch(getTile(attacker.i,attacker.j)->getTerrain()->getType())
+
+	
+	if (die >= tableMatrix[13 - inicialDamage][getTile(attacker.i,attacker.j)->getTerrain()->getType()].dado)
+		finalDamage = tableMatrix[13 - inicialDamage][terr].golpe + tableMatrix[13 - inicialDamage][terr].dado;
+	else
+		finalDamage = tableMatrix[13 - inicialDamage][terr].golpe;
+
+
+
+
+
+
 
 	if (die <= dieOnChart)// ESE DIE ON CHART tendria que estar como info en la clase de la UNIT. HACERLO!!
 	{
@@ -335,6 +350,11 @@ void Map::attack()
 	//mostrar la carta que tenga arriba el HP nuevo del defender, porque cambio su HP.
 	//if HP < 5 : dar vuelta la carta y ahora esta REDUCED.
 
+
+
+	/////////////////////// ESTO VER SI QUEDA O QUE PASA, PERO EL ATAQUE TERMINARIA AHI ARRIBA/////////////////////////////////////////
+	//ESTO PUEDE SER QUE SEA LO DEL CROSSREFERENCE QUE HAY QUE HACER AHI ARRIBA CON LA TABLA Y OBTENER FINAL DAMAGE Y DIE ON CHART:
+
 	//int terr;	//Falta cargarla para saber en que terreno estoy
 
 	/*switch (defender)
@@ -343,14 +363,6 @@ void Map::attack()
 		break;
 	}*/
 
-
-
-
-
-	//if (die >= tableMatrix[13 - inicialDamage][terr].dado)
-	//	finalDamage = tableMatrix[13 - inicialDamage][terr].golpe + tableMatrix[13 - inicialDamage][terr].dado;
-	//else
-	//	finalDamage = tableMatrix[13 - inicialDamage][terr].golpe;
 
 	//Hay que seguirla pero creo que el calculo esta bien.
 
