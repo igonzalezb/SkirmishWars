@@ -179,12 +179,16 @@ genericState* ST_Attacking::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Attacking();
 
-	if ((Info->gameInterface->myMap->getAttacker().i != NULL) && 
-		(Info->gameInterface->myMap->getAttacker().j != NULL)&& 
-		(Info->gameInterface->myMap->getDefender().i != NULL)&&
+	if ((Info->gameInterface->myMap->getAttacker().i != NULL) &&
+		(Info->gameInterface->myMap->getAttacker().j != NULL) &&
+		(Info->gameInterface->myMap->getDefender().i != NULL) &&
 		(Info->gameInterface->myMap->getDefender().j != NULL))
 	{
-		Info->gameInterface->myMap->attack();
+		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i),(Info->gameInterface->myMap->getDefender().j)))->getUnit())!=NULL)
+		{
+			Info->gameInterface->myMap->attack();
+
+		}
 	}
 	//ver donde iria el COUNTER-ATTACK (ver si se agrega un estado o algo)
 	//COMPLETAR 
