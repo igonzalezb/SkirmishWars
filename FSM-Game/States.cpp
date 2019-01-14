@@ -187,7 +187,10 @@ genericState* ST_Attacking::on_Attack(genericEvent *ev, usefulInfo * Info)
 		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i),(Info->gameInterface->myMap->getDefender().j)))->getUnit())!=NULL)
 		{
 			Info->gameInterface->myMap->attack();
-
+		}
+		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getBuilding()) != NULL)
+		{
+			Info->gameInterface->captureProperty(Info->gameInterface->playerMe,Info->gameInterface->playerYou);
 		}
 	}
 	//ver donde iria el COUNTER-ATTACK (ver si se agrega un estado o algo)
@@ -214,7 +217,14 @@ genericState* ST_Attacking::on_LastAttack(genericEvent *ev, usefulInfo * Info)
 		(Info->gameInterface->myMap->getDefender().i != NULL) &&
 		(Info->gameInterface->myMap->getDefender().j != NULL))
 	{
-		Info->gameInterface->myMap->attack();
+		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getUnit()) != NULL)
+		{
+			Info->gameInterface->myMap->attack();
+		}
+		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getBuilding()) != NULL)
+		{
+			Info->gameInterface->captureProperty(Info->gameInterface->playerMe, Info->gameInterface->playerYou);
+		}
 	}
 	//ver donde iria el COUNTER-ATTACK (ver si se agrega un estado o algo)
 	//COMPLETAR 
@@ -361,7 +371,14 @@ genericState* ST_YouMoving::on_RAttack(genericEvent *ev, usefulInfo * Info)
 		(Info->gameInterface->myMap->getDefender().i != NULL) &&
 		(Info->gameInterface->myMap->getDefender().j != NULL))
 	{
-		Info->gameInterface->myMap->attack();
+		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getUnit()) != NULL)
+		{
+			Info->gameInterface->myMap->attack();
+		}
+		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getBuilding()) != NULL)
+		{
+			Info->gameInterface->captureProperty(Info->gameInterface->playerYou, Info->gameInterface->playerMe);
+		}
 	}
 	//ver donde iria el COUNTER-ATTACK (ver si se agrega un estado o algo)
 
@@ -441,7 +458,14 @@ genericState* ST_YouAttacking::on_RAttack(genericEvent *ev, usefulInfo * Info)
 		(Info->gameInterface->myMap->getDefender().i != NULL) &&
 		(Info->gameInterface->myMap->getDefender().j != NULL))
 	{
-		Info->gameInterface->myMap->attack();
+		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getUnit()) != NULL)
+		{
+			Info->gameInterface->myMap->attack();
+		}
+		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getBuilding()) != NULL)
+		{
+			Info->gameInterface->captureProperty(Info->gameInterface->playerYou, Info->gameInterface->playerMe);
+		}
 	}
 	//ver donde iria el COUNTER-ATTACK (ver si se agrega un estado o algo)
 
