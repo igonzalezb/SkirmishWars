@@ -1,6 +1,7 @@
 
 #include "Game.h"
 #include "PlayerInfo.h"
+#include "Terrain.h"
 
 Game::Game()
 {
@@ -52,6 +53,26 @@ void Game::purchase(Player* player,string newUnit) //!!!PREVIAMENTE tienen que h
 		//si se cumple todo eso y le alcanza la plata:
 		//poner la unit en ese tile del mapa y asignarle el equipo del comprador (player)
 		//restarle el costo a la money del player
+	}
+}
+
+bool Game::didHeWin()
+{
+	int i, j;
+	bool notWinning = true;
+	for(i=0;i<FILA;i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((myMap->getTile(i,j)->getUnit()) != NULL)&&((myMap->getTile(i, j)->getUnit()->getTeam())==(playerYou->getTeam())))
+			{
+				notWinning = false;
+			}
+			if ((myMap->getTile(i,j)->getBuilding()!=NULL)&& (myMap->getTile(i, j)->getBuilding() != NULL))
+			{
+
+			}
+		}
 	}
 }
 
