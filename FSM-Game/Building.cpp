@@ -2,20 +2,21 @@
 
 
 Building::Building()
-{
-	fogOfWar = true;	
+{	
 	team = WHITE;	
 }
 
 //Building::Building(string cp, string name, string path, string type, string team)
 Building::Building(int cp, string name, string path, string type, string team)
 {
-	fogOfWar = true;
+	
 	this->cp = cp;
 	this->name = name;
 	this->type = type;
 
 	this->team = TeamColor(stoi(team));
+
+
 
 	char temp[50];
 	sprintf(temp, path.c_str(), this->team);
@@ -50,9 +51,9 @@ string Building::getPath()
 	return path;
 }
 
-string Building::getCp()
+int Building::getCp()
 {
-	return cp;
+	return stoi(cp);
 }
 
 string Building::getName()

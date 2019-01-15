@@ -26,13 +26,26 @@ class ST_GameIdle :public genericState
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 
-class ST_Moving :public genericState
+class ST_Moving :public genericState //ACA se estaria esperando la coordenada de la unidad que se va a mover
 {
 	genericState* on_Move(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_LastMove(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
+
+	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
+};
+
+class ST_WaitingDestination :public genericState
+{
+	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
+	//genericState* on_LastMove(genericEvent* ev, usefulInfo * Info);
+
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 
@@ -42,6 +55,18 @@ class ST_Attacking :public genericState
 	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_LastAttack(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
+	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
+};
+
+class ST_WaitingDefender :public genericState
+{
+	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Attack(genericEvent* ev, usefulInfo * Info); //ESTO QUEDA????????
+	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
+	//genericState* on_LastMove(genericEvent* ev, usefulInfo * Info);
+
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 

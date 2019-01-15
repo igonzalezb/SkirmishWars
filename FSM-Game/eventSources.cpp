@@ -1,3 +1,6 @@
+//HACER DESDE USER EVENT SOURCE: cuando el mouse ve que se toca un tile del mapa,
+//guardar esa info en la clase game en tileSelected y generar el evento TILE
+
 #include "eventSources.h"
 //#include "Screen.h"
 #include "Events.h"
@@ -20,16 +23,18 @@ genericEvent * GameEventSource::insertEvent()
 {
 	genericEvent * ret;
 	
-	if (!(Info->gameInterface->getNotWinning()))
-	{
-		evCode = ;
-	}
 	//COMPLETAR
 }
 
 bool GameEventSource::isThereEvent()
 {
+	bool ret = false;
 
+	if (!(gameInterface->getNotWinning()))
+	{
+		evCode = YOU_WON; //VER en que parte se setea nuevamente notWinning en true (probablemente cuando arranca el juego)
+		ret = true;
+	}
 	//COMPLETAR
 }
 

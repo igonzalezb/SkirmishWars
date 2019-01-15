@@ -32,7 +32,7 @@ public:
 	virtual genericState* on_Purchase(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Attack(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Pass(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-
+	virtual genericState* on_Tile(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	//virtual genericState* on_Timeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 

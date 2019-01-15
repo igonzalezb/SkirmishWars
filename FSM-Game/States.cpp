@@ -103,23 +103,22 @@ genericState* ST_Moving::on_Move(genericEvent *ev, usefulInfo * Info) //en un lu
 {
 	genericState *ret = (genericState *) new ST_Moving();
 
-	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit())!=NULL)&&
-		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit())->getTeam())==(Info->gameInterface->playerMe->getTeam())))
-	{
-		Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getDefender.j)->getUnit()), Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j);
-		if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender.i][Info->gameInterface->getDefender.j])==1)
-		{
-			Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender.i, Info->gameInterface->getDefender.j)->setUnit(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit());
-			Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->setUnit(NULL);
-		}
-		else {
-			//COMPLETAR:ver si se pone algo aca
-		}
-	}
-
 	//COMPLETAR 
 
 	return ret;
+}
+
+genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_WaitingDestination();
+	//HACER: cuando el mouse ve que se toca un tile del mapa,
+	//guardar esa info en la clase game en tileSelected y generar el evento TILE
+	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
+		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+	{
+		Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
+		//VER si hay que borrar tileSelected (?)
+	}
 }
 
 genericState* ST_Moving::on_Attack(genericEvent *ev, usefulInfo * Info)//Se entra aca al presionar boton ATTACK en pantalla. Todavia no se hizo el ataque.
@@ -190,6 +189,56 @@ genericState* ST_Moving::on_Timeout(genericEvent *ev, usefulInfo * Info)
 }
 */
 
+/////////////////////////////// ST_WaitingDestination //////////////////////
+genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info)
+{
+	if ((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) == NULL)
+	{
+		Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
+		genericState *ret = (genericState *) new ST_Moving();
+
+		if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit()) != NULL) &&
+			(((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit())->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+			//si el attacker es una unidad mia:
+		{
+			Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getDefender.j)->getUnit()), Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j);
+			if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender.i][Info->gameInterface->getDefender.j]) == 1)
+			{
+				Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender.i, Info->gameInterface->getDefender.j)->setUnit(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit());
+				Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->setUnit(NULL);
+			}
+			else {
+				//COMPLETAR:ver si se pone algo aca
+			}
+		}
+		//VER si se borra el tile selected
+		genericState *ret = (genericState *) new ST_Moving();
+	}
+	else if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
+			((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+	{
+		Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
+		//VER si hay que borrar tileSelected (?)
+		genericState *ret = (genericState *) new ST_WaitingDestination();
+	}
+}
+
+
+genericState* ST_WaitingDestination::on_Attack(genericEvent* ev, usefulInfo * Info)
+{
+
+}
+	
+genericState* ST_WaitingDestination::on_Purchase(genericEvent* ev, usefulInfo * Info)
+{
+
+}
+
+genericState* ST_WaitingDestination::on_Pass(genericEvent* ev, usefulInfo * Info)
+{
+
+}
+
 
 /////////////////////////////// ST_Attacking ///////////////////////////////
 //si se apretan los tiles, guardar la info en attacker y defender. Cuando se presione el boton ATTACK, recien ahi GENERAR EVENTO ATTACK! (ver donde se hacen estas cosas)
@@ -215,6 +264,11 @@ genericState* ST_Attacking::on_Attack(genericEvent *ev, usefulInfo * Info)
 	//COMPLETAR 
 
 	return ret;
+}
+
+genericState* ST_Attacking::on_Tile(genericEvent *ev, usefulInfo * Info)
+{
+
 }
 
 genericState* ST_Attacking::on_Purchase(genericEvent *ev, usefulInfo * Info)
@@ -289,6 +343,28 @@ genericState* ST_Attacking::on_Timeout(genericEvent *ev, usefulInfo * Info)
 
 	return ret;
 }*/
+
+/////////////////////////////// ST_WaitingDefender //////////////////////////
+genericState* ST_WaitingDefender::on_Tile(genericEvent* ev, usefulInfo * Info) 
+{
+
+}
+
+genericState* ST_WaitingDefender::on_Attack(genericEvent* ev, usefulInfo * Info) //ESTO QUEDA????????
+{
+
+}
+
+genericState* ST_WaitingDefender::on_Purchase(genericEvent* ev, usefulInfo * Info)
+{
+
+}
+
+genericState* ST_WaitingDefender::on_Pass(genericEvent* ev, usefulInfo * Info)
+{
+
+}
+
 
 /////////////////////////////// ST_Purchasing ///////////////////////////////
 

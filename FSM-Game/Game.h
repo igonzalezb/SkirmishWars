@@ -30,8 +30,10 @@ public:
 	void captureProperty(Player* pAttacker, Player* pDefender);
 	void setAttacker(coordenadas newAttacker);
 	void setDefender(coordenadas newDefender);
+	void setTileSelected(coordenadas newTileSelected);
 	coordenadas getAttacker();
 	coordenadas getDefender();
+	coordenadas getTileSelected();
 	void purchase(Player* player, string newUnit);
 	//void setOrigen(coordenadas origen); //USAMOS ATTACKER Y DEFENDER PARA TODO
 	//void setDestino(coordenadas destino);
@@ -46,6 +48,7 @@ public:
 private:
 	coordenadas attacker;
 	coordenadas defender;
+	coordenadas tileSelected;
 	//coordenadas origen;
 	//coordenadas destino;
 	bool notWinning;

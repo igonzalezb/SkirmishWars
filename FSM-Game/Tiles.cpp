@@ -1,5 +1,7 @@
 #include "Tiles.h"
 
+//VER: aparentemente si hay una factory en un tile, no hay terreno
+//DEBIDO A ESO, VER SI HAY QUE CAMBIAR ALGO EN COMO ESTA GUARDADA LA INFO O SI QUEDA COMO ESTA, CON buildings y terrains separados
 
 GenericTile::GenericTile()
 {

@@ -5,6 +5,7 @@
 
 Game::Game()
 {
+	notWinning = true;
 	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
 	generateDefenseModifiersTable();
 }
@@ -12,7 +13,7 @@ Game::Game()
 Game::~Game()
 {
 	delete defenseModifiers;
-//destruir los players;
+	//destruir los players;
 }
 
 
@@ -188,6 +189,16 @@ bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE
 	}
 }
 
+void Game::setNotWinning(bool nWinning)
+{
+	notWinning = nWinning;
+}
+
+bool Game::getNotWinning()
+{
+	return notWinning;
+}
+
 /////////////////////////////////// PASAR LAS SIGUIENTES FUNCIONES ACA
 void Game::setAttacker(coordenadas newAttacker)
 {
@@ -199,6 +210,11 @@ void Game::setDefender(coordenadas newDefender)
 	defender = newDefender;
 }
 
+void Game::setTileSelected(coordenadas newTileSelected)
+{
+	tileSelected = newTileSelected;
+}
+
 coordenadas Game::getAttacker()
 {
 	return attacker;
@@ -207,5 +223,10 @@ coordenadas Game::getAttacker()
 coordenadas Game::getDefender()
 {
 	return defender;
+}
+
+coordenadas Game::getTileSelected()
+{
+	return tileSelected;
 }
 
