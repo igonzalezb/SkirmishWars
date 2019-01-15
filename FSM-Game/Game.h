@@ -26,14 +26,30 @@ public:
 	//coordinates  attacker; //POR AHORA ESTAS DOS LINEAS ESTAN EN MAP.H. VER SI QUEDAN AHI O SI SE SACAN Y SE PONEN ACA O DONDE!
 	//coordinates defender;
 
+	void attack();
 	void captureProperty(Player* pAttacker, Player* pDefender);
-	void setAttacker();
-	void setDefender();
+	void setAttacker(coordenadas newAttacker);
+	void setDefender(coordenadas newDefender);
 	coordenadas getAttacker();
 	coordenadas getDefender();
+	void purchase(Player* player, string newUnit);
+	//void setOrigen(coordenadas origen); //USAMOS ATTACKER Y DEFENDER PARA TODO
+	//void setDestino(coordenadas destino);
+	//coordenadas getOrigen();
+	//coordenadas getDestino();
+	bool didHeWin();
+	void Game::generateDefenseModifiersTable();
+	void setNotWinning(bool nWinning);
+	bool getNotWinning();
+
 
 private:
 	coordenadas attacker;
 	coordenadas defender;
+	//coordenadas origen;
+	//coordenadas destino;
+	bool notWinning;
+	csvFile *defenseModifiers;
+	modifiers tableMatrix[14][5];
 };
 #endif // !GAME_H
