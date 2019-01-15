@@ -76,53 +76,64 @@ void Map::randomMap()
 
 void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units)
 {
-	string matrix2[FILA][COLUMNA];
 
 	int pos;
-	string team;
+	string matrixDeTerrenoOrFacility[FILA][COLUMNA];
+	string matrixEquipoOfFacility[FILA][COLUMNA];
+	string matrixEquipoNave[FILA][COLUMNA];
+	string matrixNave[FILA][COLUMNA];
+
+
+	// A PARTIR DE LA INFO DEL .CSV DIVIDO LA INFO EN DOS MATRICES.... LA DE TERRENOS O FACILITIES Y LA DE EQUIPOS QUE CORRESPONDE A LAS FACILITIES
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
 			pos = mapFile->getMatrix()[i][j].find('+');
 			if (pos != string::npos) {
-				matrix2[i][j] = mapFile->getMatrix()[i][j].substr(0, pos);
+				matrixDeTerrenoOrFacility[i][j] = mapFile->getMatrix()[i][j].substr(0, pos);
 			}
 			else
 			{
-				matrix2[i][j] = mapFile->getMatrix()[i][j];
+				matrixDeTerrenoOrFacility[i][j] = mapFile->getMatrix()[i][j];
 			}
 
-			if ((matrix2[i][j].length()) > 1)
+			if ((matrixDeTerrenoOrFacility[i][j].length()) > 1)
 			{
-				team = matrix2[i][j].back();
-				matrix2[i][j].erase(1);
+				matrixEquipoOfFacility[i][j] = matrixDeTerrenoOrFacility[i][j].back();
+				matrixDeTerrenoOrFacility[i][j].erase(1);
 			}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			bool encontroTerrain = false;
-				list<Terrain>::iterator it = terrains.begin();
-				for (bool k = true; k && (it != terrains.end()); ++it) {
 
-					if (strcmp(it->getType().c_str(), matrix2[i][j].c_str()) == false) {
-						k = false;
-						//printf("Encontre: %s\n", it->getName().c_str());
-						Terrain *currTerrain = new Terrain(it->getName(), it->getPath(), it->getType());
-						tilesArray[i][j]->addTerrain(currTerrain);
-						encontroTerrain = true;
-						terrainMatrix[i][j] = matrix2[i][j];
-					}
-					else
-						terrainMatrix[i][j] = "NULL";	//es un string NULL (no esta vacio)
+			//CARGO LOS TERRENOS EN TILES ARRAY
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			bool encontroTerrain = false;
+			list<Terrain>::iterator it = terrains.begin();
+			for (bool k = true; k && (it != terrains.end()); ++it) {
+
+				if (strcmp(it->getType().c_str(), matrixDeTerrenoOrFacility[i][j].c_str()) == false) {
+					k = false;
+					printf("Encontre: %s\n", it->getName().c_str());
+					Terrain *currTerrain = new Terrain(it->getName(), it->getPath(), it->getType());
+					tilesArray[i][j]->addTerrain(currTerrain);
+					encontroTerrain = true;
 				}
-			
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			if(!encontroTerrain) {
+				else
+					tilesArray[i][j]->addTerrain(NULL);	//es un string NULL (no esta vacio)
+			}
+			// CARGO LOS BUILDINGS EN TILES ARRAY
+			///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			if (!encontroTerrain) {
 				list<Building>::iterator it2 = buildings.begin();
 				for (bool k = true; k && (it2 != buildings.end()); ++it2) {
 
-					if (strcmp(it2->getType().c_str(), matrix2[i][j].c_str()) == false) {
+					if (strcmp(it2->getType().c_str(), matrixDeTerrenoOrFacility[i][j].c_str()) == false) {
 						k = false;
 						//printf("Encontre: %s\n", it2->getName().c_str());
-						Building *currBuilding = new Building(it2->getCp(),it2->getName(), it2->getPath(), it2->getType(), team);
+						Building *currBuilding = new Building(it2->getCp(), it2->getName(), it2->getPath(), it2->getType(), matrixEquipoOfFacility[i][j]);
 						tilesArray[i][j]->addBuilding(currBuilding);
+					}
+					else
+					{
+						tilesArray[i][j]->addBuilding(NULL);
 					}
 				}
 			}
@@ -132,47 +143,52 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 	for (int i = 0; i < FILA; i++) {
 		for (int j = 0; j < COLUMNA; j++)
 		{
-			//matrix[i][j] = "m1+ap0";
 			pos = mapFile->getMatrix()[i][j].find('+');
 			if (pos != -1) {
-				matrix2[i][j] = mapFile->getMatrix()[i][j].substr(pos + 1);
+				matrixNave[i][j] = mapFile->getMatrix()[i][j].substr(pos + 1);
 			}
 			else
 			{
-				matrix2[i][j] = " ";
+				matrixNave[i][j] = " ";
 
 			}
 
-			if ((matrix2[i][j].length()) > 2)
+			if ((matrixNave[i][j].length()) > 2)
 			{
-				team = matrix2[i][j].back();
-				matrix2[i][j].erase(2);
+				matrixEquipoNave[i][j] = matrixNave[i][j].back();
+				matrixNave[i][j].erase(2);
 			}
 
-			if (!(matrix2[i][j] == " ")) {
+
+
+			if (!(matrixNave[i][j] == " ")) {
 				list<Unit>::iterator it3 = units.begin();
 				for (bool k = true; k && (it3 != units.end()); ++it3) {
 
-					if (strcmp(it3->getType().c_str(), matrix2[i][j].c_str()) == false) {
+					if (strcmp(it3->getType().c_str(), matrixNave[i][j].c_str()) == false) {
 						k = false;
 						//printf("Encontre: %s\n", it3->getName().c_str());
 						Unit *currUnit = new Unit(it3);
-						currUnit->setTeam(TeamColor(stoi(team)));
+						currUnit->setTeam(TeamColor(stoi(matrixEquipoNave[i][j])));
 						tilesArray[i][j]->addUnit(currUnit);
+					}
+					else
+					{
+						tilesArray[i][j]->addUnit(NULL);
 					}
 				}
 			}
 
 		}
 	}
-	
+
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
-			tilesArray[i][j]->getTerrain()->setConnections(i, j, terrainMatrix);
+			tilesArray[i][j]->getTerrain()->setConnections(i, j, matrixDeTerrenoOrFacility);
 		}
 	}
 
-	
+
 
 }
 

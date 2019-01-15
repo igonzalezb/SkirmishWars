@@ -67,7 +67,7 @@ public:
 	void generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units);
 
 	void possibleMoves(Unit *currUnit, int i, int j);
-	
+
 	GenericTile* getTile(int i, int j);
 	void updateFogOfWar(int myTeam);
 
@@ -80,20 +80,17 @@ public:
 	void funcion(int matrixCost[FILA][COLUMNA], int i, int j, int MP);
 	//void generateDefenseModifiersTable();
 	bool canMove[FILA][COLUMNA];
-	
+
 private:
 	string mapName;
 	csvFile *mapFile;
 	//csvFile *defenseModifiers;
-		
-	string terrainMatrix[FILA][COLUMNA]; //ESTO LO SACO Y USAMOS DIRECTAMENTE LA INFO QUE ESTA ADENTRO DEL TILE
+
 
 	//modifiers tableMatrix[14][5];
-	
+
 	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
 	coordenadas attacker; //HACER: INICIARLAS EN NULL
 	coordenadas defender; //HACER: INICIAR EN NULL
 
 };
-
- 
