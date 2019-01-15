@@ -5,12 +5,118 @@
 
 Game::Game()
 {
-
+	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
+	generateDefenseModifiersTable();
 }
 
 Game::~Game()
 {
+	delete defenseModifiers;
 //destruir los players;
+}
+
+
+void Game::generateDefenseModifiersTable()
+{
+	string temp;
+
+	for (int i = 0; i < 14; i++) {
+		for (int j = 0; j < 5; j++) {
+
+			temp = defenseModifiers->getMatrix()[i][j].front();
+			tableMatrix[i][j].golpe = stoi(temp.c_str());
+			temp = defenseModifiers->getMatrix()[i][j].back();
+			tableMatrix[i][j].dado = stoi(temp.c_str());
+		}
+	}
+}
+//void Map::attack(coordenadas attacker, coordenadas defender) 
+void Game::attack()
+{
+	string symbol = myMap->getTile(defender.i,defender.j)->getUnit()->getSymbol();
+	int firepower, inicialDamage, die, finalDamage, dieOnChart;
+	//if (stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getHp()) < 5)
+	if (myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp() < 5) //menor a 5 significa REDUCED
+	{
+		if (symbol == "moon")
+			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpReduced().moon);
+		else if (symbol == "star")
+			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpReduced().star);
+		else if (symbol == "square")
+			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpReduced().square);
+		else if (symbol == "triangle")
+			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpReduced().triangle);
+		else if (symbol == "circle")
+			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpReduced().circle);
+	}
+	else
+	{
+		if (symbol == "moon")
+			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpNormal().moon);
+		else if (symbol == "star")
+			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpNormal().star);
+		else if (symbol == "square")
+			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpNormal().square);
+		else if (symbol == "triangle")
+			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpNormal().triangle);
+		else if (symbol == "circle")
+			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpNormal().circle);
+	}
+
+
+	inicialDamage = firepower - stoi(myMap->getTile(defender.i, defender.j)->getUnit()->getdefense());
+
+	// HACER aca el crossreference entre el inicial damage y el terreno en el que esta el defender!!!!!!!!!!!!!!!
+	// finalDamage = ...
+	// dieOnChart =.... (ESTAS DOS VARIABLES SALEN DE ENTRAR A LA TABLA ESA CON EL FINAL DAMAGE Y EL TERRENO DEL DEFENDER)
+
+	die = rand() % 7 + 1; //VERIFICAR si esto tira un valor random entre 1 y 6.
+
+	int columna;
+	string defenderTerrain = myMap->getTile(attacker.i, attacker.j)->getTerrain()->getType();
+	if (((myMap->getTile(attacker.i, attacker.j)->getBuilding()->getType()).compare("HQ")) || (defenderTerrain.compare("h") == 0))
+	{
+		columna = 0;
+	}
+	else if (myMap->getTile(attacker.i, attacker.j)->getBuilding() != NULL)
+	{
+		columna = 1;
+	}
+	else if (defenderTerrain.compare("f") == 0)
+	{
+		columna = 2;
+	}
+	else if (defenderTerrain.compare("t") == 0)
+	{
+		columna = 3;
+
+	}
+	else if ((defenderTerrain.compare("a") == 0) || (defenderTerrain.compare("r") == 0))
+	{
+		columna = 4;
+	}
+
+	finalDamage = tableMatrix[13 - inicialDamage][columna].golpe;
+	dieOnChart = tableMatrix[13 - inicialDamage][columna].dado;
+
+	if (die <= dieOnChart)
+	{
+		finalDamage++;
+	}
+
+	myMap->getTile(defender.i, defender.j)->getUnit()->setHp((myMap->getTile(defender.i, defender.j)->getUnit()->getHp()) - finalDamage);
+
+	if ((myMap->getTile(defender.i, defender.j)->getUnit()->getHp())<=0)
+	{
+		myMap->getTile(defender.i, defender.j)->setUnit(NULL);
+	}
+	//mostrar la carta que tenga arriba el HP nuevo del defender, porque cambio su HP.
+	//if HP < 5 : dar vuelta la carta y ahora esta REDUCED.
+
+	attacker.i = NULL;
+	attacker.j = NULL;
+	defender.i = NULL;
+	defender.j = NULL;
 }
 
 
@@ -56,35 +162,41 @@ void Game::purchase(Player* player,string newUnit) //!!!PREVIAMENTE tienen que h
 	}
 }
 
-bool Game::didHeWin()
+bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE
 {
 	int i, j;
-	bool notWinning = true;
 	for(i=0;i<FILA;i++)
 	{
 		for (j = 0; j < COLUMNA; j++)
 		{
-			if (((myMap->getTile(i,j)->getUnit()) != NULL)&&((myMap->getTile(i, j)->getUnit()->getTeam())==(playerYou->getTeam())))
+			if (((myMap->getTile(i,j)->getUnit()) != NULL)&&
+				((myMap->getTile(i, j)->getUnit()->getTeam())==(playerYou->getTeam())))
 			{
 				notWinning = false;
 			}
-			if ((myMap->getTile(i,j)->getBuilding()!=NULL)&& (myMap->getTile(i, j)->getBuilding() != NULL))
+			if ((myMap->getTile(i,j)->getBuilding()!=NULL)&&
+				((myMap->getTile(i, j)->getBuilding()->getType()).compare("HQ"))&&
+				((myMap->getTile(i,j)->getBuilding()->getTeam())==playerYou->getTeam()))//REVISAR como esta cargado el type del HQ 
 			{
-
+				notWinning = false;
 			}
 		}
+	}
+	if (!notWinning) //VER SI ESTE if VA AL GENERADOR DE EVENTOS!!!!!!!!!!!!!!
+	{
+		//GENERAR EL EVENTO YOU WON
 	}
 }
 
 /////////////////////////////////// PASAR LAS SIGUIENTES FUNCIONES ACA
-void Game::setAttacker()
+void Game::setAttacker(coordenadas newAttacker)
 {
-	//COMPLETAR
+	attacker = newAttacker;
 }
 
-void Game::setDefender()
+void Game::setDefender(coordenadas newDefender)
 {
-	//COMPLETAR
+	defender = newDefender;
 }
 
 coordenadas Game::getAttacker()
