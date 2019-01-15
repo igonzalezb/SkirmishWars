@@ -176,7 +176,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 
 }
 
-void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COLUMNA])
+void Map::possibleMoves(Unit * currUnit, int i, int j)//, bool (&canMove)[FILA][COLUMNA])
 {
 
 	int matrixCost[FILA][COLUMNA];
@@ -230,22 +230,23 @@ void Map::possibleMoves(Unit * currUnit, int i, int j, bool (&canMove)[FILA][COL
 	matrixCost[i][j] = 0;	//Seteo el lugar donde estoy en 0 (VER!!)
 
 	//int mp = stoi(currUnit->getMp());
-	funcion(matrixCost, canMove, i, j, stoi(currUnit->getMp()));       
+	funcion(matrixCost, i, j, stoi(currUnit->getMp()));       
 
 }
 
-void funcion(int matrixCost[FILA][COLUMNA], bool(&canMove)[FILA][COLUMNA], int i, int j, int MP) {
+void Map::funcion(int matrixCost[FILA][COLUMNA], int i, int j, int MP) {
 	if ((0 <= i) && (i < FILA) && (0 <= j) && (j < COLUMNA) && (MP >= 0))
 	{
 		if (MP >= 0) {
 			MP -= matrixCost[i][j];
-			if (MP >= 0) {
+			if ((MP >= 0)&&((getTile(i,j)->getFog())==false)&&((getTile(i,j)->getUnit())==NULL)) 
+			{
 				canMove[i][j] = true;
 			}
-			funcion(matrixCost, canMove, i - 1, j, MP);
-			funcion(matrixCost, canMove, i + 1, j, MP);
-			funcion(matrixCost, canMove, i, j + 1, MP);
-			funcion(matrixCost, canMove, i, j - 1, MP);
+			funcion(matrixCost, i - 1, j, MP);
+			funcion(matrixCost, i + 1, j, MP);
+			funcion(matrixCost, i, j + 1, MP);
+			funcion(matrixCost, i, j - 1, MP);
 		}
 	}
 }
@@ -280,6 +281,7 @@ void Map::updateFogOfWar(int myTeam)
 					tilesArray[i][j + 1]->removeFog();
 				}
 			}
+			
 		}
 	}
 }
@@ -326,21 +328,34 @@ void Map::attack()
 
 	die = rand() % 7 + 1; //VERIFICAR si esto tira un valor random entre 1 y 6.
 
-	switch(getTile(attacker.i,attacker.j)->getTerrain()->getType())
+	int columna;
+	string defenderTerrain = getTile(attacker.i, attacker.j)->getTerrain()->getType();
+	if (((getTile(attacker.i, attacker.j)->getBuilding()->getType()).compare("HQ"))|| (defenderTerrain.compare("h") == 0))
+	{
+		columna = 0;
+	}
+	else if (getTile(attacker.i, attacker.j)->getBuilding()!=NULL)
+	{
+		columna = 1;
+	}
+	else if (defenderTerrain.compare("f")==0)
+	{
+		columna = 2;
+	}
+	else if (defenderTerrain.compare("t") == 0)
+	{
+		columna = 3;
 
+	}
+	else if ((defenderTerrain.compare("a") == 0) || (defenderTerrain.compare("r") == 0))
+	{
+		columna = 4;
+	}
 	
-	if (die >= tableMatrix[13 - inicialDamage][getTile(attacker.i,attacker.j)->getTerrain()->getType()].dado)
-		finalDamage = tableMatrix[13 - inicialDamage][terr].golpe + tableMatrix[13 - inicialDamage][terr].dado;
-	else
-		finalDamage = tableMatrix[13 - inicialDamage][terr].golpe;
+	finalDamage = tableMatrix[13 - inicialDamage][columna].golpe; 
+	dieOnChart = tableMatrix[13 - inicialDamage][columna].dado;
 
-
-
-
-
-
-
-	if (die <= dieOnChart)// ESE DIE ON CHART tendria que estar como info en la clase de la UNIT. HACERLO!!
+	if (die <= dieOnChart)
 	{
 		finalDamage++;
 	}
@@ -350,23 +365,10 @@ void Map::attack()
 	//mostrar la carta que tenga arriba el HP nuevo del defender, porque cambio su HP.
 	//if HP < 5 : dar vuelta la carta y ahora esta REDUCED.
 
-
-
-	/////////////////////// ESTO VER SI QUEDA O QUE PASA, PERO EL ATAQUE TERMINARIA AHI ARRIBA/////////////////////////////////////////
-	//ESTO PUEDE SER QUE SEA LO DEL CROSSREFERENCE QUE HAY QUE HACER AHI ARRIBA CON LA TABLA Y OBTENER FINAL DAMAGE Y DIE ON CHART:
-
-	//int terr;	//Falta cargarla para saber en que terreno estoy
-
-	/*switch (defender)
-	{
-	default:
-		break;
-	}*/
-
-
-	//Hay que seguirla pero creo que el calculo esta bien.
-
-
+	attacker.i = NULL;
+	attacker.j = NULL;
+	defender.i = NULL;
+	defender.j = NULL;
 }
 
 void Map::generateDefenseModifiersTable()
