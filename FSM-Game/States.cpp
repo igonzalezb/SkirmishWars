@@ -98,7 +98,7 @@ genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 
 
 /////////////////////////////// ST_Moving ///////////////////////////////
-
+//creo que onMove ocurriendo en el estado Moving, se borraria (PERO CHEQUEAR)
 genericState* ST_Moving::on_Move(genericEvent *ev, usefulInfo * Info) //en un lugar ya estan guardadas las coordenadas origen y destino del movimiento
 {
 	genericState *ret = (genericState *) new ST_Moving();
@@ -110,7 +110,6 @@ genericState* ST_Moving::on_Move(genericEvent *ev, usefulInfo * Info) //en un lu
 
 genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
 {
-	genericState *ret = (genericState *) new ST_WaitingDestination();
 	//HACER: cuando el mouse ve que se toca un tile del mapa,
 	//guardar esa info en la clase game en tileSelected y generar el evento TILE
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
@@ -118,6 +117,11 @@ genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
 	{
 		Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
 		//VER si hay que borrar tileSelected (?)
+		genericState *ret = (genericState *) new ST_WaitingDestination();
+	}
+	else
+	{
+		genericState *ret = (genericState *) new ST_Moving();
 	}
 }
 
@@ -201,8 +205,8 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 			(((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit())->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
 			//si el attacker es una unidad mia:
 		{
-			Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getDefender.j)->getUnit()), Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j);
-			if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender.i][Info->gameInterface->getDefender.j]) == 1)
+			Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit()), Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j);
+			if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender.i][Info->gameInterface->getDefender.j]) == true)
 			{
 				Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender.i, Info->gameInterface->getDefender.j)->setUnit(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit());
 				Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->setUnit(NULL);
@@ -242,10 +246,12 @@ genericState* ST_WaitingDestination::on_Pass(genericEvent* ev, usefulInfo * Info
 
 /////////////////////////////// ST_Attacking ///////////////////////////////
 //si se apretan los tiles, guardar la info en attacker y defender. Cuando se presione el boton ATTACK, recien ahi GENERAR EVENTO ATTACK! (ver donde se hacen estas cosas)
+//VER SI ESTO QUEDA, CREO QUE NO
 genericState* ST_Attacking::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Attacking();
 
+	//DE ACA EN ADELANTE SE VA A BORRAR
 	if ((Info->gameInterface->myMap->getAttacker().i != NULL) &&
 		(Info->gameInterface->myMap->getAttacker().j != NULL) &&
 		(Info->gameInterface->myMap->getDefender().i != NULL) &&
@@ -268,7 +274,19 @@ genericState* ST_Attacking::on_Attack(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_Attacking::on_Tile(genericEvent *ev, usefulInfo * Info)
 {
-
+	//HACER: cuando el mouse ve que se toca un tile del mapa,
+	//guardar esa info en la clase game en tileSelected y generar el evento TILE
+	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
+		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+	{
+		Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
+		//VER si hay que borrar tileSelected (?)
+		genericState *ret = (genericState *) new ST_WaitingDefender();
+	}
+	else
+	{
+		genericState *ret = (genericState *) new ST_Attacking();
+	}
 }
 
 genericState* ST_Attacking::on_Purchase(genericEvent *ev, usefulInfo * Info)
@@ -347,7 +365,36 @@ genericState* ST_Attacking::on_Timeout(genericEvent *ev, usefulInfo * Info)
 /////////////////////////////// ST_WaitingDefender //////////////////////////
 genericState* ST_WaitingDefender::on_Tile(genericEvent* ev, usefulInfo * Info) 
 {
+	////////////////////////////////////////
+	if ((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL)
+	{
+		Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
+		genericState *ret = (genericState *) new ST_Moving();
 
+		if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit()) != NULL) &&
+			(((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit())->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+			//si el attacker es una unidad mia:
+		{
+			Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit()), Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j);
+			if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender.i][Info->gameInterface->getDefender.j]) == true)
+			{
+				Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender.i, Info->gameInterface->getDefender.j)->setUnit(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit());
+				Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->setUnit(NULL);
+			}
+			else {
+				//COMPLETAR:ver si se pone algo aca
+			}
+		}
+		//VER si se borra el tile selected
+		genericState *ret = (genericState *) new ST_Moving();
+	}
+	else if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
+		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+	{
+		Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
+		//VER si hay que borrar tileSelected (?)
+		genericState *ret = (genericState *) new ST_WaitingDestination();
+	}
 }
 
 genericState* ST_WaitingDefender::on_Attack(genericEvent* ev, usefulInfo * Info) //ESTO QUEDA????????
