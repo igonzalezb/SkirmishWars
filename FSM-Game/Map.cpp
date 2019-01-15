@@ -17,9 +17,9 @@ Map::Map()
 	randomMap();
 
 	mapFile = new csvFile(mapName, FILA, COLUMNA);
-	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
+	//defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
 
-	generateDefenseModifiersTable();
+	//generateDefenseModifiersTable();
 }
 
 void Map::setMapPath(string mapName)
@@ -260,7 +260,7 @@ void Map::updateFogOfWar(int myTeam)
 {
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
-			if (((tilesArray[i][j]->getUnit() != NULL) && (tilesArray[i][j]->getUnit()->getTeam() == myTeam)) || ((tilesArray[i][j]->getBuilding() != NULL) && (tilesArray[i][j]->getBuilding()->getTeam() == myTeam)))
+			if ((tilesArray[i][j]->getUnit() != NULL) && (tilesArray[i][j]->getUnit()->getTeam() == myTeam)) 
 			{
 				tilesArray[i][j]->removeFog();
 
@@ -281,11 +281,16 @@ void Map::updateFogOfWar(int myTeam)
 					tilesArray[i][j + 1]->removeFog();
 				}
 			}
+			if ((tilesArray[i][j]->getBuilding() != NULL) && (tilesArray[i][j]->getBuilding()->getTeam() == myTeam))
+			{
+				tilesArray[i][j]->removeFog();
+			}
 			
 		}
 	}
 }
 
+/*
 //void Map::attack(coordenadas attacker, coordenadas defender) //ESTA FUNCION HABRIA QUE PONERLA EN OTRO ARCHIVO
 void Map::attack()
 {
@@ -371,6 +376,7 @@ void Map::attack()
 	defender.j = NULL;
 }
 
+
 void Map::generateDefenseModifiersTable()
 {
 	string temp;
@@ -384,7 +390,7 @@ void Map::generateDefenseModifiersTable()
 			tableMatrix[i][j].dado = stoi(temp.c_str());
 		}
 	}
-}
+}*/
 
 Map::~Map()
 {
@@ -394,7 +400,7 @@ Map::~Map()
 		}
 	}
 	delete mapFile;
-	delete defenseModifiers;
+	//delete defenseModifiers;
 }
 
 

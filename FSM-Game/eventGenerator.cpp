@@ -17,6 +17,10 @@ void eventGenerator::generateEvent()
 	{
 		buffer.push_back(I->networkSrc->insertEvent());
 	}
+	if (I->gameSrc->isThereEvent())
+	{
+		buffer.push_back(I->gameSrc->insertEvent());
+	}
 	/*
 	if (I->timeoutSrc->isThereEvent())
 	{

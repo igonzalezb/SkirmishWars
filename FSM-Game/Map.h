@@ -72,25 +72,23 @@ public:
 	void updateFogOfWar(int myTeam);
 
 	//void attack(coordenadas attacker, coordenadas defender);//ESTA FUNCION SEGURAMENTE HAYA QUE MOVERLA A OTRO ARCHIVO (+ prolijo) Quizas no recibe nada y se usa lo de abajo attacker y defender.
-	void attack();
+	//void attack();
 	void setAttacker(int tile);
 	void setDefender(int tile);
 	coordenadas getAttacker();
 	coordenadas getDefender();
 	void funcion(int matrixCost[FILA][COLUMNA], int i, int j, int MP);
-
-	void generateDefenseModifiersTable();
-
+	//void generateDefenseModifiersTable();
 	bool canMove[FILA][COLUMNA];
 	
 private:
 	string mapName;
 	csvFile *mapFile;
-	csvFile *defenseModifiers;
+	//csvFile *defenseModifiers;
 		
 	string terrainMatrix[FILA][COLUMNA]; //ESTO LO SACO Y USAMOS DIRECTAMENTE LA INFO QUE ESTA ADENTRO DEL TILE
 
-	modifiers tableMatrix[14][5];
+	//modifiers tableMatrix[14][5];
 	
 	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
 	coordenadas attacker; //HACER: INICIARLAS EN NULL

@@ -21,7 +21,7 @@ genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 			//if (((Info->gameInterface->myMap->getTile(i,j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i,j)->getBuilding()) != NULL))
 			if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
 			{
-				Info->gameInterface->myMap->getTile(i,j)->getUnit()->setHp(8);
+				Info->gameInterface->myMap->getTile(i,j)->getUnit()->setHp(8); //VER si este HP inicial por default ya esta cargado en algun lado
 			}
 		}
 	}
@@ -204,7 +204,7 @@ genericState* ST_Attacking::on_Attack(genericEvent *ev, usefulInfo * Info)
 	{
 		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i),(Info->gameInterface->myMap->getDefender().j)))->getUnit())!=NULL)
 		{
-			Info->gameInterface->myMap->attack();
+			Info->gameInterface->attack();
 		}
 		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getBuilding()) != NULL)
 		{
@@ -240,7 +240,7 @@ genericState* ST_Attacking::on_LastAttack(genericEvent *ev, usefulInfo * Info)
 	{
 		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getUnit()) != NULL)
 		{
-			Info->gameInterface->myMap->attack();
+			Info->gameInterface->attack();
 		}
 		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getBuilding()) != NULL)
 		{
@@ -373,7 +373,7 @@ genericState* ST_YouMoving::on_RAttack(genericEvent *ev, usefulInfo * Info)
 	{
 		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getUnit()) != NULL)
 		{
-			Info->gameInterface->myMap->attack();
+			Info->gameInterface->attack();
 		}
 		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getBuilding()) != NULL)
 		{
@@ -463,7 +463,7 @@ genericState* ST_YouAttacking::on_RAttack(genericEvent *ev, usefulInfo * Info)
 	{
 		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getUnit()) != NULL)
 		{
-			Info->gameInterface->myMap->attack();
+			Info->gameInterface->attack();
 		}
 		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getBuilding()) != NULL)
 		{

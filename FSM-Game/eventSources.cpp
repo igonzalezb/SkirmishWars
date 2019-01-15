@@ -20,11 +20,16 @@ genericEvent * GameEventSource::insertEvent()
 {
 	genericEvent * ret;
 	
+	if (!(Info->gameInterface->getNotWinning()))
+	{
+		evCode = ;
+	}
 	//COMPLETAR
 }
 
 bool GameEventSource::isThereEvent()
 {
+
 	//COMPLETAR
 }
 
