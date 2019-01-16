@@ -476,7 +476,7 @@ genericState* ST_WaitingLocation::on_Tile(genericEvent* ev, usefulInfo * Info)
 	genericState *ret;
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding())!=NULL)&&
 		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding()->getType()).compare("m"))==0)&&
-		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding()->getTeam()) == (Info->gameInterface->playerMe->getTeam()))
+		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding()->getTeam()) == (Info->gameInterface->playerMe->getTeam()))&&
 		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) == NULL))
 	{
 		Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
@@ -590,6 +590,7 @@ genericState* ST_YouMoving::on_RMove(genericEvent *ev, usefulInfo * Info)
 			//COMPLETAR: TIRAR ERROR O VER QUE SE HACE (QUIZAS NO SE HACE NADA)
 		}
 	}
+
 	//COMPLETAR 
 	return ret;
 }
@@ -624,10 +625,8 @@ genericState* ST_YouMoving::on_RAttack(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_YouMoving::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 {
-	//genericState *ret = (genericState *) new ST_YouPurchasing();
-
 	genericState *ret = (genericState *) new ST_YouPurchasing();
-	//ESTE IF PASARLO AL GENERADOR DE EVENTOS PROVENIENTES DE LA FSM DE NETWORKING!!!!!!!!!!!!!!!!!!!!!!!!
+	//ESTE IF PASARLO AL GENERADOR DE EVENTOS PROVENIENTES DE LA FSM DE NETWORKING,CUANDO SE RECIBE PAQUETE DE PURCHASE!!!!!!!!!!!!!!!!!!!!!!!!
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getBuilding()) != NULL) &&
 		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getBuilding()->getType()).compare("m")) == 0) &&
 		((Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getBuilding()->getTeam()) == (Info->gameInterface->playerYou->getTeam()))&&
@@ -635,11 +634,9 @@ genericState* ST_YouMoving::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 		((stoi(Info->gameInterface->getNewUnit()->getCost()))<=(Info->gameInterface->playerYou->getMoney())))
 	{
 		//EL DEFENDER YA ESTA SETEADO cuando se recibe el mensaje de networking
-		Info->gameInterface->purchase(Info->gameInterface->playerYou);	
+		Info->gameInterface->purchase(Info->gameInterface->playerYou);	//SI SACAMOS EL IF PARA LA PARTE DEL GENERADOR DE EVENTOS, QUEDARIA ACA SOLO ESTA LINEA
+
 	}
-
-	return ret;
-
 
 	//COMPLETAR 
 
@@ -692,7 +689,7 @@ genericState* ST_YouAttacking::on_RAttack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouAttacking();
 
-	//HACER: leer el mensaje que me llega del ataque y cargar el tile atacante y el defendido en attacker y defender
+	//HACER EN IS THERE EVENT DE NETWORKING: leer el mensaje que me llega del ataque y cargar el tile atacante y el defendido en attacker y defender
 
 	if ((Info->gameInterface->myMap->getAttacker().i != NULL) &&
 		(Info->gameInterface->myMap->getAttacker().j != NULL) &&
@@ -719,8 +716,10 @@ genericState* ST_YouAttacking::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouPurchasing();
 
+	/*
 	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
 	Info->gameInterface->purchase(Info->gameInterface->playerYou, newUnit);
+	*/
 
 	//COMPLETAR 
 

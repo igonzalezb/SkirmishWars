@@ -24,9 +24,11 @@ public:
 	virtual genericState* on_MapOk(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_ErrDetected(genericEvent* ev, usefulInfo * Info) { return nullptr; } //VER si esto se deja o no.
 
+	//ESTOS DOS VER SI SE BORRAN O QUE HACER:
 	virtual genericState* on_IPlay(genericEvent* ev, usefulInfo * Info) { return nullptr; } //VER si estos dos se usan en la fsm del juego o no.
 	virtual genericState* on_YouPlay(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
+	
 	//virtual genericState* on_Iquit(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Move(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Purchase(genericEvent* ev, usefulInfo * Info) { return nullptr; }

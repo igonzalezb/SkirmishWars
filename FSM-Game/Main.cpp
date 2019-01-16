@@ -2,6 +2,8 @@
 #include "usefulInfo.h"
 #include "eventGenerator.h"
 #include "genericFSM.h"
+#include "FSMGame.h"
+#include "FSMNetworking.h"
 #include "eventSources.h"
 //#include "Screen.h"
 //#include "Networking.h"
@@ -20,26 +22,37 @@ using namespace std;
 
 int main()
 {
-	
-
 	srand(time(NULL));
 
 	allegroStartup();
 
+	/////////////////////////////////////////
+	std::cout << "Por favor ingrese la direccion IP del servidor a traves de la linea de comando.\n Ejemplo: 'Client.exe 192.168.0.50'" << std::endl;
+	std::cout << "Presione una tecla para salir." << std::endl;
+	getchar();
 
-
+	std::string opponentsIP = "localhost"; //CAMBIAR y ver donde recibirlo y como
+	Networking Client(opponentsIP);
+	Networking server;
 	
 	Game skirmish; //Creo una instancia del juego
-	//Networking Server;
-	GameEventSource gameSource;
+
+
+
+
+	GameEventSource gameSource(&skirmish);
+	UserEventSource userSource();
+	NetworkEventSource networkSource(&server);
 	//SoftwareEventSource Software;
 	//NetworkEventSource networkSource(&Server);
 	//UserEventSource userSource(&Terminal);
 	//usefulInfo Info(&userSource, &Timeout, &networkSource, &fileSystem, &Software);
-	usefulInfo Info(&gameSource);
+	usefulInfo Info(&userSource,&gameSource,&networkSource);
 	genericEvent *ev;
 	eventGenerator evGen(&Info);
-	genericFSM FSM;
+	//genericFSM FSM;
+	FSMGame gameFSM;
+	FSMNetworking networkingFSM;
 	/*
 	//Terminal.putClear("Listening on port 69...");
 	cout << "Listening on port 69..." << endl; //VER EN QUE PUERTO

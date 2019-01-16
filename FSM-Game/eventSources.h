@@ -12,6 +12,12 @@
 #include "genericEventSource.h"
 #include <ctime>
 #include "MapGraphics.h"
+#include <boost\asio.hpp>
+#include "Packages.h"
+#include <boost\asio\deadline_timer.hpp>
+#include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include "Networking.h"
 
 /*
 #define ONE_MINUTE		60
@@ -29,6 +35,37 @@ public:
 	Game *gameInterface;
 private:
 	//MapGraphics* graphics;
+};
+
+
+class NetworkEventSource : public genericEventSource
+{
+public:
+	NetworkEventSource(Networking *_networkInterface);
+	bool isThereEvent();
+	genericEvent* insertEvent();
+	Networking *networkInterface;
+	Game* GameInterface
+	//unsigned int expectedBlockNum;
+	//std::string fileRequested;
+	//std::vector<char> data;	//Se almacena la data en caso de recibir DATA
+	//std::string errorMsg;
+	//errorCodes errorCode;
+	//unsigned int blockNumber;
+
+	//agrego esto, despues ver donde meterlo (r de recibido)
+	std::vector<char> r_name;
+	std::vector<char> r_map;
+	// VER si dejar las columnas con su valor como MYBYTE que significa char, o si guardarlo como int!!!
+	// las columnas si o si chars porque son letras en mayuscula: A, B, C, D etc
+	MYBYTE r_fila_or;
+	MYBYTE r_col_or;
+	MYBYTE r_fila_de;
+	MYBYTE r_col_de;
+	std::vector<char>  r_unidad;
+	MYBYTE r_dado;
+private:
+
 };
 
 

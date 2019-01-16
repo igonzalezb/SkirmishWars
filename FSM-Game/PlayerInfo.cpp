@@ -21,12 +21,12 @@ int Player::getMoney()
 	return money;
 }
 
-void Player::setTeam(int team)
+void Player::setTeam(TeamColor team)
 {
 	this->team = team;
 }
 
-int Player::getTeam()
+TeamColor Player::getTeam()
 {
 	return team;
 }

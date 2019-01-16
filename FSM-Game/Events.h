@@ -108,7 +108,7 @@ R_GAME_OVER, R_ERROR_, R_QUIT,*/
 
 
 //NETWORK EVENTS
-/*
+
 class EV_Rack : public genericEvent
 {
 public:
@@ -144,7 +144,7 @@ public:
 	EV_RmapIs() { ev = R_MAP_IS; };
 
 private:
-	//std::string fileToTransfer;
+	
 };
 
 class EV_RyouStart : public genericEvent
@@ -153,7 +153,7 @@ public:
 	EV_RyouStart() { ev = R_YOU_START; };
 
 private:
-	//std::string fileToTransfer;
+	
 
 };
 
@@ -163,7 +163,7 @@ public:
 	EV_RIStart() { ev = R_I_START; };
 
 private:
-	//std::string fileToTransfer;
+	
 
 };
 
@@ -173,7 +173,7 @@ public:
 	EV_Rpass() { ev = R_PASS; };
 
 private:
-	//std::string fileToTransfer;
+	
 };
 
 class EV_Rmove : public genericEvent
@@ -182,7 +182,7 @@ public:
 	EV_Rmove() { ev = R_MOVE; };
 
 private:
-	//std::string fileToTransfer;
+
 };
 
 class EV_Rpurchase : public genericEvent
@@ -191,7 +191,7 @@ public:
 	EV_Rpurchase() { ev = R_PURCHASE; };
 
 private:
-	//std::string fileToTransfer;
+	
 };
 
 class EV_Rattack : public genericEvent
@@ -200,7 +200,7 @@ public:
 	EV_Rattack() { ev = R_ATTACK; };
 
 private:
-	//std::string fileToTransfer;
+	
 };
 
 
@@ -210,7 +210,7 @@ public:
 	EV_RyouWon() { ev = R_YOU_WON; };
 
 private:
-	//std::string fileToTransfer;
+	
 };
 
 class EV_RplayAgain : public genericEvent
@@ -219,7 +219,7 @@ public:
 	EV_RplayAgain() { ev = R_PLAY_AGAIN; };
 
 private:
-	//std::string fileToTransfer;
+	
 };
 
 class EV_RgameOver : public genericEvent
@@ -228,7 +228,7 @@ public:
 	EV_RgameOver() { ev = R_GAME_OVER; };
 
 private:
-	//std::string fileToTransfer;
+	
 };
 
 class EV_Rerror_ : public genericEvent
@@ -237,7 +237,7 @@ public:
 	EV_Rerror_() { ev = R_ERROR_; };
 
 private:
-	//std::string fileToTransfer;
+	
 };
 
 class EV_ErrDetected : public genericEvent
@@ -246,7 +246,7 @@ public:
 	EV_ErrDetected() { ev = ERR_DETECTED; };
 
 private:
-	//std::string fileToTransfer;
+
 };
 
 class EV_Rquit : public genericEvent
@@ -255,7 +255,7 @@ public:
 	EV_Rquit() { ev = R_QUIT; };
 
 private:
-	//std::string fileToTransfer;
+
 };
 
 
@@ -265,9 +265,9 @@ public:
 	EV_Connected() { ev = CONNECTED; };
 
 private:
-	//std::string fileToTransfer;
+
 };
-*/
+
 
 /*
 //SOFTWARE EVENTS

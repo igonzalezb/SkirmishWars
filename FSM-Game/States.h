@@ -108,5 +108,6 @@ class ST_YouPurchasing :public genericState
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 
+////////////////////////////////////////////////
 
 #endif // !STATES_H

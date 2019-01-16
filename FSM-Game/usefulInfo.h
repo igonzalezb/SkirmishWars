@@ -13,17 +13,21 @@ public:
 	//y pasar el constructor a un .cpp
 
 	
-	usefulInfo(GameEventSource *UsEvSrc,GameEventSource *GameEvSrc)
+	usefulInfo(UserEventSource *UsEvSrc,GameEventSource *GameEvSrc, NetworkEventSource *NETEvSrc) :networkSrc(NETEvSrc) //CHEQUEAR
 		//:userSrc(UsEvSrc),gameSrc(GameEvSrc)
 	{
 		gameInterface = gameSrc->gameInterface;
+		networkInterface = networkSrc->networkInterface;
 		//userInterface = userSrc->user;
 	}
 	
 	GameEventSource* gameSrc;
+	NetworkEventSource* networkSrc;
 	//UserEventSource* userSrc;
 
 	Game *gameInterface;
+	Networking *networkInterface;
+	genericPackage *nextPkg;
 	//Input *userInterface;
 private:
 
