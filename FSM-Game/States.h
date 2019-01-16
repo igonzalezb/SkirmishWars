@@ -69,6 +69,16 @@ class ST_Purchasing :public genericState
 	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Unit(genericEvent* ev, usefulInfo * Info);
+	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
+};
+
+class ST_WaitingLocation :public genericState
+{
+	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Unit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
+	genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 

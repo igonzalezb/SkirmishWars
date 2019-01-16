@@ -31,6 +31,13 @@ void Game::generateDefenseModifiersTable()
 		}
 	}
 }
+
+void Game::move()
+{
+	myMap->getTile(getDefender().i, getDefender().j)->setUnit(myMap->getTile(getAttacker().i, getAttacker().j)->getUnit());
+	myMap->getTile(getAttacker().i, getAttacker().j)->setUnit(NULL);
+}
+
 //void Map::attack(coordenadas attacker, coordenadas defender) 
 void Game::attack()
 {
@@ -150,17 +157,11 @@ void Game::captureProperty(Player* pAttacker, Player* pDefender)
 	defender.j = NULL;
 }
 
-void Game::purchase(Player* player,string newUnit) //!!!PREVIAMENTE tienen que haber guardado en defender.i y defender.j las coordenadas del lugar al que quieren poner la unidad nueva.
+void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado en defender.i y defender.j las coordenadas del lugar al que quieren poner la unidad nueva.
 {
-	if (((myMap->getTile(defender.i,defender.j)->getBuilding()->getType().compare("m"))==0)&& //VERIFICAR si el type de la factory es una m
-		((myMap->getTile(defender.i,defender.j)->getBuilding()->getTeam())==(player->getTeam()))&&
-		((myMap->getTile(defender.i,defender.j)->getUnit()) != NULL))//HACER:agregar que chequee si el player tiene plata suficiente para comprar la unit que quiere
-	{
-		//HACER:
-		//si se cumple todo eso y le alcanza la plata:
-		//poner la unit en ese tile del mapa y asignarle el equipo del comprador (player)
-		//restarle el costo a la money del player
-	}
+	myMap->getTile(defender.i,defender.j)->setUnit(newUnit);
+	myMap->getTile(defender.i, defender.j)->getUnit()->setTeam(player->getTeam());
+	player->setMoney((player->getMoney())-(stoi(newUnit->getCost())));
 }
 
 bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE
@@ -228,5 +229,15 @@ coordenadas Game::getDefender()
 coordenadas Game::getTileSelected()
 {
 	return tileSelected;
+} 
+
+void Game::setNewUnit(Unit* unit) 
+{
+	newUnit = unit;
+}
+
+Unit* Game::getNewUnit()
+{
+	return newUnit;
 }
 

@@ -120,19 +120,12 @@ genericState* ST_Moving::on_Attack(genericEvent *ev, usefulInfo * Info)//Se entr
 {																	//El ataque se hace despues, una vez que ya se entro a este estado por primera vez.
 	genericState *ret = (genericState *) new ST_Attacking();
 
-	//COMPLETAR 
-
 	return ret;
 }
 
 genericState* ST_Moving::on_Purchase(genericEvent *ev, usefulInfo * Info) //VER
 {
 	genericState *ret = (genericState *) new ST_Purchasing();
-
-	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
-	Info->gameInterface->purchase(Info->gameInterface->playerMe, newUnit);
-
-	//COMPLETAR 
 
 	return ret;
 }
@@ -160,7 +153,6 @@ genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info)
 			}
 		}
 	}
-	//COMPLETAR 
 
 	return ret;
 }
@@ -268,8 +260,10 @@ genericState* ST_Attacking::on_Purchase(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Purchasing();
 
+	/*
 	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
 	Info->gameInterface->purchase(Info->gameInterface->playerMe, newUnit);
+	*/
 
 	//COMPLETAR 
 
@@ -372,13 +366,49 @@ genericState* ST_WaitingDefender::on_Pass(genericEvent* ev, usefulInfo * Info)
 
 
 /////////////////////////////// ST_Purchasing ///////////////////////////////
-
+//PURCHASING::ON PURCHASE PROBABLEMENTE DESAPAREZCA!!!!!!!
 genericState* ST_Purchasing::on_Purchase(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
 {
 	genericState *ret = (genericState *) new ST_Purchasing();
 
 	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
 	Info->gameInterface->purchase(Info->gameInterface->playerMe, newUnit);
+
+	//COMPLETAR 
+
+	return ret;
+}
+
+genericState* ST_Purchasing::on_Unit(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
+{
+	genericState *ret;
+
+	/*
+	units=Info->gameInterface->resourses->getUnitList
+
+	list<Unit>::iterator ite = units.begin();
+	for (bool k = true; k && (ite != units.end()); ++it3) {
+
+		if (strcmp(it3->getType().c_str(), matrixNave[i][j].c_str()) == false) {
+			k = false;
+			//printf("Encontre: %s\n", it3->getName().c_str());
+			Unit *currUnit = new Unit(it3);
+			currUnit->setTeam(TeamColor(stoi(matrixEquipoNave[i][j])));
+			tilesArray[i][j]->addUnit(currUnit);
+		}
+		else
+		{
+			tilesArray[i][j]->addUnit(NULL);
+		}*/
+
+	if ((stoi(Info->gameInterface->getNewUnit()->getCost()))<=(Info->gameInterface->playerMe->getMoney()))
+	{//Si alcanza la plata para comprar esa unidad, cambio de estado
+		ret = (genericState *) new ST_WaitingLocation();
+	}
+	else
+	{//Si no alcanza la plata para comprar esa unidad, espera que se elija una nueva unidad.
+		ret = (genericState *) new ST_Purchasing();
+	}
 
 	//COMPLETAR 
 
@@ -439,6 +469,108 @@ genericState* ST_Purchasing::on_NoMoney(genericEvent *ev, usefulInfo * Info)
 }
 
 
+/////////////////////////////// ST_WaitingLocation ///////////////////////////////
+
+genericState* ST_WaitingLocation::on_Tile(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret;
+	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding())!=NULL)&&
+		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding()->getType()).compare("m"))==0)&&
+		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding()->getTeam()) == (Info->gameInterface->playerMe->getTeam()))
+		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) == NULL))
+	{
+		Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
+		Info->gameInterface->purchase(Info->gameInterface->playerMe);
+		ret = (genericState *) new ST_Purchasing();
+	}
+	else
+	{//Si el tile presionado es uno invalido para meterle una nueva unit, quedarse en este estado
+		ret = (genericState *) new ST_WaitingLocation();
+	}
+	return ret;
+}
+
+genericState* ST_WaitingLocation::on_Unit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret;
+
+	if ((stoi(Info->gameInterface->getNewUnit()->getCost())) <= (Info->gameInterface->playerMe->getMoney()))
+	{//Si alcanza la plata para comprar esa unidad, cambio de estado
+		ret = (genericState *) new ST_WaitingLocation();
+	}
+	else
+	{//Si no alcanza la plata para comprar esa unidad, espera que se elija una nueva unidad.
+		ret = (genericState *) new ST_Purchasing();
+	}
+	return ret;
+}
+
+genericState* ST_WaitingLocation::on_Pass(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
+	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
+
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
+				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
+			{
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				{
+					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+				}
+			}
+		}
+	}
+	//COMPLETAR 
+
+	return ret;
+}
+
+genericState* ST_WaitingLocation::on_NoMoney(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
+	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
+
+	int i = 0, j = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
+				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
+			{
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				{
+					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+				}
+			}
+		}
+	}
+	//COMPLETAR 
+
+	return ret;
+}
+
+/*
+genericState* ST_WaitingLocation::on_Timeout(genericEvent *ev, usefulInfo * Info)
+{
+genericState *ret = (genericState *) new ST_Moving();
+
+//COMPLETAR
+
+return ret;
+}
+*/
+
+
 /////////////////////////////// ST_YouMoving ///////////////////////////////
 
 genericState* ST_YouMoving::on_RMove(genericEvent *ev, usefulInfo * Info)
@@ -446,23 +578,19 @@ genericState* ST_YouMoving::on_RMove(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_YouMoving();
 
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit()) != NULL) &&
-		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit())->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit())->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
 	{
 		Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getDefender.j)->getUnit()), Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j);
-		if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender.i][Info->gameInterface->getDefender.j]) == 1)
+		if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender.i][Info->gameInterface->getDefender.j]) == true)
 		{
-			Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender.i, Info->gameInterface->getDefender.j)->setUnit(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->getUnit());
-			Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker.i, Info->gameInterface->getAttacker.j)->setUnit(NULL);
+			Info->gameInterface->move();
 		}
 		else 
 		{
-			//COMPLETAR: TIRAR ERROR O VER QUE SE HACE
+			//COMPLETAR: TIRAR ERROR O VER QUE SE HACE (QUIZAS NO SE HACE NADA)
 		}
 	}
-
-
 	//COMPLETAR 
-
 	return ret;
 }
 
@@ -496,25 +624,28 @@ genericState* ST_YouMoving::on_RAttack(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_YouMoving::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 {
-	genericState *ret = (genericState *) new ST_YouPurchasing();
+	//genericState *ret = (genericState *) new ST_YouPurchasing();
 
-	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
-	Info->gameInterface->purchase(Info->gameInterface->playerYou, newUnit);
+	genericState *ret = (genericState *) new ST_YouPurchasing();
+	//ESTE IF PASARLO AL GENERADOR DE EVENTOS PROVENIENTES DE LA FSM DE NETWORKING!!!!!!!!!!!!!!!!!!!!!!!!
+	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getBuilding()) != NULL) &&
+		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getBuilding()->getType()).compare("m")) == 0) &&
+		((Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getBuilding()->getTeam()) == (Info->gameInterface->playerYou->getTeam()))&&
+		((Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit()) == NULL)&&
+		((stoi(Info->gameInterface->getNewUnit()->getCost()))<=(Info->gameInterface->playerYou->getMoney())))
+	{
+		//EL DEFENDER YA ESTA SETEADO cuando se recibe el mensaje de networking
+		Info->gameInterface->purchase(Info->gameInterface->playerYou);	
+	}
+
+	return ret;
+
 
 	//COMPLETAR 
 
 	return ret;
 }
 
-/*
-genericState* ST_YouMoving::on_LastMove(genericEvent *ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_Attacking();
-
-	//COMPLETAR 
-
-	return ret;
-}*/
 
 genericState* ST_YouMoving::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
@@ -650,8 +781,7 @@ genericState* ST_YouPurchasing::on_RPurchase(genericEvent *ev, usefulInfo * Info
 {
 	genericState *ret = (genericState *) new ST_YouPurchasing();
 
-	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
-	Info->gameInterface->purchase(Info->gameInterface->playerYou, newUnit);
+
 
 	//COMPLETAR 
 

@@ -11,6 +11,7 @@
 #include "PlayerInfo.h"
 #include "Map.h"
 
+
 typedef char MYBYTE;
 
 
@@ -26,6 +27,7 @@ public:
 	//coordinates  attacker; //POR AHORA ESTAS DOS LINEAS ESTAN EN MAP.H. VER SI QUEDAN AHI O SI SE SACAN Y SE PONEN ACA O DONDE!
 	//coordinates defender;
 
+	void move();
 	void attack();
 	void captureProperty(Player* pAttacker, Player* pDefender);
 	void setAttacker(coordenadas newAttacker);
@@ -34,7 +36,7 @@ public:
 	coordenadas getAttacker();
 	coordenadas getDefender();
 	coordenadas getTileSelected();
-	void purchase(Player* player, string newUnit);
+	void purchase(Player* player);
 	//void setOrigen(coordenadas origen); //USAMOS ATTACKER Y DEFENDER PARA TODO
 	//void setDestino(coordenadas destino);
 	//coordenadas getOrigen();
@@ -43,6 +45,8 @@ public:
 	void Game::generateDefenseModifiersTable();
 	void setNotWinning(bool nWinning);
 	bool getNotWinning();
+	void setNewUnit(Unit* unit);
+	Unit* getNewUnit();
 
 
 private:
@@ -54,5 +58,6 @@ private:
 	bool notWinning;
 	csvFile *defenseModifiers;
 	modifiers tableMatrix[14][5];
+	Unit *newUnit;
 };
 #endif // !GAME_H
