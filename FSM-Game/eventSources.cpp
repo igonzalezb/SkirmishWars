@@ -30,6 +30,12 @@ bool GameEventSource::isThereEvent()
 {
 	bool ret = false;
 
+	if ((gameInterface->playerMe->getMoney())<=0)
+	{
+		evCode = NO_MONEY;
+		ret = true;
+	}
+
 	if (!(gameInterface->getNotWinning()))
 	{
 		evCode = YOU_WON; //VER en que parte se setea nuevamente notWinning en true (probablemente cuando arranca el juego)

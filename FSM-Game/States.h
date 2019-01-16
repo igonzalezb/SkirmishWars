@@ -28,11 +28,9 @@ class ST_GameIdle :public genericState
 
 class ST_Moving :public genericState //ACA se estaria esperando la coordenada de la unidad que se va a mover
 {
-	genericState* on_Move(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
-	genericState* on_LastMove(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
 
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
@@ -44,17 +42,14 @@ class ST_WaitingDestination :public genericState
 	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_LastMove(genericEvent* ev, usefulInfo * Info);
 
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_Attacking :public genericState
 {
-	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
-	genericState* on_LastAttack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
@@ -62,7 +57,6 @@ class ST_Attacking :public genericState
 class ST_WaitingDefender :public genericState
 {
 	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Attack(genericEvent* ev, usefulInfo * Info); //ESTO QUEDA????????
 	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_LastMove(genericEvent* ev, usefulInfo * Info);
@@ -74,20 +68,9 @@ class ST_Purchasing :public genericState
 {
 	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
+	genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
-
-/*
-class ST_YouPlay :public genericState
-{
-	genericState* on_IPlay(genericEvent* ev, usefulInfo * Info); //VER si este queda o no
-	//genericState* on_RMove(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_RPurchase(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_RAttack(genericEvent* ev, usefulInfo * Info); //VER por lo del counter attack!! 
-	genericState* on_RPass(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
-};
-*/
 
 class ST_YouMoving :public genericState
 {
