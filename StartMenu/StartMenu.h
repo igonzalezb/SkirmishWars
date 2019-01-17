@@ -3,7 +3,7 @@
 #include "AllegroSetup.h"
 #include "videoplayer.h"
 
-#define DISPLAY_WIDTH		800
+#define DISPLAY_WIDTH		1000
 #define DISPLAY_HEIGHT		600
 #define VIDEO_PATH		"Advance Wars.ogv"
 #define MENU_IMAGE_PATH		"banner.png"

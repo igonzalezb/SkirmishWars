@@ -12,6 +12,12 @@
 #include "Map.h"
 
 
+#include "basicXML.h"
+#include "MapGraphics.h"
+#include "Resources.h"
+
+#define XML_PATH	"resources.xml"
+
 typedef char MYBYTE;
 
 
@@ -26,7 +32,7 @@ public:
 	Map* myMap;
 	//coordinates  attacker; //POR AHORA ESTAS DOS LINEAS ESTAN EN MAP.H. VER SI QUEDAN AHI O SI SE SACAN Y SE PONEN ACA O DONDE!
 	//coordinates defender;
-
+	
 	void move();
 	void attack();
 	void captureProperty(Player* pAttacker, Player* pDefender);

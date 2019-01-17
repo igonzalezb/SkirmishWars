@@ -341,7 +341,7 @@ bool UserEventSource::isThereEvent()
 		case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
 			if (ev.mouse.button == 1)		//Para usar solo el click izquierdo
 			{
-				evCode = dispachClick(ev.mouse.x, ev.mouse.y);
+				evCode = graphics->dispatchClick(ev.mouse.x, ev.mouse.y, gameInterface);
 
 				if (evCode == NO_EV)	//RET?????? VER!
 					ret = false;
@@ -349,12 +349,12 @@ bool UserEventSource::isThereEvent()
 			break;
 		case ALLEGRO_EVENT_KEY_UP:
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
-				evCode = QUIT;
+				evCode = END_PLAYING;
 				ret = true;
 			}
 			break;
 		case ALLEGRO_EVENT_DISPLAY_CLOSE:
-			evCode = QUIT;
+			evCode = END_PLAYING;
 			ret = true;
 			break;
 		default:
@@ -368,11 +368,11 @@ bool UserEventSource::isThereEvent()
 	return ret;
 
 }
-
-eventCode UserEventSource::dispachClick(int x, int y)
-{
-	
-}
+//
+//eventCode UserEventSource::dispachClick(int x, int y)
+//{
+//	
+//}
 
 
 genericEvent * UserEventSource::insertEvent()

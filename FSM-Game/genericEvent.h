@@ -39,6 +39,7 @@ typedef enum {
 
 	TILE, NEW_UNIT, //ESTE QUEDA
 
+
 	//Opciones de compra presionadas
 	OPT_1, OPT_2, OPT_3, OPT_4, OPT_5, OPT_6, OPT_7, OPT_8, OPT_9,
 

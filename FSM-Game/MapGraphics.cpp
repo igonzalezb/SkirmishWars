@@ -20,6 +20,12 @@ MapGraphics::MapGraphics()
 		printf("Failed to create purchase button!\n");
 	}
 
+	passButton = al_load_bitmap("resources/images/PASS.png");
+	if (!passButton)
+	{
+		printf("Failed to create pass button!\n");
+	}
+
 	menuFont = al_load_font(FONT_MENU, 30, 0);
 	if (!menuFont) {
 		fprintf(stderr, "failed to create menuFont!\n");
@@ -37,7 +43,7 @@ MapGraphics::~MapGraphics()
 	}
 }
 
-void MapGraphics::showMap(Map * map)
+void MapGraphics::showMap(Game* game)
 {
 	al_clear_to_color(al_map_rgb(0.0, 170.0, 0.0));
 	al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, 0.0, 0.0, "TIMER 00:00:00");
@@ -45,17 +51,28 @@ void MapGraphics::showMap(Map * map)
 	
 	al_draw_scaled_bitmap(attackButton, 0.0, 0.0,
 		al_get_bitmap_width(attackButton), al_get_bitmap_height(attackButton),
-		M_WIDTH, al_get_font_line_height(menuFont)*2, R_WIDTH, M_HEIGHT / 6.0, 0);
+		M_WIDTH, al_get_font_line_height(menuFont)*2, R_WIDTH, M_HEIGHT / 8.0, 0);
+	
+	al_draw_scaled_bitmap(passButton, 0.0, 0.0,
+		al_get_bitmap_width(passButton), al_get_bitmap_height(passButton),
+		M_WIDTH, al_get_font_line_height(menuFont) * 3, R_WIDTH, M_HEIGHT / 8.0, 0);
 
 	al_draw_scaled_bitmap(purchaseButton, 0.0, 0.0,
 		al_get_bitmap_width(purchaseButton), al_get_bitmap_height(purchaseButton),
-		M_WIDTH, al_get_font_line_height(menuFont)*2 + al_get_bitmap_height(attackButton), R_WIDTH, M_HEIGHT / 6.0, 0);
+		M_WIDTH, al_get_font_line_height(menuFont)*2 + al_get_bitmap_height(attackButton), R_WIDTH, M_HEIGHT / 8.0, 0);
 
+	list<Unit>::iterator iterator1 = game->data.getUnitList().begin();
 
 	for (int i = 0; i < 9; i++) {
+		string currItem;
+		advance(iterator1, i);
+
+		currItem = iterator1->getName() + "$" + iterator1->getCost;
+		
+
 		al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10,
 			al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton), 0.0,
-			purchaselist[i].c_str());
+			currItem.c_str());
 	}
 
 	bool canMove[FILA][COLUMNA];
@@ -77,7 +94,7 @@ void MapGraphics::showMap(Map * map)
 					al_get_bitmap_width(unitsArray[i][j]), al_get_bitmap_height(unitsArray[i][j]),
 					j*T_WIDTH, i* T_HEIGHT, T_WIDTH / 1.3, T_HEIGHT / 1.3, 0);
 				
-				map->possibleMoves(map->getTile(i, j)->getUnit(), i, j, canMove);	//Esto no va aca!!
+				game->myMap->possibleMoves(game->myMap->getTile(i, j)->getUnit(), i, j, canMove);	//Esto no va aca!!
 				for (int p = 0; p < (FILA); p++) {
 					for (int q = 0; q < (COLUMNA); q++) {
 						if (canMove[p][q]) {
@@ -91,10 +108,6 @@ void MapGraphics::showMap(Map * map)
 			}
 		}
 	}
-
-	
-
-	
 
 	al_flip_display();
 }
@@ -138,7 +151,7 @@ ALLEGRO_DISPLAY* MapGraphics::getDisplay()
 	return display;
 }
 
-eventCode MapGraphics::dispatchClick(int x, int y)
+eventCode MapGraphics::dispatchClick(int x, int y, Game * game)
 {
 	if ((0.0 < x < M_WIDTH) && (0.0 < y < M_HEIGHT))
 	{
@@ -153,303 +166,10 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 #ifdef DEBUG
 					printf("Se apreto la fila: %d, columna %d/n", i, j);
 #endif // DEBUG
-					switch (i)
-					{
-					case 0:
-					{
-						switch (j)
-						{
-						case 0:gameInterface->setTileSelected(LO QUE VA); return TILE; break;
-						case 1: return A2; break;
-						case 2:return A3; break;
-						case 3:return A4; break;
-						case 4:return A5; break;
-						case 5:return A6; break;
-						case 6:return A7; break;
-						case 7:return A8; break;
-						case 8:return A9; break;
-						case 9:return A10; break;
-						case 10:return A11; break;
-						case 11:return A12; break;
-						case 12:return A13; break;
-						case 13:return A14; break;
-						case 14:return A15; break;
-						case 15:return A16; break;
-						default:
-							break;
-						}
-						break;
-					}
-					case 1:
-					{
-						switch (j)
-						{
-						case 0: return B1; break;
-						case 1: return B2; break;
-						case 2:return B3; break;
-						case 3:return B4; break;
-						case 4:return B5; break;
-						case 5:return B6; break;
-						case 6:return B7; break;
-						case 7:return B8; break;
-						case 8:return B9; break;
-						case 9:return B10; break;
-						case 10:return B11; break;
-						case 11:return B12; break;
-						case 12:return B13; break;
-						case 13:return B14; break;
-						case 14:return B15; break;
-						case 15:return B16; break;
-						default: break;
-						}
-						break;
-					}
-					case 2:
-					{
-						switch (j)
-						{
-						case 0:return C1; break;
-						case 1:return C2; break;
-						case 2:return C3; break;
-						case 3:return C4; break;
-						case 4:return C5; break;
-						case 5:return C6; break;
-						case 6:return C7; break;
-						case 7:return C8; break;
-						case 8:return C9; break;
-						case 9:return C10; break;
-						case 10:return C11; break;
-						case 11:return C12; break;
-						case 12:return C13; break;
-						case 13:return C14; break;
-						case 14:return C15; break;
-						case 15:return C16; break;
-						default: break;
-						}
-						break;
-					}
-					case 3:
-					{
-						switch (j)
-						{
-						case 0:return D1; break;
-						case 1:return D2; break;
-						case 2:return D3; break;
-						case 3:return D4; break;
-						case 4:return D5; break;
-						case 5:return D6; break;
-						case 6:return D7; break;
-						case 7:return D8; break;
-						case 8:return D9; break;
-						case 9:return D10; break;
-						case 10:return D11; break;
-						case 11:return D12; break;
-						case 12:return D13; break;
-						case 13:return D14; break;
-						case 14:return D15; break;
-						case 15:return D16; break;
-						default: break;
-						}
-						break;
-					}
-					case 4:
-					{
-						switch (j)
-						{
-						case 0:return E1; break;
-						case 1:return E2; break;
-						case 2:return E3; break;
-						case 3:return E4; break;
-						case 4:return E5; break;
-						case 5:return E6; break;
-						case 6:return E7; break;
-						case 7:return E8; break;
-						case 8:return E9; break;
-						case 9:return E10; break;
-						case 10:return E11; break;
-						case 11:return E12; break;
-						case 12:return E13; break;
-						case 13:return E14; break;
-						case 14:return E15; break;
-						case 15:return E16; break;
-						default: break;
-						}
-						break;
-					}
-					case 5:
-					{
-						switch (j)
-						{
-						case 0:return F1; break;
-						case 1:return F2; break;
-						case 2:return F3; break;
-						case 3:return F4; break;
-						case 4:return F5; break;
-						case 5:return F6; break;
-						case 6:return F7; break;
-						case 7:return F8; break;
-						case 8:return F9; break;
-						case 9:return F10; break;
-						case 10:return F11; break;
-						case 11:return F12; break;
-						case 12:return F13; break;
-						case 13:return F14; break;
-						case 14:return F15; break;
-						case 15:return F16; break;
-						default: break;
-						}
-						break;
-					}
-					case 6:
-					{
-						switch (j)
-						{
-						case 0:return G1; break;
-						case 1:return G2; break;
-						case 2:return G3; break;
-						case 3:return G4; break;
-						case 4:return G5; break;
-						case 5:return G6; break;
-						case 6:return G7; break;
-						case 7:return G8; break;
-						case 8:return G9; break;
-						case 9:return G10; break;
-						case 10:return G11; break;
-						case 11:return G12; break;
-						case 12:return G13; break;
-						case 13:return G14; break;
-						case 14:return G15; break;
-						case 15:return G16; break;
-						default: break;
-						}
-						break;
-					}
-					case 7:
-					{
-						switch (j)
-						{
-						case 0:return H1; break;
-						case 1:return H2; break;
-						case 2:return H3; break;
-						case 3:return H4; break;
-						case 4:return H5; break;
-						case 5:return H6; break;
-						case 6:return H7; break;
-						case 7:return H8; break;
-						case 8:return H9; break;
-						case 9:return H10; break;
-						case 10:return H11; break;
-						case 11:return H12; break;
-						case 12:return H13; break;
-						case 13:return H14; break;
-						case 14:return H15; break;
-						case 15:return H16; break;
-						default: break;
-						}
-						break;
-					}
-					case 8:
-					{
-						switch (j)
-						{
-						case 0:return I1; break;
-						case 1:return I2; break;
-						case 2:return I3; break;
-						case 3:return I4; break;
-						case 4:return I5; break;
-						case 5:return I6; break;
-						case 6:return I7; break;
-						case 7:return I8; break;
-						case 8:return I9; break;
-						case 9:return I10; break;
-						case 10:return I11; break;
-						case 11:return I12; break;
-						case 12:return I13; break;
-						case 13:return I14; break;
-						case 14:return I15; break;
-						case 15:return I16; break;
-						default: break;
-						}
-						break;
-					}
-					case 9:
-					{
-						switch (j)
-						{
-						case 0:return J1; break;
-						case 1:return J2; break;
-						case 2:return J3; break;
-						case 3:return J4; break;
-						case 4:return J5; break;
-						case 5:return J6; break;
-						case 6:return J7; break;
-						case 7:return J8; break;
-						case 8:return J9; break;
-						case 9:return J10; break;
-						case 10:return J11; break;
-						case 11:return J12; break;
-						case 12:return J13; break;
-						case 13:return J14; break;
-						case 14:return J15; break;
-						case 15:return J16; break;
-						default: break;
-						}
-						break;
-					}
-					case 10:
-					{
-						switch (j)
-						{
-						case 0:return K1; break;
-						case 1:return K2; break;
-						case 2:return K3; break;
-						case 3:return K4; break;
-						case 4:return K5; break;
-						case 5:return K6; break;
-						case 6:return K7; break;
-						case 7:return K8; break;
-						case 8:return K9; break;
-						case 9:return K10; break;
-						case 10:return K11; break;
-						case 11:return K12; break;
-						case 12:return K13; break;
-						case 13:return K14; break;
-						case 14:return K15; break;
-						case 15:return K16; break;
-						default: break;
-						}
-						break;
-					}
-					case 11:
-					{
-						switch (j)
-						{
-						case 0:return L1; break;
-						case 1:return L2; break;
-						case 2:return L3; break;
-						case 3:return L4; break;
-						case 4:return L5; break;
-						case 5:return L6; break;
-						case 6:return L7; break;
-						case 7:return L8; break;
-						case 8:return L9; break;
-						case 9:return L10; break;
-						case 10:return L11; break;
-						case 11:return L12; break;
-						case 12:return L13; break;
-						case 13:return L14; break;
-						case 14:return L15; break;
-						case 15:return L16; break;
-						default: break;
-						}
-						break;
-					}
-					default: break;
-					}
-
+					game->setTileSelected(i, j);
+					return TILE;
 				}
 			}
-
 		}
 	}
 
@@ -462,6 +182,16 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 #endif // DEBUG
 		return ATTACK;
 	}
+	else if ((M_WIDTH < x < al_get_display_width(display)) &&
+		(al_get_font_line_height(menuFont) * 3 < y < (al_get_font_line_height(menuFont) * 3 + al_get_bitmap_height(attackButton))))
+	{
+		//Se apreto PASS
+#ifdef DEBUG
+		printf("Se apreto Pass/n");
+#endif // DEBUG
+		return PASS;
+	}
+
 	else if ((M_WIDTH < x < al_get_display_width(display)) && 
 		((al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton)) < y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton))))
 	{
@@ -481,29 +211,22 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 				(al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) + al_get_font_line_height(menuFont)))
 		{
 			// Se apreto para comprar la unidad de numero i de la lista
-			switch (i)
-			{
-			case 1: return OPT_1; break;
-			case 2: return OPT_2; break;
-			case 3: return OPT_3; break;
-			case 4: return OPT_4; break;
-			case 5: return OPT_5; break;
-			case 6: return OPT_6; break;
-			case 7: return OPT_7; break;
-			case 8: return OPT_8; break;
-			case 9: return OPT_9; break;
-			}
-
-#ifdef DEBUG
-			printf("Se apreto la opcion %d para comprar/n", i);
-#endif // DEBUG
-
+		
+			list<Unit>::iterator it3 = game->data.getUnitList().begin();
+			advance(it3, i);
+			Unit *currUnit = new Unit(it3);
+			currUnit->setTeam(game->playerMe->getTeam());	//VERRR
+			game->setNewUnit(currUnit);
 		}
-	
+			
+#ifdef DEBUG
+			sprintf("Se apreto la opcion %d para comprar/n", i);
+#endif // DEBUG
+			return NEW_UNIT;
 	
 	}
 #ifdef DEBUG
-	printf("No se apreto nada relevante/n");
+	sprintf("No se apreto nada relevante/n");
 #endif // DEBUG
 
 	return NO_EV;		//VER!!!!!
