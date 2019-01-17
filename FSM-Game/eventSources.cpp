@@ -130,10 +130,10 @@ bool NetworkEventSource::isThereEvent()
 		case MOVE:
 			evCode = R_MOVE;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
-			r_fila_or = aux[1];
-			r_col_or = aux[2];
-			r_fila_de = aux[3];
-			r_col_de = aux[4];
+			//r_fila_or = aux[1];
+			//r_col_or = aux[2];
+			//r_fila_de = aux[3];
+			//r_col_de = aux[4];
 			
 			gameInterface->setAttacker((int)aux[1], (int)aux[2]);
 			gameInterface->setAttacker((int)aux[3], (int)aux[4]);

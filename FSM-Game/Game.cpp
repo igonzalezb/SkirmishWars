@@ -222,6 +222,12 @@ void Game::setTileSelected(coordenadas newTileSelected)
 	tileSelected = newTileSelected;
 }
 
+void Game::setTileSelected(int i, int j)
+{
+	tileSelected.i;
+	tileSelected.j;
+}
+
 coordenadas Game::getAttacker()
 {
 	return attacker;

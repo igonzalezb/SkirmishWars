@@ -34,6 +34,7 @@ public:
 	void setAttacker(int i,int j);
 	void setDefender(coordenadas newDefender);
 	void setTileSelected(coordenadas newTileSelected);
+	void setTileSelected(int i, int j);
 	coordenadas getAttacker();
 	coordenadas getDefender();
 	coordenadas getTileSelected();
