@@ -12,7 +12,8 @@ StartMenu::StartMenu()
 	if (!display) {
 		fprintf(stderr, "failed to create display!\n");
 	}
-	al_set_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, true);	//ACORDARSE DE ACTIVAR!!!
+
+	//al_set_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, true);	//ACORDARSE DE ACTIVAR!!!
 
 	menuImage = al_load_bitmap(MENU_IMAGE_PATH);
 	if (!menuImage)
@@ -25,7 +26,7 @@ StartMenu::StartMenu()
 		fprintf(stderr, "failed to create event_quieue1!\n");
 	}
 
-	menuFont = al_load_font(FONT_MENU, 75, 0);
+	menuFont = al_load_font(FONT_MENU, 50, 0);
 	if(!menuFont){
 		fprintf(stderr, "failed to create menuFont!\n");
 	}
@@ -94,7 +95,7 @@ int StartMenu::dispachClick(int x, int y)
 #endif // DEBUG
 
 
-	for (int i = 0, j = 0; i< MAX_OPTIONS; i++, j += 100.0)
+	for (int i = 0; i< MAX_OPTIONS; i++)
 	{
 		al_get_text_dimensions(menuFont, Option[i], &bbx, &bby, &bbw, &bbh);
 		
@@ -104,8 +105,8 @@ int StartMenu::dispachClick(int x, int y)
 
 		bbx += 20;
 		bbw += 20;
-		bby += (al_get_display_height(display) / 2.5) + j;
-		bbh += (al_get_display_height(display) / 2.5) + j;
+		bby += (al_get_display_height(display) / 2.5) + (i * al_get_font_line_height(menuFont));
+		bbh += (al_get_display_height(display) / 2.5) + (i * al_get_font_line_height(menuFont));
 
 		if ((x >= bbx && x <= bbw) && (y >= bby && y <= bbh))
 		{
@@ -123,13 +124,13 @@ int StartMenu::dispachClick(int x, int y)
 void StartMenu::dispachMovement(int x, int y)
 {
 	int bbx, bby, bbw, bbh;
-	for (int i = 0, j = 0; i< MAX_OPTIONS; i++, j += 100.0)
+	for (int i = 0; i< MAX_OPTIONS; i++)
 	{
 		al_get_text_dimensions(menuFont, Option[i], &bbx, &bby, &bbw, &bbh);
 		bbx += 20;
 		bbw += 20;
-		bby += (al_get_display_height(display) / 2.5) + j;
-		bbh += (al_get_display_height(display) / 2.5) + j;
+		bby += (al_get_display_height(display) / 2.5) + (i * al_get_font_line_height(menuFont));
+		bbh += (al_get_display_height(display) / 2.5) + (i * al_get_font_line_height(menuFont));
 
 		if ((x >= bbx && x <= bbw) && (y >= bby && y <= bbh))
 		{
@@ -137,11 +138,11 @@ void StartMenu::dispachMovement(int x, int y)
 			printf("Move - Opcion: %s\n", Option[i]);
 #endif // DEBUG
 
-			al_draw_text(menuFont, al_map_rgb(FONT_COLOR_2), 20.0, (al_get_display_height(display) / 2.5) + j, 0.0, Option[i]);
+			al_draw_text(menuFont, al_map_rgb(FONT_COLOR_2), 20.0, (al_get_display_height(display) / 2.5) + (i * al_get_font_line_height(menuFont)), 0.0, Option[i]);
 			
 		}
 		else
-			al_draw_text(menuFont, al_map_rgb(FONT_COLOR_1), 20.0, (al_get_display_height(display) / 2.5) + j, 0.0, Option[i]);
+			al_draw_text(menuFont, al_map_rgb(FONT_COLOR_1), 20.0, (al_get_display_height(display) / 2.5) + (i * al_get_font_line_height(menuFont)), 0.0, Option[i]);
 		al_flip_display();
 	}
 }
@@ -154,8 +155,8 @@ void StartMenu::updateMenu()
 		al_get_bitmap_width(menuImage), al_get_bitmap_height(menuImage), 0.0,0.0,
 		al_get_display_width(display), al_get_display_height(display), 0);
 
-	for (int i=0, j=0; i< MAX_OPTIONS; i++, j+=100.0)
-		al_draw_text(menuFont, al_map_rgb(FONT_COLOR_1), 20.0, (al_get_display_height(display) / 2.5) + j, 0.0, Option[i]);
+	for (int i=0; i< MAX_OPTIONS; i++)
+		al_draw_text(menuFont, al_map_rgb(FONT_COLOR_1), 20.0, (al_get_display_height(display) / 2.5) + (i * al_get_font_line_height(menuFont)), 0.0, Option[i]);
 
 	al_flip_display();
 }
@@ -184,9 +185,8 @@ void StartMenu::dispachOption()		//HAY QUE SACAR LOS TEXT Y PONER QUE HAGA LAS A
 	}
 
 	al_flip_display();
-	al_rest(3.0);
+	al_rest(2.0);
 }
-
 
 StartMenu::~StartMenu()
 {

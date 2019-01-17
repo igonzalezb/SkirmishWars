@@ -17,7 +17,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="resources\maps\BalancedArena.csv">
       <Filter>Resources\Maps</Filter>
     </None>
@@ -51,6 +50,7 @@
     <None Include="resources\terrainDefenseModifiers.csv">
       <Filter>Resources</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AllegroSetup.cpp">
