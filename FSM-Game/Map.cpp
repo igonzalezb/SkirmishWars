@@ -17,9 +17,7 @@ Map::Map()
 	randomMap();
 
 	mapFile = new csvFile(mapName, FILA, COLUMNA);
-	//defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
 
-	//generateDefenseModifiersTable();
 }
 
 void Map::setMapPath(string mapName)
@@ -78,7 +76,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 {
 
 	int pos;
-	string matrixDeTerrenoOrFacility[FILA][COLUMNA];
+	
 	string matrixEquipoOfFacility[FILA][COLUMNA];
 	string matrixEquipoNave[FILA][COLUMNA];
 	string matrixNave[FILA][COLUMNA];
@@ -204,35 +202,21 @@ void Map::possibleMoves(Unit * currUnit, int i, int j)//, bool (&canMove)[FILA][
 			if (getTile(p, q)->getFog()) {
 				matrixCost[p][q] = CANNOT_MOVE;
 			}
-			/*
-			else if (terrainMatrix[p][q] == "a")
-				matrixCost[p][q] = stoi(currUnit->getMc().road);
-			else if (terrainMatrix[p][q] == "r")
-				matrixCost[p][q] = stoi(currUnit->getMc().river);
-			else if (terrainMatrix[p][q] == "f")
-				matrixCost[p][q] = stoi(currUnit->getMc().forest);
-			else if (terrainMatrix[p][q] == "h")
-				matrixCost[p][q] = stoi(currUnit->getMc().hills);
-			else if (terrainMatrix[p][q] == "t")
-				matrixCost[p][q] = stoi(currUnit->getMc().plain);
-			else if (terrainMatrix[p][q] == "NULL")
-				matrixCost[p][q] = 1;	//Quiere decir que hay un factory o city. LE PUSE 1 PERO NO ME ACUERDO
-				*/
+
 
 			//CAMBIO lo comentado de arriba por esto de abajo, usando la info del terreno que tiene el tile:
 			else if (((tilesArray[p][q])->getBuilding()) != NULL)															//VER SI EL NULL VA ASI O SI VA CON COMILLAS "NULL" (?)
 				matrixCost[p][q] = stoi(currUnit->getMc().road);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (terrainMatrix[p][q] == "a"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (matrixDeTerrenoOrFacility[p][q] == "a"))
 				matrixCost[p][q] = stoi(currUnit->getMc().road);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (terrainMatrix[p][q] == "r"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (matrixDeTerrenoOrFacility[p][q] == "r"))
 				matrixCost[p][q] = stoi(currUnit->getMc().river);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (terrainMatrix[p][q] == "f"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (matrixDeTerrenoOrFacility[p][q] == "f"))
 				matrixCost[p][q] = stoi(currUnit->getMc().forest);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (terrainMatrix[p][q] == "h"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (matrixDeTerrenoOrFacility[p][q] == "h"))
 				matrixCost[p][q] = stoi(currUnit->getMc().hills);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (terrainMatrix[p][q] == "t"))
+			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (matrixDeTerrenoOrFacility[p][q] == "t"))
 				matrixCost[p][q] = stoi(currUnit->getMc().plain);
-			//else if (((tilesArray[p][q])->getTerrain()->getType()) == "NULL") //ESTO LO CAMBIO POR UN ELSE
 			else
 				matrixCost[p][q] = 1;	//Quiere decir que hay un factory o city. LE PUSE 1 PERO NO ME ACUERDO
 
@@ -245,7 +229,6 @@ void Map::possibleMoves(Unit * currUnit, int i, int j)//, bool (&canMove)[FILA][
 
 	matrixCost[i][j] = 0;	//Seteo el lugar donde estoy en 0 (VER!!)
 
-	//int mp = stoi(currUnit->getMp());
 	funcion(matrixCost, i, j, stoi(currUnit->getMp()));       
 
 }
@@ -265,6 +248,16 @@ void Map::funcion(int matrixCost[FILA][COLUMNA], int i, int j, int MP) {
 			funcion(matrixCost, i, j - 1, MP);
 		}
 	}
+}
+
+string Map::getMapName()
+{
+	return mapName;
+}
+
+void Map::setMapName(string mapName_)
+{
+	this->mapName = mapName_;
 }
 
 GenericTile* Map::getTile(int i, int j)

@@ -58,13 +58,17 @@ public:
 
 	//agrego esto, despues ver donde meterlo (r de recibido)
 	std::vector<char> r_name;
+	string r_name_string;
 	std::vector<char> r_map;
+	string r_map_string;
 	// VER si dejar las columnas con su valor como MYBYTE que significa char, o si guardarlo como int!!!
 	// las columnas si o si chars porque son letras en mayuscula: A, B, C, D etc
+    /*
 	MYBYTE r_fila_or;
 	MYBYTE r_col_or;
 	MYBYTE r_fila_de;
 	MYBYTE r_col_de;
+	*/
 	std::vector<char>  r_unidad;
 	MYBYTE r_dado;
 private:

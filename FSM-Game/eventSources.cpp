@@ -41,6 +41,39 @@ bool GameEventSource::isThereEvent()
 		evCode = YOU_WON; //VER en que parte se setea nuevamente notWinning en true (probablemente cuando arranca el juego)
 		ret = true;
 	}
+	if (gameInterface->moving==true)
+	{
+		if ((gameInterface->myMap->getTile(gameInterface->getDefender().i,gameInterface->getDefender().j)->getUnit()) == NULL)
+		{
+			if (((gameInterface->myMap->getTile(gameInterface->getAttacker.i, gameInterface->getAttacker.j)->getUnit()) != NULL) &&
+				(((gameInterface->myMap->getTile(gameInterface->getAttacker.i, gameInterface->getAttacker.j)->getUnit())->getTeam()) == (gameInterface->playerMe->getTeam())))
+				//si el attacker es una unidad mia:
+			{
+				gameInterface->myMap->possibleMoves((gameInterface->myMap->getTile(gameInterface->getAttacker.i,gameInterface->getAttacker.j)->getUnit()), gameInterface->getAttacker.i,gameInterface->getAttacker.j);
+				if ((gameInterface->myMap->canMove[gameInterface->getDefender.i][gameInterface->getDefender.j]) == true)
+				{
+					evCode = MOVE;
+					gameInterface->moving = false;
+				}
+			}
+		}
+	}
+	if (gameInterface->attacking == true)
+	{
+		if (((((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getUnit()) != NULL) &&
+			((gameInterface->myMap->getTile(gameInterface->getDefender().i,gameInterface->getDefender().j)->getUnit()->getTeam()) == (gameInterface->playerYou->getTeam()))) ||
+			(((gameInterface->myMap->getTile(gameInterface->getDefender().i,gameInterface->getDefender().j)->getBuilding()) != NULL) &&
+			((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getBuilding()->getTeam()) != (gameInterface->playerMe->getTeam()))))&&
+			 
+			(((gameInterface->myMap->getTile(gameInterface->getAttacker.i, gameInterface->getAttacker.j)->getUnit()) != NULL) &&
+			((gameInterface->myMap->getTile(gameInterface->getAttacker().i,gameInterface->getAttacker().j)->getUnit()->getTeam()) == (gameInterface->playerMe->getTeam()))))
+			//si las coordenadas de attacker y defender estan bien seteadas:
+			{
+				evCode = ATTACK;
+				gameInterface->attacking = false;
+			}
+	}
+
 	//COMPLETAR
 }
 
@@ -96,11 +129,13 @@ bool NetworkEventSource::isThereEvent()
 			aux.erase(aux.begin());
 			r_name.clear();
 			r_name.insert(r_name.begin(), aux.begin(), aux.end());
-			
+
+			//lo pasamos a string y lo guardamos en el nombre del player:
+			for (char c : r_name) {
+				r_name_string.push_back(c);
+			}
+			gameInterface->playerYou->setName(r_name_string);
 			ret = true;
-			/*for (int j = 0; j < i; j++) {
-			cout << name[j];
-			}*/
 			break;
 		case MAP_IS:
 			evCode = R_MAP_IS;
@@ -110,10 +145,13 @@ bool NetworkEventSource::isThereEvent()
 			aux.erase(aux.begin());
 			r_map.clear();
 			r_map.insert(r_map.begin(), aux.begin(), aux.end());
+			
+			//lo pasamos a string y lo guardamos en el nombre del player:
+			for (char c : r_name) {
+				r_map_string.push_back(c);
+			}
+			gameInterface->myMap->setMapName(r_map_string);
 			ret = true;
-			/*for (int j = 0; j < i; j++) {
-			cout << name[j];
-			}*/
 			break;
 		case YOU_START: //sin campo de datos
 			evCode = R_YOU_START;
@@ -130,14 +168,8 @@ bool NetworkEventSource::isThereEvent()
 		case MOVE:
 			evCode = R_MOVE;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
-			//r_fila_or = aux[1];
-			//r_col_or = aux[2];
-			//r_fila_de = aux[3];
-			//r_col_de = aux[4];
-			
-			gameInterface->setAttacker((int)aux[1], (int)aux[2]);
-			gameInterface->setAttacker((int)aux[3], (int)aux[4]);
-
+			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-'0X41'));
+			gameInterface->setDefender((int)aux[3], (int)(aux[4]-'0X41'));
 			ret = true;
 			break;
 		case PURCHASE:
@@ -145,22 +177,26 @@ bool NetworkEventSource::isThereEvent()
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			r_unidad.clear();
 			r_unidad.insert(r_unidad.begin(), aux.begin() + 1, aux.begin() + 3); //para que meta lo que hay en pos 1 y 2 de aux, se pone hasta +3 porque no incluye esa, sino que hasta la anterior.
-			r_fila_de = aux[1];
-			r_col_de = aux[2];
+			//r_fila_de = aux[1];
+			//r_col_de = aux[2];
+			gameInterface->setDefender((int)aux[1], (int)(aux[2]-'0X41'));
+			//CARGAR LA UNIDAD CORRESPONDIENTE EN NEW UNIT ADENTRO DE GAME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			ret = true;
-			/*for (int j = 0; j < 2; j++) {
-			cout << r_unidad[j];
-			}*/
-
 			break;
 		case ATTACK:
 			evCode = R_ATTACK;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
+			/*
 			r_fila_or = aux[1];
 			r_col_or = aux[2];
 			r_fila_de = aux[3];
 			r_col_de = aux[4];
 			r_dado = aux[5];
+			*/
+			gameInterface->setDie((int)aux[5]);
+			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-'0X41'));
+			gameInterface->setDefender((int)aux[3], (int)(aux[4]-'0X41'));
+			
 			ret = true;
 			break;
 		case YOU_WON: //sin campo de datos

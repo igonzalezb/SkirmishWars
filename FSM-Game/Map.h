@@ -80,12 +80,14 @@ public:
 	void funcion(int matrixCost[FILA][COLUMNA], int i, int j, int MP);
 	//void generateDefenseModifiersTable();
 	bool canMove[FILA][COLUMNA];
+	string getMapName();
+	void setMapName(string mapName_);
 
 private:
 	string mapName;
 	csvFile *mapFile;
 	//csvFile *defenseModifiers;
-
+	string matrixDeTerrenoOrFacility[FILA][COLUMNA];
 
 	//modifiers tableMatrix[14][5];
 
