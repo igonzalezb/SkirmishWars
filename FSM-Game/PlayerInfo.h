@@ -19,6 +19,8 @@ public:
 	bool doIStart();
 	void setAmmountOfCities(Map* myMap);
 	int getAmmountOfCities();
+	string getName();
+	void setName(string Name_);
 
 private:
 	string name;

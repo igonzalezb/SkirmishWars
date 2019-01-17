@@ -59,3 +59,13 @@ int Player::getAmmountOfCities()
 	return cities;
 }
 
+string Player::getName()
+{
+	return name;
+}
+
+void Player::setName(string Name_)
+{
+	this->name = Name_;
+}
+

@@ -27,10 +27,9 @@ class Game
 public:
 	Game();
 	~Game(); //Ver cuando llamarlo
-	Player* playerMe = new Player;
-	Player* playerYou = new Player;
-	Map* myMap = new Map;
-	Resources data;
+	Player* playerMe;
+	Player* playerYou;
+	Map* myMap;
 	//coordinates  attacker; //POR AHORA ESTAS DOS LINEAS ESTAN EN MAP.H. VER SI QUEDAN AHI O SI SE SACAN Y SE PONEN ACA O DONDE!
 	//coordinates defender;
 	
@@ -40,6 +39,7 @@ public:
 	void setAttacker(coordenadas newAttacker);
 	void setAttacker(int i,int j);
 	void setDefender(coordenadas newDefender);
+	void setDefender(int i, int j);
 	void setTileSelected(coordenadas newTileSelected);
 	void setTileSelected(int i, int j);
 	coordenadas getAttacker();
@@ -56,17 +56,21 @@ public:
 	bool getNotWinning();
 	void setNewUnit(Unit* unit);
 	Unit* getNewUnit();
-
-
+	int getDie();
+	void setDie(int Dado_);
+	bool moving;
+	bool attacking;
 private:
 	coordenadas attacker;
 	coordenadas defender;
 	coordenadas tileSelected;
+	int die;
 	//coordenadas origen;
 	//coordenadas destino;
 	bool notWinning;
 	csvFile *defenseModifiers;
 	modifiers tableMatrix[14][5];
 	Unit *newUnit;
+
 };
 #endif // !GAME_H

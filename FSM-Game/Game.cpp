@@ -20,6 +20,9 @@ Game::Game()
 
 
 
+	playerMe = new Player;
+	playerYou = new Player;
+	myMap = new Map;
 	notWinning = true;
 	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
 	generateDefenseModifiersTable();
@@ -32,6 +35,9 @@ Game::Game()
 Game::~Game()
 {
 	delete defenseModifiers;
+	delete playerMe;
+	delete playerYou;
+	delete myMap;
 	//destruir los players;
 }
 
@@ -61,7 +67,7 @@ void Game::move()
 void Game::attack()
 {
 	string symbol = myMap->getTile(defender.i,defender.j)->getUnit()->getSymbol();
-	int firepower, inicialDamage, die, finalDamage, dieOnChart;
+	int firepower, inicialDamage, finalDamage, dieOnChart;
 	//if (stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getHp()) < 5)
 	if (myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp() < 5) //menor a 5 significa REDUCED
 	{
@@ -97,7 +103,7 @@ void Game::attack()
 	// finalDamage = ...
 	// dieOnChart =.... (ESTAS DOS VARIABLES SALEN DE ENTRAR A LA TABLA ESA CON EL FINAL DAMAGE Y EL TERRENO DEL DEFENDER)
 
-	die = rand() % 7 + 1; //VERIFICAR si esto tira un valor random entre 1 y 6.
+	//die= rand() % 7 + 1; //VERIFICAR si esto tira un valor random entre 1 y 6.
 
 	int columna;
 	string defenderTerrain = myMap->getTile(attacker.i, attacker.j)->getTerrain()->getType();
@@ -236,6 +242,12 @@ void Game::setDefender(coordenadas newDefender)
 	defender = newDefender;
 }
 
+void Game::setDefender(int i, int j)
+{
+	defender.i = i;
+	defender.j = j;
+}
+
 void Game::setTileSelected(coordenadas newTileSelected)
 {
 	tileSelected = newTileSelected;
@@ -270,5 +282,15 @@ void Game::setNewUnit(Unit* unit)
 Unit* Game::getNewUnit()
 {
 	return newUnit;
+}
+
+int Game::getDie()
+{
+	return die;
+}
+
+void Game::setDie(int Dado_)
+{
+	this->die = Dado_;
 }
 
