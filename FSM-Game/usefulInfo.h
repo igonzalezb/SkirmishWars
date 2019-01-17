@@ -21,14 +21,15 @@ public:
 		//userInterface = userSrc->user;
 	}
 	
-	GameEventSource* gameSrc;
-	NetworkEventSource* networkSrc;
-	//UserEventSource* userSrc;
 
 	Game *gameInterface;
 	Networking *networkInterface;
 	genericPackage *nextPkg;
 	//Input *userInterface;
+
+	GameEventSource* gameSrc;
+	NetworkEventSource* networkSrc;
+	//UserEventSource* userSrc;
 private:
 
 };

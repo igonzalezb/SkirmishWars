@@ -46,8 +46,9 @@ bool GameEventSource::isThereEvent()
 
 //////////////////////NETWORK EVENT SOURCES////////////////////////////////////////////
 /*****  NETWORK EVENT SOURCE  *****/
-NetworkEventSource::NetworkEventSource(Networking *_networkInterface) :networkInterface(_networkInterface)
-{}
+NetworkEventSource::NetworkEventSource(Networking *_networkInterface,Game* _gameInterface) :networkInterface(_networkInterface)//:gameInterface(_gameInterface)
+{
+}
 
 //Chequea si se recibió algo y se guarda la info correspondiente en r_algo en caso de haberla
 bool NetworkEventSource::isThereEvent()
@@ -255,7 +256,8 @@ genericEvent * NetworkEventSource::insertEvent()
 
 
 /////////////////////USER EVENT SOURCES ///////////////////////////////////////////////
-UserEventSource::UserEventSource()
+//UserEventSource::UserEventSource()
+UserEventSource(userInterface* _userInterface, Game* _gameInterface)
 {
 	graphics = new MapGraphics;
 	event_queue = al_create_event_queue();

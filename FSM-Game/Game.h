@@ -42,7 +42,7 @@ public:
 	//coordenadas getOrigen();
 	//coordenadas getDestino();
 	bool didHeWin();
-	void Game::generateDefenseModifiersTable();
+	void generateDefenseModifiersTable();
 	void setNotWinning(bool nWinning);
 	bool getNotWinning();
 	void setNewUnit(Unit* unit);

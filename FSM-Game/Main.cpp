@@ -5,6 +5,7 @@
 #include "FSMGame.h"
 #include "FSMNetworking.h"
 #include "eventSources.h"
+#include "userInput.h"
 //#include "Screen.h"
 //#include "Networking.h"
 //#include "Game.h"
@@ -32,17 +33,13 @@ int main()
 	getchar();
 
 	std::string opponentsIP = "localhost"; //CAMBIAR y ver donde recibirlo y como
-	Networking Client(opponentsIP);
-	Networking server;
-	
+	Networking communicator(opponentsIP);
+	userInput user;
 	Game skirmish; //Creo una instancia del juego
 
-
-
-
 	GameEventSource gameSource(&skirmish);
-	UserEventSource userSource();
-	NetworkEventSource networkSource(&server);
+	UserEventSource userSource(&user,&skirmish);
+	NetworkEventSource networkSource(&communicator,&skirmish);
 	//SoftwareEventSource Software;
 	//NetworkEventSource networkSource(&Server);
 	//UserEventSource userSource(&Terminal);
@@ -50,18 +47,18 @@ int main()
 	usefulInfo Info(&userSource,&gameSource,&networkSource);
 	genericEvent *ev;
 	eventGenerator evGen(&Info);
-	//genericFSM FSM;
+	
 	FSMGame gameFSM;
 	FSMNetworking networkingFSM;
-	/*
+	
+
 	//Terminal.putClear("Listening on port 69...");
 	cout << "Listening on port 69..." << endl; //VER EN QUE PUERTO
-	Server.startConnection();
+	communicator.startConnection();
 	//Terminal.putNext("Connection established");
-	Server.justConnected = 1;
+	communicator.justConnected = 1;
 	//networkSource.evCode = CONNECTED; //VEEEEER COMO MODIFICAR ESE evCode!!!!!!!!!!!!!!!
 	cout << "Connection established" << endl;
-	*/
 
 	do
 	{
@@ -72,10 +69,12 @@ int main()
 #ifdef DEBUG
 			cout << "entra 5: entro porque ev distinto de nullptr" << endl;
 #endif // DEBUG
-			FSM.dispatch(ev, &Info);
+			gameFSM.dispatch(ev, &Info);
+			networkingFSM.dispatch(ev, &Info);
 		}
 
-	} while (FSM.getCurrentState()->getLastEvent() != END_PLAYING);
+	} while ((gameFSM.getCurrentState()->getLastEvent() != END_PLAYING)&&
+		(networkingFSM.getCurrentState()->getLastEvent() != END_PLAYING));//VER BIEN ESTO
 	//while (FSM.getCurrentState()->getLastEvent() != QUIT); //ver bien si este QUIT queda el mismo o si hay que cambiarlo
 }
 

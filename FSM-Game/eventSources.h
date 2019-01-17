@@ -18,6 +18,9 @@
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include "Networking.h"
+#include "userInput.h"
+
+
 
 /*
 #define ONE_MINUTE		60
@@ -28,7 +31,7 @@
 class GameEventSource : public genericEventSource
 {
 public:
-	GameEventSource(Game *_gameInterface); //VER que recibe aca (A LOS DOS JUGADORES, O UNA CLASE CON TODO EL JUEGO O QUE)
+	GameEventSource(Game* _gameInterface);//VER que recibe aca (A LOS DOS JUGADORES, O UNA CLASE CON TODO EL JUEGO O QUE)
 	bool isThereEvent();
 	//eventCode dispachClick(int x, int y);
 	genericEvent* insertEvent();
@@ -41,11 +44,11 @@ private:
 class NetworkEventSource : public genericEventSource
 {
 public:
-	NetworkEventSource(Networking *_networkInterface);
+	NetworkEventSource(Networking *_networkInterface, Game *_gameInterface);
 	bool isThereEvent();
 	genericEvent* insertEvent();
 	Networking *networkInterface;
-	Game* GameInterface
+	Game* gameInterface;
 	//unsigned int expectedBlockNum;
 	//std::string fileRequested;
 	//std::vector<char> data;	//Se almacena la data en caso de recibir DATA
@@ -72,10 +75,11 @@ private:
 class UserEventSource : public genericEventSource
 {
 public:
-	UserEventSource(); //VER que recibe aca (A LOS DOS JUGADORES, O UNA CLASE CON TODO EL JUEGO O QUE)
+	UserEventSource(userInterface* _userInterface,Game*_gameInterface); //VER que recibe aca (A LOS DOS JUGADORES, O UNA CLASE CON TODO EL JUEGO O QUE)
 	bool isThereEvent();
 	eventCode dispachClick(int x, int y);
 	genericEvent* insertEvent();
+	userInterface *userInterface;
 	Game *gameInterface;
 private:
 	MapGraphics* graphics;

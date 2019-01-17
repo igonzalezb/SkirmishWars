@@ -10,6 +10,7 @@ FSMGame::~FSMGame()
 	delete currentState;
 }
 
+//HACER: CAMBIAR ESTA FUNCION, ADAPTANDOLA AL DISPATCHER DEL GAME!!!!!!!!!!!!!!!!
 void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 {
 	genericState *newState = nullptr;

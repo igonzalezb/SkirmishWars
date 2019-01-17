@@ -23,35 +23,37 @@ typedef char MYBYTE;
 class Networking
 {
 public:
-	Networking();
+	Networking(std::string _serverAddress);//PARA CUANDO ES CLIENTE!!!
+	Networking();//PARA CUANDO ES SERVER!!!
 	~Networking(); //Ver cuando llamarlo
+	std::string getServerAddres();//PARA CUANDO ES CLIENTE
 	void sendPackage(genericPackage *Pkg);
 	bool receivePackage();
 	std::vector<char> getInputPackage();
-	//errorCodes getErrorCode();
-	//std::string getData();
-	//std::string getRequestedFile();
-	//std::string getErrorMsg();
 	unsigned int getBlockNumber(); //VER si va a haber que usarla o no
 
 	void startConnection();
 	bool justConnected = 0;
 
 private:
+	//siguientes 3 lineas son  para server
 	boost::asio::io_service*  IO_handler;
-	boost::asio::ip::tcp::socket* serverSocket;
-	boost::asio::ip::tcp::acceptor* serverAcceptor;
+	//boost::asio::ip::tcp::socket* serverSocket;//PARA SERVER PERO IGUAL AL DEL CLIENT. PONER NOMBRE EN COMUN
+	boost::asio::ip::tcp::acceptor* serverAcceptor;//PARA SERVER!!!
+	
+	boost::asio::ip::tcp::socket* mySocket;
+	
+	//siguientes 3 lineas son para client
+	//boost::asio::ip::tcp::socket* clientSocket; //PARA CLIENT PERO ES IGUAL AL DE DOS LINEAS MAS ARRIBA (SE PUEDE SACAR Y PONER NOMBRE EN COMUN)
+	boost::asio::ip::tcp::resolver* clientResolver; //PARA CUANDO ES CLIENT!!!
+	boost::asio::ip::tcp::resolver::iterator endpoint; //PARA CUANDO ES CLIENT!!!
 
-	//void packageDecode();
-
-	//std::string fileToTransfer;
+	std::string serverAddress; //PARA CUANDO ES CLIENT
 	opCodes receivedPackageType;
-	//std::string data;	//Se almacena la data en caso de recibir DATA
-	//std::string errorMsg;
-	//errorCodes errorCode;
 	unsigned int blockNumber;
-
 	std::vector<char> inputPackage;
+
+	bool IamClient;
 };
 #endif // !NETWORKING_H
 
