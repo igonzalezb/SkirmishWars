@@ -159,7 +159,7 @@ eventCode MapGraphics::dispatchClick(int x, int y)
 					{
 						switch (j)
 						{
-						case 0: return A1; break;
+						case 0:gameInterface->setTileSelected(LO QUE VA); return TILE; break;
 						case 1: return A2; break;
 						case 2:return A3; break;
 						case 3:return A4; break;

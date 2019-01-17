@@ -75,11 +75,11 @@ private:
 class UserEventSource : public genericEventSource
 {
 public:
-	UserEventSource(userInterface* _userInterface,Game*_gameInterface); //VER que recibe aca (A LOS DOS JUGADORES, O UNA CLASE CON TODO EL JUEGO O QUE)
+	UserEventSource(userInput* _userInterface,Game*_gameInterface); //VER que recibe aca (A LOS DOS JUGADORES, O UNA CLASE CON TODO EL JUEGO O QUE)
 	bool isThereEvent();
 	eventCode dispachClick(int x, int y);
 	genericEvent* insertEvent();
-	userInterface *userInterface;
+	userInput *userInterface;
 	Game *gameInterface;
 private:
 	MapGraphics* graphics;

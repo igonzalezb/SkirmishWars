@@ -206,6 +206,12 @@ void Game::setAttacker(coordenadas newAttacker)
 	attacker = newAttacker;
 }
 
+void Game::setAttacker(int i, int j)
+{
+	attacker.i = i;
+	attacker.j = j;
+}
+
 void Game::setDefender(coordenadas newDefender)
 {
 	defender = newDefender;

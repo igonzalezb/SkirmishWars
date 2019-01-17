@@ -31,6 +31,7 @@ public:
 	void attack();
 	void captureProperty(Player* pAttacker, Player* pDefender);
 	void setAttacker(coordenadas newAttacker);
+	void setAttacker(int i,int j);
 	void setDefender(coordenadas newDefender);
 	void setTileSelected(coordenadas newTileSelected);
 	coordenadas getAttacker();

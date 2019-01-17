@@ -134,9 +134,10 @@ bool NetworkEventSource::isThereEvent()
 			r_col_or = aux[2];
 			r_fila_de = aux[3];
 			r_col_de = aux[4];
-			///////////VER COMO MODIFICAR ATTACKER Y DEFENDER
-			//Info->gameInterface->setAttacker(,);
-			//Info->gameInterface->setDefender(,);
+			
+			gameInterface->setAttacker((int)aux[1], (int)aux[2]);
+			gameInterface->setAttacker((int)aux[3], (int)aux[4]);
+
 			ret = true;
 			break;
 		case PURCHASE:
@@ -257,7 +258,7 @@ genericEvent * NetworkEventSource::insertEvent()
 
 /////////////////////USER EVENT SOURCES ///////////////////////////////////////////////
 //UserEventSource::UserEventSource()
-UserEventSource(userInterface* _userInterface, Game* _gameInterface)
+UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface)
 {
 	graphics = new MapGraphics;
 	event_queue = al_create_event_queue();
