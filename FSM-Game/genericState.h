@@ -19,8 +19,10 @@ public:
 	
 	virtual genericState* on_NoEv(genericEvent* ev) { return nullptr; }
 
+	virtual genericState* on_WaitingConnection(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Connected(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_MapSelected(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_WaitingMapConfirmation(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_MapOk(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_ErrDetected(genericEvent* ev, usefulInfo * Info) { return nullptr; } //VER si esto se deja o no.
 

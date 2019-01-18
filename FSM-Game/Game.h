@@ -60,6 +60,7 @@ public:
 	void setDie(int Dado_);
 	bool moving;
 	bool attacking;
+	bool purchasing;
 private:
 	coordenadas attacker;
 	coordenadas defender;

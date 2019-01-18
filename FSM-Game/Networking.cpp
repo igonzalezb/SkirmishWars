@@ -13,6 +13,7 @@ Networking::Networking(std::string _serverAddress) : serverAddress(_serverAddres
 	mySocket = new boost::asio::ip::tcp::socket(*IO_handler);
 	clientResolver = new boost::asio::ip::tcp::resolver(*IO_handler);
 	
+	justConnected = false;
 	IamClient = true;
 }
 //VA A HABER QUE UNIR EN UNO A LOS DOS SIGUIENTES CONSTRUCTORES
@@ -75,6 +76,7 @@ void Networking::startConnection()
 	if (contador<=5) //NO SE CUMPLIO EL TIEMPO, ES CLIENTE
 	{
 		mySocket->non_blocking(true);
+		IamClient = true;
 		cout << "CONNECTED AS CLIENT" << endl;
 	}
 	else //TIENE QUE SER SERVER

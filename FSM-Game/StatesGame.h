@@ -1,7 +1,7 @@
 //CHEQUEAR TODOS LOS ON...
 
-#ifndef STATES_H
-#define STATES_H
+#ifndef STATESGAME_H
+#define STATESGAME_H
 
 #define DEBUG true
 
@@ -86,7 +86,7 @@ class ST_WaitingAttackConfirmation :public genericState //ACA se estaria esperan
 
 class ST_Purchasing :public genericState
 {
-	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
+	//genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Unit(genericEvent* ev, usefulInfo * Info);
@@ -101,6 +101,14 @@ class ST_WaitingLocation :public genericState
 	genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
+
+class ST_WaitingPurchaseConfirmation :public genericState
+{
+	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
+	//genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
+	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
+};
+
 
 class ST_YouMoving :public genericState
 {
@@ -130,4 +138,4 @@ class ST_YouPurchasing :public genericState
 
 ////////////////////////////////////////////////
 
-#endif // !STATES_H
+#endif // !STATESGAME_H

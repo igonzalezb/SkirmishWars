@@ -1,5 +1,5 @@
 
-#include "States.h"
+#include "StatesGame.h"
 #include "Game.h"
 #include "usefulInfo.h"
 #include "Events.h"
@@ -394,49 +394,42 @@ genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulIn
 }
 
 
-/////////////////////////////// ST_Purchasing ///////////////////////////////
-//PURCHASING::ON PURCHASE PROBABLEMENTE DESAPAREZCA!!!!!!!
-genericState* ST_Purchasing::on_Purchase(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
+/////////////////////////////// ST_WaitingPurchaseConfirmation ///////////////////////////////
+genericState* ST_WaitingPurchaseConfirmation::on_Purchase(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Purchasing();
-
-	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
-	Info->gameInterface->purchase(Info->gameInterface->playerMe, newUnit);
-
-	//COMPLETAR 
-
+	Info->gameInterface->purchase(Info->gameInterface->playerMe);
 	return ret;
 }
+
+/////////////////////////////// ST_Purchasing ///////////////////////////////
+//PURCHASING::ON PURCHASE PROBABLEMENTE DESAPAREZCA!!!!!!!
+//genericState* ST_Purchasing::on_Purchase(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
+//{
+//	genericState *ret = (genericState *) new ST_Purchasing();
+//
+//	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
+//	Info->gameInterface->purchase(Info->gameInterface->playerMe, newUnit);
+//
+//	//COMPLETAR 
+//
+//	return ret;
+//}
 
 genericState* ST_Purchasing::on_Unit(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
 {
 	genericState *ret;
 
-	/*
-	units=Info->gameInterface->resourses->getUnitList
-
-	list<Unit>::iterator ite = units.begin();
-	for (bool k = true; k && (ite != units.end()); ++it3) {
-
-		if (strcmp(it3->getType().c_str(), matrixNave[i][j].c_str()) == false) {
-			k = false;
-			//printf("Encontre: %s\n", it3->getName().c_str());
-			Unit *currUnit = new Unit(it3);
-			currUnit->setTeam(TeamColor(stoi(matrixEquipoNave[i][j])));
-			tilesArray[i][j]->addUnit(currUnit);
-		}
-		else
-		{
-			tilesArray[i][j]->addUnit(NULL);
-		}*/
 
 	if ((stoi(Info->gameInterface->getNewUnit()->getCost()))<=(Info->gameInterface->playerMe->getMoney()))
 	{//Si alcanza la plata para comprar esa unidad, cambio de estado
 		ret = (genericState *) new ST_WaitingLocation();
+		Info->gameInterface->purchasing = false;
 	}
 	else
 	{//Si no alcanza la plata para comprar esa unidad, espera que se elija una nueva unidad.
 		ret = (genericState *) new ST_Purchasing();
+		Info->gameInterface->purchasing = false;
 	}
 
 	//COMPLETAR 
@@ -509,12 +502,13 @@ genericState* ST_WaitingLocation::on_Tile(genericEvent* ev, usefulInfo * Info)
 		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) == NULL))
 	{
 		Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
-		Info->gameInterface->purchase(Info->gameInterface->playerMe);
-		ret = (genericState *) new ST_Purchasing();
+		ret = (genericState *) new ST_WaitingPurchaseConfirmation();
+		Info->gameInterface->purchasing = true;
 	}
 	else
 	{//Si el tile presionado es uno invalido para meterle una nueva unit, quedarse en este estado
 		ret = (genericState *) new ST_WaitingLocation();
+		Info->gameInterface->purchasing = false;
 	}
 	return ret;
 }

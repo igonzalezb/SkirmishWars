@@ -21,9 +21,49 @@ GameEventSource::GameEventSource(Game *_gameInterface)
 
 genericEvent * GameEventSource::insertEvent()
 {
-	genericEvent * ret;
-	
-	//COMPLETAR
+	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
+	switch (evCode)
+	{
+	case YOU_START:
+		ret = (genericEvent *) new EV_YouStart();
+		break;
+	case I_START:
+		ret = (genericEvent *) new EV_IStart();
+		break;
+	case MOVE:
+		ret = (genericEvent *) new EV_Move();
+		break;
+	case PURCHASE:
+		ret = (genericEvent *) new EV_Purchase();
+		break;
+	case ATTACK:
+		ret = (genericEvent *) new EV_Attack();
+		break;
+	case PASS:
+		ret = (genericEvent *) new EV_Pass();
+		break;
+	case YOU_WON:
+		ret = (genericEvent *) new EV_YouWon();
+		break;
+	case PLAY_AGAIN:
+		ret = (genericEvent *) new EV_PlayAgain();
+		break;
+	case GAME_OVER:
+		ret = (genericEvent *) new EV_GameOver();
+		break;
+	case QUIT:
+		ret = (genericEvent *) new EV_Quit();
+		break;
+	case END_PLAYING:
+		ret = (genericEvent *) new EV_EndPlaying();
+		break;
+	case ERR_DETECTED:		//VER si este case se deja o si se saca
+		ret = (genericEvent *) new EV_ErrDetected();
+		break;
+	default:
+		break;
+	}
+	return ret;
 }
 
 bool GameEventSource::isThereEvent()
@@ -54,6 +94,7 @@ bool GameEventSource::isThereEvent()
 				{
 					evCode = MOVE;
 					gameInterface->moving = false;
+					ret = true;
 				}
 			}
 		}
@@ -71,7 +112,22 @@ bool GameEventSource::isThereEvent()
 			{
 				evCode = ATTACK;
 				gameInterface->attacking = false;
+				ret = true;
 			}
+	}
+
+	if (gameInterface->purchasing == true)
+	{
+		if (((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getBuilding()) != NULL) &&
+			(((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getBuilding()->getType()).compare("m")) == 0) &&
+			((gameInterface->myMap->getTile(gameInterface->getDefender().i,gameInterface->getDefender().j)->getBuilding()->getTeam()) == (gameInterface->playerMe->getTeam())) &&
+			((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getUnit()) == NULL) &&
+			(stoi(gameInterface->getNewUnit()->getCost())) <= (gameInterface->playerMe->getMoney()))
+		{
+			evCode = PURCHASE;
+			gameInterface->purchasing = false;
+			ret = true;
+		}
 	}
 
 	//COMPLETAR
@@ -95,14 +151,21 @@ bool NetworkEventSource::isThereEvent()
 
 	//VER COMO HACER PARA QUE APAREZCA UN EVENTO DE CONNECTED!!! CON SERVER. NO SE PUEDE
 
-	if (networkInterface->justConnected == 1)
+	if (networkInterface->justConnected)
 	{
-		evCode = CONNECTED;
-		networkInterface->justConnected = 0;
+		//evCode = CONNECTED;
+		networkInterface->justConnected = false;
 #ifdef DEBUG
 		cout << "ENTRA 1" << endl;
 #endif // DEBUG
-
+		if (networkInterface->IamClient)
+		{
+			evCode = CONNECTED_AS_CLIENT;
+		}
+		else
+		{
+			evCode = CONNECTED_AS_SERVER;
+		}
 		ret = true;
 	}
 
@@ -113,15 +176,15 @@ bool NetworkEventSource::isThereEvent()
 #endif // DEBUG
 		switch (networkInterface->getInputPackage()[0])	//segun el tipo de paquete devuelvo el tipo de evento
 		{
-		case ACK: //sin campo de datos
+		case OP_ACK: //sin campo de datos
 			evCode = R_ACK;
 			ret = true;
 			break;
-		case NAME://sin campo de datos
+		case OP_NAME://sin campo de datos
 			evCode = R_NAME;
 			ret = true;
 			break;
-		case NAME_IS: //guarda en r_name el nombre recibido (del oponente) por networking
+		case OP_NAME_IS: //guarda en r_name el nombre recibido (del oponente) por networking
 			evCode = R_NAME_IS;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			i = static_cast<int>(aux[1]);
@@ -137,7 +200,7 @@ bool NetworkEventSource::isThereEvent()
 			gameInterface->playerYou->setName(r_name_string);
 			ret = true;
 			break;
-		case MAP_IS:
+		case OP_MAP_IS:
 			evCode = R_MAP_IS;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			i = static_cast<int>(aux[1]);
@@ -153,26 +216,26 @@ bool NetworkEventSource::isThereEvent()
 			gameInterface->myMap->setMapName(r_map_string);
 			ret = true;
 			break;
-		case YOU_START: //sin campo de datos
+		case OP_YOU_START: //sin campo de datos
 			evCode = R_YOU_START;
 			ret = true;
 			break;
-		case I_START: //sin campo de datos
+		case OP_I_START: //sin campo de datos
 			evCode = R_I_START;
 			ret = true;
 			break;
-		case PASS: //sin campo de datos
+		case OP_PASS: //sin campo de datos
 			evCode = R_PASS;
 			ret = true;
 			break;
-		case MOVE:
+		case OP_MOVE:
 			evCode = R_MOVE;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-'0X41'));
 			gameInterface->setDefender((int)aux[3], (int)(aux[4]-'0X41'));
 			ret = true;
 			break;
-		case PURCHASE:
+		case OP_PURCHASE:
 			evCode = R_PURCHASE;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			r_unidad.clear();
@@ -183,7 +246,7 @@ bool NetworkEventSource::isThereEvent()
 			//CARGAR LA UNIDAD CORRESPONDIENTE EN NEW UNIT ADENTRO DE GAME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			ret = true;
 			break;
-		case ATTACK:
+		case OP_ATTACK:
 			evCode = R_ATTACK;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			/*
@@ -199,23 +262,23 @@ bool NetworkEventSource::isThereEvent()
 			
 			ret = true;
 			break;
-		case YOU_WON: //sin campo de datos
+		case OP_YOU_WON: //sin campo de datos
 			evCode = R_YOU_WON;
 			ret = true;
 			break;
-		case PLAY_AGAIN: //sin campo de datos
+		case OP_PLAY_AGAIN: //sin campo de datos
 			evCode = R_PLAY_AGAIN;
 			ret = true;
 			break;
-		case GAME_OVER: //sin campo de datos
+		case OP_GAME_OVER: //sin campo de datos
 			evCode = R_GAME_OVER;
 			ret = true;
 			break;
-		case ERROR_: //sin campo de datos
+		case OP_ERROR: //sin campo de datos
 			evCode = R_ERROR_;
 			ret = true;
 			break;
-		case QUIT: //sin campo de datos
+		case OP_QUIT: //sin campo de datos
 			evCode = R_QUIT;
 			ret = true;
 			break;
@@ -231,6 +294,18 @@ genericEvent * NetworkEventSource::insertEvent()
 	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
 	switch (evCode)
 	{
+	case CONNECTED_AS_CLIENT:
+		ret = (genericEvent *) new EV_ConnectedAsClient();
+#ifdef DEBUG
+		cout << "entra 3: genera evento connected as client" << endl;
+#endif // DEBUG
+		break;
+	case CONNECTED_AS_SERVER:
+		ret = (genericEvent *) new EV_ConnectedAsServer();
+#ifdef DEBUG
+		cout << "entra 3: genera evento connected as server" << endl;
+#endif // DEBUG
+		break;
 	case R_ACK:
 		ret = (genericEvent *) new EV_Rack();
 		break;
@@ -278,12 +353,6 @@ genericEvent * NetworkEventSource::insertEvent()
 		break;
 	case ERR_DETECTED:		//VER si este case se deja o si se saca
 		ret = (genericEvent *) new EV_ErrDetected();
-		break;
-	case CONNECTED:
-		ret = (genericEvent *) new EV_Connected();
-#ifdef DEBUG
-		cout << "entra 3: entro a insert event" << endl;
-#endif // DEBUG
 		break;
 	default:
 		break;
@@ -362,11 +431,28 @@ bool UserEventSource::isThereEvent()
 //}
 
 
-genericEvent * UserEventSource::insertEvent()
+genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 {
-	genericEvent * ret;
+	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
+	switch (evCode)
+	{
+	case NO_EV:
+		ret = (genericEvent *) new EV_NoEv();
+		break;
+	case END_PLAYING:
+		ret = (genericEvent *) new EV_EndPlaying();
+		break;
+	case TILE:
+		ret = (genericEvent *) new EV_Tile();
+		break;
+	case NEW_UNIT:
+		ret = (genericEvent *) new EV_NewUnit();
+		break;
 
-	//COMPLETAR
+	default:
+		break;
+	}
+	return ret;
 }
 
 
