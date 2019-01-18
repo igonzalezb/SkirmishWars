@@ -85,12 +85,12 @@ bool GameEventSource::isThereEvent()
 	{
 		if ((gameInterface->myMap->getTile(gameInterface->getDefender().i,gameInterface->getDefender().j)->getUnit()) == NULL)
 		{
-			if (((gameInterface->myMap->getTile(gameInterface->getAttacker.i, gameInterface->getAttacker.j)->getUnit()) != NULL) &&
-				(((gameInterface->myMap->getTile(gameInterface->getAttacker.i, gameInterface->getAttacker.j)->getUnit())->getTeam()) == (gameInterface->playerMe->getTeam())))
+			if (((gameInterface->myMap->getTile(gameInterface->getAttacker().i, gameInterface->getAttacker().j)->getUnit()) != NULL) &&
+				(((gameInterface->myMap->getTile(gameInterface->getAttacker().i, gameInterface->getAttacker().j)->getUnit())->getTeam()) == (gameInterface->playerMe->getTeam())))
 				//si el attacker es una unidad mia:
 			{
-				gameInterface->myMap->possibleMoves((gameInterface->myMap->getTile(gameInterface->getAttacker.i,gameInterface->getAttacker.j)->getUnit()), gameInterface->getAttacker.i,gameInterface->getAttacker.j);
-				if ((gameInterface->myMap->canMove[gameInterface->getDefender.i][gameInterface->getDefender.j]) == true)
+				gameInterface->myMap->possibleMoves((gameInterface->myMap->getTile(gameInterface->getAttacker().i,gameInterface->getAttacker().j)->getUnit()), gameInterface->getAttacker().i,gameInterface->getAttacker().j);
+				if ((gameInterface->myMap->canMove[gameInterface->getDefender().i][gameInterface->getDefender().j]) == true)
 				{
 					evCode = MOVE;
 					gameInterface->moving = false;
@@ -106,7 +106,7 @@ bool GameEventSource::isThereEvent()
 			(((gameInterface->myMap->getTile(gameInterface->getDefender().i,gameInterface->getDefender().j)->getBuilding()) != NULL) &&
 			((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getBuilding()->getTeam()) != (gameInterface->playerMe->getTeam()))))&&
 			 
-			(((gameInterface->myMap->getTile(gameInterface->getAttacker.i, gameInterface->getAttacker.j)->getUnit()) != NULL) &&
+			(((gameInterface->myMap->getTile(gameInterface->getAttacker().i, gameInterface->getAttacker().j)->getUnit()) != NULL) &&
 			((gameInterface->myMap->getTile(gameInterface->getAttacker().i,gameInterface->getAttacker().j)->getUnit()->getTeam()) == (gameInterface->playerMe->getTeam()))))
 			//si las coordenadas de attacker y defender estan bien seteadas:
 			{
@@ -131,6 +131,7 @@ bool GameEventSource::isThereEvent()
 	}
 
 	//COMPLETAR
+	return ret;
 }
 
 //////////////////////NETWORK EVENT SOURCES////////////////////////////////////////////
@@ -144,6 +145,7 @@ bool NetworkEventSource::isThereEvent()
 {
 	//unsigned char blockLow, blockHigh;
 	bool ret = false;
+	list<Unit>::iterator it3 = gameInterface->data.getUnitList().begin();
 	//std::ifstream fileStream;
 	std::vector<MYBYTE> aux; //en vez de MYBYTE se puede poner char ( que es lo que estaba) pero es lo mismo
 	std::string auxstr; //ver si lo voy a usar o no
@@ -247,8 +249,8 @@ bool NetworkEventSource::isThereEvent()
 			for (char c : r_unidad) {
 				r_unidad_string.push_back(c);
 			}
-			list<Unit>::iterator it3 = gameInterface->data.getUnitList.begin();
-			for (bool k = true; k && (it3 != gameInterface->data.getUnitList.end()); ++it3) {
+			
+			for (bool k = true; k && (it3 != gameInterface->data.getUnitList().end()); ++it3) {
 
 				if (strcmp(it3->getType().c_str(), r_unidad_string.c_str()) == false) {
 					k = false;

@@ -74,9 +74,10 @@ int main()
 			networkingFSM.dispatch(ev, &Info);
 		}
 
-	} while ((gameFSM.getCurrentState()->getLastEvent() != END_PLAYING)&&
-		(networkingFSM.getCurrentState()->getLastEvent() != END_PLAYING));//VER BIEN ESTO
+	} while (((gameFSM.getCurrentState())->getLastEvent() != END_PLAYING) &&
+		((networkingFSM.getCurrentState())->getLastEvent() != END_PLAYING));//VER BIEN ESTO
 	//while (FSM.getCurrentState()->getLastEvent() != QUIT); //ver bien si este QUIT queda el mismo o si hay que cambiarlo
+
 }
 
 

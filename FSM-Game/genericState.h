@@ -21,6 +21,10 @@ public:
 
 	virtual genericState* on_WaitingConnection(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Connected(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+
+	virtual genericState* on_ConnectedAsServer(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_ConnectedAsClient(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+
 	virtual genericState* on_MapSelected(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_WaitingMapConfirmation(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_MapOk(genericEvent* ev, usefulInfo * Info) { return nullptr; }

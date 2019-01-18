@@ -1,5 +1,6 @@
 #include "genericFSM.h"
-#include "States.h"
+#include "StatesGame.h"
+#include "StatesNetworking.h"
 
 genericFSM::genericFSM()
 {
