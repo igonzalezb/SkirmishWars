@@ -2,8 +2,6 @@
 
 using namespace std;
 
-
-
 Map::Map()
 {
 	for (int i = 0; i < (FILA); i++) {

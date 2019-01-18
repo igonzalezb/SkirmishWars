@@ -191,28 +191,30 @@ void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado e
 
 bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE
 {
-	int i, j;
-	for(i=0;i<FILA;i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			if (((myMap->getTile(i,j)->getUnit()) != NULL)&&
-				((myMap->getTile(i, j)->getUnit()->getTeam())==(playerYou->getTeam())))
-			{
-				notWinning = false;
-			}
-			if ((myMap->getTile(i,j)->getBuilding()!=NULL)&&
-				((myMap->getTile(i, j)->getBuilding()->getType()).compare("HQ"))&&
-				((myMap->getTile(i,j)->getBuilding()->getTeam())==playerYou->getTeam()))//REVISAR como esta cargado el type del HQ 
-			{
-				notWinning = false;
-			}
-		}
-	}
-	if (!notWinning) //VER SI ESTE if VA AL GENERADOR DE EVENTOS!!!!!!!!!!!!!!
-	{
-		//GENERAR EL EVENTO YOU WON
-	}
+	//int i, j;
+	//for(i=0;i<FILA;i++)
+	//{
+	//	for (j = 0; j < COLUMNA; j++)
+	//	{
+	//		if (((myMap->getTile(i,j)->getUnit()) != NULL)&&
+	//			((myMap->getTile(i, j)->getUnit()->getTeam())==(playerYou->getTeam())))
+	//		{
+	//			notWinning = false;
+	//		}
+	//		if ((myMap->getTile(i,j)->getBuilding()!=NULL)&&
+	//			((myMap->getTile(i, j)->getBuilding()->getType()).compare("HQ"))&&
+	//			((myMap->getTile(i,j)->getBuilding()->getTeam())==playerYou->getTeam()))//REVISAR como esta cargado el type del HQ 
+	//		{
+	//			notWinning = false;
+	//		}
+	//	}
+	//}
+	//if (!notWinning) //VER SI ESTE if VA AL GENERADOR DE EVENTOS!!!!!!!!!!!!!!
+	//{
+	//	return true;
+	//	//GENERAR EL EVENTO YOU WON
+	//}
+	return false;
 }
 
 void Game::setNotWinning(bool nWinning)
