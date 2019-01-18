@@ -5,6 +5,7 @@ Player::Player()
 {
 	money = 5;	//El juego se empieza con $5
 	team = TeamColor(rand() % MAX_PLAYERS + 1);
+	cities = 0;
 }
 
 Player::~Player()

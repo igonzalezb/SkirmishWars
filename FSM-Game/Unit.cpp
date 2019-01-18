@@ -74,7 +74,8 @@ void Unit::setType(string type)
 	this->type = type;
 }
 
-void Unit::setTeam(TeamColor team)
+void Unit::setTeam(
+	team)
 {
 	this->team = team;
 	type.append(to_string(team));			//PROBAR!!!!

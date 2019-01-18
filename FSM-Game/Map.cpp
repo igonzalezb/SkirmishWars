@@ -2,7 +2,6 @@
 
 using namespace std;
 
-void funcion(int matrixCost[FILA][COLUMNA], bool(&canMove)[FILA][COLUMNA], int i, int j, int MP);
 
 
 Map::Map()
@@ -167,7 +166,7 @@ if (!encontroTerrain) {
 						k = false;
 						//printf("Encontre: %s\n", it3->getName().c_str());
 						Unit *currUnit = new Unit(it3);
-						currUnit->setTeam(TeamColor(stoi(matrixEquipoNave[i][j])));
+						currUnit->setTeam(TeamNumber(stoi(matrixEquipoNave[i][j])));
 						tilesArray[i][j]->addUnit(currUnit);
 					}
 					else
@@ -246,13 +245,60 @@ void Map::checkPossibleMoves(int matrixCost[FILA][COLUMNA], int i, int j, int MP
 			{
 				canMove[i][j] = true;
 			}
-			funcion(matrixCost, i - 1, j, MP);
-			funcion(matrixCost, i + 1, j, MP);
-			funcion(matrixCost, i, j + 1, MP);
-			funcion(matrixCost, i, j - 1, MP);
+			checkPossibleMoves(matrixCost, i - 1, j, MP);
+			checkPossibleMoves(matrixCost, i + 1, j, MP);
+			checkPossibleMoves(matrixCost, i, j + 1, MP);
+			checkPossibleMoves(matrixCost, i, j - 1, MP);
 		}
 	}
 }
+
+void Map::possibleAttack(Unit * currUnit, int i, int j)
+{
+
+	int matrixCost[FILA][COLUMNA];
+
+	for (int p = 0; p < FILA; p++)
+	{
+		for (int q = 0; q < COLUMNA; q++)
+		{
+			if (getTile(p, q)->getFog())
+			{
+				matrixCost[p][q] = CANNOT_MOVE;
+			}
+			else
+			{
+				matrixCost[p][q] = 1;
+			}
+			canAttack[p][q] = false;
+		}
+			
+	}
+
+	matrixCost[i][j] = 0;
+	checkPossibleAttacks(matrixCost, i, j, stoi(currUnit->getRange().max));
+}
+
+
+void Map::checkPossibleAttacks(int matrixCost[FILA][COLUMNA], int i, int j, int Range) {
+	if ((0 <= i) && (i < FILA) && (0 <= j) && (j < COLUMNA) && (Range >= 0))
+	{
+		if (Range >= 0) {
+			Range -= matrixCost[i][j];
+			if ((Range >= 0) && ((getTile(i, j)->getFog()) == false))//&& ((getTile(i, j)->getUnit()) == NULL))
+			{
+				canAttack[i][j] = true;
+			}
+			checkPossibleAttacks(matrixCost, i - 1, j, Range);
+			checkPossibleAttacks(matrixCost, i + 1, j, Range);
+			checkPossibleAttacks(matrixCost, i, j + 1, Range);
+			checkPossibleAttacks(matrixCost, i, j - 1, Range);
+		}
+	}
+}
+
+
+
 
 string Map::getMapName()
 {
