@@ -66,7 +66,6 @@ public:
 	void randomMap();
 	void generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units);
 
-	void possibleMoves(Unit *currUnit, int i, int j);
 
 	GenericTile* getTile(int i, int j);
 	void updateFogOfWar(int myTeam);
@@ -77,9 +76,16 @@ public:
 	void setDefender(int tile);
 	coordenadas getAttacker();
 	coordenadas getDefender();
+
+	void possibleMoves(Unit *currUnit, int i, int j);
+	void possibleAttack(Unit *currUnit, int i, int j);
 	void checkPossibleMoves(int matrixCost[FILA][COLUMNA], int i, int j, int MP);
+	void checkPossibleAttacks(int matrixCost[FILA][COLUMNA], int i, int j, int Range);
+
+
 	//void generateDefenseModifiersTable();
 	bool canMove[FILA][COLUMNA];
+	bool canAttack[FILA][COLUMNA];
 	string getMapName();
 	void setMapName(string mapName_);
 

@@ -6,7 +6,7 @@
 using namespace std;
 
 typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
-
+typedef enum {NEUTRO, EQUIPO1, EQUIPO2}TeamNumber;
 
 //#define HQ(x)		"q"#x
 //#define CITY(x)		"c"#x

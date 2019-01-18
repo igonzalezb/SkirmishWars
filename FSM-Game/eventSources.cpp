@@ -110,9 +110,13 @@ bool GameEventSource::isThereEvent()
 			((gameInterface->myMap->getTile(gameInterface->getAttacker().i,gameInterface->getAttacker().j)->getUnit()->getTeam()) == (gameInterface->playerMe->getTeam()))))
 			//si las coordenadas de attacker y defender estan bien seteadas:
 			{
-				evCode = ATTACK;
-				gameInterface->attacking = false;
-				ret = true;
+				gameInterface->myMap->possibleAttack((gameInterface->myMap->getTile(gameInterface->getAttacker.i, gameInterface->getAttacker.j)->getUnit()), gameInterface->getAttacker.i, gameInterface->getAttacker.j);
+				if ((gameInterface->myMap->canAttack[gameInterface->getDefender.i][gameInterface->getDefender.j]) == true)
+				{
+					evCode = ATTACK;
+					gameInterface->attacking = false;
+					ret = true;
+				}
 			}
 	}
 
