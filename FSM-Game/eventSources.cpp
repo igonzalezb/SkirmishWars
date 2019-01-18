@@ -54,6 +54,7 @@ bool GameEventSource::isThereEvent()
 				{
 					evCode = MOVE;
 					gameInterface->moving = false;
+					ret = true;
 				}
 			}
 		}
@@ -71,6 +72,7 @@ bool GameEventSource::isThereEvent()
 			{
 				evCode = ATTACK;
 				gameInterface->attacking = false;
+				ret = true;
 			}
 	}
 
@@ -84,6 +86,7 @@ bool GameEventSource::isThereEvent()
 		{
 			evCode = PURCHASE;
 			gameInterface->purchasing = false;
+			ret = true;
 		}
 	}
 
