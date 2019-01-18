@@ -49,19 +49,19 @@ class ST_S_WaitingIPlayAck :public genericState
 //Estados en caso de ser CLIENT:
 class ST_C_WaitingName :public genericState
 {
-	genericState* on_Name(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rname(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_C_WaitingNameIsAck :public genericState
 {
-	genericState* on_Ack(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rack(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_C_WaitingNameIs :public genericState
 {
-	genericState* on_NameIs(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RnameIs(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 

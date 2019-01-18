@@ -10,6 +10,12 @@ FSMNetworking::~FSMNetworking()
 	delete currentState;
 }
 
+//PROBANDO CON ESTA FUNCION ACA
+genericState * FSMNetworking::getCurrentState()
+{
+	return currentState;
+}
+
 void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 {
 	genericState *newState = nullptr;

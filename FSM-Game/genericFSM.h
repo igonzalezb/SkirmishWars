@@ -12,7 +12,7 @@ public:
 	genericFSM();	//Crea un estado al que apunta currentState
 	~genericFSM();	//Destruye el estado al que apunta currentState
 
-	virtual void dispatch(genericEvent * ev, usefulInfo *Info)=0;	//llama a la funcion del estado al que apunta current state que repsonde al evento recibido
+	virtual void dispatch(genericEvent * ev, usefulInfo *Info) = 0;	//llama a la funcion del estado al que apunta current state que repsonde al evento recibido
 	genericState * getCurrentState();
 
 	//ESTO QUE SIGUE NO LO PUSIMOS EN LAS HIJAS, SI NO FUNCION, PONERLO.
