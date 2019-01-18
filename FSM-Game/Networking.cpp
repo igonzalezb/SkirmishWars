@@ -75,6 +75,7 @@ void Networking::startConnection()
 	if (contador<=5) //NO SE CUMPLIO EL TIEMPO, ES CLIENTE
 	{
 		mySocket->non_blocking(true);
+		IamClient = true;
 		cout << "CONNECTED AS CLIENT" << endl;
 	}
 	else //TIENE QUE SER SERVER

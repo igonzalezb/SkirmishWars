@@ -1,7 +1,7 @@
 //CHEQUEAR TODOS LOS ON...
 
-#ifndef STATES_H
-#define STATES_H
+#ifndef STATESGAME_H
+#define STATESGAME_H
 
 #define DEBUG true
 
@@ -138,4 +138,4 @@ class ST_YouPurchasing :public genericState
 
 ////////////////////////////////////////////////
 
-#endif // !STATES_H
+#endif // !STATESGAME_H

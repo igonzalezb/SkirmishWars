@@ -200,9 +200,12 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapGraphics.cpp" />
     <ClCompile Include="Networking.cpp" />
+    <ClCompile Include="Packages.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
     <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="States.cpp" />
+    <ClCompile Include="StatesGame.cpp" />
+    <ClCompile Include="StatesClient.cpp" />
+    <ClCompile Include="StatesServer.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Tiles.cpp" />
     <ClCompile Include="Unit.cpp" />
@@ -229,7 +232,10 @@
     <ClInclude Include="Packages.h" />
     <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="Resources.h" />
-    <ClInclude Include="States.h" />
+    <ClInclude Include="StatesGame.h" />
+    <ClInclude Include="StatesClient.h" />
+    <ClInclude Include="StatesNetworking.h" />
+    <ClInclude Include="StatesServer.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Tiles.h" />
     <ClInclude Include="Unit.h" />

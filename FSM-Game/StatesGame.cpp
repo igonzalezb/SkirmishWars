@@ -1,5 +1,5 @@
 
-#include "States.h"
+#include "StatesGame.h"
 #include "Game.h"
 #include "usefulInfo.h"
 #include "Events.h"

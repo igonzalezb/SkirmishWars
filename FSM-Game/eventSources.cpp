@@ -116,6 +116,7 @@ bool NetworkEventSource::isThereEvent()
 		cout << "ENTRA 1" << endl;
 #endif // DEBUG
 
+
 		ret = true;
 	}
 
