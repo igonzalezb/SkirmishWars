@@ -2,9 +2,6 @@
 
 using namespace std;
 
-void funcion(int matrixCost[FILA][COLUMNA], bool(&canMove)[FILA][COLUMNA], int i, int j, int MP);
-
-
 Map::Map()
 {
 	for (int i = 0; i < (FILA); i++) {
@@ -246,10 +243,10 @@ void Map::checkPossibleMoves(int matrixCost[FILA][COLUMNA], int i, int j, int MP
 			{
 				canMove[i][j] = true;
 			}
-			funcion(matrixCost, i - 1, j, MP);
-			funcion(matrixCost, i + 1, j, MP);
-			funcion(matrixCost, i, j + 1, MP);
-			funcion(matrixCost, i, j - 1, MP);
+			checkPossibleMoves(matrixCost, i - 1, j, MP);
+			checkPossibleMoves(matrixCost, i + 1, j, MP);
+			checkPossibleMoves(matrixCost, i, j + 1, MP);
+			checkPossibleMoves(matrixCost, i, j - 1, MP);
 		}
 	}
 }

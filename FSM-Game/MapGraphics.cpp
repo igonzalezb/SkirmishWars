@@ -76,8 +76,6 @@ void MapGraphics::showMap(Game* gameInfo)
 			currItem.c_str());
 	}
 
-	bool canMove[FILA][COLUMNA];
-
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
 
@@ -95,10 +93,10 @@ void MapGraphics::showMap(Game* gameInfo)
 					al_get_bitmap_width(unitsArray[i][j]), al_get_bitmap_height(unitsArray[i][j]),
 					j*T_WIDTH, i* T_HEIGHT, T_WIDTH / 1.3, T_HEIGHT / 1.3, 0);
 				
-				gameInfo->myMap->possibleMoves(gameInfo->myMap->getTile(i, j)->getUnit(), i, j, canMove);	//Esto no va aca!!
+				gameInfo->myMap->possibleMoves(gameInfo->myMap->getTile(i, j)->getUnit(), i, j);	//Esto no va aca!!
 				for (int p = 0; p < (FILA); p++) {
 					for (int q = 0; q < (COLUMNA); q++) {
-						if (canMove[p][q]) {
+						if (gameInfo->myMap->canMove[p][q]) {
 							al_draw_rectangle(q*T_WIDTH, p* T_HEIGHT,
 								(q*T_WIDTH) + T_WIDTH,
 								(p* T_HEIGHT) + T_HEIGHT,

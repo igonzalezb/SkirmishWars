@@ -14,7 +14,6 @@
 
 
 #include "basicXML.h"
-#include "MapGraphics.h"
 #include "Resources.h"
 
 #define XML_PATH	"resources.xml"
