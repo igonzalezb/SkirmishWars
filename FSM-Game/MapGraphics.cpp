@@ -215,18 +215,18 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * game)
 			list<Unit>::iterator it3 = game->data.getUnitList().begin();
 			advance(it3, i);
 			Unit *currUnit = new Unit(it3);
-			currUnit->setTeam(game->playerMe->getTeam());	//VERRR
+			currUnit->setTeam(game->playerMe->getTeam());
 			game->setNewUnit(currUnit);
 		}
 			
 #ifdef DEBUG
-			sprintf("Se apreto la opcion %d para comprar/n", i);
+			printf("Se apreto la opcion %d para comprar/n", i);
 #endif // DEBUG
 			return NEW_UNIT;
 	
 	}
 #ifdef DEBUG
-	sprintf("No se apreto nada relevante/n");
+	printf("No se apreto nada relevante/n");
 #endif // DEBUG
 
 	return NO_EV;		//VER!!!!!

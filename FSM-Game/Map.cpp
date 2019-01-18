@@ -72,8 +72,7 @@ void Map::randomMap()
 	
 }
 
-void Map::generate
-sArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units)
+void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units)
 {
 
 	int pos;
