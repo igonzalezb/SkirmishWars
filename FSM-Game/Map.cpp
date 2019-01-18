@@ -104,38 +104,38 @@ sArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units)
 
 			//CARGO LOS TERRENOS EN TILES ARRAY
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			bool encontroTerrain = false;
-			list<Terrain>::iterator it = terrains.begin();
-			for (bool k = true; k && (it != terrains.end()); ++it) {
+bool encontroTerrain = false;
+list<Terrain>::iterator it = terrains.begin();
+for (bool k = true; k && (it != terrains.end()); ++it) {
 
-				if (strcmp(it->getType().c_str(), matrixDeTerrenoOrFacility[i][j].c_str()) == false) {
-					k = false;
-					printf("Encontre: %s\n", it->getName().c_str());
-					Terrain *currTerrain = new Terrain(it->getName(), it->getPath(), it->getType());
-					tilesArray[i][j]->addTerrain(currTerrain);
-					encontroTerrain = true;
-				}
-				else
-					tilesArray[i][j]->addTerrain(NULL);	//es un string NULL (no esta vacio)
-			}
-			// CARGO LOS BUILDINGS EN TILES ARRAY
-			///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			if (!encontroTerrain) {
-				list<Building>::iterator it2 = buildings.begin();
-				for (bool k = true; k && (it2 != buildings.end()); ++it2) {
+	if (strcmp(it->getType().c_str(), matrixDeTerrenoOrFacility[i][j].c_str()) == false) {
+		k = false;
+		printf("Encontre: %s\n", it->getName().c_str());
+		Terrain *currTerrain = new Terrain(it->getName(), it->getPath(), it->getType());
+		tilesArray[i][j]->addTerrain(currTerrain);
+		encontroTerrain = true;
+	}
+	else
+		tilesArray[i][j]->addTerrain(NULL);	//es un string NULL (no esta vacio)
+}
+// CARGO LOS BUILDINGS EN TILES ARRAY
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (!encontroTerrain) {
+	list<Building>::iterator it2 = buildings.begin();
+	for (bool k = true; k && (it2 != buildings.end()); ++it2) {
 
-					if (strcmp(it2->getType().c_str(), matrixDeTerrenoOrFacility[i][j].c_str()) == false) {
-						k = false;
-						//printf("Encontre: %s\n", it2->getName().c_str());
-						Building *currBuilding = new Building(it2->getCp(), it2->getName(), it2->getPath(), it2->getType(), matrixEquipoOfFacility[i][j]);
-						tilesArray[i][j]->addBuilding(currBuilding);
-					}
-					else
-					{
-						tilesArray[i][j]->addBuilding(NULL);
-					}
-				}
-			}
+		if (strcmp(it2->getType().c_str(), matrixDeTerrenoOrFacility[i][j].c_str()) == false) {
+			k = false;
+			//printf("Encontre: %s\n", it2->getName().c_str());
+			Building *currBuilding = new Building(it2->getCp(), it2->getName(), it2->getPath(), it2->getType(), matrixEquipoOfFacility[i][j]);
+			tilesArray[i][j]->addBuilding(currBuilding);
+		}
+		else
+		{
+			tilesArray[i][j]->addBuilding(NULL);
+		}
+	}
+}
 		}
 	}
 
@@ -195,46 +195,50 @@ void Map::possibleMoves(Unit * currUnit, int i, int j)//, bool (&canMove)[FILA][
 {
 
 	int matrixCost[FILA][COLUMNA];
-	
+
 	for (int p = 0; p < FILA; p++)
 	{
 		for (int q = 0; q < COLUMNA; q++)
 		{
-			if (getTile(p, q)->getFog()) {
+			if (getTile(p, q)->getFog())
+			{
 				matrixCost[p][q] = CANNOT_MOVE;
 			}
-
-
-			//CAMBIO lo comentado de arriba por esto de abajo, usando la info del terreno que tiene el tile:
-			else if (((tilesArray[p][q])->getBuilding()) != NULL)															//VER SI EL NULL VA ASI O SI VA CON COMILLAS "NULL" (?)
+			else if ((tilesArray[p][q]->getBuilding()) != NULL)
+			{
 				matrixCost[p][q] = stoi(currUnit->getMc().road);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (matrixDeTerrenoOrFacility[p][q] == "a"))
-				matrixCost[p][q] = stoi(currUnit->getMc().road);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (matrixDeTerrenoOrFacility[p][q] == "r"))
-				matrixCost[p][q] = stoi(currUnit->getMc().river);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (matrixDeTerrenoOrFacility[p][q] == "f"))
-				matrixCost[p][q] = stoi(currUnit->getMc().forest);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (matrixDeTerrenoOrFacility[p][q] == "h"))
-				matrixCost[p][q] = stoi(currUnit->getMc().hills);
-			else if ((((tilesArray[p][q])->getBuilding()) == NULL) && (matrixDeTerrenoOrFacility[p][q] == "t"))
-				matrixCost[p][q] = stoi(currUnit->getMc().plain);
-			else
-				matrixCost[p][q] = 1;	//Quiere decir que hay un factory o city. LE PUSE 1 PERO NO ME ACUERDO
-
-			//////
+			}
+			else 
+			{
+				if (matrixDeTerrenoOrFacility[p][q] == "a")
+				{
+					matrixCost[p][q] = stoi(currUnit->getMc().road);
+				}
+				else if (matrixDeTerrenoOrFacility[p][q] == "r")
+				{
+					matrixCost[p][q] = stoi(currUnit->getMc().river);
+				}
+				else if (matrixDeTerrenoOrFacility[p][q] == "f")
+				{
+					matrixCost[p][q] = stoi(currUnit->getMc().forest);
+				}
+				else if (matrixDeTerrenoOrFacility[p][q] == "h")
+				{
+					matrixCost[p][q] = stoi(currUnit->getMc().hills);
+				}
+				else if (matrixDeTerrenoOrFacility[p][q] == "t")
+				{
+					matrixCost[p][q] = stoi(currUnit->getMc().plain);
+				}
+			}
 			canMove[p][q] = false;	//La seteo toda en false al principio
 		}
 	}
-
-
-
 	matrixCost[i][j] = 0;	//Seteo el lugar donde estoy en 0 (VER!!)
-
-	funcion(matrixCost, i, j, stoi(currUnit->getMp()));       
-
+	checkPossibleMoves(matrixCost, i, j, stoi(currUnit->getMp()));
 }
 
-void Map::funcion(int matrixCost[FILA][COLUMNA], int i, int j, int MP) {
+void Map::checkPossibleMoves(int matrixCost[FILA][COLUMNA], int i, int j, int MP) {
 	if ((0 <= i) && (i < FILA) && (0 <= j) && (j < COLUMNA) && (MP >= 0))
 	{
 		if (MP >= 0) {

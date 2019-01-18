@@ -30,6 +30,7 @@ public:
 	Player* playerMe;
 	Player* playerYou;
 	Map* myMap;
+	Resources data;
 	//coordinates  attacker; //POR AHORA ESTAS DOS LINEAS ESTAN EN MAP.H. VER SI QUEDAN AHI O SI SE SACAN Y SE PONEN ACA O DONDE!
 	//coordinates defender;
 	
