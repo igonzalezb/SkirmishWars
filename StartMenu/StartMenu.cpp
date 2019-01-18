@@ -169,7 +169,6 @@ void StartMenu::dispachOption()		//HAY QUE SACAR LOS TEXT Y PONER QUE HAGA LAS A
 		al_clear_to_color(al_map_rgb(0,0,0));
 		al_draw_text(menuFont, al_map_rgb(100, 100, 100), 0.0, 0.0, 0.0, "Starting Game...");
 		break;
-
 	case SETTINGS:
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_text(menuFont, al_map_rgb(100, 100, 100), 0.0, 0.0, 0.0, "Settings...");
