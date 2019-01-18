@@ -70,6 +70,7 @@ public:
 	MYBYTE r_col_de;
 	*/
 	std::vector<char>  r_unidad;
+	string r_unidad_string;
 	MYBYTE r_dado;
 private:
 

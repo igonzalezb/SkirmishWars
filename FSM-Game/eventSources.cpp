@@ -243,7 +243,20 @@ bool NetworkEventSource::isThereEvent()
 			//r_fila_de = aux[1];
 			//r_col_de = aux[2];
 			gameInterface->setDefender((int)aux[1], (int)(aux[2]-'0X41'));
-			//CARGAR LA UNIDAD CORRESPONDIENTE EN NEW UNIT ADENTRO DE GAME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//lo pasamos a string y lo guardamos en el tipo de newUnit adentro de networking:
+			for (char c : r_unidad) {
+				r_unidad_string.push_back(c);
+			}
+			list<Unit>::iterator it3 = gameInterface->data.getUnitList.begin();
+			for (bool k = true; k && (it3 != gameInterface->data.getUnitList.end()); ++it3) {
+
+				if (strcmp(it3->getType().c_str(), r_unidad_string.c_str()) == false) {
+					k = false;
+					Unit *currUnit = new Unit(it3);
+					currUnit->setTeam(gameInterface->playerYou->getTeam());
+					gameInterface->setNewUnit(currUnit);
+				}
+			}
 			ret = true;
 			break;
 		case OP_ATTACK:

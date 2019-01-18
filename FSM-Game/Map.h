@@ -77,7 +77,7 @@ public:
 	void setDefender(int tile);
 	coordenadas getAttacker();
 	coordenadas getDefender();
-	void funcion(int matrixCost[FILA][COLUMNA], int i, int j, int MP);
+	void checkPossibleMoves(int matrixCost[FILA][COLUMNA], int i, int j, int MP);
 	//void generateDefenseModifiersTable();
 	bool canMove[FILA][COLUMNA];
 	string getMapName();
@@ -91,8 +91,7 @@ private:
 
 	//modifiers tableMatrix[14][5];
 
-	Generic
-		* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
+	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
 	coordenadas attacker; //HACER: INICIARLAS EN NULL
 	coordenadas defender; //HACER: INICIAR EN NULL
 

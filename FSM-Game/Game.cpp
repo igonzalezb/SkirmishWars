@@ -85,8 +85,7 @@ void Game::attack()
 	else
 	{
 		if (symbol == "moon")
-			firepower = stoi(myMap->get
-			(attacker.i, attacker.j)->getUnit()->getFpNormal().moon);
+			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpNormal().moon);
 		else if (symbol == "star")
 			firepower = stoi(myMap->getTile(attacker.i, attacker.j)->getUnit()->getFpNormal().star);
 		else if (symbol == "square")
