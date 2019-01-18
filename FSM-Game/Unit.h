@@ -48,8 +48,8 @@ private:
 	FP fpreduced;
 	FP fpnormal;
 	MovementCost mcost;
-	TeamColor team;
-
+	TeamNumber team;
+	TeamColor teamColor;
 
 
 
@@ -71,7 +71,7 @@ public:
 	void setMinRange(string range);
 	void setMaxRange(string range);
 	void setType(string type);
-	void setTeam(TeamColor team);
+	void setTeam(TeamNumber team);
 	void setSymbol(string symbol);
 	void setFpReducedMoon(string fp);
 	void setFpReducedTriangle(string fp);

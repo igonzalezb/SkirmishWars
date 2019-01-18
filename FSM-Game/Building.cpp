@@ -61,15 +61,25 @@ string Building::getName()
 	return name;
 }
 
-void Building::setTeam(TeamColor team)
+void Building::setTeam(TeamNumber team)
 {
 	type += to_string(team);			//PROBAR!!!!
 	this->team = team;
 }
 
-TeamColor Building::getTeam()
+TeamNumber Building::getTeam()
 {
 	return team;
+}
+
+TeamColor Building::getTeamColor()
+{
+	return teamColor;
+}
+
+void Building::setTeamColor(TeamColor teamco_)
+{
+	this->teamColor = teamco_;
 }
 
 string Building::getType()

@@ -2,7 +2,8 @@
 
 Unit::Unit()
 {
-	team = RED;
+	team = NEUTRO;
+	teamColor = RED;
 	fogOfWar = true;
 }
 
@@ -74,8 +75,7 @@ void Unit::setType(string type)
 	this->type = type;
 }
 
-void Unit::setTeam(
-	team)
+void Unit::setTeam(TeamNumber team)
 {
 	this->team = team;
 	type.append(to_string(team));			//PROBAR!!!!

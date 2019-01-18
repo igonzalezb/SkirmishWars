@@ -21,7 +21,8 @@ private:
 	string name;
 	string path;
 	string type;
-	TeamColor team;
+	TeamNumber team;
+	TeamColor teamColor;
 	bool fogOfWar;	//FIJARSE DONDE METERLO
 
 public:
@@ -37,8 +38,10 @@ public:
 	int getCp();
 	string getPath();
 	string getName();
-	void setTeam(TeamColor team);
-	TeamColor getTeam();
+	void setTeam(TeamNumber team);
+	TeamNumber getTeam();
+	TeamColor getTeamColor();
+	void setTeamColor(TeamColor teamco_);
 	string getType();
 	void setType(string type);
 	void removeFog();

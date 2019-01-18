@@ -8,7 +8,7 @@
 #include <string>
 #include <exception>
 #include <array>
-#include <Windows.h> //ver si sacar
+//#include <Windows.h> //ver si sacar
 #include "PlayerInfo.h"
 #include "Map.h"
 
