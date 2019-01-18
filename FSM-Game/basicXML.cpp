@@ -244,7 +244,7 @@ void chararacterDataCallback(void *userData, const XML_Char *s, int len)
 		myData->getLastBuilding().setPath(d);	//set path
 		break;
 	case B_HP:
-		myData->getLastBuilding().setCp(d);	//set hp
+		myData->getLastBuilding().setCp(stoi(d));	//set hp
 		break;
 	case B_TYPE:
 		myData->getLastBuilding().setType(d);
@@ -270,7 +270,7 @@ void chararacterDataCallback(void *userData, const XML_Char *s, int len)
 	case U_TYPE:
 		myData->getLastUnit().setType(d);
 	case U_HP:
-		myData->getLastUnit().setHp(d);		//set path
+		myData->getLastUnit().setHp(stoi(d));		//set path
 		break;
 	case COST:
 		myData->getLastUnit().setCost(d);	//set path

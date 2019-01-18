@@ -22,6 +22,7 @@ private:
 	string path;
 	string type;
 	TeamColor team;
+	bool fogOfWar;	//FIJARSE DONDE METERLO
 
 public:
 	Building();

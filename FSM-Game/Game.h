@@ -1,5 +1,6 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
+//#ifndef GAME_H
+//#define GAME_H
 
 #define DEBUG true
 
@@ -75,4 +76,4 @@ private:
 	Unit *newUnit;
 
 };
-#endif // !GAME_H
+//#endif // !GAME_H

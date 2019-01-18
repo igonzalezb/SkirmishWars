@@ -22,13 +22,13 @@ class MapGraphics
 public:
 	MapGraphics();
 	~MapGraphics();
-	void showMap(Game* game);
+	void showMap(Game* gameInfo);
 	void loadBitmaps(Map *map);
 	//void setMap(Map *map);
 
 	ALLEGRO_DISPLAY* getDisplay();
 
-	eventCode dispatchClick(int x, int y, Game* game);
+	eventCode dispatchClick(int x, int y, Game *gameInfo);
 
 private:
 	ALLEGRO_DISPLAY *display = NULL;

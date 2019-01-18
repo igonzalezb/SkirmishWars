@@ -43,7 +43,7 @@ MapGraphics::~MapGraphics()
 	}
 }
 
-void MapGraphics::showMap(Game* game)
+void MapGraphics::showMap(Game* gameInfo)
 {
 	al_clear_to_color(al_map_rgb(0.0, 170.0, 0.0));
 	al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, 0.0, 0.0, "TIMER 00:00:00");
@@ -61,13 +61,14 @@ void MapGraphics::showMap(Game* game)
 		al_get_bitmap_width(purchaseButton), al_get_bitmap_height(purchaseButton),
 		M_WIDTH, al_get_font_line_height(menuFont)*2 + al_get_bitmap_height(attackButton), R_WIDTH, M_HEIGHT / 8.0, 0);
 
-	list<Unit>::iterator iterator1 = game->data.getUnitList().begin();
+	list<Unit>::iterator iterator1 = gameInfo->data.getUnitList().begin();
 
 	for (int i = 0; i < 9; i++) {
 		string currItem;
 		advance(iterator1, i);
 
-		currItem = iterator1->getName() + "$" + iterator1->getCost;
+		currItem = iterator1->getName() + "$";
+		currItem += iterator1->getCost();
 		
 
 		al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10,
@@ -94,7 +95,7 @@ void MapGraphics::showMap(Game* game)
 					al_get_bitmap_width(unitsArray[i][j]), al_get_bitmap_height(unitsArray[i][j]),
 					j*T_WIDTH, i* T_HEIGHT, T_WIDTH / 1.3, T_HEIGHT / 1.3, 0);
 				
-				game->myMap->possibleMoves(game->myMap->getTile(i, j)->getUnit(), i, j, canMove);	//Esto no va aca!!
+				gameInfo->myMap->possibleMoves(gameInfo->myMap->getTile(i, j)->getUnit(), i, j, canMove);	//Esto no va aca!!
 				for (int p = 0; p < (FILA); p++) {
 					for (int q = 0; q < (COLUMNA); q++) {
 						if (canMove[p][q]) {
@@ -151,30 +152,30 @@ ALLEGRO_DISPLAY* MapGraphics::getDisplay()
 	return display;
 }
 
-eventCode MapGraphics::dispatchClick(int x, int y, Game * game)
+eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 {
-	if ((0.0 < x < M_WIDTH) && (0.0 < y < M_HEIGHT))
+	if (((0.0 < x) && (x < M_WIDTH)) && ((0.0 < y) && (y < M_HEIGHT)))
 	{
 		//Se cliqueo dentro del mapa
 		for (int i = 0; i < (FILA); i++) {
 			for (int j = 0; j < (COLUMNA); j++) {
 
-				if (((T_WIDTH * j) < x < ((T_WIDTH * j) + T_WIDTH)) &&
-					((T_HEIGHT * i) < y < ((T_HEIGHT * i) + T_HEIGHT)))
+				if (((((T_WIDTH * j) < x) && (x < ((T_WIDTH * j) + T_WIDTH)))) &&
+					((((T_HEIGHT * i) < y) && (y < ((T_HEIGHT * i) + T_HEIGHT)))))
 				{
 					//Se cliqueo en la posicion ij (i:fila(16). j:col(12))
 #ifdef DEBUG
 					printf("Se apreto la fila: %d, columna %d/n", i, j);
 #endif // DEBUG
-					game->setTileSelected(i, j);
+					gameInfo->setTileSelected(i, j);
 					return TILE;
 				}
 			}
 		}
 	}
 
-	else if ((M_WIDTH < x < al_get_display_width(display)) && 
-		(al_get_font_line_height(menuFont) * 2 < y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton))))
+	else if ((((M_WIDTH < x) && (x < al_get_display_width(display)))) && 
+		((al_get_font_line_height(menuFont) * 2 < y) && (y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton)))))
 	{
 		//Se apreto ATTACK
 #ifdef DEBUG
@@ -182,8 +183,8 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * game)
 #endif // DEBUG
 		return ATTACK;
 	}
-	else if ((M_WIDTH < x < al_get_display_width(display)) &&
-		(al_get_font_line_height(menuFont) * 3 < y < (al_get_font_line_height(menuFont) * 3 + al_get_bitmap_height(attackButton))))
+	else if (((M_WIDTH < x) && (x < al_get_display_width(display))) &&
+		((al_get_font_line_height(menuFont) * 3 < y) && (y < (al_get_font_line_height(menuFont) * 3 + al_get_bitmap_height(attackButton)))))
 	{
 		//Se apreto PASS
 #ifdef DEBUG
@@ -192,8 +193,8 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * game)
 		return PASS;
 	}
 
-	else if ((M_WIDTH < x < al_get_display_width(display)) && 
-		((al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton)) < y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton))))
+	else if (((M_WIDTH < x) && (x < al_get_display_width(display))) && 
+		(((al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton)) < y) && (y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)))))
 	{
 		//Se apreto PURCHASE
 #ifdef DEBUG
@@ -205,18 +206,18 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * game)
 		
 	for (int i = 1; i <= 9; i++) 
 	{
-		if((M_WIDTH + 10 < x < al_get_display_width(display))
-			&& ((al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) 
-				< y < 
-				(al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) + al_get_font_line_height(menuFont)))
+		if(((M_WIDTH + 10 < x) && (x < al_get_display_width(display)))
+			&& (((al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) 
+				< y) && (y < 
+				(al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) + al_get_font_line_height(menuFont))))
 		{
 			// Se apreto para comprar la unidad de numero i de la lista
 		
-			list<Unit>::iterator it3 = game->data.getUnitList().begin();
+			list<Unit>::iterator it3 = gameInfo->data.getUnitList().begin();
 			advance(it3, i);
 			Unit *currUnit = new Unit(it3);
-			currUnit->setTeam(game->playerMe->getTeam());
-			game->setNewUnit(currUnit);
+			currUnit->setTeam(gameInfo->playerMe->getTeam());
+			gameInfo->setNewUnit(currUnit);
 		}
 			
 #ifdef DEBUG
