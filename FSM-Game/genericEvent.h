@@ -13,6 +13,9 @@
 
 typedef enum {
 	//Eventos que genera la fsm de GAME :
+
+	CONNECTED_AS_CLIENT, CONNECTED_AS_SERVER,
+
 	YOU_START, I_START, MOVE, PURCHASE, ATTACK, PASS, YOU_WON, PLAY_AGAIN,
 	GAME_OVER, QUIT,
 

@@ -33,7 +33,8 @@ public:
 	unsigned int getBlockNumber(); //VER si va a haber que usarla o no
 
 	void startConnection();
-	bool justConnected = 0;
+	bool justConnected;
+	bool IamClient;
 
 private:
 	//siguientes 3 lineas son  para server
@@ -52,8 +53,6 @@ private:
 	opCodes receivedPackageType;
 	unsigned int blockNumber;
 	std::vector<char> inputPackage;
-
-	bool IamClient;
 };
 #endif // !NETWORKING_H
 

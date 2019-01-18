@@ -108,15 +108,21 @@ bool NetworkEventSource::isThereEvent()
 
 	//VER COMO HACER PARA QUE APAREZCA UN EVENTO DE CONNECTED!!! CON SERVER. NO SE PUEDE
 
-	if (networkInterface->justConnected == 1)
+	if (networkInterface->justConnected)
 	{
-		evCode = CONNECTED;
-		networkInterface->justConnected = 0;
+		//evCode = CONNECTED;
+		networkInterface->justConnected = false;
 #ifdef DEBUG
 		cout << "ENTRA 1" << endl;
 #endif // DEBUG
-
-
+		if (networkInterface->IamClient)
+		{
+			evCode = CONNECTED_AS_CLIENT;
+		}
+		else
+		{
+			evCode = CONNECTED_AS_SERVER;
+		}
 		ret = true;
 	}
 
@@ -127,15 +133,15 @@ bool NetworkEventSource::isThereEvent()
 #endif // DEBUG
 		switch (networkInterface->getInputPackage()[0])	//segun el tipo de paquete devuelvo el tipo de evento
 		{
-		case ACK: //sin campo de datos
+		case OP_ACK: //sin campo de datos
 			evCode = R_ACK;
 			ret = true;
 			break;
-		case NAME://sin campo de datos
+		case OP_NAME://sin campo de datos
 			evCode = R_NAME;
 			ret = true;
 			break;
-		case NAME_IS: //guarda en r_name el nombre recibido (del oponente) por networking
+		case OP_NAME_IS: //guarda en r_name el nombre recibido (del oponente) por networking
 			evCode = R_NAME_IS;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			i = static_cast<int>(aux[1]);
@@ -151,7 +157,7 @@ bool NetworkEventSource::isThereEvent()
 			gameInterface->playerYou->setName(r_name_string);
 			ret = true;
 			break;
-		case MAP_IS:
+		case OP_MAP_IS:
 			evCode = R_MAP_IS;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			i = static_cast<int>(aux[1]);
@@ -167,26 +173,26 @@ bool NetworkEventSource::isThereEvent()
 			gameInterface->myMap->setMapName(r_map_string);
 			ret = true;
 			break;
-		case YOU_START: //sin campo de datos
+		case OP_YOU_START: //sin campo de datos
 			evCode = R_YOU_START;
 			ret = true;
 			break;
-		case I_START: //sin campo de datos
+		case OP_I_START: //sin campo de datos
 			evCode = R_I_START;
 			ret = true;
 			break;
-		case PASS: //sin campo de datos
+		case OP_PASS: //sin campo de datos
 			evCode = R_PASS;
 			ret = true;
 			break;
-		case MOVE:
+		case OP_MOVE:
 			evCode = R_MOVE;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-'0X41'));
 			gameInterface->setDefender((int)aux[3], (int)(aux[4]-'0X41'));
 			ret = true;
 			break;
-		case PURCHASE:
+		case OP_PURCHASE:
 			evCode = R_PURCHASE;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			r_unidad.clear();
@@ -197,7 +203,7 @@ bool NetworkEventSource::isThereEvent()
 			//CARGAR LA UNIDAD CORRESPONDIENTE EN NEW UNIT ADENTRO DE GAME!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			ret = true;
 			break;
-		case ATTACK:
+		case OP_ATTACK:
 			evCode = R_ATTACK;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			/*
@@ -213,23 +219,23 @@ bool NetworkEventSource::isThereEvent()
 			
 			ret = true;
 			break;
-		case YOU_WON: //sin campo de datos
+		case OP_YOU_WON: //sin campo de datos
 			evCode = R_YOU_WON;
 			ret = true;
 			break;
-		case PLAY_AGAIN: //sin campo de datos
+		case OP_PLAY_AGAIN: //sin campo de datos
 			evCode = R_PLAY_AGAIN;
 			ret = true;
 			break;
-		case GAME_OVER: //sin campo de datos
+		case OP_GAME_OVER: //sin campo de datos
 			evCode = R_GAME_OVER;
 			ret = true;
 			break;
-		case ERROR_: //sin campo de datos
+		case OP_ERROR: //sin campo de datos
 			evCode = R_ERROR_;
 			ret = true;
 			break;
-		case QUIT: //sin campo de datos
+		case OP_QUIT: //sin campo de datos
 			evCode = R_QUIT;
 			ret = true;
 			break;
