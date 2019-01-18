@@ -21,9 +21,49 @@ GameEventSource::GameEventSource(Game *_gameInterface)
 
 genericEvent * GameEventSource::insertEvent()
 {
-	genericEvent * ret;
-	
-	//COMPLETAR
+	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
+	switch (evCode)
+	{
+	case YOU_START:
+		ret = (genericEvent *) new EV_YouStart();
+		break;
+	case I_START:
+		ret = (genericEvent *) new EV_IStart();
+		break;
+	case MOVE:
+		ret = (genericEvent *) new EV_Move();
+		break;
+	case PURCHASE:
+		ret = (genericEvent *) new EV_Purchase();
+		break;
+	case ATTACK:
+		ret = (genericEvent *) new EV_Attack();
+		break;
+	case PASS:
+		ret = (genericEvent *) new EV_Pass();
+		break;
+	case YOU_WON:
+		ret = (genericEvent *) new EV_YouWon();
+		break;
+	case PLAY_AGAIN:
+		ret = (genericEvent *) new EV_PlayAgain();
+		break;
+	case GAME_OVER:
+		ret = (genericEvent *) new EV_GameOver();
+		break;
+	case QUIT:
+		ret = (genericEvent *) new EV_Quit();
+		break;
+	case END_PLAYING:
+		ret = (genericEvent *) new EV_EndPlaying();
+		break;
+	case ERR_DETECTED:		//VER si este case se deja o si se saca
+		ret = (genericEvent *) new EV_ErrDetected();
+		break;
+	default:
+		break;
+	}
+	return ret;
 }
 
 bool GameEventSource::isThereEvent()
@@ -254,6 +294,18 @@ genericEvent * NetworkEventSource::insertEvent()
 	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
 	switch (evCode)
 	{
+	case CONNECTED_AS_CLIENT:
+		ret = (genericEvent *) new EV_ConnectedAsClient();
+#ifdef DEBUG
+		cout << "entra 3: genera evento connected as client" << endl;
+#endif // DEBUG
+		break;
+	case CONNECTED_AS_SERVER:
+		ret = (genericEvent *) new EV_ConnectedAsServer();
+#ifdef DEBUG
+		cout << "entra 3: genera evento connected as server" << endl;
+#endif // DEBUG
+		break;
 	case R_ACK:
 		ret = (genericEvent *) new EV_Rack();
 		break;
@@ -301,12 +353,6 @@ genericEvent * NetworkEventSource::insertEvent()
 		break;
 	case ERR_DETECTED:		//VER si este case se deja o si se saca
 		ret = (genericEvent *) new EV_ErrDetected();
-		break;
-	case CONNECTED:
-		ret = (genericEvent *) new EV_Connected();
-#ifdef DEBUG
-		cout << "entra 3: entro a insert event" << endl;
-#endif // DEBUG
 		break;
 	default:
 		break;
@@ -385,11 +431,28 @@ bool UserEventSource::isThereEvent()
 //}
 
 
-genericEvent * UserEventSource::insertEvent()
+genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 {
-	genericEvent * ret;
+	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
+	switch (evCode)
+	{
+	case NO_EV:
+		ret = (genericEvent *) new EV_NoEv();
+		break;
+	case END_PLAYING:
+		ret = (genericEvent *) new EV_EndPlaying();
+		break;
+	case TILE:
+		ret = (genericEvent *) new EV_Tile();
+		break;
+	case NEW_UNIT:
+		ret = (genericEvent *) new EV_NewUnit();
+		break;
 
-	//COMPLETAR
+	default:
+		break;
+	}
+	return ret;
 }
 
 

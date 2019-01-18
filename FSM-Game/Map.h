@@ -91,7 +91,8 @@ private:
 
 	//modifiers tableMatrix[14][5];
 
-	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
+	Generic
+		* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
 	coordenadas attacker; //HACER: INICIARLAS EN NULL
 	coordenadas defender; //HACER: INICIAR EN NULL
 

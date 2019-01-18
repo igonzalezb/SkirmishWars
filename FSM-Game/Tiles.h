@@ -4,7 +4,8 @@
 #include "Unit.h"
 #include "Building.h"
 
-class GenericTile
+class Generic
+
 {
 public:
 	GenericTile();
