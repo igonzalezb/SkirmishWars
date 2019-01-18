@@ -205,6 +205,7 @@
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="StatesGame.cpp" />
     <ClCompile Include="StatesClient.cpp" />
+    <ClCompile Include="StatesNetworking.cpp" />
     <ClCompile Include="StatesServer.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Tiles.cpp" />
