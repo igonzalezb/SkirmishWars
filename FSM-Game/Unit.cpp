@@ -201,7 +201,7 @@ string Unit::getName()
 	return name;
 }
 
-TeamColor Unit::getTeam()
+TeamNumber Unit::getTeam()
 {
 	return team;
 }

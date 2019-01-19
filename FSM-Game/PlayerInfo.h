@@ -14,8 +14,8 @@ public:
 	~Player();
 	void setMoney(int money);
 	int getMoney();
-	void setTeam(TeamColor team);
-	TeamColor getTeam();
+	void setTeam(TeamNumber team);
+	TeamNumber getTeam();
 	bool doIStart();
 	void setAmmountOfCities(Map* myMap);
 	int getAmmountOfCities();
@@ -25,7 +25,8 @@ public:
 private:
 	string name;
 	int money;
-	TeamColor team;	//TeamNumber
+	TeamNumber team;	//TeamNumber
+	TeamColor teamcolor;
 	int ip;
 	bool myTurn;
 

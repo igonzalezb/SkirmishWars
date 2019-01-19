@@ -4,23 +4,20 @@
 #include "genericFSM.h"
 
 //probando con esto
-#include "genericState.h"
-#include "genericEvent.h"
+//#include "genericState.h"
+//#include "genericEvent.h"
+#include "StatesNetworking.h"
 
-//class FSMNetworking :public genericFSM 
-class FSMNetworking
+class FSMNetworking :public genericFSM 
 {
 public:
-	FSMNetworking();
-	~FSMNetworking();
-
+	//FSMNetworking() :genericFSM() { currentState = (genericState *) new ST_WaitingConnection(); };
+	FSMNetworking() :genericFSM() {};
+	~FSMNetworking(); 
+	genericState * getCurrentState();
+	//genericState* genericFSM::getCurrentState();
 	void dispatch(genericEvent * ev, usefulInfo *Info);	//llama a la funcion del estado al que apunta current state que repsonde al evento recibido	
 
-	genericState * getCurrentState();
-
-	//ESTO QUE SIGUE NO LO PUSIMOS EN LAS HIJAS, SI NO FUNCION, PONERLO.
-protected:
-	genericState * currentState;
 };
 
 #endif //!FSMNETWORKING_H

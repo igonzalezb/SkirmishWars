@@ -12,9 +12,9 @@ genericFSM::~genericFSM()
 	delete currentState;
 }
 
-genericState * genericFSM::getCurrentState()
-{
-	return currentState;
-}
+//genericState * genericFSM::getCurrentState()
+//{
+//	return currentState;
+//}
 
 //MOVI LA DEFINICION DE dispatch A LAS HIJAS

@@ -3,7 +3,7 @@
 
 Building::Building()
 {	
-	team = WHITE;	
+	team = NEUTRO;	
 }
 
 //Building::Building(string cp, string name, string path, string type, string team)
@@ -14,7 +14,7 @@ Building::Building(int cp, string name, string path, string type, string team)
 	this->name = name;
 	this->type = type;
 
-	this->team = TeamColor(stoi(team));
+	this->team = TeamNumber(stoi(team));
 
 
 

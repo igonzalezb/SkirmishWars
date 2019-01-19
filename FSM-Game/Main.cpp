@@ -48,7 +48,6 @@ int main()
 	usefulInfo Info(&userSource,&gameSource,&networkSource);
 	genericEvent *ev;
 	eventGenerator evGen(&Info);
-	
 	FSMGame gameFSM;
 	FSMNetworking networkingFSM;
 	

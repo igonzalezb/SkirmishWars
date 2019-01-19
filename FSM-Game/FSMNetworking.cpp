@@ -1,20 +1,20 @@
 #include "FSMNetworking.h"
 
-FSMNetworking::FSMNetworking()
-{
-	currentState = (genericState *) new ST_WaitingConnection(); //ver que poner
-}
+//FSMNetworking::FSMNetworking()
+//{
+//	currentState = (genericState *) new ST_WaitingConnection(); //ver que poner
+//}
 
 FSMNetworking::~FSMNetworking()
 {
 	delete currentState;
 }
 
-//PROBANDO CON ESTA FUNCION ACA
 genericState * FSMNetworking::getCurrentState()
 {
-	return currentState;
+	return genericFSM::currentState;
 }
+
 
 void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 {

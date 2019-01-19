@@ -4,7 +4,8 @@
 Player::Player()
 {
 	money = 5;	//El juego se empieza con $5
-	team = TeamColor(rand() % MAX_PLAYERS + 1);
+	teamcolor = TeamColor(rand() % MAX_PLAYERS + 1);
+	team = NEUTRO;
 	cities = 0;
 }
 
@@ -22,14 +23,14 @@ int Player::getMoney()
 	return money;
 }
 
-void Player::setTeam(TeamColor team)
+void Player::setTeam(TeamNumber team)
 {
 	this->team = team;
 }
 
-TeamColor Player::getTeam()
+TeamNumber Player::getTeam()
 {
-	return team;
+	return this->team;
 }
 
 bool Player::doIStart()

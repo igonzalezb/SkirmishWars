@@ -98,7 +98,7 @@ public:
 	int getHp();
 	string getPath();
 	string getName();
-	TeamColor getTeam();
+	TeamNumber getTeam();
 	string getSymbol();
 	string getType();
 	FP getFpReduced();
