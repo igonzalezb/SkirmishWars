@@ -1,9 +1,9 @@
 #include "FSMNetworking.h"
 
-//FSMNetworking::FSMNetworking()
-//{
-//	currentState = (genericState *) new ST_WaitingConnection(); //ver que poner
-//}
+FSMNetworking::FSMNetworking()
+{
+	currentState = (genericState *) new ST_WaitingConnection(); //ver que poner
+}
 
 FSMNetworking::~FSMNetworking()
 {
@@ -12,7 +12,7 @@ FSMNetworking::~FSMNetworking()
 
 genericState * FSMNetworking::getCurrentState()
 {
-	return genericFSM::currentState;
+	return currentState;
 }
 
 

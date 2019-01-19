@@ -4,7 +4,7 @@
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
 #include <conio.h>
-
+//#include <boost/asio/ip/basic_endpoint.hpp>
 
 //CONSTRUCTOR PARA CLIENTE
 Networking::Networking(std::string _serverAddress) : serverAddress(_serverAddress)
@@ -54,7 +54,7 @@ void Networking::startConnection()
 	bool exit;
 
 	endpoint = clientResolver->resolve(
-		boost::asio::ip::tcp::resolver::query(serverAddress.c_str(), CONNECTION_PORT));
+		boost::asio::ip::tcp::resolver::query(serverAddress.c_str(), CONNECTION_PORT_C));
 	int contador = 0; //PROVISORIO!!!!!!!!!!!!! ES PARA SIMULAR UN TIMER
 	do
 	{
@@ -85,7 +85,7 @@ void Networking::startConnection()
 		IamClient = false;
 		delete clientResolver;
 		serverAcceptor = new boost::asio::ip::tcp::acceptor(*IO_handler,
-			boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), CONNECTION_PORT));
+			boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), CONNECTION_PORT_S));
 
 		serverAcceptor->accept(*mySocket);
 		mySocket->non_blocking(true);

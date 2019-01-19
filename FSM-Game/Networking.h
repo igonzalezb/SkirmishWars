@@ -1,6 +1,7 @@
 #ifndef NETWORKING_H
 #define NETWORKING_H
 
+//#define SERVER_IP "localhost"
 #define DEBUG true
 
 #include <iostream>
@@ -10,10 +11,14 @@
 #include <boost/asio.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
-#include <Windows.h> //ver si sacar
+//#include <boost/asio/ip/basic_endpoint.hpp>
+//#include <Windows.h> //ver si sacar
 #include "Packages.h"
 
-#define CONNECTION_PORT 69	//puerto TFTP
+#define CONNECTION_PORT_C "69"	//puerto TFTP
+#define CONNECTION_PORT_S 69	//puerto TFTP
+//#define CONNECTION_PORT "13225"	//puerto TFTP
+//#define CONNECTION_PORT 13225	//puerto TFTP
 #define PACKAGE_MAX_SIZE 516	
 
 typedef char MYBYTE;
@@ -53,6 +58,8 @@ private:
 	opCodes receivedPackageType;
 	unsigned int blockNumber;
 	std::vector<char> inputPackage;
+
+
 };
 #endif // !NETWORKING_H
 

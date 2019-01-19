@@ -1,9 +1,10 @@
 #include "FSMGame.h"
 
-//FSMGame::FSMGame()
-//{
-//	//currentState = (genericState *) new ST_WaitingConnection(); //ver que poner
-//}
+
+FSMGame::FSMGame()
+{
+	currentState = (genericState *) new ST_GameIdle(); //ver que poner
+}
 
 FSMGame::~FSMGame()
 {
@@ -12,7 +13,7 @@ FSMGame::~FSMGame()
 
 genericState * FSMGame::getCurrentState()
 {
-	return genericFSM::currentState;
+	return currentState;
 }
 
 //HACER: CAMBIAR ESTA FUNCION, ADAPTANDOLA AL DISPATCHER DEL GAME!!!!!!!!!!!!!!!!

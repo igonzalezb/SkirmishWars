@@ -131,7 +131,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UndefinePreprocessorDefinitions>
       </UndefinePreprocessorDefinitions>
     </ClCompile>
@@ -203,7 +203,6 @@
     <ClCompile Include="FSMGame.cpp" />
     <ClCompile Include="FSMNetworking.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="genericFSM.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapGraphics.cpp" />
@@ -231,7 +230,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="genericEvent.h" />
     <ClInclude Include="genericEventSource.h" />
-    <ClInclude Include="genericFSM.h" />
     <ClInclude Include="genericState.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapGraphics.h" />
@@ -251,7 +249,9 @@
     <Xml Include="resources.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -303,8 +303,6 @@
     <Import Project="..\packages\boost_wserialization-vc140.1.68.0.0\build\boost_wserialization-vc140.targets" Condition="Exists('..\packages\boost_wserialization-vc140.1.68.0.0\build\boost_wserialization-vc140.targets')" />
     <Import Project="..\packages\boost_zlib-vc140.1.68.0.0\build\boost_zlib-vc140.targets" Condition="Exists('..\packages\boost_zlib-vc140.1.68.0.0\build\boost_zlib-vc140.targets')" />
     <Import Project="..\packages\boost-vc140.1.68.0.0\build\boost-vc140.targets" Condition="Exists('..\packages\boost-vc140.1.68.0.0\build\boost-vc140.targets')" />
-    <Import Project="..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets" Condition="Exists('..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" />
-    <Import Project="..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets" Condition="Exists('..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -358,7 +356,5 @@
     <Error Condition="!Exists('..\packages\boost_wserialization-vc140.1.68.0.0\build\boost_wserialization-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_wserialization-vc140.1.68.0.0\build\boost_wserialization-vc140.targets'))" />
     <Error Condition="!Exists('..\packages\boost_zlib-vc140.1.68.0.0\build\boost_zlib-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_zlib-vc140.1.68.0.0\build\boost_zlib-vc140.targets'))" />
     <Error Condition="!Exists('..\packages\boost-vc140.1.68.0.0\build\boost-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost-vc140.1.68.0.0\build\boost-vc140.targets'))" />
-    <Error Condition="!Exists('..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets'))" />
-    <Error Condition="!Exists('..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Packages\Allegro.5.2.4.0\build\native\Allegro.targets'))" />
   </Target>
 </Project>

@@ -1,7 +1,11 @@
+//PARA PREPROCESSOR EN PROPERTIES: _CRT_SECURE_NO_WARNINGS
+// <package id="Allegro" version="5.2.4.0" targetFramework="native" />
+// <package id="AllegroDeps" version="1.7.0.0" targetFramework="native" />
+//COMENTE TODOS LOS #include "Windows.h". VER SI ERAN IMPORTANTES PARA ALGO!!!!!!!!!
 
 #include "usefulInfo.h"
 #include "eventGenerator.h"
-#include "genericFSM.h"
+//#include "genericFSM.h"
 #include "FSMGame.h"
 #include "FSMNetworking.h"
 #include "eventSources.h"
@@ -12,7 +16,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-#include "Windows.h"
+//#include "Windows.h"
 
 #include "basicXML.h"
 #include "AllegroSetup.h"
@@ -76,7 +80,7 @@ int main()
 	} while (((gameFSM.getCurrentState())->getLastEvent() != END_PLAYING) &&
 		((networkingFSM.getCurrentState())->getLastEvent() != END_PLAYING));//VER BIEN ESTO
 	//while (FSM.getCurrentState()->getLastEvent() != QUIT); //ver bien si este QUIT queda el mismo o si hay que cambiarlo
-
+	//getchar();
 }
 
 
