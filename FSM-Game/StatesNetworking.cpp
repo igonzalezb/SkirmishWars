@@ -12,7 +12,7 @@ genericState* ST_WaitingConnection::on_ConnectedAsServer(genericEvent *ev, usefu
 	genericState *ret = (genericState *) new ST_S_WaitingNameIs();
 	Info->nextPkg = new Name();
 #ifdef DEBUG
-	cout << "entra : funcion on Connected as server" << endl;
+	cout << "WAITING CONNECTION: funcion on Connected as server" << endl;
 #endif // DEBUG
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete NAME
 	return ret;
@@ -23,7 +23,7 @@ genericState* ST_WaitingConnection::on_ConnectedAsClient(genericEvent *ev, usefu
 {
 	genericState *ret = (genericState *) new ST_C_WaitingName();
 #ifdef DEBUG
-	cout << "entra : funcion on Connected as client" << endl;
+	cout << "WAITING CONNECTION : funcion on Connected as client" << endl;
 #endif // DEBUG
 	return ret;
 }

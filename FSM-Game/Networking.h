@@ -43,7 +43,7 @@ public:
 
 private:
 	//siguientes 3 lineas son  para server
-	boost::asio::io_service*  IO_handler;
+	boost::asio::io_service*  s_IO_handler;
 	boost::asio::ip::tcp::socket* serverSocket;//PARA SERVER PERO IGUAL AL DEL CLIENT. PONER NOMBRE EN COMUN
 	boost::asio::ip::tcp::acceptor* serverAcceptor;//PARA SERVER!!!
 	
@@ -51,6 +51,7 @@ private:
 	
 	//siguientes 3 lineas son para client
 	//boost::asio::ip::tcp::socket* clientSocket; //PARA CLIENT PERO ES IGUAL AL DE DOS LINEAS MAS ARRIBA (SE PUEDE SACAR Y PONER NOMBRE EN COMUN)
+	boost::asio::io_service*  IO_handler;
 	boost::asio::ip::tcp::resolver* clientResolver; //PARA CUANDO ES CLIENT!!!
 	boost::asio::ip::tcp::resolver::iterator endpoint; //PARA CUANDO ES CLIENT!!!
 

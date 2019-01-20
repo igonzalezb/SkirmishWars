@@ -35,6 +35,7 @@ Networking::~Networking()//PARA CLIENT
 		mySocket->close();
 		delete clientResolver;
 		delete mySocket;
+		delete IO_handler;
 	}
 	else
 		//3 SIGUIENTES LINEAS PARA SERVER
@@ -44,9 +45,10 @@ Networking::~Networking()//PARA CLIENT
 		delete serverSocket;
 		//serverSocket->close();
 		//delete serverSocket;
+		delete s_IO_handler;
 	}
 
-	delete IO_handler;
+	//delete IO_handler;
 }
 
 
@@ -88,8 +90,10 @@ void Networking::startConnection()
 		mySocket->close();
 		delete clientResolver;
 		delete mySocket;
-		serverSocket = new boost::asio::ip::tcp::socket(*IO_handler);
-		serverAcceptor = new boost::asio::ip::tcp::acceptor(*IO_handler,
+		delete IO_handler;
+		s_IO_handler = new boost::asio::io_service();
+		serverSocket = new boost::asio::ip::tcp::socket(*s_IO_handler);
+		serverAcceptor = new boost::asio::ip::tcp::acceptor(*s_IO_handler,
 			boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), CONNECTION_PORT_S));
 
 		//serverAcceptor->accept(*mySocket);
@@ -119,16 +123,26 @@ unsigned int Networking::getBlockNumber()
 
 void Networking::sendPackage(genericPackage *Pkg)
 {
+#ifdef DEBUG
+	cout << "entra 8: funcion send Package" << endl;
+#endif // DEBUG
 	Pkg->setPackage();
 
 	size_t len;
 	boost::system::error_code error;
-#ifdef DEBUG
-	cout << "entra 8: funcion send Package" << endl;
-#endif // DEBUG
+
 	do
 	{
-		len = mySocket->write_some(boost::asio::buffer(Pkg->package, Pkg->package.size()), error);
+		if (IamClient)
+		{
+			len = mySocket->write_some(boost::asio::buffer(Pkg->package, Pkg->package.size()), error);
+		}
+		else
+		{
+			len = serverSocket->write_some(boost::asio::buffer(Pkg->package, Pkg->package.size()), error);
+
+		}
+
 #ifdef DEBUG
 		cout << "len: " << len << endl;
 #endif // DEBUG
@@ -162,23 +176,36 @@ bool Networking::receivePackage()
 	do
 	{
 #ifdef DEBUG
-		cout << "entra adentro de receive package, a un do while" << endl;
+		//cout << "entra adentro de receive package, a un do while" << endl;
 #endif // DEBUG
-		len = mySocket->read_some(boost::asio::buffer(buf), error);
+		if (IamClient)
+		{
+			len = mySocket->read_some(boost::asio::buffer(buf), error);
+#ifdef DEBUG
+		//	cout << "entra adentro de receive package, a un do while CLIENT" << endl;
+#endif // DEBUG
+		}
+		else 
+		{
+			len = serverSocket->read_some(boost::asio::buffer(buf), error);
+#ifdef DEBUG
+		//	cout << "entra adentro de receive package, a un do while, SERVER" << endl;
+#endif // DEBUG
+		}
 
-		//if (!error)
-		if(error)
+		if (!error)
+		//if(error)
 		{
 			std::cout << '|';
 			buf[len] = '\0';
 		}
-	} while (!error);
+	//} while (!error);
 
-	//} while (error); //cambio por error en lugar de !error
+	} while (error); //cambio por error en lugar de !error
 					 // HASTA ACA
 
-		if(error)
-	//if (!error)
+	//	if(error)
+	if (!error)
 	{
 		inputPackage.clear();
 		//inputPackage.insert(inputPackage.end(), buf, buf + len); //VER insert
@@ -210,9 +237,9 @@ bool Networking::receivePackage()
 		//imprimo el str:
 		std::cout << std::endl << "Server says: " << str << std::endl;
 		char recibi = (char)buf[1];
-		char recibi2 = (char)str[2];
+	//	char recibi2 = (char)str[2];
 		std::cout << "message lenght (-2) (recibi): " << recibi << std::endl;
-		std::cout << "recibi2: " << recibi2 << std::endl;
+	//	std::cout << "recibi2: " << recibi2 << std::endl;
 #endif // DEBUG
 
 		ret = true;
