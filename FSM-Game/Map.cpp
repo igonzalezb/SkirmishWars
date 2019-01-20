@@ -14,6 +14,7 @@ Map::Map()
 	randomMap();
 
 	mapFile = new csvFile(mapName, FILA, COLUMNA);
+	
 
 }
 
@@ -83,6 +84,8 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
+			cout << "hola" << endl;
+			cout << mapFile->getMatrix()[i][j] << endl;
 			pos = mapFile->getMatrix()[i][j].find('+');
 			if (pos != string::npos) {
 				matrixDeTerrenoOrFacility[i][j] = mapFile->getMatrix()[i][j].substr(0, pos);
@@ -106,7 +109,9 @@ for (bool k = true; k && (it != terrains.end()); ++it) {
 
 	if (strcmp(it->getType().c_str(), matrixDeTerrenoOrFacility[i][j].c_str()) == false) {
 		k = false;
+#ifdef DEBUG
 		printf("Encontre: %s\n", it->getName().c_str());
+#endif // DEBUG
 		Terrain *currTerrain = new Terrain(it->getName(), it->getPath(), it->getType());
 		tilesArray[i][j]->addTerrain(currTerrain);
 		encontroTerrain = true;
