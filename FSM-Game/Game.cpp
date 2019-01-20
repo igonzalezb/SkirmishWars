@@ -25,13 +25,15 @@ Game::Game()
 	playerMe = new Player;
 	playerYou = new Player;
 	myMap = new Map;
+	//graphics = new MapGraphics;
 	notWinning = true;
 	myMap->generateTilesArray(data->getBuildingList(), data->getTerrainList(), data->getUnitList());
+	
+	//graphics->loadBitmaps(myMap);
+
 	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
 	generateDefenseModifiersTable();
-
-
-
+	playing = false;
 
 }
 
@@ -297,5 +299,15 @@ int Game::getDie()
 void Game::setDie(int Dado_)
 {
 	this->die = Dado_;
+}
+
+void Game::setPlaying(bool now)
+{
+	playing = now;
+}
+
+bool Game::getPlaying()
+{
+	return playing;
 }
 

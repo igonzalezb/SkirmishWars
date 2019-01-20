@@ -27,13 +27,13 @@ void eventGenerator::generateEvent()
 	if (I->timeoutSrc->isThereEvent())
 	{
 	buffer.push_back(I->timeoutSrc->insertEvent());
-	}
+	}*/
 
 	if (I->userSrc->isThereEvent())
 	{
 	buffer.push_back(I->userSrc->insertEvent());
 	}
-	*/
+	
 
 }
 

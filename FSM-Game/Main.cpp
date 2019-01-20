@@ -76,6 +76,11 @@ int main()
 			networkingFSM.dispatch(ev, &Info);
 			gameFSM.dispatch(ev, &Info);
 		}
+		if (skirmish.getPlaying())
+		{
+			Info.userSrc->graphics->loadBitmaps(skirmish.myMap);
+			Info.userSrc->graphics->showMap(&skirmish);
+		}
 
 	} while (1); // (((gameFSM.getCurrentState())->getLastEvent() != END_PLAYING) &&
 		//((networkingFSM.getCurrentState())->getLastEvent() != END_PLAYING));//VER BIEN ESTO

@@ -148,6 +148,10 @@ void Networking::sendPackage(genericPackage *Pkg)
 
 bool Networking::receivePackage()
 {
+#ifdef DEBUG
+	cout << "entra a Receive Package" << endl;
+#endif // DEBUG
+
 	bool ret = false;
 	boost::system::error_code error;
 	char buf[PACKAGE_MAX_SIZE];
@@ -157,18 +161,24 @@ bool Networking::receivePackage()
 	//pruebo esto en lugar de la linea de arriba. DE ACA
 	do
 	{
-		len =mySocket->read_some(boost::asio::buffer(buf), error);
+#ifdef DEBUG
+		cout << "entra adentro de receive package, a un do while" << endl;
+#endif // DEBUG
+		len = mySocket->read_some(boost::asio::buffer(buf), error);
 
-		if (!error)
+		//if (!error)
+		if(error)
 		{
 			std::cout << '|';
 			buf[len] = '\0';
 		}
+	} while (!error);
 
-	} while (error); //cambio por error en lugar de !error
+	//} while (error); //cambio por error en lugar de !error
 					 // HASTA ACA
 
-	if (!error)
+		if(error)
+	//if (!error)
 	{
 		inputPackage.clear();
 		//inputPackage.insert(inputPackage.end(), buf, buf + len); //VER insert

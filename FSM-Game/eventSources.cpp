@@ -386,7 +386,7 @@ genericEvent * NetworkEventSource::insertEvent()
 
 /////////////////////USER EVENT SOURCES ///////////////////////////////////////////////
 //UserEventSource::UserEventSource()
-UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface)
+UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface):gameInterface(_gameInterface)
 {
 	graphics = new MapGraphics;
 	event_queue = al_create_event_queue();
@@ -397,12 +397,16 @@ UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface
 
 bool UserEventSource::isThereEvent()
 {
+	cout << "Entra a is there event de user" << endl;
 	bool redraw = false;
 	bool ret = false;
 
 	al_register_event_source(event_queue, al_get_display_event_source(graphics->getDisplay()));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_mouse_event_source());
+
+	graphics->loadBitmaps(gameInterface->myMap);
+	graphics->showMap(gameInterface);
 
 	if (al_is_event_queue_empty(event_queue))
 	{
@@ -443,9 +447,6 @@ bool UserEventSource::isThereEvent()
 
 
 	}
-
-	al_flip_display();
-
 	return ret;
 
 }
