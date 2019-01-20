@@ -42,7 +42,6 @@ int main()
 	Networking communicator(opponentsIP);
 	userInput user;
 	Game skirmish; //Creo una instancia del juego
-
 	GameEventSource gameSource(&skirmish);
 	UserEventSource userSource(&user,&skirmish);
 	NetworkEventSource networkSource(&communicator,&skirmish);
@@ -75,8 +74,13 @@ int main()
 #ifdef DEBUG
 			cout << "entra 5: entro porque ev distinto de nullptr" << endl;
 #endif // DEBUG
-			gameFSM.dispatch(ev, &Info);
 			networkingFSM.dispatch(ev, &Info);
+			gameFSM.dispatch(ev, &Info);
+		}
+		if (skirmish.getPlaying())
+		{
+			Info.userSrc->graphics->loadBitmaps(skirmish.myMap);
+			Info.userSrc->graphics->showMap(&skirmish);
 		}
 
 	} while (1); // (((gameFSM.getCurrentState())->getLastEvent() != END_PLAYING) &&

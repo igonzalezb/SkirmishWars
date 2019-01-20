@@ -86,8 +86,9 @@ public:
 	genericEvent* insertEvent();
 	userInput *userInterface;
 	Game *gameInterface;
-private:
 	MapGraphics* graphics;
+
+private:
 	ALLEGRO_EVENT_QUEUE* event_queue;
 };
 

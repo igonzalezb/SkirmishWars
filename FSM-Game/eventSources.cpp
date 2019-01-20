@@ -13,7 +13,7 @@ using namespace std;
 /*****  GAME EVENT SOURCE  *****/
 
 
-GameEventSource::GameEventSource(Game *_gameInterface)
+GameEventSource::GameEventSource(Game *_gameInterface):gameInterface(_gameInterface)
 {
 
 }
@@ -68,6 +68,7 @@ genericEvent * GameEventSource::insertEvent()
 
 bool GameEventSource::isThereEvent()
 {
+	cout << "entra a is there event del game" << endl;
 	bool ret = false;
 
 	if ((gameInterface->playerMe->getMoney())<=0)
@@ -140,17 +141,19 @@ bool GameEventSource::isThereEvent()
 
 //////////////////////NETWORK EVENT SOURCES////////////////////////////////////////////
 /*****  NETWORK EVENT SOURCE  *****/
-NetworkEventSource::NetworkEventSource(Networking *_networkInterface,Game* _gameInterface) :networkInterface(_networkInterface)//:gameInterface(_gameInterface)
+NetworkEventSource::NetworkEventSource(Networking *_networkInterface,Game* _gameInterface) :networkInterface(_networkInterface),gameInterface(_gameInterface)
 {
+	//gameInterface = _gameInterface;
+	
 }
 
 //Chequea si se recibió algo y se guarda la info correspondiente en r_algo en caso de haberla
 bool NetworkEventSource::isThereEvent()
 {
+	cout << "entra a is there event de networking" << endl;
 	//unsigned char blockLow, blockHigh;
 	bool ret = false;
-
-	list<Unit>::iterator it4 = (gameInterface->data.getUnitList()).begin();
+	list<Unit>::iterator it4 = gameInterface->data->getUnitList().begin();
 	//std::ifstream fileStream;
 	std::vector<MYBYTE> aux; //en vez de MYBYTE se puede poner char ( que es lo que estaba) pero es lo mismo
 	std::string auxstr; //ver si lo voy a usar o no
@@ -255,7 +258,7 @@ bool NetworkEventSource::isThereEvent()
 				r_unidad_string.push_back(c);
 			}
 			
-			for (bool k = true; k && (it4 != gameInterface->data.getUnitList().end()); ++it4) {
+			for (bool k = true; k && (it4 != gameInterface->data->getUnitList().end()); ++it4) {
 
 				if (strcmp(it4->getType().c_str(), r_unidad_string.c_str()) == false) {
 					k = false;
@@ -383,7 +386,7 @@ genericEvent * NetworkEventSource::insertEvent()
 
 /////////////////////USER EVENT SOURCES ///////////////////////////////////////////////
 //UserEventSource::UserEventSource()
-UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface)
+UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface):gameInterface(_gameInterface)
 {
 	graphics = new MapGraphics;
 	event_queue = al_create_event_queue();
@@ -394,12 +397,16 @@ UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface
 
 bool UserEventSource::isThereEvent()
 {
+	cout << "Entra a is there event de user" << endl;
 	bool redraw = false;
 	bool ret = false;
 
 	al_register_event_source(event_queue, al_get_display_event_source(graphics->getDisplay()));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_mouse_event_source());
+
+	graphics->loadBitmaps(gameInterface->myMap);
+	graphics->showMap(gameInterface);
 
 	if (al_is_event_queue_empty(event_queue))
 	{
@@ -440,9 +447,6 @@ bool UserEventSource::isThereEvent()
 
 
 	}
-
-	al_flip_display();
-
 	return ret;
 
 }

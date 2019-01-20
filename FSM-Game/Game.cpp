@@ -8,11 +8,13 @@ Game::Game()
 	char * xml_path = XML_PATH;
 	XML_Parser P = XML_ParserCreate(NULL);
 	FILE * fp = fopen(xml_path, "rb");
+	
+	data = new Resources;
 
 	XML_SetStartElementHandler(P, startTagCallback);	// Función que va a encontrar cuando aparece un Start tag;
 	XML_SetEndElementHandler(P, endTagCallback);		//Función que va a encontrar cuando aparece un End tag;
 	XML_SetCharacterDataHandler(P, chararacterDataCallback);
-	XML_SetUserData(P, &data);
+	XML_SetUserData(P, data);
 	readFileToBuffer(P, fp);
 	fclose(fp);
 
@@ -23,13 +25,15 @@ Game::Game()
 	playerMe = new Player;
 	playerYou = new Player;
 	myMap = new Map;
+	//graphics = new MapGraphics;
 	notWinning = true;
-	myMap->generateTilesArray(data.getBuildingList(), data.getTerrainList(), data.getUnitList());
+	myMap->generateTilesArray(data->getBuildingList(), data->getTerrainList(), data->getUnitList());
+	
+	//graphics->loadBitmaps(myMap);
+
 	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
 	generateDefenseModifiersTable();
-
-
-
+	playing = false;
 
 }
 
@@ -295,5 +299,15 @@ int Game::getDie()
 void Game::setDie(int Dado_)
 {
 	this->die = Dado_;
+}
+
+void Game::setPlaying(bool now)
+{
+	playing = now;
+}
+
+bool Game::getPlaying()
+{
+	return playing;
 }
 

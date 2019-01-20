@@ -12,6 +12,7 @@
 #include "PlayerInfo.h"
 #include "Map.h"
 
+//#include "MapGraphics.h"
 
 #include "basicXML.h"
 #include "Resources.h"
@@ -30,7 +31,8 @@ public:
 	Player* playerMe;
 	Player* playerYou;
 	Map* myMap;
-	Resources data;
+	Resources* data;
+	//MapGraphics* graphics;
 	//coordinates  attacker; //POR AHORA ESTAS DOS LINEAS ESTAN EN MAP.H. VER SI QUEDAN AHI O SI SE SACAN Y SE PONEN ACA O DONDE!
 	//coordinates defender;
 	
@@ -59,6 +61,8 @@ public:
 	Unit* getNewUnit();
 	int getDie();
 	void setDie(int Dado_);
+	void setPlaying(bool now);
+	bool getPlaying();
 	bool moving;
 	bool attacking;
 	bool purchasing;
@@ -73,6 +77,7 @@ private:
 	csvFile *defenseModifiers;
 	modifiers tableMatrix[14][5];
 	Unit *newUnit;
+	bool playing;
 
 };
 //#endif // !GAME_H

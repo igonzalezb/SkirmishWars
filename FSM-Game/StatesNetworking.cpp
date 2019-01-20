@@ -36,6 +36,9 @@ genericState* ST_WaitingConnection::on_ConnectedAsClient(genericEvent *ev, usefu
 
 genericState* ST_S_WaitingNameIs::on_RnameIs(genericEvent *ev, usefulInfo * Info)
 {
+#ifdef DEBUG
+	cout << "entra :S waiting name is y llego name is" << endl;
+#endif // DEBUG
 	genericState *ret = (genericState *) new ST_S_WaitingName();
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ACK
@@ -97,6 +100,9 @@ genericState* ST_S_WaitingIPlayAck::on_Rack(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_C_WaitingName::on_Rname(genericEvent *ev, usefulInfo * Info)
 {
+#ifdef DEBUG
+	cout << "entra : C en waiting name y llego name" << endl;
+#endif // DEBUG
 	genericState *ret = (genericState *) new ST_C_WaitingNameIsAck();
 	Info->nextPkg = new NameIs();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete MAP IS

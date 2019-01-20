@@ -27,6 +27,7 @@ genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 	}
 
 	//COMPLETAR 
+	Info->gameInterface->setPlaying(true);
 	return ret;
 }
 

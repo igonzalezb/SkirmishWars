@@ -5,7 +5,7 @@
 
 #include <string>
 #include "eventSources.h"
-//#include "FileSystem.h"
+
 class usefulInfo
 {
 public:
@@ -13,23 +13,23 @@ public:
 	//y pasar el constructor a un .cpp
 
 	
-	usefulInfo(UserEventSource *UsEvSrc,GameEventSource *GameEvSrc, NetworkEventSource *NETEvSrc) :networkSrc(NETEvSrc),gameSrc(GameEvSrc)//CHEQUEAR
+	usefulInfo(UserEventSource *UsEvSrc,GameEventSource *GameEvSrc, NetworkEventSource *NETEvSrc) :networkSrc(NETEvSrc),gameSrc(GameEvSrc),userSrc(UsEvSrc)//CHEQUEAR
 		//:userSrc(UsEvSrc),gameSrc(GameEvSrc)
 	{
 		networkInterface = networkSrc->networkInterface;
 		gameInterface = gameSrc->gameInterface;
-		//userInterface = userSrc->user;
+		userInterface = userSrc->userInterface;
 	}
 	
 
 	Game *gameInterface;
 	Networking *networkInterface;
 	genericPackage *nextPkg;
-	//Input *userInterface;
+	userInput *userInterface;
 
 	GameEventSource* gameSrc;
 	NetworkEventSource* networkSrc;
-	//UserEventSource* userSrc;
+	UserEventSource* userSrc;
 private:
 
 };
