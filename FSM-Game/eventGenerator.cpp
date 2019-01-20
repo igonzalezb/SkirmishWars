@@ -13,6 +13,8 @@ void eventGenerator::generateEvent()
 	buffer.push_back(I->softwareSrc->insertEvent());
 	}*/
 
+	cout << "entra a generate Event " << endl;
+
 	if (I->networkSrc->isThereEvent())
 	{
 		buffer.push_back(I->networkSrc->insertEvent());
@@ -37,6 +39,7 @@ void eventGenerator::generateEvent()
 
 genericEvent * eventGenerator::getNextEvent()
 {
+	cout << "entra ACA" << endl;
 	genericEvent * ret;
 	if (buffer.size() != 0)
 	{

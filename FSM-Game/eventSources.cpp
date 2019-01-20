@@ -149,7 +149,7 @@ bool NetworkEventSource::isThereEvent()
 {
 	//unsigned char blockLow, blockHigh;
 	bool ret = false;
-	list<Unit>::iterator it3 = gameInterface->data.getUnitList().begin();
+	list<Unit>::iterator it4 = gameInterface->data.getUnitList().begin();
 	//std::ifstream fileStream;
 	std::vector<MYBYTE> aux; //en vez de MYBYTE se puede poner char ( que es lo que estaba) pero es lo mismo
 	std::string auxstr; //ver si lo voy a usar o no
@@ -254,11 +254,11 @@ bool NetworkEventSource::isThereEvent()
 				r_unidad_string.push_back(c);
 			}
 			
-			for (bool k = true; k && (it3 != gameInterface->data.getUnitList().end()); ++it3) {
+			for (bool k = true; k && (it4 != gameInterface->data.getUnitList().end()); ++it4) {
 
-				if (strcmp(it3->getType().c_str(), r_unidad_string.c_str()) == false) {
+				if (strcmp(it4->getType().c_str(), r_unidad_string.c_str()) == false) {
 					k = false;
-					Unit *currUnit = new Unit(it3);
+					Unit *currUnit = new Unit(it4);
 					currUnit->setTeam(gameInterface->playerYou->getTeam());
 					gameInterface->setNewUnit(currUnit);
 				}
@@ -439,6 +439,8 @@ bool UserEventSource::isThereEvent()
 
 
 	}
+
+	al_flip_display();
 
 	return ret;
 

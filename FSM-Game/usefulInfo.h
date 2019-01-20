@@ -13,11 +13,11 @@ public:
 	//y pasar el constructor a un .cpp
 
 	
-	usefulInfo(UserEventSource *UsEvSrc,GameEventSource *GameEvSrc, NetworkEventSource *NETEvSrc) :networkSrc(NETEvSrc) //CHEQUEAR
+	usefulInfo(UserEventSource *UsEvSrc,GameEventSource *GameEvSrc, NetworkEventSource *NETEvSrc) :networkSrc(NETEvSrc),gameSrc(GameEvSrc)//CHEQUEAR
 		//:userSrc(UsEvSrc),gameSrc(GameEvSrc)
 	{
-		gameInterface = gameSrc->gameInterface;
 		networkInterface = networkSrc->networkInterface;
+		gameInterface = gameSrc->gameInterface;
 		//userInterface = userSrc->user;
 	}
 	

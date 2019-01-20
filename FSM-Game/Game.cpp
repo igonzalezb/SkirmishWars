@@ -16,7 +16,7 @@ Game::Game()
 	readFileToBuffer(P, fp);
 	fclose(fp);
 
-	myMap->generateTilesArray(data.getBuildingList(), data.getTerrainList(), data.getUnitList());
+	
 
 
 
@@ -24,6 +24,7 @@ Game::Game()
 	playerYou = new Player;
 	myMap = new Map;
 	notWinning = true;
+	myMap->generateTilesArray(data.getBuildingList(), data.getTerrainList(), data.getUnitList());
 	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
 	generateDefenseModifiersTable();
 

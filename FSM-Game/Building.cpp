@@ -35,7 +35,7 @@ void Building::setName(string name)
 //void Building::setCp(string cp)
 void Building::setCp(int cp)
 {
-	this->cp = cp;
+	this->cp = to_string(cp);
 }
 
 void Building::setPath(string path)

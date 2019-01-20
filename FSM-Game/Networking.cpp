@@ -40,8 +40,10 @@ Networking::~Networking()//PARA CLIENT
 		//3 SIGUIENTES LINEAS PARA SERVER
 	{
 		serverAcceptor->close();
-		mySocket->close();
-		delete mySocket;
+		serverSocket->close();
+		delete serverSocket;
+		//serverSocket->close();
+		//delete serverSocket;
 	}
 
 	delete IO_handler;
@@ -83,12 +85,21 @@ void Networking::startConnection()
 	{
 		//Si no anduvo como cliente, destruyo el clientResolver y creo un serverAcceptor:
 		IamClient = false;
+		mySocket->close();
 		delete clientResolver;
+		delete mySocket;
+		serverSocket = new boost::asio::ip::tcp::socket(*IO_handler);
 		serverAcceptor = new boost::asio::ip::tcp::acceptor(*IO_handler,
 			boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), CONNECTION_PORT_S));
 
-		serverAcceptor->accept(*mySocket);
-		mySocket->non_blocking(true);
+		//serverAcceptor->accept(*mySocket);
+		//mySocket->non_blocking(true);
+		//try {
+			serverAcceptor->accept(*serverSocket);
+			serverSocket->non_blocking(true);
+		//}
+		//catch (boost::exception const&  ex) {}
+
 		cout << "CONNECTED AS SERVER" << endl;
 	}
 }

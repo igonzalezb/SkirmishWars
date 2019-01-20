@@ -234,6 +234,8 @@ void chararacterDataCallback(void *userData, const XML_Char *s, int len)
 	Resources* myData = (Resources*)userData;
 
 	string d(s, s + len);
+//	cout << d << endl;
+
 
 	switch (myData->getFeedSate())
 	{
@@ -269,7 +271,9 @@ void chararacterDataCallback(void *userData, const XML_Char *s, int len)
 		break;
 	case U_TYPE:
 		myData->getLastUnit().setType(d);
+		break;
 	case U_HP:
+		//printf("%i", stoi(d));
 		myData->getLastUnit().setHp(stoi(d));		//set path
 		break;
 	case COST:

@@ -56,6 +56,11 @@ Unit & Resources::getLastUnit()
 {
 	return units.back();
 }
+//Unit * Resources::getLastUnit()
+//{
+//	return &units.back();
+//}
+
 
 list<Terrain>& Resources::getTerrainList()
 {

@@ -40,6 +40,7 @@ public:
 	Terrain& getLastTerrain();
 	Building& getLastBuilding();
 	Unit& getLastUnit();
+	//Unit* getLastUnit();
 	list<Terrain>& getTerrainList();
 	list<Building>& getBuildingList();
 	list<Unit>& getUnitList();
