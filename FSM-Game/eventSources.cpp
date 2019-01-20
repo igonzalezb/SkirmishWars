@@ -149,7 +149,8 @@ bool NetworkEventSource::isThereEvent()
 {
 	//unsigned char blockLow, blockHigh;
 	bool ret = false;
-	list<Unit>::iterator it4 = gameInterface->data.getUnitList().begin();
+
+	list<Unit>::iterator it4 = (gameInterface->data.getUnitList()).begin();
 	//std::ifstream fileStream;
 	std::vector<MYBYTE> aux; //en vez de MYBYTE se puede poner char ( que es lo que estaba) pero es lo mismo
 	std::string auxstr; //ver si lo voy a usar o no

@@ -74,5 +74,6 @@ list<Building>& Resources::getBuildingList()
 
 list<Unit>& Resources::getUnitList()
 {
+	cout << "get UNIT LIST" << endl;
 	return units;
 }

@@ -38,6 +38,7 @@ int main()
 	getchar();
 
 	std::string opponentsIP = "localhost"; //CAMBIAR y ver donde recibirlo y como
+	//std::string opponentsIP = "25.4.70.130"; //CAMBIAR y ver donde recibirlo y como
 	Networking communicator(opponentsIP);
 	userInput user;
 	Game skirmish; //Creo una instancia del juego
