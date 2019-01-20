@@ -13,7 +13,7 @@ void eventGenerator::generateEvent()
 	buffer.push_back(I->softwareSrc->insertEvent());
 	}*/
 
-	cout << "entra a generate Event " << endl;
+	//cout << "entra a generate Event " << endl;
 
 	if (I->networkSrc->isThereEvent())
 	{
@@ -39,14 +39,14 @@ void eventGenerator::generateEvent()
 
 genericEvent * eventGenerator::getNextEvent()
 {
-	cout << "entra ACA" << endl;
+	//cout << "entra ACA" << endl;
 	genericEvent * ret;
 	if (buffer.size() != 0)
 	{
 		ret = buffer.front();	//carga en re t el primer elemento del buffer
 		buffer.pop_front();	//elimina el ultimo elemento del buffer
 #ifdef DEBUG
-		cout << "entra 4: entro a get next event" << endl;
+	//	cout << "entra 4: entro a get next event" << endl;
 #endif // DEBUG
 	}
 	else

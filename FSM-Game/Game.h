@@ -66,6 +66,10 @@ public:
 	bool moving;
 	bool attacking;
 	bool purchasing;
+
+	void chooseWhoStarts();
+	bool playerChosen;
+	bool Istart;
 private:
 	coordenadas attacker;
 	coordenadas defender;

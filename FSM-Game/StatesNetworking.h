@@ -33,6 +33,11 @@ class ST_S_WaitingNameIsAck :public genericState
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 
+class ST_S_WaitingMapIsAck :public genericState
+{
+	genericState* ST_S_WaitingMapIsAck::on_Rack(genericEvent *ev, usefulInfo * Info);
+};
+
 class ST_S_WaitingWhoStarts :public genericState
 {
 	genericState* on_IPlay(genericEvent* ev, usefulInfo * Info);
@@ -63,6 +68,11 @@ class ST_C_WaitingNameIs :public genericState
 {
 	genericState* on_RnameIs(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
+};
+
+class ST_C_WaitingMapIs : public genericState
+{
+	genericState* on_RMapIs(genericEvent *ev, usefulInfo * Info);
 };
 
 class ST_C_WaitingMapConfirmation :public genericState

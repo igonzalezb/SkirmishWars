@@ -75,17 +75,20 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case CONNECTED_AS_SERVER:
 #ifdef DEBUG
-			cout << "entra 6: dispatcher en CONNECTED as server" << endl;
+			//cout << "entra 6: dispatcher en CONNECTED as server" << endl;
 #endif // DEBUG
 			//newState = currentState->on_Connected(ev, Info);
 			newState = currentState->on_ConnectedAsServer(ev, Info);
 			break;
 		case CONNECTED_AS_CLIENT:
 #ifdef DEBUG
-			cout << "entra 6: dispatcher en CONNECTED as client" << endl;
+			//cout << "entra 6: dispatcher en CONNECTED as client" << endl;
 #endif // DEBUG
 			//newState = currentState->on_Connected(ev, Info);
 			newState = currentState->on_ConnectedAsClient(ev, Info);
+			break;
+		case MAP_OK:
+			newState = currentState->on_MapOk(ev, Info);
 			break;
 		default:
 			break;

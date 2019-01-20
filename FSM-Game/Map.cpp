@@ -14,8 +14,15 @@ Map::Map()
 	randomMap();
 
 	mapFile = new csvFile(mapName, FILA, COLUMNA);
-	
+	isMapReceivedOk = false;
 
+}
+
+void Map::verifyMapReceived()
+{
+	//HACERLA y que ponga en true map ok
+	cout << "entra a verifymapreceived" << endl;
+	isMapReceivedOk = true;
 }
 
 void Map::setMapPath(string mapName)
@@ -25,42 +32,44 @@ void Map::setMapPath(string mapName)
 
 void Map::randomMap()
 {
-	int map = rand() % MAX_MAPS;
-	
-	switch (map)
-	{
-	case 0:
-		mapName = MAP_0;
-		break;
-	case 1:
-		mapName = MAP_1;
-		break;
-	case 2:
-		mapName = MAP_2;
-		break;
-	case 3:
-		mapName = MAP_3;
-		break;
-	case 4:
-		mapName = MAP_4;
-		break;
-	case 5:
-		mapName = MAP_5;
-		break;
-//////////////////////////////////////////
-	case 6:
-		mapName = MAP_6;
-		break;
-	case 7:
-		mapName = MAP_7;
-		break;
-	case 8:
-		mapName = MAP_8;
-		break;
-	case 9:
-		mapName = MAP_9;
-		break;
-	}
+//	int map = rand() % MAX_MAPS;
+//	
+//	switch (map)
+//	{
+//	case 0:
+//		mapName = MAP_0;
+//		break;
+//	case 1:
+//		mapName = MAP_1;
+//		break;
+//	case 2:
+//		mapName = MAP_2;
+//		break;
+//	case 3:
+//		mapName = MAP_3;
+//		break;
+//	case 4:
+//		mapName = MAP_4;
+//		break;
+//	case 5:
+//		mapName = MAP_5;
+//		break;
+////////////////////////////////////////////
+//	case 6:
+//		mapName = MAP_6;
+//		break;
+//	case 7:
+//		mapName = MAP_7;
+//		break;
+//	case 8:
+//		mapName = MAP_8;
+//		break;
+//	case 9:
+//		mapName = MAP_9;
+//		break;
+//	}
+
+	mapName = MAP_0;		//VOVLER A CAMBIAR!!!!!
 
 #ifdef DEBUG
 	printf("%s\n", mapName.c_str());
@@ -84,8 +93,8 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
-			cout << "hola" << endl;
-			cout << mapFile->getMatrix()[i][j] << endl;
+			//cout << "hola" << endl;
+			//cout << mapFile->getMatrix()[i][j] << endl;
 			pos = mapFile->getMatrix()[i][j].find('+');
 			if (pos != string::npos) {
 				matrixDeTerrenoOrFacility[i][j] = mapFile->getMatrix()[i][j].substr(0, pos);
@@ -110,7 +119,7 @@ for (bool k = true; k && (it != terrains.end()); ++it) {
 	if (strcmp(it->getType().c_str(), matrixDeTerrenoOrFacility[i][j].c_str()) == false) {
 		k = false;
 #ifdef DEBUG
-		printf("Encontre: %s\n", it->getName().c_str());
+		//printf("Encontre: %s\n", it->getName().c_str());
 #endif // DEBUG
 		Terrain *currTerrain = new Terrain(it->getName(), it->getPath(), it->getType());
 		tilesArray[i][j]->addTerrain(currTerrain);

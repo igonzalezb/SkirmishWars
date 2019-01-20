@@ -34,7 +34,8 @@ Game::Game()
 	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
 	generateDefenseModifiersTable();
 	playing = false;
-
+	playerChosen = false;
+	Istart = false;
 }
 
 Game::~Game()
@@ -309,5 +310,11 @@ void Game::setPlaying(bool now)
 bool Game::getPlaying()
 {
 	return playing;
+}
+
+void Game::chooseWhoStarts()
+{
+	Istart = rand() % 2;
+	playerChosen = true;
 }
 

@@ -88,7 +88,10 @@ public:
 	bool canAttack[FILA][COLUMNA];
 	string getMapName();
 	void setMapName(string mapName_);
+	void verifyMapReceived();
 
+
+	bool isMapReceivedOk;
 private:
 	string mapName;
 	csvFile *mapFile;

@@ -182,7 +182,7 @@ bool Networking::receivePackage()
 		{
 			len = mySocket->read_some(boost::asio::buffer(buf), error);
 #ifdef DEBUG
-		//	cout << "entra adentro de receive package, a un do while CLIENT" << endl;
+			//cout << "entra adentro de receive package, a un do while CLIENT" << endl;
 #endif // DEBUG
 		}
 		else 
@@ -196,7 +196,7 @@ bool Networking::receivePackage()
 		if (!error)
 		//if(error)
 		{
-			std::cout << '|';
+			std::cout << '|' << endl;
 			buf[len] = '\0';
 		}
 	//} while (!error);

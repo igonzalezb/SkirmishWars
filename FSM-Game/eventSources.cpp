@@ -71,6 +71,25 @@ bool GameEventSource::isThereEvent()
 	cout << "entra a is there event del game" << endl;
 	bool ret = false;
 
+	if (gameInterface->playerChosen)
+	{
+		if (gameInterface->Istart)
+		{
+			cout << "IS THERE EVENG:I START" << endl;
+			evCode = I_START;
+		}
+		else
+			evCode = YOU_START;
+		ret = true;
+		cout << "IS THERE EVENG:I START o YOU START" << endl;
+	}
+
+	if (gameInterface->myMap->isMapReceivedOk)
+	{
+		evCode = MAP_OK;
+		gameInterface->myMap->isMapReceivedOk = false;
+		ret = true;
+	}
 	if ((gameInterface->playerMe->getMoney())<=0)
 	{
 		evCode = NO_MONEY;
@@ -145,12 +164,13 @@ NetworkEventSource::NetworkEventSource(Networking *_networkInterface,Game* _game
 {
 	//gameInterface = _gameInterface;
 	
+	
 }
 
 //Chequea si se recibió algo y se guarda la info correspondiente en r_algo en caso de haberla
 bool NetworkEventSource::isThereEvent()
 {
-	cout << "entra a is there event de networking" << endl;
+	//cout << "entra a is there event de networking" << endl;
 	//unsigned char blockLow, blockHigh;
 	bool ret = false;
 	list<Unit>::iterator it4 = gameInterface->data->getUnitList().begin();
@@ -166,15 +186,17 @@ bool NetworkEventSource::isThereEvent()
 		//evCode = CONNECTED;
 		networkInterface->justConnected = false;
 #ifdef DEBUG
-		cout << "ENTRA 1" << endl;
+		//cout << "ENTRA 1" << endl;
 #endif // DEBUG
 		if (networkInterface->IamClient)
 		{
 			evCode = CONNECTED_AS_CLIENT;
+			gameInterface->Istart = false;//ESTO ACA NO VA
 		}
 		else
 		{
 			evCode = CONNECTED_AS_SERVER;
+			gameInterface->Istart = true;//ESTO ACA NO VA
 		}
 		ret = true;
 	}
@@ -182,7 +204,7 @@ bool NetworkEventSource::isThereEvent()
 	else if (networkInterface->receivePackage())	//verifica si se recibio algo
 	{
 #ifdef DEBUG
-		cout << "entra 2 (aca no deberia entrar)" << endl;
+	//	cout << "entra 2 (aca no deberia entrar)" << endl;
 #endif // DEBUG
 		switch (networkInterface->getInputPackage()[0])	//segun el tipo de paquete devuelvo el tipo de evento
 		{
@@ -212,6 +234,7 @@ bool NetworkEventSource::isThereEvent()
 			break;
 		case OP_MAP_IS:
 			evCode = R_MAP_IS;
+			cout << "GENERA EL EVENTO MAP IS" << endl;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			i = static_cast<int>(aux[1]);
 			aux.erase(aux.begin());
