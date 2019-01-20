@@ -73,9 +73,15 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 															   //si lo saco, sacar tambien de generic_states.h, genericEvent.h
 															   // se se deja, VER donde agregar en States.h
 			break;
-		case CONNECTED:
+		case CONNECTED_AS_SERVER:
 #ifdef DEBUG
-			cout << "entra 6: dispatcher en CONNECTED" << endl;
+			cout << "entra 6: dispatcher en CONNECTED as server" << endl;
+#endif // DEBUG
+			newState = currentState->on_Connected(ev, Info);
+			break;
+		case CONNECTED_AS_CLIENT:
+#ifdef DEBUG
+			cout << "entra 6: dispatcher en CONNECTED as client" << endl;
 #endif // DEBUG
 			newState = currentState->on_Connected(ev, Info);
 			break;

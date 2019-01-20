@@ -61,7 +61,7 @@ void MapGraphics::showMap(Game* gameInfo)
 		al_get_bitmap_width(purchaseButton), al_get_bitmap_height(purchaseButton),
 		M_WIDTH, al_get_font_line_height(menuFont)*2 + al_get_bitmap_height(attackButton), R_WIDTH, M_HEIGHT / 8.0, 0);
 
-	list<Unit>::iterator iterator1 = gameInfo->data.getUnitList().begin();
+	list<Unit>::iterator iterator1 = gameInfo->data->getUnitList().begin();
 
 	for (int i = 0; i < 9; i++) {
 		string currItem;
@@ -211,7 +211,7 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 		{
 			// Se apreto para comprar la unidad de numero i de la lista
 		
-			list<Unit>::iterator it3 = gameInfo->data.getUnitList().begin();
+			list<Unit>::iterator it3 = gameInfo->data->getUnitList().begin();
 			advance(it3, i);
 			Unit *currUnit = new Unit(it3);
 			currUnit->setTeam(gameInfo->playerMe->getTeam());
