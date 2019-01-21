@@ -63,7 +63,7 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_RgameOver(ev, Info);
 			break;
 		case R_ERROR_:
-			newState = currentState->on_Rerror_(ev, Info);
+			newState = currentState->on_Rerror_(ev, Info);  
 			break;
 		case R_QUIT:
 			newState = currentState->on_Rquit(ev, Info);
@@ -89,6 +89,15 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case MAP_OK:
 			newState = currentState->on_MapOk(ev, Info);
+			cout << "DISPATCH DE MAP OK" << endl;
+			break;
+		case I_START:
+			newState = currentState->on_IStart(ev, Info);
+			cout << "DISPATCH DE I START" << endl;
+			break;
+		case YOU_START:
+			newState = currentState->on_YouStart(ev, Info);
+			cout << "DISPATCH DE YOU START" << endl;
 			break;
 		default:
 			break;

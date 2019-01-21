@@ -124,7 +124,7 @@ unsigned int Networking::getBlockNumber()
 void Networking::sendPackage(genericPackage *Pkg)
 {
 #ifdef DEBUG
-	cout << "entra 8: funcion send Package" << endl;
+	//cout << "entra 8: funcion send Package" << endl;
 #endif // DEBUG
 	Pkg->setPackage();
 
@@ -144,18 +144,18 @@ void Networking::sendPackage(genericPackage *Pkg)
 		}
 
 #ifdef DEBUG
-		cout << "len: " << len << endl;
+	//	cout << "len: " << len << endl;
 #endif // DEBUG
 	} while ((error.value() == WSAEWOULDBLOCK));
 	if (error)
 	{
 		/*std::cout << "Error while trying to connect to server " << error.message() << std::endl;*/
 #ifdef DEBUG
-		cout << "error al querer enviar" << endl;
+	//	cout << "error al querer enviar" << endl;
 #endif // DEBUG
 	}
 #ifdef DEBUG
-	cout << "entra 9: termino de enviar" << endl;
+	//cout << "entra 9: termino de enviar" << endl;
 #endif // DEBUG
 
 }
@@ -163,7 +163,7 @@ void Networking::sendPackage(genericPackage *Pkg)
 bool Networking::receivePackage()
 {
 #ifdef DEBUG
-	cout << "entra a Receive Package" << endl;
+	//cout << "entra a Receive Package" << endl;
 #endif // DEBUG
 
 	bool ret = false;
@@ -173,14 +173,15 @@ bool Networking::receivePackage()
 	//len = serverSocket->read_some(boost::asio::buffer(buf), error); //VER EL LEN QUE ONDA, EN MI CASO
 
 	//pruebo esto en lugar de la linea de arriba. DE ACA
-	do
-	{
+//	do
+//	{
 #ifdef DEBUG
 		//cout << "entra adentro de receive package, a un do while" << endl;
 #endif // DEBUG
 		if (IamClient)
 		{
 			len = mySocket->read_some(boost::asio::buffer(buf), error);
+		//	cout << "BUF:" << buf<< endl;
 #ifdef DEBUG
 			//cout << "entra adentro de receive package, a un do while CLIENT" << endl;
 #endif // DEBUG
@@ -188,6 +189,7 @@ bool Networking::receivePackage()
 		else 
 		{
 			len = serverSocket->read_some(boost::asio::buffer(buf), error);
+			//cout << "BUF:" << buf<< endl;
 #ifdef DEBUG
 		//	cout << "entra adentro de receive package, a un do while, SERVER" << endl;
 #endif // DEBUG
@@ -201,7 +203,7 @@ bool Networking::receivePackage()
 		}
 	//} while (!error);
 
-	} while (error); //cambio por error en lugar de !error
+//	} while (error); //cambio por error en lugar de !error
 					 // HASTA ACA
 
 	//	if(error)
@@ -212,7 +214,7 @@ bool Networking::receivePackage()
 		inputPackage.insert(inputPackage.end(), buf, buf + len);
 
 #ifdef DEBUG	
-		std::cout << "len del recibido: " << len << std::endl;
+	//	std::cout << "len del recibido: " << len << std::endl;
 		//Paso el vector a string:
 		/*
 		for (int i = 0; i < 10; ++i)
@@ -220,8 +222,8 @@ bool Networking::receivePackage()
 
 		string str(inputPackage.begin(), inputPackage.end());
 		//str.c_str();
-		cout << "Here is strC, which is constructed from a vector:\n";
-		cout << str << endl;
+		//cout << "Here is strC, which is constructed from a vector:\n";
+	//	cout << str << endl;
 
 		//------------
 		//int n = str.length();

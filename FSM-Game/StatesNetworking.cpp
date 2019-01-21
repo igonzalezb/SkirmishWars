@@ -90,7 +90,7 @@ genericState* ST_S_WaitingMapIsAck::on_Rack(genericEvent *ev, usefulInfo * Info)
 
 /////////////////////////////// ST_S_WaitingWhoStarts ///////////////////////////////
 
-genericState* ST_S_WaitingWhoStarts::on_IPlay(genericEvent *ev, usefulInfo * Info)
+genericState* ST_S_WaitingWhoStarts::on_IStart(genericEvent *ev, usefulInfo * Info)
 {
 #ifdef DEBUG
 	cout << "ST S PLAYING" << endl;
@@ -101,7 +101,7 @@ genericState* ST_S_WaitingWhoStarts::on_IPlay(genericEvent *ev, usefulInfo * Inf
 	return ret;
 }
 
-genericState* ST_S_WaitingWhoStarts::on_YouPlay(genericEvent *ev, usefulInfo * Info)
+genericState* ST_S_WaitingWhoStarts::on_YouStart(genericEvent *ev, usefulInfo * Info)
 {
 #ifdef DEBUG
 	cout << "ST S YOU PLAYING" << endl;
@@ -166,7 +166,7 @@ genericState* ST_C_WaitingNameIs::on_RnameIs(genericEvent *ev, usefulInfo * Info
 
 /////////////////////////////// ST_C_WaitingMapIs ///////////////////////////////
 
-genericState* ST_C_WaitingMapIs::on_RMapIs(genericEvent *ev, usefulInfo * Info)
+genericState* ST_C_WaitingMapIs::on_RmapIs(genericEvent *ev, usefulInfo * Info)
 {
 #ifdef DEBUG
 	cout << "ST C ON MAP IS" << endl;
@@ -195,17 +195,30 @@ genericState* ST_C_WaitingMapConfirmation::on_MapOk(genericEvent *ev, usefulInfo
 
 /////////////////////////////// ST_C_WaitingWhoStarts ///////////////////////////////
 
-genericState* ST_C_WaitingWhoStarts::on_IPlay(genericEvent *ev, usefulInfo * Info)
+//genericState* ST_C_WaitingWhoStarts::on_IPlay(genericEvent *ev, usefulInfo * Info)
+genericState* ST_C_WaitingWhoStarts::on_RyouStart(genericEvent *ev, usefulInfo * Info)
 {
 #ifdef DEBUG
 	cout << "ST C 6" << endl;
 #endif // DEBUG
 	genericState *ret = (genericState *) new ST_IPlay();
+	//Info->nextPkg = new Ack();
+	//Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ACK
+	return ret;
+}
+
+genericState* ST_C_WaitingWhoStarts::on_RIStart(genericEvent *ev, usefulInfo * Info)
+{
+#ifdef DEBUG
+	cout << "ST R I START" << endl;
+#endif // DEBUG
+	genericState *ret = (genericState *) new ST_WaitingAPlay();
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ACK
 	return ret;
 }
 
+/*
 genericState* ST_C_WaitingWhoStarts::on_Rmove(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
@@ -233,7 +246,7 @@ genericState* ST_C_WaitingWhoStarts::on_Rpass(genericEvent *ev, usefulInfo * Inf
 	genericState *ret = (genericState *) new ST_IPlay();
 	return ret;
 }
-
+*/
 
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -40,8 +40,8 @@ class ST_S_WaitingMapIsAck :public genericState
 
 class ST_S_WaitingWhoStarts :public genericState
 {
-	genericState* on_IPlay(genericEvent* ev, usefulInfo * Info);
-	genericState* on_YouPlay(genericEvent* ev, usefulInfo * Info);
+	genericState* on_IStart(genericEvent* ev, usefulInfo * Info);
+	genericState* on_YouStart(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 
@@ -72,7 +72,7 @@ class ST_C_WaitingNameIs :public genericState
 
 class ST_C_WaitingMapIs : public genericState
 {
-	genericState* on_RMapIs(genericEvent *ev, usefulInfo * Info);
+	genericState* on_RmapIs(genericEvent *ev, usefulInfo * Info);
 };
 
 class ST_C_WaitingMapConfirmation :public genericState
@@ -83,11 +83,14 @@ class ST_C_WaitingMapConfirmation :public genericState
 
 class ST_C_WaitingWhoStarts :public genericState
 {
-	genericState* on_IPlay(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RyouStart(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RIStart(genericEvent* ev, usefulInfo * Info);
+	/*
 	genericState* on_Rmove(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Rpurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Rattack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Rpass(genericEvent* ev, usefulInfo * Info);
+	*/
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 

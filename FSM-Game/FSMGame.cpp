@@ -23,7 +23,12 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 	{
 		switch (ev->getEventType())
 		{
-
+		case I_START:
+			newState = currentState->on_IStart(ev, Info);
+			break;
+		case YOU_START:
+			newState = currentState->on_YouStart(ev, Info);
+			break;
 		case R_ACK:
 			newState = currentState->on_Rack(ev, Info);
 			break;

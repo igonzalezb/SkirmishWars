@@ -29,7 +29,7 @@ public:
 	virtual genericState* on_MapSelected(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	virtual genericState* on_WaitingMapIs(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	virtual genericState* on_RMapIs(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	//virtual genericState* on_RMapIs(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	virtual genericState* on_WaitingMapConfirmation(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_MapOk(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -38,6 +38,8 @@ public:
 	//ESTOS DOS VER SI SE BORRAN O QUE HACER:
 	virtual genericState* on_IPlay(genericEvent* ev, usefulInfo * Info) { return nullptr; } //VER si estos dos se usan en la fsm del juego o no.
 	virtual genericState* on_YouPlay(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_IStart(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_YouStart(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	
 	//virtual genericState* on_Iquit(genericEvent* ev, usefulInfo * Info) { return nullptr; }

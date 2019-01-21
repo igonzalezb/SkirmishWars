@@ -163,7 +163,7 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 				{
 					//Se cliqueo en la posicion ij (i:fila(16). j:col(12))
 #ifdef DEBUG
-					printf("Se apreto la fila: %d, columna %d/n", i, j);
+					cout << "SE APRETO la fila:" << i << " , columna " << j << endl;
 #endif // DEBUG
 					gameInfo->setTileSelected(i, j);
 					return TILE;
@@ -177,7 +177,7 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 	{
 		//Se apreto ATTACK
 #ifdef DEBUG
-		printf("Se apreto Attack/n");
+		cout << "Se apreto Attack" << endl;
 #endif // DEBUG
 		return ATTACK;
 	}
@@ -186,7 +186,7 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 	{
 		//Se apreto PASS
 #ifdef DEBUG
-		printf("Se apreto Pass/n");
+		cout << "Se apreto Pass" << endl;
 #endif // DEBUG
 		return PASS;
 	}
@@ -196,7 +196,7 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 	{
 		//Se apreto PURCHASE
 #ifdef DEBUG
-		printf("Se apreto Purchase/n");
+		cout << "Se apreto Purchase\n" << endl;
 #endif // DEBUG
 		return PURCHASE;
 	}
@@ -219,13 +219,13 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 		}
 			
 #ifdef DEBUG
-			printf("Se apreto la opcion %d para comprar/n", i);
+			cout << "Se apreto comprar la opcion" << i << endl;
 #endif // DEBUG
 			return NEW_UNIT;
 	
 	}
 #ifdef DEBUG
-	printf("No se apreto nada relevante/n");
+	cout << "No se apreto nada relevante" << endl;
 #endif // DEBUG
 
 	return NO_EV;		//VER!!!!!

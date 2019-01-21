@@ -49,7 +49,7 @@ genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 		}
 	}
 	//COMPLETAR
-
+	Info->gameInterface->setPlaying(true);
 	return ret;
 }
 
@@ -71,6 +71,7 @@ genericState* ST_GameIdle::on_RYouStart(genericEvent *ev, usefulInfo * Info)
 		}
 	}
 	//COMPLETAR
+	Info->gameInterface->setPlaying(true);
 
 	return ret;
 }
@@ -93,6 +94,7 @@ genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 		}
 	}
 	//COMPLETAR
+	Info->gameInterface->setPlaying(true);
 
 	return ret;
 }

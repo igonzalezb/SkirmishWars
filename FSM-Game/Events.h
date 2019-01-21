@@ -14,6 +14,13 @@ Eventos que genera la fsm de GAME :
 YOU_START, I_START, MOVE, PURCHASE, ATTACK, PASS, YOU_WON, PLAY_AGAIN,
 GAME_OVER */
 
+class EV_MapOk : public genericEvent //VER QUIEN LO GENERA
+{
+public:
+	EV_MapOk() { ev = MAP_OK; };
+private:
+};
+
 class EV_YouStart : public genericEvent //VER QUIEN LO GENERA
 {
 public:

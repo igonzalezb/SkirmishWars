@@ -66,19 +66,20 @@ int main()
 
 	do
 	{
-		cout << "do while del main" << endl;
+		//cout << "do while del main" << endl;
 		evGen.generateEvent();
 		ev = evGen.getNextEvent();
 		if (ev != nullptr)
 		{
 #ifdef DEBUG
-			cout << "entra 5: entro porque ev distinto de nullptr" << endl;
+		//	cout << "entra 5: entro porque ev distinto de nullptr" << endl;
 #endif // DEBUG
 			networkingFSM.dispatch(ev, &Info);
 			gameFSM.dispatch(ev, &Info);
 		}
 		if (skirmish.getPlaying())
 		{
+			cout << "MOSTRAR LA PANTALLA" << endl;
 			Info.userSrc->graphics->loadBitmaps(skirmish.myMap);
 			Info.userSrc->graphics->showMap(&skirmish);
 		}

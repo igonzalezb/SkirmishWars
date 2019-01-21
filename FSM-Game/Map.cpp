@@ -14,7 +14,8 @@ Map::Map()
 	randomMap();
 
 	mapFile = new csvFile(mapName, FILA, COLUMNA);
-	isMapReceivedOk = false;
+	isMapReceivedOk = false; //DESPUES PONER EN FALSE
+
 
 }
 

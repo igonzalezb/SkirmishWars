@@ -24,6 +24,9 @@ genericEvent * GameEventSource::insertEvent()
 	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
 	switch (evCode)
 	{
+	case MAP_OK:
+		ret = (genericEvent *) new EV_MapOk();
+		break;
 	case YOU_START:
 		ret = (genericEvent *) new EV_YouStart();
 		break;
@@ -68,24 +71,27 @@ genericEvent * GameEventSource::insertEvent()
 
 bool GameEventSource::isThereEvent()
 {
-	cout << "entra a is there event del game" << endl;
+//	cout << "entra a is there event del game" << endl;
 	bool ret = false;
 
 	if (gameInterface->playerChosen)
 	{
 		if (gameInterface->Istart)
 		{
-			cout << "IS THERE EVENG:I START" << endl;
+		//	cout << "IS THERE EVENG:I START" << endl;
+			//evCode = I_START;
 			evCode = I_START;
 		}
 		else
 			evCode = YOU_START;
 		ret = true;
 		cout << "IS THERE EVENG:I START o YOU START" << endl;
+		gameInterface->playerChosen = false; //probando
 	}
 
 	if (gameInterface->myMap->isMapReceivedOk)
 	{
+		cout << "GENERA EVENTO MAP OK" << endl;
 		evCode = MAP_OK;
 		gameInterface->myMap->isMapReceivedOk = false;
 		ret = true;
@@ -420,7 +426,7 @@ UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface
 
 bool UserEventSource::isThereEvent()
 {
-	cout << "Entra a is there event de user" << endl;
+	//cout << "Entra a is there event de user" << endl;
 	bool redraw = false;
 	bool ret = false;
 
@@ -428,8 +434,8 @@ bool UserEventSource::isThereEvent()
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_mouse_event_source());
 
-	graphics->loadBitmaps(gameInterface->myMap);
-	graphics->showMap(gameInterface);
+	//graphics->loadBitmaps(gameInterface->myMap);	 //AREGAR DENUEVO DES[PUES
+	//graphics->showMap(gameInterface);
 
 	if (al_is_event_queue_empty(event_queue))
 	{
