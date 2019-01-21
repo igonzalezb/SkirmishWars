@@ -7,6 +7,7 @@ Player::Player()
 	teamcolor = TeamColor(rand() % MAX_PLAYERS + 1);
 	team = NEUTRO;
 	cities = 0;
+	
 }
 
 Player::~Player()

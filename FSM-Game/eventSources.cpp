@@ -434,7 +434,7 @@ bool UserEventSource::isThereEvent()
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_mouse_event_source());
 
-	//graphics->loadBitmaps(gameInterface->myMap);	 //AREGAR DENUEVO DES[PUES
+	//graphics->loadBitmaps(gameInterface->myMap);	 //AGREGAR DENUEVO DES[PUES
 	//graphics->showMap(gameInterface);
 
 	if (al_is_event_queue_empty(event_queue))
@@ -469,6 +469,9 @@ bool UserEventSource::isThereEvent()
 			evCode = END_PLAYING;
 			ret = true;
 			break;
+		case ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
+			al_flip_display();
+			break;
 		default:
 			ret = false;
 			break;
@@ -476,6 +479,11 @@ bool UserEventSource::isThereEvent()
 
 
 	}
+
+#ifdef DEBUG
+	//cout << "Salgo de isThereEvent del USER" << endl;
+#endif // DEBUG
+
 	return ret;
 
 }

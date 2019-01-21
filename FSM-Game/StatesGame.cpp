@@ -11,20 +11,19 @@
 genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Moving();
-	Info->gameInterface->playerMe->setMoney(5);
+	//Info->gameInterface->playerMe->setMoney(5);
 
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			//if (((Info->gameInterface->myMap->getTile(i,j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i,j)->getBuilding()) != NULL))
-			if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
-			{
-				Info->gameInterface->myMap->getTile(i,j)->getUnit()->setHp(8); //VER si este HP inicial por default ya esta cargado en algun lado
-			}
-		}
-	}
+	//int i = 0, j = 0;
+	//for (i = 0; i < FILA; i++)
+	//{
+	//	for (j = 0; j < COLUMNA; j++)
+	//	{
+	//		//if (((Info->gameInterface->myMap->getTile(i,j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i,j)->getBuilding()) != NULL))
+	//		if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
+	//		{
+	//			Info->gameInterface->myMap->getTile(i,j)->getUnit()->setHp(8); //VER si este HP inicial por default ya esta cargado en algun lado
+	//		}
+	//}
 
 	//COMPLETAR 
 	Info->gameInterface->setPlaying(true);
@@ -34,20 +33,20 @@ genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setMoney(5);
+	//Info->gameInterface->playerYou->setMoney(5);
 
 	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
-			if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-			}
-		}
-	}
+	//for (i = 0; i < FILA; i++)
+	//{
+	//	for (j = 0; j < COLUMNA; j++)
+	//	{
+	//		//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+	//		if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
+	//		{
+	//			Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+	//		}
+	//	}
+	//}
 	//COMPLETAR
 	Info->gameInterface->setPlaying(true);
 	return ret;
@@ -58,18 +57,18 @@ genericState* ST_GameIdle::on_RYouStart(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->playerMe->setMoney(5);
 
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
-			if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-			}
-		}
-	}
+	//int i = 0, j = 0;
+	//for (i = 0; i < FILA; i++)
+	//{
+	//	for (j = 0; j < COLUMNA; j++)
+	//	{
+	//		//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+	//		if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
+	//		{
+	//			Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+	//		}
+	//	}
+	//}
 	//COMPLETAR
 	Info->gameInterface->setPlaying(true);
 
@@ -79,20 +78,20 @@ genericState* ST_GameIdle::on_RYouStart(genericEvent *ev, usefulInfo * Info)
 genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setMoney(5);
+	//Info->gameInterface->playerYou->setMoney(5);
 
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
-			if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-			}
-		}
-	}
+	//int i = 0, j = 0;
+	//for (i = 0; i < FILA; i++)
+	//{
+	//	for (j = 0; j < COLUMNA; j++)
+	//	{
+	//		//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
+	//		if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
+	//		{
+	//			Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+	//		}
+	//	}
+	//}
 	//COMPLETAR
 	Info->gameInterface->setPlaying(true);
 
