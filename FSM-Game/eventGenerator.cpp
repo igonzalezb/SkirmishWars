@@ -18,10 +18,17 @@ void eventGenerator::generateEvent()
 	if (I->networkSrc->isThereEvent())
 	{
 		buffer.push_back(I->networkSrc->insertEvent());
+		//
+		I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
+		I->userSrc->graphics->showMap(I->userSrc->gameInterface);
 	}
 	if (I->gameSrc->isThereEvent())
 	{
 		buffer.push_back(I->gameSrc->insertEvent());
+		//
+
+		I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
+		I->userSrc->graphics->showMap(I->userSrc->gameInterface);
 	}
 	/*
 	if (I->timeoutSrc->isThereEvent())
@@ -31,7 +38,11 @@ void eventGenerator::generateEvent()
 
 	if (I->userSrc->isThereEvent())
 	{
-	buffer.push_back(I->userSrc->insertEvent());
+		buffer.push_back(I->userSrc->insertEvent());
+
+		I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
+		I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+	//
 	}
 	
 

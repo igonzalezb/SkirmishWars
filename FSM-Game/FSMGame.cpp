@@ -29,17 +29,26 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 		case YOU_START:
 			newState = currentState->on_YouStart(ev, Info);
 			break;
-		case R_ACK:
-			newState = currentState->on_Rack(ev, Info);
+		case MOVE:
+			newState = currentState->on_Move(ev, Info);
 			break;
-		case R_NAME:
-			newState = currentState->on_Rname(ev, Info);
+		case PURCHASE:
+			newState = currentState->on_Purchase(ev, Info);
 			break;
-		case R_NAME_IS:
-			newState = currentState->on_RnameIs(ev, Info);
+		case ATTACK:
+			newState = currentState->on_Attack(ev, Info);
 			break;
-		case R_MAP_IS:
-			newState = currentState->on_RmapIs(ev, Info);
+		case PASS:
+			newState = currentState->on_Pass(ev, Info);
+			break;
+		case TILE:
+			newState = currentState->on_Tile(ev, Info);
+			break;
+		case NEW_UNIT:
+			newState = currentState->on_NewUnit(ev, Info);
+			break;
+		case NO_MONEY:
+			newState = currentState->on_NoMoney(ev, Info);
 			break;
 		case R_YOU_START:
 			newState = currentState->on_RyouStart(ev, Info);

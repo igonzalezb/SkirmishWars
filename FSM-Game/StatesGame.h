@@ -17,11 +17,11 @@ public:
 };*/
 
 
-class ST_GameIdle :public genericState
+class ST_GameIdle :public genericState //FUNCIONAN
 {
 	genericState* on_IStart(genericEvent* ev, usefulInfo * Info);
 	genericState* on_YouStart(genericEvent* ev, usefulInfo * Info);
-	genericState* on_RYouStart(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RyouStart(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RIStart(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
@@ -89,14 +89,14 @@ class ST_Purchasing :public genericState
 	//genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Unit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_NewUnit(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_WaitingLocation :public genericState
 {
 	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Unit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_NewUnit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);

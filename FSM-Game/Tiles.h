@@ -22,12 +22,13 @@ public:
 	void setUnit(Unit* newUnit);
 	Building* getBuilding();
 	Terrain* getTerrain();
-	
+	bool isSelected();
 
 private:
 	Unit *currUnit = NULL;
 	Building *currBuilding = NULL;
 	Terrain *currTerrain = NULL;
 	bool fogOfWar;
+	bool _selected;
 };
 

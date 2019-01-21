@@ -18,10 +18,6 @@ Game::Game()
 	readFileToBuffer(P, fp);
 	fclose(fp);
 
-	
-
-
-
 	playerMe = new Player;
 	playerYou = new Player;
 	myMap = new Map;
@@ -315,6 +311,7 @@ bool Game::getPlaying()
 void Game::chooseWhoStarts()
 {
 	Istart = rand() % 2;
+	//Istart = false;
 	playerChosen = true;
 }
 

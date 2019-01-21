@@ -41,6 +41,7 @@ public:
 	bool justConnected;
 	bool IamClient;
 
+
 private:
 	//siguientes 3 lineas son  para server
 	boost::asio::io_service*  s_IO_handler;

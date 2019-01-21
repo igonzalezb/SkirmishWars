@@ -25,6 +25,7 @@ void GenericTile::addUnit(Unit *currUnit)
 
 void GenericTile::removeUnit(Unit *currUnit)
 {
+
 }
 
 void GenericTile::addBuilding(Building *currBuilding)
@@ -69,6 +70,11 @@ Building * GenericTile::getBuilding()
 Terrain * GenericTile::getTerrain()
 {
 	return currTerrain;
+}
+
+bool GenericTile::isSelected()
+{
+	return _selected;
 }
 
 void GenericTile::addTerrain(Terrain *currTerrain)

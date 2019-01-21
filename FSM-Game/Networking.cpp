@@ -82,6 +82,7 @@ void Networking::startConnection()
 		mySocket->non_blocking(true);
 		IamClient = true;
 		cout << "CONNECTED AS CLIENT" << endl;
+
 	}
 	else //TIENE QUE SER SERVER
 	{

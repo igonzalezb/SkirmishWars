@@ -10,6 +10,7 @@
 
 genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "GAME IDLE: ON I START" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
 	//Info->gameInterface->playerMe->setMoney(5);
 
@@ -32,6 +33,7 @@ genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "GAME IDLE: ON you START" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
 	//Info->gameInterface->playerYou->setMoney(5);
 
@@ -52,8 +54,9 @@ genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-genericState* ST_GameIdle::on_RYouStart(genericEvent *ev, usefulInfo * Info)
+genericState* ST_GameIdle::on_RyouStart(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "GAME IDLE: ON R you START" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->playerMe->setMoney(5);
 
@@ -77,6 +80,7 @@ genericState* ST_GameIdle::on_RYouStart(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "GAME IDLE: ON R ISTART" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
 	//Info->gameInterface->playerYou->setMoney(5);
 
@@ -94,7 +98,6 @@ genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 	//}
 	//COMPLETAR
 	Info->gameInterface->setPlaying(true);
-
 	return ret;
 }
 
@@ -103,9 +106,12 @@ genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "G MOVING: ON TILE" << endl;
 	genericState *ret;
 	//HACER: cuando el mouse ve que se toca un tile del mapa,
 	//guardar esa info en la clase game en tileSelected y generar el evento TILE
+	cout << (Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit())->getName() << endl;
+
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
 		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
 	{
@@ -123,7 +129,9 @@ genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
 }
 
 genericState* ST_Moving::on_Attack(genericEvent *ev, usefulInfo * Info)//Se entra aca al presionar boton ATTACK en pantalla. Todavia no se hizo el ataque.
-{																	//El ataque se hace despues, una vez que ya se entro a este estado por primera vez.
+{	
+	cout << "G MOVING: ATTACK" << endl;
+	//El ataque se hace despues, una vez que ya se entro a este estado por primera vez.
 	genericState *ret = (genericState *) new ST_Attacking();
 
 	return ret;
@@ -131,6 +139,7 @@ genericState* ST_Moving::on_Attack(genericEvent *ev, usefulInfo * Info)//Se entr
 
 genericState* ST_Moving::on_Purchase(genericEvent *ev, usefulInfo * Info) //VER
 {
+	cout << "G MOVING: ON PURCHASE" << endl;
 	genericState *ret = (genericState *) new ST_Purchasing();
 
 	return ret;
@@ -139,6 +148,7 @@ genericState* ST_Moving::on_Purchase(genericEvent *ev, usefulInfo * Info) //VER
 
 genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "G MOVING: ON PASS" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
 	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities())+1)*5);
@@ -166,6 +176,7 @@ genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info)
 ////////////////////////////////////////
 genericState* ST_WaitingMoveConfirmation::on_Move(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "G WAITING MOVE CONFIRMATION: ON MOVE" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
 		Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->setUnit(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit());
 		Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->setUnit(NULL);
@@ -192,6 +203,7 @@ genericState* ST_Moving::on_Timeout(genericEvent *ev, usefulInfo * Info)
 /////////////////////////////// ST_WaitingDestination //////////////////////
 genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "G WaitingDestination::on_Tile" << endl;
 	genericState *ret;
 	if ((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) == NULL)
 	{
@@ -228,6 +240,7 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 
 genericState* ST_WaitingDestination::on_Attack(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "G WaitingDestination::on_Attack" << endl;
 	genericState *ret = (genericState *) new ST_Attacking();
 
 	//COMPLETAR 
@@ -237,6 +250,7 @@ genericState* ST_WaitingDestination::on_Attack(genericEvent* ev, usefulInfo * In
 	
 genericState* ST_WaitingDestination::on_Purchase(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "G WaitingDestination::on_Purchase" << endl;
 	genericState *ret = (genericState *) new ST_Purchasing();
 
 	//COMPLETAR 
@@ -246,6 +260,7 @@ genericState* ST_WaitingDestination::on_Purchase(genericEvent* ev, usefulInfo * 
 
 genericState* ST_WaitingDestination::on_Pass(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "G WaitingDestination::on_Pass" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
 
 	//COMPLETAR 
@@ -260,6 +275,7 @@ genericState* ST_WaitingDestination::on_Pass(genericEvent* ev, usefulInfo * Info
 
 genericState* ST_Attacking::on_Tile(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "G Attacking::on_Tile" << endl;
 	genericState *ret;
 	//HACER: cuando el mouse ve que se toca un tile del mapa,
 	//guardar esa info en la clase game en tileSelected y generar el evento TILE
@@ -281,6 +297,7 @@ genericState* ST_Attacking::on_Tile(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_Attacking::on_Purchase(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "G Attacking::on_Purchase" << endl;
 	genericState *ret = (genericState *) new ST_Purchasing();
 
 	/*
@@ -297,6 +314,7 @@ genericState* ST_Attacking::on_Purchase(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_Attacking::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "G Attacking::on_Pass" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
 	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
@@ -335,6 +353,7 @@ genericState* ST_Attacking::on_Timeout(genericEvent *ev, usefulInfo * Info)
 /////////////////////////////// ST_WaitingDefender //////////////////////////
 genericState* ST_WaitingDefender::on_Tile(genericEvent* ev, usefulInfo * Info) 
 {
+	cout << "G aitingDefender::on_Tile" << endl;
 	genericState *ret;
 	
 	if ((((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
@@ -423,7 +442,7 @@ genericState* ST_WaitingPurchaseConfirmation::on_Purchase(genericEvent *ev, usef
 //	return ret;
 //}
 
-genericState* ST_Purchasing::on_Unit(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
+genericState* ST_Purchasing::on_NewUnit(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
 {
 	genericState *ret;
 
@@ -520,7 +539,7 @@ genericState* ST_WaitingLocation::on_Tile(genericEvent* ev, usefulInfo * Info)
 	return ret;
 }
 
-genericState* ST_WaitingLocation::on_Unit(genericEvent* ev, usefulInfo * Info)
+genericState* ST_WaitingLocation::on_NewUnit(genericEvent* ev, usefulInfo * Info)
 {
 	genericState *ret;
 

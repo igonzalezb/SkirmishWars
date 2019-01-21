@@ -8,6 +8,7 @@ MapGraphics::MapGraphics()
 		printf("Failed to create display!\n");
 	}
 	
+	
 	attackButton = al_load_bitmap("resources/images/AttackButton.png");
 	if(!attackButton)
 	{
@@ -93,6 +94,8 @@ void MapGraphics::showMap(Game* gameInfo)
 					al_get_bitmap_width(unitsArray[i][j]), al_get_bitmap_height(unitsArray[i][j]),
 					j*T_WIDTH, i* T_HEIGHT, T_WIDTH / 1.3, T_HEIGHT / 1.3, 0);
 				
+				
+				//ACA VA LO DE IS SELECTED!!
 				//gameInfo->myMap->possibleMoves(gameInfo->myMap->getTile(i, j)->getUnit(), i, j);	//Esto no va aca!!
 				//for (int p = 0; p < (FILA); p++) {
 				//	for (int q = 0; q < (COLUMNA); q++) {
@@ -116,6 +119,10 @@ void MapGraphics::loadBitmaps(Map * map)
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
 
+			unitsArray[i][j] = NULL;
+			bitmapArray[i][j] = NULL;
+
+
 #ifndef NOFOG
 			if (!(map->getTile(i, j)->getFog())) {
 #endif // NOFOG
@@ -127,10 +134,13 @@ void MapGraphics::loadBitmaps(Map * map)
 				if ((map->getTile(i, j)->getBuilding() != NULL))
 					bitmapArray[i][j] = al_load_bitmap(map->getTile(i, j)->getBuilding()->getPath().c_str());
 
-				else
+				else if(map->getTile(i,j)->getTerrain() != NULL)
 					bitmapArray[i][j] = al_load_bitmap(map->getTile(i, j)->getTerrain()->getPath().c_str());
-				if (!bitmapArray[i][j] && !unitsArray[i][j])
+				
+				if (!bitmapArray[i][j])
+				{
 					printf("Failed to load Bitmap [%d][%d]\n", i, j);
+				}
 #ifndef NOFOG
 		}
 

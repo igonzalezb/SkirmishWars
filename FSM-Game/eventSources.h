@@ -49,6 +49,7 @@ public:
 	genericEvent* insertEvent();
 	Networking *networkInterface;
 	Game* gameInterface;
+
 	//unsigned int expectedBlockNum;
 	//std::string fileRequested;
 	//std::vector<char> data;	//Se almacena la data en caso de recibir DATA

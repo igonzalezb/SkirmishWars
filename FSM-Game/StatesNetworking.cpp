@@ -199,7 +199,7 @@ genericState* ST_C_WaitingMapConfirmation::on_MapOk(genericEvent *ev, usefulInfo
 genericState* ST_C_WaitingWhoStarts::on_RyouStart(genericEvent *ev, usefulInfo * Info)
 {
 #ifdef DEBUG
-	cout << "ST C 6" << endl;
+	cout << "ST C 6: C_WaitingWhoStarts::on_RyouStart" << endl;
 #endif // DEBUG
 	genericState *ret = (genericState *) new ST_IPlay();
 	//Info->nextPkg = new Ack();
@@ -210,7 +210,7 @@ genericState* ST_C_WaitingWhoStarts::on_RyouStart(genericEvent *ev, usefulInfo *
 genericState* ST_C_WaitingWhoStarts::on_RIStart(genericEvent *ev, usefulInfo * Info)
 {
 #ifdef DEBUG
-	cout << "ST R I START" << endl;
+	cout << "ST c  R I START" << endl;
 #endif // DEBUG
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
 	Info->nextPkg = new Ack();
@@ -258,6 +258,7 @@ genericState* ST_C_WaitingWhoStarts::on_Rpass(genericEvent *ev, usefulInfo * Inf
 
 genericState* ST_IPlay::on_Imove(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "N ST I PLAY::onImove" << endl;
 	genericState *ret = (genericState *) new ST_WaitingPlayAck();
 	Info->nextPkg = new Move();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete MOVE
@@ -266,6 +267,7 @@ genericState* ST_IPlay::on_Imove(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_IPlay::on_Ipurchase(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "N ST I PLAY::onIpurchase" << endl;
 	genericState *ret = (genericState *) new ST_WaitingPlayAck();
 	Info->nextPkg = new Purchase();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PURCHASE
@@ -274,6 +276,7 @@ genericState* ST_IPlay::on_Ipurchase(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_IPlay::on_Iattack(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "N ST I PLAY::onIattack" << endl;
 	genericState *ret = (genericState *) new ST_WaitingCounterAttack();
 	Info->nextPkg = new Attack();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ATTACK
@@ -282,6 +285,7 @@ genericState* ST_IPlay::on_Iattack(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_IPlay::on_Ipass(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "N ST I PLAY::onIpass" << endl;
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
 	Info->nextPkg = new Pass();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PASS

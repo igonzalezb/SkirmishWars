@@ -12,7 +12,7 @@ public:
 	void userEvents();
 
 private:
-	ALLEGRO_DISPLAY *display = NULL;
-	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
+	//ALLEGRO_DISPLAY *display = NULL;
+	//ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 };
 

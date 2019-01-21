@@ -24,7 +24,7 @@ genericEvent * GameEventSource::insertEvent()
 	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
 	switch (evCode)
 	{
-	case MAP_OK:
+	case MAP_OK: //ESTE CREO QUE SE BORRA DE ACA
 		ret = (genericEvent *) new EV_MapOk();
 		break;
 	case YOU_START:
@@ -45,6 +45,12 @@ genericEvent * GameEventSource::insertEvent()
 	case PASS:
 		ret = (genericEvent *) new EV_Pass();
 		break;
+	case TILE:
+		ret = (genericEvent *) new EV_Tile;
+		break;
+	case NEW_UNIT:
+		ret = (genericEvent *) new EV_NewUnit();
+		break;
 	case YOU_WON:
 		ret = (genericEvent *) new EV_YouWon();
 		break;
@@ -62,6 +68,33 @@ genericEvent * GameEventSource::insertEvent()
 		break;
 	case ERR_DETECTED:		//VER si este case se deja o si se saca
 		ret = (genericEvent *) new EV_ErrDetected();
+		break;
+	case R_YOU_START:
+		ret = (genericEvent *) new EV_YouStart();
+		break;
+	case R_I_START:
+		ret = (genericEvent *) new EV_IStart();
+		break;
+	case R_MOVE:
+		ret = (genericEvent *) new EV_Move();
+		break;
+	case R_PURCHASE:
+		ret = (genericEvent *) new EV_Purchase();
+		break;
+	case R_ATTACK:
+		ret = (genericEvent *) new EV_Attack();
+		break;
+	case R_PASS:
+		ret = (genericEvent *) new EV_Pass();
+		break;
+	case R_YOU_WON:
+		ret = (genericEvent *) new EV_YouWon();
+		break;
+	case R_GAME_OVER:
+		ret = (genericEvent *) new EV_GameOver();
+		break;
+	case R_QUIT:
+		ret = (genericEvent *) new EV_Quit();
 		break;
 	default:
 		break;
@@ -198,11 +231,17 @@ bool NetworkEventSource::isThereEvent()
 		{
 			evCode = CONNECTED_AS_CLIENT;
 			gameInterface->Istart = false;//ESTO ACA NO VA
+			gameInterface->playerMe->setTeam(EQUIPO2); //cliente es equipo 2
+			gameInterface->playerYou->setTeam(EQUIPO1); //server es equipo 1
+			
+
 		}
 		else
 		{
 			evCode = CONNECTED_AS_SERVER;
 			gameInterface->Istart = true;//ESTO ACA NO VA
+			gameInterface->playerMe->setTeam(EQUIPO1); //server equipo 1
+			gameInterface->playerYou->setTeam(EQUIPO2); //client equipo 2 
 		}
 		ret = true;
 	}
@@ -422,13 +461,18 @@ UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface
 	if (!event_queue) {
 		fprintf(stderr, "failed to create event_quieue!\n");
 	}
+
+	
 }
 
 bool UserEventSource::isThereEvent()
 {
 	//cout << "Entra a is there event de user" << endl;
-	bool redraw = false;
 	bool ret = false;
+
+#ifdef DEBUG
+	al_set_window_title(graphics->getDisplay(), to_string(gameInterface->playerMe->getTeam()).c_str());
+#endif // DEBUG
 
 	al_register_event_source(event_queue, al_get_display_event_source(graphics->getDisplay()));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -454,9 +498,7 @@ bool UserEventSource::isThereEvent()
 			if (ev.mouse.button == 1)		//Para usar solo el click izquierdo
 			{
 				evCode = graphics->dispatchClick(ev.mouse.x, ev.mouse.y, gameInterface);
-
-				if (evCode == NO_EV)	//RET?????? VER!
-					ret = false;
+				ret = true;
 			}
 			break;
 		case ALLEGRO_EVENT_KEY_UP:
@@ -510,6 +552,15 @@ genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 		break;
 	case NEW_UNIT:
 		ret = (genericEvent *) new EV_NewUnit();
+		break;
+	case PURCHASE:
+		ret = (genericEvent *) new EV_Purchase();
+		break;
+	case PASS:
+		ret = (genericEvent *) new EV_Pass();
+		break;
+	case ATTACK:
+		ret = (genericEvent *) new EV_Attack();
 		break;
 
 	default:
