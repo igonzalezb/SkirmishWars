@@ -96,7 +96,7 @@ int main() {
 
 ////FUNCION QUE CHEQUEA MOVIMIENTOS POSIBLES SEGUN LOS MP(MOVEMENT POINTS)/////
 void funcion(int matrix[FILA][COLUMNA], bool(&matrix2)[FILA][COLUMNA], int i, int j, int MP) {
-	if ((0 <= i) && (i < FILA) && (0 <= i) && (j < COLUMNA) && (MP >= 0))
+	if ((0 <= i) && (i < FILA) && (0 <= j) && (j < COLUMNA) && (MP >= 0))
 	{
 		MP -= matrix[i][j];
 		if (MP >= 0) {

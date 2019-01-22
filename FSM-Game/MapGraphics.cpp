@@ -32,6 +32,12 @@ MapGraphics::MapGraphics()
 		fprintf(stderr, "failed to create menuFont!\n");
 	}
 
+	for (int i = 0; i < (FILA); i++) {
+		for (int j = 0; j < (COLUMNA); j++) {
+			bitmapArray[i][j] = NULL;
+			unitsArray[i][j] = NULL;
+		}
+	}
 }
 
 MapGraphics::~MapGraphics()
@@ -118,7 +124,9 @@ void MapGraphics::loadBitmaps(Map * map)
 {
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
-
+			
+			if (bitmapArray[i][j] != NULL) { al_destroy_bitmap(bitmapArray[i][j]);; }
+			if (unitsArray[i][j] != NULL) { al_destroy_bitmap(unitsArray[i][j]); }
 			unitsArray[i][j] = NULL;
 			bitmapArray[i][j] = NULL;
 
@@ -127,10 +135,10 @@ void MapGraphics::loadBitmaps(Map * map)
 			if (!(map->getTile(i, j)->getFog())) {
 #endif // NOFOG
 				//despues rechequear lo del fog segun el equipo
-				if ((map->getTile(i, j)->getUnit() != NULL))
+				if ((map->getTile(i, j)->getUnit() != NULL)) {
 					unitsArray[i][j] = al_load_bitmap(map->getTile(i, j)->getUnit()->getPath().c_str());
-				else
-					unitsArray[i][j] = NULL;
+					//cout << "path de la unit " << map->getTile(i, j)->getUnit()->getPath() << endl;
+				}
 				if ((map->getTile(i, j)->getBuilding() != NULL))
 					bitmapArray[i][j] = al_load_bitmap(map->getTile(i, j)->getBuilding()->getPath().c_str());
 
@@ -176,6 +184,7 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 					cout << "SE APRETO la fila:" << i << " , columna " << j << endl;
 #endif // DEBUG
 					gameInfo->setTileSelected(i, j);
+
 					return TILE;
 				}
 			}
@@ -211,29 +220,29 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 		return PURCHASE;
 	}
 		
-		
-	for (int i = 1; i <= 9; i++) 
-	{
-		if(((M_WIDTH + 10 < x) && (x < al_get_display_width(display)))
-			&& (((al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) 
-				< y) && (y < 
-				(al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) + al_get_font_line_height(menuFont))))
-		{
-			// Se apreto para comprar la unidad de numero i de la lista
-		
-			list<Unit>::iterator it3 = gameInfo->data->getUnitList().begin();
-			advance(it3, i);
-			Unit *currUnit = new Unit(it3);
-			currUnit->setTeam(gameInfo->playerMe->getTeam());
-			gameInfo->setNewUnit(currUnit);
-		}
-			
-#ifdef DEBUG
-			cout << "Se apreto comprar la opcion" << i << endl;
-#endif // DEBUG
-			return NEW_UNIT;
-	
-	}
+		//VOLER A PONER!!!!!!!!!!!!!!
+//	for (int i = 1; i <= 9; i++) 
+//	{
+//		if(((M_WIDTH + 10 < x) && (x < al_get_display_width(display)))
+//			&& (((al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) 
+//				< y) && (y < 
+//				(al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) + al_get_font_line_height(menuFont))))
+//		{
+//			// Se apreto para comprar la unidad de numero i de la lista
+//		
+//			list<Unit>::iterator it3 = gameInfo->data->getUnitList().begin();
+//			advance(it3, i);
+//			Unit *currUnit = new Unit(it3);
+//			currUnit->setTeam(gameInfo->playerMe->getTeam());
+//			gameInfo->setNewUnit(currUnit);
+//		}
+//			
+//#ifdef DEBUG
+//			cout << "Se apreto comprar la opcion" << i << endl;
+//#endif // DEBUG
+//			return NEW_UNIT;
+//	
+//	}
 #ifdef DEBUG
 	cout << "No se apreto nada relevante" << endl;
 #endif // DEBUG

@@ -31,6 +31,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case MOVE:
 			newState = currentState->on_Move(ev, Info);
+			cout << "entro al switch de MOVE" << endl;
 			break;
 		case PURCHASE:
 			newState = currentState->on_Purchase(ev, Info);
@@ -86,7 +87,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 		case ERR_DETECTED:
 			newState = currentState->on_ErrDetected(ev, Info); //VER si este caso se deja o no 
 															   //si lo saco, sacar tambien de generic_states.h, genericEvent.h
-															   // se se deja, VER donde agregar en States.h
+													   // se se deja, VER donde agregar en States.h
 			break;
 		case CONNECTED:
 #ifdef DEBUG

@@ -58,7 +58,7 @@ genericState* ST_GameIdle::on_RyouStart(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "GAME IDLE: ON R you START" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
-	Info->gameInterface->playerMe->setMoney(5);
+	//Info->gameInterface->playerMe->setMoney(5);
 
 	//int i = 0, j = 0;
 	//for (i = 0; i < FILA; i++)
@@ -110,7 +110,11 @@ genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
 	genericState *ret;
 	//HACER: cuando el mouse ve que se toca un tile del mapa,
 	//guardar esa info en la clase game en tileSelected y generar el evento TILE
-	cout << (Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit())->getName() << endl;
+	//cout << (Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit())->getName() << endl;
+	
+	//cout << "Team playerMe:" << Info->gameInterface->playerMe->getTeam() << endl;
+	//cout << "Team tile:" << (Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) << endl;
+
 
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
 		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
@@ -119,11 +123,13 @@ genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
 		//VER si hay que borrar tileSelected (?)
 		Info->gameInterface->moving = false;
 		ret = (genericState *) new ST_WaitingDestination();
+		cout << "ENTRO AL IF DEL ON_TILE" << endl;
 	}
 	else
 	{
 		ret = (genericState *) new ST_Moving();
 		Info->gameInterface->moving = false;
+		cout << "ENTRO AL else DEL ON_TILE (no apretre ninguna unit)" << endl;
 	}
 	return ret;
 }
@@ -153,10 +159,9 @@ genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info)
 	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
 	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities())+1)*5);
 
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
+	for (int i = 0; i < FILA; i++)
 	{
-		for (j = 0; j < COLUMNA; j++)
+		for (int j = 0; j < COLUMNA; j++)
 		{
 			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL)&&
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
@@ -178,8 +183,8 @@ genericState* ST_WaitingMoveConfirmation::on_Move(genericEvent *ev, usefulInfo *
 {
 	cout << "G WAITING MOVE CONFIRMATION: ON MOVE" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
-		Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->setUnit(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit());
-		Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->setUnit(NULL);
+	Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->setUnit(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit());
+	Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->setUnit(NULL);
 	return ret;
 }
 
@@ -209,9 +214,25 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 	{
 		Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
 
-		Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()), Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j);
-		if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender().i][Info->gameInterface->getDefender().j]) == true)
+		// VOLVER A CAMBIAR!!!!!!!!!!!!!
+		//cout << "Defender: " << Info->gameInterface->getDefender().i << Info->gameInterface->getDefender().j << endl;
+		//cout << "Attacker: " << Info->gameInterface->getAttacker().i << Info->gameInterface->getAttacker().j << endl;
+		//Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()), Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j);
+		
+		/*cout << "Matrix CanMove" << endl;
+		for (int i = 0; i < FILA; i++)
 		{
+			for (int j = 0; j < COLUMNA; j++)
+			{
+				
+				cout << Info->gameInterface->myMap->canMove[i][j];
+			}
+			cout << endl;
+		}*/
+
+		if (1) //(Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender().i][Info->gameInterface->getDefender().j]))
+		{
+			cout << "ENTRA AL IF 1" << endl;
 			Info->gameInterface->moving = true;
 			ret = (genericState *) new ST_WaitingMoveConfirmation();
 		}
@@ -224,6 +245,7 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 	else if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
 			((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
 	{
+		cout << "aca no tendria que entrar" << endl;
 		Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
 		//VER si hay que borrar tileSelected (?)
 		ret = (genericState *) new ST_WaitingDestination();
@@ -231,9 +253,12 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 	}
 	else
 	{
+		cout << "aca no tendria que entrar" << endl;
 		ret = (genericState *) new ST_WaitingDestination();
 		Info->gameInterface->moving = false;
 	}
+	
+	cout << "Saliendo..." << endl;
 	return ret;
 }
 
@@ -406,12 +431,12 @@ genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulIn
 {
 	genericState *ret = (genericState *) new ST_Attacking();
 
-	if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getUnit()) != NULL)
+	if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getUnit()) != NULL)
 	{
 		Info->gameInterface->setDie(rand() % 7 + 1); //VERIFICAR si esto tira un valor random entre 1 y 6.
 		Info->gameInterface->attack();
 	}
-	else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getBuilding()) != NULL)
+	else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getBuilding()) != NULL)
 	{
 		Info->gameInterface->captureProperty(Info->gameInterface->playerMe, Info->gameInterface->playerYou);
 	}
@@ -651,16 +676,16 @@ genericState* ST_YouMoving::on_RAttack(genericEvent *ev, usefulInfo * Info)
 
 	//HACER: leer el mensaje que me llega del ataque y cargar el tile atacante y el defendido en attacker y defender
 
-	if ((Info->gameInterface->myMap->getAttacker().i != NULL) &&
-		(Info->gameInterface->myMap->getAttacker().j != NULL) &&
-		(Info->gameInterface->myMap->getDefender().i != NULL) &&
-		(Info->gameInterface->myMap->getDefender().j != NULL))
+	if ((Info->gameInterface->getAttacker().i != NULL) &&
+		(Info->gameInterface->getAttacker().j != NULL) &&
+		(Info->gameInterface->getDefender().i != NULL) &&
+		(Info->gameInterface->getDefender().j != NULL))
 	{
-		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getUnit()) != NULL)
+		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getUnit()) != NULL)
 		{
 			Info->gameInterface->attack();
 		}
-		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getBuilding()) != NULL)
+		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getBuilding()) != NULL)
 		{
 			Info->gameInterface->captureProperty(Info->gameInterface->playerYou, Info->gameInterface->playerMe);
 		}
@@ -740,16 +765,16 @@ genericState* ST_YouAttacking::on_RAttack(genericEvent *ev, usefulInfo * Info)
 
 	//HACER EN IS THERE EVENT DE NETWORKING: leer el mensaje que me llega del ataque y cargar el tile atacante y el defendido en attacker y defender
 
-	if ((Info->gameInterface->myMap->getAttacker().i != NULL) &&
-		(Info->gameInterface->myMap->getAttacker().j != NULL) &&
-		(Info->gameInterface->myMap->getDefender().i != NULL) &&
-		(Info->gameInterface->myMap->getDefender().j != NULL))
+	if ((Info->gameInterface->getAttacker().i != NULL) &&
+		(Info->gameInterface->getAttacker().j != NULL) &&
+		(Info->gameInterface->getDefender().i != NULL) &&
+		(Info->gameInterface->getDefender().j != NULL))
 	{
-		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getUnit()) != NULL)
+		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getUnit()) != NULL)
 		{
 			Info->gameInterface->attack();
 		}
-		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->myMap->getDefender().i), (Info->gameInterface->myMap->getDefender().j)))->getBuilding()) != NULL)
+		else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getBuilding()) != NULL)
 		{
 			Info->gameInterface->captureProperty(Info->gameInterface->playerYou, Info->gameInterface->playerMe);
 		}

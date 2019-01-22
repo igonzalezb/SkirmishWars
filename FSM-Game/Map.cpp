@@ -215,6 +215,10 @@ void Map::possibleMoves(Unit * currUnit, int i, int j)//, bool (&canMove)[FILA][
 			{
 				matrixCost[p][q] = CANNOT_MOVE;
 			}
+			else if((tilesArray[p][q]->getUnit()) != NULL)
+			{
+				matrixCost[p][q] = CANNOT_MOVE;
+			}
 			else if ((tilesArray[p][q]->getBuilding()) != NULL)
 			{
 				matrixCost[p][q] = stoi(currUnit->getMc().road);
@@ -247,17 +251,29 @@ void Map::possibleMoves(Unit * currUnit, int i, int j)//, bool (&canMove)[FILA][
 	}
 	matrixCost[i][j] = 0;	//Seteo el lugar donde estoy en 0 (VER!!)
 	checkPossibleMoves(matrixCost, i, j, stoi(currUnit->getMp()));
+	/*cout << "Matrix CanMove" << endl;
+	for (int i = 0; i < FILA; i++)
+	{
+		for (int j = 0; j < COLUMNA; j++)
+		{
+
+			cout << canMove[i][j];
+		}
+
+		cout << endl;
+	}*/
 }
 
 void Map::checkPossibleMoves(int matrixCost[FILA][COLUMNA], int i, int j, int MP) {
 	if ((0 <= i) && (i < FILA) && (0 <= j) && (j < COLUMNA) && (MP >= 0))
 	{
+		MP -= matrixCost[i][j];
 		if (MP >= 0) {
-			MP -= matrixCost[i][j];
-			if ((MP >= 0)&&((getTile(i,j)->getFog())==false)&&((getTile(i,j)->getUnit())==NULL)) 
-			{
+			
+			//if (MP >= 0)//&&((getTile(i,j)->getUnit())==NULL)) 
+			//{
 				canMove[i][j] = true;
-			}
+			//}
 			checkPossibleMoves(matrixCost, i - 1, j, MP);
 			checkPossibleMoves(matrixCost, i + 1, j, MP);
 			checkPossibleMoves(matrixCost, i, j + 1, MP);
@@ -479,7 +495,7 @@ Map::~Map()
 //////////////////////
 void Map::setAttacker(int tile)
 {
-	switch (tile)
+	/*switch (tile)
 	{
 	case A1: attacker.i = 0; attacker.j = 0; break;
 	case A2: attacker.i = 0; attacker.j = 1; break;
@@ -686,12 +702,12 @@ void Map::setAttacker(int tile)
 	case L16: attacker.i = 11; attacker.j = 15; break;
 
 	default: break;
-	}
+	}*/
 }
 
 void Map::setDefender(int tile)
 {
-	switch (tile)
+	/*switch (tile)
 	{
 	case A1: defender.i = 0; defender.j = 0; break;
 	case A2: defender.i = 0; defender.j = 1; break;
@@ -898,15 +914,5 @@ void Map::setDefender(int tile)
 	case L16: defender.i = 11; defender.j = 15; break;
 
 	default: break;
-	}
-}
-
-coordenadas Map::getAttacker()
-{
-	return attacker;
-}
-
-coordenadas Map::getDefender()
-{
-	return defender;
+	}*/
 }

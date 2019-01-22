@@ -246,21 +246,21 @@ void Game::setDefender(coordenadas newDefender)
 	defender = newDefender;
 }
 
-void Game::setDefender(int i, int j)
+void Game::setDefender(int _i, int _j)
 {
-	defender.i = i;
-	defender.j = j;
+	defender.i = _i;
+	defender.j = _j;
 }
 
-void Game::setTileSelected(coordenadas newTileSelected)
-{
-	tileSelected = newTileSelected;
-}
+//void Game::setTileSelected(coordenadas newTileSelected)
+//{
+//	tileSelected = newTileSelected;
+//}
 
-void Game::setTileSelected(int i, int j)
+void Game::setTileSelected(int _i, int _j)
 {
-	tileSelected.i;
-	tileSelected.j;
+	tileSelected.i = _i;
+	tileSelected.j = _j;
 }
 
 coordenadas Game::getAttacker()
@@ -310,8 +310,8 @@ bool Game::getPlaying()
 
 void Game::chooseWhoStarts()
 {
-	Istart = rand() % 2;
-	//Istart = false;
+	//Istart = rand() % 2;
+	Istart = true;
 	playerChosen = true;
 }
 

@@ -35,7 +35,7 @@ int main()
 	/////////////////////////////////////////
 	std::cout << "Por favor ingrese la direccion IP del servidor a traves de la linea de comando.\n Ejemplo: 'Client.exe 192.168.0.50'" << std::endl;
 	std::cout << "Presione una tecla para salir." << std::endl;
-	getchar();
+	//getchar();
 
 	std::string opponentsIP = "localhost"; //CAMBIAR y ver donde recibirlo y como
 	//std::string opponentsIP = "25.4.70.130"; //CAMBIAR y ver donde recibirlo y como

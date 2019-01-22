@@ -18,17 +18,35 @@ void eventGenerator::generateEvent()
 	if (I->networkSrc->isThereEvent())
 	{
 		buffer.push_back(I->networkSrc->insertEvent());
-		//
-		I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
-		I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+
+
+		//if ((I->gameSrc->evCode == TILE) || (I->gameSrc->evCode == MOVE) || (I->gameSrc->evCode == NEW_UNIT)) //PARA PROBAR!!!!!!
+		//{
+		//	I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
+		//	I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+		//}
+		////if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
+		//else
+		//{
+		//	//I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
+		//	I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+		//}
 	}
 	if (I->gameSrc->isThereEvent())
 	{
 		buffer.push_back(I->gameSrc->insertEvent());
-		//
 
-		I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
-		I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+		if ((I->gameSrc->evCode == TILE) || (I->gameSrc->evCode == MOVE) || (I->gameSrc->evCode == NEW_UNIT) || (I->gameSrc->evCode == I_START) || (I->gameSrc->evCode == YOU_START)) //PARA PROBAR!!!!!!
+		{
+			I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
+			I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+		}
+		//if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
+		//else
+		//{
+		//	//I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
+		//	I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+		//}
 	}
 	/*
 	if (I->timeoutSrc->isThereEvent())
@@ -40,8 +58,17 @@ void eventGenerator::generateEvent()
 	{
 		buffer.push_back(I->userSrc->insertEvent());
 
-		I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
-		I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+		if ((I->gameSrc->evCode == TILE) || (I->gameSrc->evCode == MOVE) || (I->gameSrc->evCode == NEW_UNIT) || (I->gameSrc->evCode == I_START) || (I->gameSrc->evCode == YOU_START)) //PARA PROBAR!!!!!!
+		{
+			I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
+			I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+		}
+		//if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
+		else //if (I->gameSrc->evCode != NO_EV)
+		{
+			//I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
+			//I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+		}
 	//
 	}
 	

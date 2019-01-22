@@ -74,8 +74,6 @@ public:
 	//void attack();
 	void setAttacker(int tile);
 	void setDefender(int tile);
-	coordenadas getAttacker();
-	coordenadas getDefender();
 
 	void possibleMoves(Unit *currUnit, int i, int j);
 	void possibleAttack(Unit *currUnit, int i, int j);
@@ -101,7 +99,7 @@ private:
 	//modifiers tableMatrix[14][5];
 
 	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
-	coordenadas attacker; //HACER: INICIARLAS EN NULL
-	coordenadas defender; //HACER: INICIAR EN NULL
+	//coordenadas attacker; //HACER: INICIARLAS EN NULL
+	//coordenadas defender; //HACER: INICIAR EN NULL
 
 };
