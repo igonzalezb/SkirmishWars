@@ -21,6 +21,7 @@ Unit::Unit(list<Unit>::iterator it)
 	fpreduced = it->getFpReduced();
 	fpnormal = it->getFpNormal();
 	mcost = it->getMc();
+	team = it->getTeam();
 }
 
 Unit::~Unit()

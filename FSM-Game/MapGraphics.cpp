@@ -53,45 +53,51 @@ MapGraphics::~MapGraphics()
 void MapGraphics::showMap(Game* gameInfo)
 {
 	al_clear_to_color(al_map_rgb(0.0, 170.0, 0.0));
-	al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, 0.0, 0.0, "MONEY: $5");
-	//al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, al_get_font_line_height(menuFont), 0.0, "MONEY: $5");
+
+	//Imprimo en pantalla el dinero
+	string money_text = "MONEY: $" + to_string(gameInfo->playerMe->getMoney());
+	al_draw_textf(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 20, 0.0, 0.0, money_text.c_str());
 	
+	//Imprimo el boton ATTACK en la pantalla
 	al_draw_scaled_bitmap(attackButton, 0.0, 0.0,
 		al_get_bitmap_width(attackButton), al_get_bitmap_height(attackButton),
 		M_WIDTH, al_get_font_line_height(menuFont), R_WIDTH, M_HEIGHT / 8.0, 0);
 	
+	//Imprimo el boton PASS en la pantalla
 	al_draw_scaled_bitmap(passButton, 0.0, 0.0,
 		al_get_bitmap_width(passButton), al_get_bitmap_height(passButton),
 		M_WIDTH, al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0), R_WIDTH, M_HEIGHT / 8.0, 0);
 
+	//Imprimo el boton PURCHASE en la pantalla
 	al_draw_scaled_bitmap(purchaseButton, 0.0, 0.0,
 		al_get_bitmap_width(purchaseButton), al_get_bitmap_height(purchaseButton),
 		M_WIDTH, al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0)*2, R_WIDTH, M_HEIGHT / 8.0, 0);
 
-	/*list<Unit>::iterator iterator1 = gameInfo->data->getUnitList().begin();
-
+	//Imprimo en la pantalla la lista de unidades para comprar
+	list<Unit>::iterator iterator1 = gameInfo->data->getUnitList().begin();
 	for (int i = 0; i < 9; i++) {
 		string currItem;
-		advance(iterator1, i);
-
-		currItem = iterator1->getName() + "$";
+		currItem = iterator1->getName() + ": $";
 		currItem += iterator1->getCost();
-		
-
-		al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10,
-			al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton), 0.0,
+		al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 20,
+			(al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0)*3) + (al_get_font_line_height(menuFont) * i), 0.0,
 			currItem.c_str());
-	}*/
+		if (i < 8)
+		{
+			advance(iterator1, 1);
+		}
+	}
 
+	//Imprimo en la pantalla todos los terrenos y buildings
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
 
 			al_draw_scaled_bitmap(bitmapArray[i][j], 0.0, 0.0,
 				al_get_bitmap_width(bitmapArray[i][j]), al_get_bitmap_height(bitmapArray[i][j]),
 				j*T_WIDTH, i* T_HEIGHT, T_WIDTH, T_HEIGHT, 0);
-
 		}
 	}
+	//Imprimo en la pantalla todas las unidades
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
 			
@@ -219,30 +225,33 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 #endif // DEBUG
 		return BO_PURCHASE;
 	}
-		
-		//VOLER A PONER!!!!!!!!!!!!!!
-//	for (int i = 1; i <= 9; i++) 
-//	{
-//		if(((M_WIDTH + 10 < x) && (x < al_get_display_width(display)))
-//			&& (((al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) 
-//				< y) && (y < 
-//				(al_get_font_line_height(menuFont) + al_get_font_descent(menuFont) + al_get_font_ascent(menuFont)*i + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)) + al_get_font_line_height(menuFont))))
-//		{
-//			// Se apreto para comprar la unidad de numero i de la lista
-//		
-//			list<Unit>::iterator it3 = gameInfo->data->getUnitList().begin();
-//			advance(it3, i);
-//			Unit *currUnit = new Unit(it3);
-//			currUnit->setTeam(gameInfo->playerMe->getTeam());
-//			gameInfo->setNewUnit(currUnit);
-//		}
-//			
-//#ifdef DEBUG
-//			cout << "Se apreto comprar la opcion" << i << endl;
-//#endif // DEBUG
-//			return NEW_UNIT;
-//	
-//	}
+
+	list<Unit>::iterator it3 = gameInfo->data->getUnitList().begin();
+	for (int i = 0; i < 9; i++) 
+	{
+		if (((M_WIDTH + 20 < x) && (x < al_get_display_width(display)))
+			&& (((al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0) * 3) + (al_get_font_line_height(menuFont) * i)
+				< y) && (y <
+				(al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0) * 3) + (al_get_font_line_height(menuFont) * i) + al_get_font_line_height(menuFont))))
+		{
+			// Se apreto para comprar la unidad de numero i de la lista
+			
+				advance(it3, i);
+			
+#ifdef DEBUG
+			cout << "Se apreto comprar: " << it3->getName() << endl;
+#endif // DEBUG
+			Unit *currUnit = new Unit(it3);
+			currUnit->setTeam(gameInfo->playerMe->getTeam());
+			gameInfo->setNewUnit(currUnit);
+			
+
+
+			return NEW_UNIT;
+		}
+	
+	}
+
 #ifdef DEBUG
 	cout << "No se apreto nada relevante" << endl;
 #endif // DEBUG

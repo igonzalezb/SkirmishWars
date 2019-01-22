@@ -34,9 +34,9 @@ private:
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_BITMAP *bitmapArray[FILA][COLUMNA];
 	ALLEGRO_BITMAP *unitsArray[FILA][COLUMNA];
-	ALLEGRO_BITMAP *attackButton;
-	ALLEGRO_BITMAP *purchaseButton;
-	ALLEGRO_BITMAP *passButton;
-	ALLEGRO_FONT *menuFont;
+	ALLEGRO_BITMAP *attackButton = NULL;
+	ALLEGRO_BITMAP *purchaseButton = NULL;
+	ALLEGRO_BITMAP *passButton = NULL;
+	ALLEGRO_FONT *menuFont = NULL;
 
 };
