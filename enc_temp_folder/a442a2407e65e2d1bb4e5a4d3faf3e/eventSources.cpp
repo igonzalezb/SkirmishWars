@@ -76,7 +76,7 @@ genericEvent * GameEventSource::insertEvent()
 		ret = (genericEvent *) new EV_IStart();
 		break;
 	case R_MOVE:
-		ret = (genericEvent *) new EV_Rmove();	//PROPBAMOS CON R!!!!!!!!!!!!!!!!!!!!!!!
+		ret = (genericEvent *) new EV_Rmove();
 		break;
 	case R_PURCHASE:
 		ret = (genericEvent *) new EV_Purchase();
