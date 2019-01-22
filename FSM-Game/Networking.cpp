@@ -71,11 +71,11 @@ void Networking::startConnection()
 		{
 			exit = false;
 		}
-		cout << "HOLA" << endl;
+		//cout << "HOLA" << endl;
 
 		contador++; //PROVISORIO, DESPUES BORRAR
 	} while ((!exit) && (contador <= 5)); //PROVISORIO!! EN VEZ DE CONTADOR, VA EL TIMER DE 5000milisegundos
-	cout << "HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
+	//cout << "HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
 
 	if (contador<=5) //NO SE CUMPLIO EL TIEMPO, ES CLIENTE
 	{

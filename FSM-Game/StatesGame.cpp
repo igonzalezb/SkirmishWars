@@ -134,7 +134,7 @@ genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-genericState* ST_Moving::on_Attack(genericEvent *ev, usefulInfo * Info)//Se entra aca al presionar boton ATTACK en pantalla. Todavia no se hizo el ataque.
+genericState* ST_Moving::on_BoAttack(genericEvent *ev, usefulInfo * Info)//Se entra aca al presionar boton ATTACK en pantalla. Todavia no se hizo el ataque.
 {	
 	cout << "G MOVING: ATTACK" << endl;
 	//El ataque se hace despues, una vez que ya se entro a este estado por primera vez.
@@ -143,7 +143,7 @@ genericState* ST_Moving::on_Attack(genericEvent *ev, usefulInfo * Info)//Se entr
 	return ret;
 }
 
-genericState* ST_Moving::on_Purchase(genericEvent *ev, usefulInfo * Info) //VER
+genericState* ST_Moving::on_BoPurchase(genericEvent *ev, usefulInfo * Info) //VER
 {
 	cout << "G MOVING: ON PURCHASE" << endl;
 	genericState *ret = (genericState *) new ST_Purchasing();
@@ -163,11 +163,11 @@ genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info)
 	{
 		for (int j = 0; j < COLUMNA; j++)
 		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL)&&
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
 				{
 					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 				}
@@ -187,9 +187,6 @@ genericState* ST_WaitingMoveConfirmation::on_Move(genericEvent *ev, usefulInfo *
 	Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->setUnit(NULL);
 	return ret;
 }
-
-
-
 
 ///////////////////////////////////////
 /////////////////////////////////////
@@ -232,7 +229,7 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 
 		if (1) //(Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender().i][Info->gameInterface->getDefender().j]))
 		{
-			cout << "ENTRA AL IF 1" << endl;
+			//cout << "ENTRA AL IF 1" << endl;
 			Info->gameInterface->moving = true;
 			ret = (genericState *) new ST_WaitingMoveConfirmation();
 		}
@@ -263,7 +260,7 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 }
 
 
-genericState* ST_WaitingDestination::on_Attack(genericEvent* ev, usefulInfo * Info)
+genericState* ST_WaitingDestination::on_BoAttack(genericEvent* ev, usefulInfo * Info)
 {
 	cout << "G WaitingDestination::on_Attack" << endl;
 	genericState *ret = (genericState *) new ST_Attacking();
@@ -273,7 +270,7 @@ genericState* ST_WaitingDestination::on_Attack(genericEvent* ev, usefulInfo * In
 	return ret;
 }
 	
-genericState* ST_WaitingDestination::on_Purchase(genericEvent* ev, usefulInfo * Info)
+genericState* ST_WaitingDestination::on_BoPurchase(genericEvent* ev, usefulInfo * Info)
 {
 	cout << "G WaitingDestination::on_Purchase" << endl;
 	genericState *ret = (genericState *) new ST_Purchasing();
@@ -293,10 +290,8 @@ genericState* ST_WaitingDestination::on_Pass(genericEvent* ev, usefulInfo * Info
 	return ret;
 }
 
-
 /////////////////////////////// ST_Attacking ///////////////////////////////
 //si se apretan los tiles, guardar la info en attacker y defender. Cuando se presione el boton ATTACK, recien ahi GENERAR EVENTO ATTACK! (ver donde se hacen estas cosas)
-
 
 genericState* ST_Attacking::on_Tile(genericEvent *ev, usefulInfo * Info)
 {
@@ -320,7 +315,7 @@ genericState* ST_Attacking::on_Tile(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-genericState* ST_Attacking::on_Purchase(genericEvent *ev, usefulInfo * Info)
+genericState* ST_Attacking::on_BoPurchase(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "G Attacking::on_Purchase" << endl;
 	genericState *ret = (genericState *) new ST_Purchasing();
@@ -334,8 +329,6 @@ genericState* ST_Attacking::on_Purchase(genericEvent *ev, usefulInfo * Info)
 
 	return ret;
 }
-
-
 
 genericState* ST_Attacking::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
@@ -353,7 +346,7 @@ genericState* ST_Attacking::on_Pass(genericEvent *ev, usefulInfo * Info)
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
 				{
 					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 				}
@@ -387,9 +380,9 @@ genericState* ST_WaitingDefender::on_Tile(genericEvent* ev, usefulInfo * Info)
 		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding()->getTeam()) != (Info->gameInterface->playerMe->getTeam()))))
 	{ //si es una unit del equipo contrario:
 		Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
-		ret = (genericState *) new ST_Attacking();
+		ret = (genericState *) new ST_WaitingAttackConfirmation();
 		Info->gameInterface->attacking = true;
-
+		cout << "PONE ATTACKING EN TRUE" << endl;
 		//ver donde iria el COUNTER-ATTACK (ver si se agrega un estado o algo)
 	}
 	else if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
@@ -398,17 +391,19 @@ genericState* ST_WaitingDefender::on_Tile(genericEvent* ev, usefulInfo * Info)
 		Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
 		ret = (genericState *) new ST_WaitingDefender();
 		Info->gameInterface->attacking = false;
+		cout << "PONE ATTACKING EN FALSE. IF ELSE" << endl;
 	}
 	else
 	{
 		ret = (genericState *) new ST_WaitingDefender();
 		Info->gameInterface->attacking = false;
+		cout << "PONE ATTACKING EN FALSE.  ELSE" << endl;
+
 	}
 	return ret;
 }
 
-
-genericState* ST_WaitingDefender::on_Purchase(genericEvent* ev, usefulInfo * Info)
+genericState* ST_WaitingDefender::on_BoPurchase(genericEvent* ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Purchasing();
 
@@ -419,6 +414,7 @@ genericState* ST_WaitingDefender::on_Purchase(genericEvent* ev, usefulInfo * Inf
 
 genericState* ST_WaitingDefender::on_Pass(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "ST_WaitingDefender::on_Pass" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
 
 	//COMPLETAR 
@@ -429,11 +425,12 @@ genericState* ST_WaitingDefender::on_Pass(genericEvent* ev, usefulInfo * Info)
 /////////////////////////////// ST_WaitingAttackConfirmation ///////////////////////////////
 genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "ST_WaitingAttackConfirmation::on_Attack" << endl;
 	genericState *ret = (genericState *) new ST_Attacking();
 
 	if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getUnit()) != NULL)
 	{
-		Info->gameInterface->setDie(rand() % 7 + 1); //VERIFICAR si esto tira un valor random entre 1 y 6.
+		Info->gameInterface->setDie(rand() % 6 + 1); //VERIFICAR si esto tira un valor random entre 1 y 6.
 		Info->gameInterface->attack();
 	}
 	else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getBuilding()) != NULL)
@@ -443,7 +440,6 @@ genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulIn
 
 	return ret;
 }
-
 
 /////////////////////////////// ST_WaitingPurchaseConfirmation ///////////////////////////////
 genericState* ST_WaitingPurchaseConfirmation::on_Purchase(genericEvent *ev, usefulInfo * Info)
@@ -490,6 +486,7 @@ genericState* ST_Purchasing::on_NewUnit(genericEvent *ev, usefulInfo * Info) //V
 
 genericState* ST_Purchasing::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "ST_Purchasing::on_Pass" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
 	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
@@ -503,7 +500,7 @@ genericState* ST_Purchasing::on_Pass(genericEvent *ev, usefulInfo * Info)
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
 				{
 					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 				}
@@ -530,7 +527,7 @@ genericState* ST_Purchasing::on_NoMoney(genericEvent *ev, usefulInfo * Info)
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
 				{
 					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 				}
@@ -541,11 +538,11 @@ genericState* ST_Purchasing::on_NoMoney(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-
 /////////////////////////////// ST_WaitingLocation ///////////////////////////////
 
 genericState* ST_WaitingLocation::on_Tile(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "ST_WaitingLocation::on_Tile" << endl;
 	genericState *ret;
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding())!=NULL)&&
 		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding()->getType()).compare("m"))==0)&&
@@ -581,6 +578,7 @@ genericState* ST_WaitingLocation::on_NewUnit(genericEvent* ev, usefulInfo * Info
 
 genericState* ST_WaitingLocation::on_Pass(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "ST_WaitingLocation::on_Pass" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
 	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
@@ -594,7 +592,7 @@ genericState* ST_WaitingLocation::on_Pass(genericEvent* ev, usefulInfo * Info)
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
 				{
 					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 				}
@@ -621,7 +619,7 @@ genericState* ST_WaitingLocation::on_NoMoney(genericEvent* ev, usefulInfo * Info
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
 				{
 					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 				}
@@ -644,18 +642,18 @@ return ret;
 }
 */
 
-
 /////////////////////////////// ST_YouMoving ///////////////////////////////
 
 genericState* ST_YouMoving::on_RMove(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "ST_YouMoving:: on_RMOVE" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
 
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()) != NULL) &&
 		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit())->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
 	{
-		Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getDefender().j)->getUnit()), Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j);
-		if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender().i][Info->gameInterface->getDefender().j]) == true)
+		//Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getDefender().j)->getUnit()), Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j);
+		if (1)//((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender().i][Info->gameInterface->getDefender().j]) == true)
 		{
 			Info->gameInterface->move();
 		}
@@ -668,7 +666,6 @@ genericState* ST_YouMoving::on_RMove(genericEvent *ev, usefulInfo * Info)
 	//COMPLETAR 
 	return ret;
 }
-
 
 genericState* ST_YouMoving::on_RAttack(genericEvent *ev, usefulInfo * Info)
 {
@@ -717,9 +714,9 @@ genericState* ST_YouMoving::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-
 genericState* ST_YouMoving::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "entra a on_RPass" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->playerMe->setAmmountOfCities(Info->gameInterface->myMap);
 	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->getAmmountOfCities()) + 1) * 5);
@@ -733,7 +730,7 @@ genericState* ST_YouMoving::on_RPass(genericEvent *ev, usefulInfo * Info)
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
 				{
 					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 				}
@@ -810,8 +807,10 @@ genericState* ST_YouAttacking::on_LastAttack(genericEvent *ev, usefulInfo * Info
 	return ret;
 }
 */
+
 genericState* ST_YouAttacking::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "ST_YouAttacking::on_RPass" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->playerMe->setAmmountOfCities(Info->gameInterface->myMap);
 	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->getAmmountOfCities()) + 1) * 5);// se suma 1 porque el HQ tambien aporta $5 al inicio de cada jugada
@@ -825,7 +824,7 @@ genericState* ST_YouAttacking::on_RPass(genericEvent *ev, usefulInfo * Info)
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
 				{
 					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 				}
@@ -847,7 +846,6 @@ genericState *ret = (genericState *) new ST_Moving();
 return ret;
 }*/
 
-
 /////////////////////////////// ST_YouPurchasing ///////////////////////////////
 
 genericState* ST_YouPurchasing::on_RPurchase(genericEvent *ev, usefulInfo * Info)
@@ -863,6 +861,7 @@ genericState* ST_YouPurchasing::on_RPurchase(genericEvent *ev, usefulInfo * Info
 
 genericState* ST_YouPurchasing::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "ST_YouPurchasing::on_RPass" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->playerMe->setAmmountOfCities(Info->gameInterface->myMap);
 	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->getAmmountOfCities()) + 1) * 5);
@@ -876,7 +875,7 @@ genericState* ST_YouPurchasing::on_RPass(genericEvent *ev, usefulInfo * Info)
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
 			{
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) >> 8)
+				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
 				{
 					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 				}

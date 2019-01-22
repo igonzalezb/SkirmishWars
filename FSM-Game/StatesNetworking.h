@@ -99,10 +99,10 @@ class ST_WaitingAPlay : public genericState
 {
 public:
 	//genericState* on_YourTimeout(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Rmove(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Rattack(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Rpurchase(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Rpass(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RMove(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RAttack(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RPurchase(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RPass(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
 private:
 };
@@ -110,10 +110,10 @@ private:
 class ST_IPlay : public genericState
 {
 public:
-	genericState* on_Imove(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Ipurchase(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Iattack(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Ipass(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Move(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Iquit(genericEvent* ev, usefulInfo * Info);
 private:
@@ -129,7 +129,7 @@ private:
 class ST_WaitingCounterAttack : public genericState
 {
 public:
-	genericState* on_Rattack(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RAttack(genericEvent* ev, usefulInfo * Info);
 private:
 };
 /*
@@ -144,7 +144,7 @@ private:
 class ST_WaitingToAttack : public genericState
 {
 public:
-	genericState* on_IAttack(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Rtimeout(genericEvent* ev, usefulInfo * Info);
 private:
 };

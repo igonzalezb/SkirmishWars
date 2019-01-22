@@ -24,9 +24,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,10 +72,13 @@
     <ClCompile Include="Packages.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StatesGame.cpp">
+    <ClCompile Include="StatesNetworking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StatesNetworking.cpp">
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StatesGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

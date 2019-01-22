@@ -19,6 +19,7 @@ Unit::Unit(list<Unit>::iterator it)
 	range = it->getRange();
 	type = it->getType();
 	fpreduced = it->getFpReduced();
+	fpnormal = it->getFpNormal();
 	mcost = it->getMc();
 }
 
@@ -26,10 +27,10 @@ Unit::~Unit()
 {
 }
 
-void Unit::setHp(int hp)
+void Unit::setHp(int _hp)
 {
 
-	this->hp = hp;
+	this->hp = _hp;
 }
 
 void Unit::setPath(string path)

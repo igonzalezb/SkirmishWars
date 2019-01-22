@@ -49,6 +49,8 @@ public:
 	virtual genericState* on_Pass(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Tile(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_NewUnit(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	virtual genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	//virtual genericState* on_Timeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -61,11 +63,11 @@ public:
 
 	virtual genericState* on_RyouStart(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_RIStart(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	virtual genericState* on_Rpass(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	virtual genericState* on_Rmove(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	virtual genericState* on_Rpurchase(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	virtual genericState* on_Rattack(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	virtual genericState* on_RyouWon(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_RPass(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_RMove(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_RPurchase(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_RAttack(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	virtual genericState* on_RplayAgain(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_RgameOver(genericEvent* ev, usefulInfo * Info) { return nullptr; }

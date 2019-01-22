@@ -98,6 +98,21 @@ public:
 private:
 };
 
+class EV_BoAttack : public genericEvent
+{
+public:
+	EV_BoAttack() { ev = BO_ATTACK; };
+private:
+};
+
+class EV_BoPurchase : public genericEvent
+{
+public:
+	EV_BoPurchase() { ev = BO_PURCHASE; };
+private:
+};
+
+
 
 /*
 //USER EVENTS
@@ -209,10 +224,10 @@ private:
 
 };
 
-class EV_Rpass : public genericEvent
+class EV_RPass : public genericEvent
 {
 public:
-	EV_Rpass() { ev = R_PASS; };
+	EV_RPass() { ev = R_PASS; };
 
 private:
 	

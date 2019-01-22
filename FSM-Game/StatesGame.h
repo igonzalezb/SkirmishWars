@@ -29,8 +29,8 @@ class ST_GameIdle :public genericState //FUNCIONAN
 class ST_Moving :public genericState //ACA se estaria esperando la coordenada de la unidad que se va a mover
 {
 	//genericState* on_Move(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
+	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info);
+	genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
 
@@ -50,8 +50,8 @@ class ST_WaitingMoveConfirmation :public genericState //ACA se estaria esperando
 class ST_WaitingDestination :public genericState
 {
 	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
+	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info);
+	genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
@@ -59,7 +59,7 @@ class ST_WaitingDestination :public genericState
 
 class ST_Attacking :public genericState
 {
-	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
+	genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
@@ -68,7 +68,7 @@ class ST_Attacking :public genericState
 class ST_WaitingDefender :public genericState
 {
 	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
+	genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_LastMove(genericEvent* ev, usefulInfo * Info);
 

@@ -42,19 +42,20 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_RIStart(ev, Info);
 			break;
 		case R_PASS:
-			newState = currentState->on_Rpass(ev, Info);
+			newState = currentState->on_RPass(ev, Info);
+			cout << "DISPATCHER DE NETWORKING EN R PASS" << endl;
 			break;
 		case R_MOVE:
-			newState = currentState->on_Rmove(ev, Info);
+			newState = currentState->on_RMove(ev, Info);
 			break;
 		case R_PURCHASE:
-			newState = currentState->on_Rpurchase(ev, Info);
+			newState = currentState->on_RPurchase(ev, Info);
 			break;
 		case R_ATTACK:
-			newState = currentState->on_Rattack(ev, Info);
+			newState = currentState->on_RAttack(ev, Info);
 			break;
 		case R_YOU_WON:
-			newState = currentState->on_RyouWon(ev, Info);
+			newState = currentState->on_RYouWon(ev, Info);
 			break;
 		case R_PLAY_AGAIN:
 			newState = currentState->on_RplayAgain(ev, Info);
@@ -70,8 +71,8 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case ERR_DETECTED:
 			newState = currentState->on_ErrDetected(ev, Info); //VER si este caso se deja o no 
-															   //si lo saco, sacar tambien de generic_states.h, genericEvent.h
-															   // se se deja, VER donde agregar en States.h
+				   //si lo saco, sacar tambien de generic_states.h, genericEvent.h
+				   // se se deja, VER donde agregar en States.h
 			break;
 		case CONNECTED_AS_SERVER:
 #ifdef DEBUG
@@ -98,6 +99,22 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 		case YOU_START:
 			newState = currentState->on_YouStart(ev, Info);
 			cout << "DISPATCH DE YOU START" << endl;
+			break;
+		case PASS:
+			newState = currentState->on_Pass(ev, Info);
+			cout << "DISPATCH DE PASS" << endl;
+			break;
+		case MOVE:
+			newState = currentState->on_Move(ev, Info);
+			cout << "DISPATCH DE MOVE" << endl;
+			break;
+		case PURCHASE:
+			newState = currentState->on_Purchase(ev, Info);
+			cout << "DISPATCH DE PURCHASE" << endl;
+			break;
+		case ATTACK:
+			newState = currentState->on_Attack(ev, Info);
+			cout << "DISPATCH DE ATTACK" << endl;
 			break;
 		default:
 			break;

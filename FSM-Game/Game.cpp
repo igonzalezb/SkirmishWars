@@ -71,6 +71,11 @@ void Game::attack()
 	string symbol = myMap->getTile(defender.i,defender.j)->getUnit()->getSymbol();
 	int firepower, inicialDamage, finalDamage, dieOnChart;
 	//if (stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getHp()) < 5)
+
+	if (myMap->getTile(attacker.i, attacker.j)->getUnit() != NULL) {
+		cout << "HP de UNIT attacker:" << myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp() << endl;
+	}
+
 	if (myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp() < 5) //menor a 5 significa REDUCED
 	{
 		if (symbol == "moon")
@@ -107,9 +112,12 @@ void Game::attack()
 
 	//die= rand() % 7 + 1; //VERIFICAR si esto tira un valor random entre 1 y 6.
 
+	cout << "DADO: " << die << endl;
+
 	int columna;
 	string defenderTerrain = myMap->getTile(attacker.i, attacker.j)->getTerrain()->getType();
-	if (((myMap->getTile(attacker.i, attacker.j)->getBuilding()->getType()).compare("HQ")) || (defenderTerrain.compare("h") == 0))
+
+	if ((((myMap->getTile(attacker.i, attacker.j)->getBuilding()!=NULL) && (myMap->getTile(attacker.i, attacker.j)->getBuilding()->getType()).compare("q") == 0)) || (defenderTerrain.compare("h") == 0))
 	{
 		columna = 0;
 	}
@@ -138,8 +146,11 @@ void Game::attack()
 	{
 		finalDamage++;
 	}
+	cout << "final damage = " << finalDamage << endl;
 
 	myMap->getTile(defender.i, defender.j)->getUnit()->setHp((myMap->getTile(defender.i, defender.j)->getUnit()->getHp()) - finalDamage);
+
+	cout << "HP luego del attack: " << myMap->getTile(defender.i, defender.j)->getUnit()->getHp() << endl;
 
 	if ((myMap->getTile(defender.i, defender.j)->getUnit()->getHp())<=0)
 	{

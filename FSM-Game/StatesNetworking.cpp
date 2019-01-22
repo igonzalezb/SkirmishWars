@@ -256,16 +256,17 @@ genericState* ST_C_WaitingWhoStarts::on_Rpass(genericEvent *ev, usefulInfo * Inf
 
 /////////////////////////////// ST_IPlay ///////////////////////////////
 
-genericState* ST_IPlay::on_Imove(genericEvent *ev, usefulInfo * Info)
+genericState* ST_IPlay::on_Move(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "N ST I PLAY::onImove" << endl;
 	genericState *ret = (genericState *) new ST_WaitingPlayAck();
-	Info->nextPkg = new Move();
+	Info->nextPkg = new Move(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j, Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j);
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete MOVE
+	cout << "se envio el paquete de move" << endl;
 	return ret;
 }
 
-genericState* ST_IPlay::on_Ipurchase(genericEvent *ev, usefulInfo * Info)
+genericState* ST_IPlay::on_Purchase(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "N ST I PLAY::onIpurchase" << endl;
 	genericState *ret = (genericState *) new ST_WaitingPlayAck();
@@ -274,21 +275,23 @@ genericState* ST_IPlay::on_Ipurchase(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-genericState* ST_IPlay::on_Iattack(genericEvent *ev, usefulInfo * Info)
+genericState* ST_IPlay::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "N ST I PLAY::onIattack" << endl;
-	genericState *ret = (genericState *) new ST_WaitingCounterAttack();
-	Info->nextPkg = new Attack();
+	//genericState *ret = (genericState *) new ST_WaitingCounterAttack(); //SACAMOS EL COUNTERATTACK
+	genericState *ret = (genericState *) new ST_WaitingPlayAck();
+	Info->nextPkg = new Attack(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j, Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j, Info->gameInterface->getDie());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ATTACK
 	return ret;
 }
 
-genericState* ST_IPlay::on_Ipass(genericEvent *ev, usefulInfo * Info)
+genericState* ST_IPlay::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "N ST I PLAY::onIpass" << endl;
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
 	Info->nextPkg = new Pass();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PASS
+	cout << "se envio el paquete de pass" << endl;
 	return ret;
 }
 
@@ -314,13 +317,14 @@ genericState* ST_IPlay::on_Iquit(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_WaitingPlayAck::on_Rack(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "Waiting play ACK: on R ACK" << endl;
 	genericState *ret = (genericState *) new ST_IPlay();
 	return ret;
 }
 
 /////////////////////////////// ST_WaitingCounterAttack ///////////////////////////////
 
-genericState* ST_WaitingCounterAttack::on_Rattack(genericEvent *ev, usefulInfo * Info)
+genericState* ST_WaitingCounterAttack::on_RAttack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_IPlay();
 	return ret;
@@ -328,38 +332,45 @@ genericState* ST_WaitingCounterAttack::on_Rattack(genericEvent *ev, usefulInfo *
 
 /////////////////////////////// ST_WaitingAPlay ///////////////////////////////
 
-genericState* ST_WaitingAPlay::on_Rmove(genericEvent *ev, usefulInfo * Info)
+genericState* ST_WaitingAPlay::on_RMove(genericEvent *ev, usefulInfo * Info)
 {
+	cout << " waitingAPlay: on R MOVE" << endl;
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ACK
 	return ret;
 }
 
-genericState* ST_WaitingAPlay::on_Rpurchase(genericEvent *ev, usefulInfo * Info)
+genericState* ST_WaitingAPlay::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "waitingAPlay: on R PURCHASE" << endl;
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ACK
 	return ret;
 }
 
-genericState* ST_WaitingAPlay::on_Rattack(genericEvent *ev, usefulInfo * Info)
+genericState* ST_WaitingAPlay::on_RAttack(genericEvent *ev, usefulInfo * Info)
 {
-	genericState *ret = (genericState *) new ST_WaitingToAttack();
+	cout << "waitingAPlay: on R attack" << endl;
+	//genericState *ret = (genericState *) new ST_WaitingToAttack(); //SACAR LO DEL CONTRATAQUE
+	genericState *ret = (genericState *) new ST_WaitingAPlay(); //esto para no hacer counterattack
+	Info->nextPkg = new Ack(); //ESTA Y LA LINEA DE ABAJO SON SI NO USAMOS CONTRAATAQJE
+	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ACK
 	return ret;
 }
 
-genericState* ST_WaitingAPlay::on_Rpass(genericEvent *ev, usefulInfo * Info)
+genericState* ST_WaitingAPlay::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
+	cout << "waitingAPlay: on R" << endl;
 	genericState *ret = (genericState *) new ST_IPlay();
 	return ret;
 }
 
-genericState* ST_WaitingToAttack::on_IAttack(genericEvent *ev, usefulInfo * Info)
+genericState* ST_WaitingToAttack::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
-	Info->nextPkg = new Attack();
+	Info->nextPkg = new Attack(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j, Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j, Info->gameInterface->getDie());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ATTACK
 	return ret;
 }

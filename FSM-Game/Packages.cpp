@@ -73,21 +73,43 @@ void IStart::setPackage()
 	package.push_back((MYBYTE)OP_I_START);
 }
 
+Move::Move(int attacker_i, int attacker_j, int defender_i, int defender_j)
+{ 
+	code = OP_MOVE; 
+	this->attacker_i = attacker_i;
+	this->attacker_j = attacker_j;
+	this->defender_i = defender_i;
+	this->defender_j = defender_j;
+}
+
 void Move::setPackage()
 {
-	//ejemplos de valores en variables:
-	MYBYTE filaOrigen = 0x00; //RECIBIR FILA DE ORIGEN (entre 0x00 y 0x0C)
-	MYBYTE columnaOrigen = 0x42; //RECIBIR COLUMNA  (entre 0x41 y 0x50)
-	MYBYTE filaDestino = 0x0C; //RECIBIR FILA DESTINO (entre 0x00 y 0x0C)
-	MYBYTE columnaDestino = 0x041; //RECIBIR (entre 0x41 y 0x50)
+	//ejemplos de valores en variables
+
+	//MYBYTE filaOrigen = 0x00; //RECIBIR FILA DE ORIGEN (entre 0x00 y 0x0C)
+	//MYBYTE columnaOrigen = 0x42; //RECIBIR COLUMNA  (entre 0x41 y 0x50)
+	//MYBYTE filaDestino = 0x0C; //RECIBIR FILA DESTINO (entre 0x00 y 0x0C)
+	//MYBYTE columnaDestino = 0x041; //RECIBIR (entre 0x41 y 0x50)
+
+	MYBYTE filaOrigen = (MYBYTE)attacker_i;
+	MYBYTE columnaOrigen = ((MYBYTE)attacker_j)+ 0x41;
+	MYBYTE filaDestino = (MYBYTE)defender_i;
+	MYBYTE columnaDestino = ((MYBYTE)defender_j) + 0x41;
 
 								   //std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_MOVE);			//byte 1
+	
 	package.push_back((MYBYTE)filaOrigen);		//byte 2
 	package.push_back((MYBYTE)columnaOrigen);	//byte 3
 	package.push_back((MYBYTE)filaDestino);		//byte 4
 	package.push_back((MYBYTE)columnaDestino);	//byte 5
+	
+	//package.push_back((MYBYTE)//Info->gameInterface->getAttacker().i);		//byte 2
+	//package.push_back((MYBYTE)attacker_j);	//byte 3
+	//package.push_back((MYBYTE));		//byte 4
+	//package.push_back((MYBYTE)columnaDestino);	//byte 5
+
 }
 
 void Purchase::setPackage()//ANDA
@@ -105,13 +127,24 @@ void Purchase::setPackage()//ANDA
 	package.push_back((MYBYTE)columna);				//byte 5
 }
 
+Attack::Attack(int attacker_i, int attacker_j, int defender_i, int defender_j, int dado) 
+{ 
+	code = OP_ATTACK;
+	this->attacker_i = attacker_i;
+	this->attacker_j = attacker_j;
+	this->defender_i = defender_i;
+	this->defender_j = defender_j;
+	this->dado = dado;
+}
+
 void Attack::setPackage()
-{	//ejemplos de valores en variables:
-	MYBYTE filaOrigen = 0x00; //RECIBIR FILA DE unidad atacante (entre 0x00 y 0x0C)
-	MYBYTE columnaOrigen = 0x42; //RECIBIR COLUMNA de unidad atacante  (entre 0x41 y 0x50)
-	MYBYTE filaDestino = 0x0C; //RECIBIR FILA DESTINO unidad atacada (entre 0x00 y 0x0C)
-	MYBYTE columnaDestino = 0x041; //RECIBIR columna atacada(entre 0x41 y 0x50)
-	MYBYTE dado = 0x03;	//RECIBIR valor del dado (entre 00x0 y 00x6)
+{	
+	MYBYTE filaOrigen = (MYBYTE)attacker_i;
+	MYBYTE columnaOrigen = ((MYBYTE)attacker_j) + 0x41;
+	MYBYTE filaDestino = (MYBYTE)defender_i;
+	MYBYTE columnaDestino = ((MYBYTE)defender_j) + 0x41;
+		
+	MYBYTE _dado = (MYBYTE)dado;	//0x03;	//RECIBIR valor del dado (entre 00x0 y 00x6)
 
 						//std::vector<char> package;
 	package.clear();
@@ -120,10 +153,12 @@ void Attack::setPackage()
 	package.push_back((MYBYTE)columnaOrigen);	//byte 3
 	package.push_back((MYBYTE)filaDestino);		//byte 4
 	package.push_back((MYBYTE)columnaDestino);	//byte 5
+	package.push_back((MYBYTE)_dado);
 }
 
 void Pass::setPackage()
 {
+	cout << "envia paquete PASS" << endl;
 	std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_PASS);			//byte 1: encabezado
@@ -162,4 +197,17 @@ void Quit::setPackage()
 	std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_QUIT);			//byte 1: encabezado
+}
+
+genericPackage::genericPackage()
+{
+}
+
+genericPackage::~genericPackage()
+{
+}
+
+genericPackage::genericPackage(Game * gameInfo)
+{
+	this->gameInfo = gameInfo;
 }

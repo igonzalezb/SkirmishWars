@@ -32,10 +32,9 @@ void Building::setName(string name)
 	this->name = name;
 }
 
-//void Building::setCp(string cp)
 void Building::setCp(int cp)
 {
-	this->cp = to_string(cp);
+	this->cp = cp;
 }
 
 void Building::setPath(string path)
@@ -53,7 +52,7 @@ string Building::getPath()
 
 int Building::getCp()
 {
-	return stoi(cp);
+	return cp;
 }
 
 string Building::getName()
@@ -63,7 +62,7 @@ string Building::getName()
 
 void Building::setTeam(TeamNumber team)
 {
-	type += to_string(team);			//PROBAR!!!!
+	//type += to_string(team);			//PROBAR!!!!
 	this->team = team;
 }
 

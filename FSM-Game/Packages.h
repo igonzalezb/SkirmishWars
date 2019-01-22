@@ -6,6 +6,7 @@
 
 #include <string>
 #include <vector>
+#include "Game.h"
 
 using namespace std;
 
@@ -29,9 +30,13 @@ typedef enum {
 class genericPackage
 {
 public:
+	genericPackage();
+	~genericPackage();
+	genericPackage(Game* gameInfo);
 	std::vector<char> package;
 	virtual void setPackage() = 0;
 	opCodes code;
+	Game* gameInfo;
 };
 
 
@@ -87,8 +92,13 @@ public:
 
 class Move :public genericPackage
 {
+private:
+	int attacker_i;
+	int attacker_j;
+	int defender_i;
+	int defender_j;
 public:
-	Move() { code = OP_MOVE; }
+	Move(int attacker_i, int attacker_j, int defender_i, int defender_j);
 	void setPackage();
 };
 
@@ -101,8 +111,14 @@ public:
 
 class Attack :public genericPackage
 {
+private:
+	int attacker_i;
+	int attacker_j;
+	int defender_i;
+	int defender_j;
+	int dado;
 public:
-	Attack() { code = OP_ATTACK; }
+	Attack(int attacker_i, int attacker_j, int defender_i, int defender_j, int dado);
 	void setPackage();
 };
 

@@ -58,19 +58,20 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_RIStart(ev, Info);
 			break;
 		case R_PASS:
-			newState = currentState->on_Rpass(ev, Info);
+			newState = currentState->on_RPass(ev, Info);
 			break;
 		case R_MOVE:
-			newState = currentState->on_Rmove(ev, Info);
+			newState = currentState->on_RMove(ev, Info);
 			break;
 		case R_PURCHASE:
-			newState = currentState->on_Rpurchase(ev, Info);
+			newState = currentState->on_RPurchase(ev, Info);
 			break;
 		case R_ATTACK:
-			newState = currentState->on_Rattack(ev, Info);
+			cout << "DISPATCH R_ATTACK" << endl;
+			newState = currentState->on_RAttack(ev, Info);
 			break;
 		case R_YOU_WON:
-			newState = currentState->on_RyouWon(ev, Info);
+			newState = currentState->on_RYouWon(ev, Info);
 			break;
 		case R_PLAY_AGAIN:
 			newState = currentState->on_RplayAgain(ev, Info);
@@ -83,6 +84,14 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case R_QUIT:
 			newState = currentState->on_Rquit(ev, Info);
+			break;
+			break;
+		case BO_ATTACK:
+			newState = currentState->on_BoAttack(ev, Info);
+			break;
+			break;
+		case BO_PURCHASE:
+			newState = currentState->on_BoPurchase(ev, Info);
 			break;
 		case ERR_DETECTED:
 			newState = currentState->on_ErrDetected(ev, Info); //VER si este caso se deja o no 

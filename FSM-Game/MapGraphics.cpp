@@ -53,20 +53,20 @@ MapGraphics::~MapGraphics()
 void MapGraphics::showMap(Game* gameInfo)
 {
 	al_clear_to_color(al_map_rgb(0.0, 170.0, 0.0));
-	al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, 0.0, 0.0, "TIMER 00:00:00");
-	al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, al_get_font_line_height(menuFont), 0.0, "MONEY: $5");
+	al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, 0.0, 0.0, "MONEY: $5");
+	//al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 10, al_get_font_line_height(menuFont), 0.0, "MONEY: $5");
 	
 	al_draw_scaled_bitmap(attackButton, 0.0, 0.0,
 		al_get_bitmap_width(attackButton), al_get_bitmap_height(attackButton),
-		M_WIDTH, al_get_font_line_height(menuFont)*2, R_WIDTH, M_HEIGHT / 8.0, 0);
+		M_WIDTH, al_get_font_line_height(menuFont), R_WIDTH, M_HEIGHT / 8.0, 0);
 	
 	al_draw_scaled_bitmap(passButton, 0.0, 0.0,
 		al_get_bitmap_width(passButton), al_get_bitmap_height(passButton),
-		M_WIDTH, al_get_font_line_height(menuFont) * 3, R_WIDTH, M_HEIGHT / 8.0, 0);
+		M_WIDTH, al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0), R_WIDTH, M_HEIGHT / 8.0, 0);
 
 	al_draw_scaled_bitmap(purchaseButton, 0.0, 0.0,
 		al_get_bitmap_width(purchaseButton), al_get_bitmap_height(purchaseButton),
-		M_WIDTH, al_get_font_line_height(menuFont)*2 + al_get_bitmap_height(attackButton), R_WIDTH, M_HEIGHT / 8.0, 0);
+		M_WIDTH, al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0)*2, R_WIDTH, M_HEIGHT / 8.0, 0);
 
 	/*list<Unit>::iterator iterator1 = gameInfo->data->getUnitList().begin();
 
@@ -192,16 +192,16 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 	}
 
 	else if ((((M_WIDTH < x) && (x < al_get_display_width(display)))) && 
-		((al_get_font_line_height(menuFont) * 2 < y) && (y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton)))))
+		((al_get_font_line_height(menuFont) < y) && (y < (al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0)))))
 	{
 		//Se apreto ATTACK
 #ifdef DEBUG
 		cout << "Se apreto Attack" << endl;
 #endif // DEBUG
-		return ATTACK;
+		return BO_ATTACK;
 	}
 	else if (((M_WIDTH < x) && (x < al_get_display_width(display))) &&
-		((al_get_font_line_height(menuFont) * 3 < y) && (y < (al_get_font_line_height(menuFont) * 3 + al_get_bitmap_height(attackButton)))))
+		(((al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0)) < y) && (y < ((al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0)*2)))))
 	{
 		//Se apreto PASS
 #ifdef DEBUG
@@ -211,13 +211,13 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 	}
 
 	else if (((M_WIDTH < x) && (x < al_get_display_width(display))) && 
-		(((al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton)) < y) && (y < (al_get_font_line_height(menuFont) * 2 + al_get_bitmap_height(attackButton) + al_get_bitmap_height(purchaseButton)))))
+		(((((al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0) * 2))) < y) && (y < (((al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0) * 3))))))
 	{
 		//Se apreto PURCHASE
 #ifdef DEBUG
 		cout << "Se apreto Purchase\n" << endl;
 #endif // DEBUG
-		return PURCHASE;
+		return BO_PURCHASE;
 	}
 		
 		//VOLER A PONER!!!!!!!!!!!!!!

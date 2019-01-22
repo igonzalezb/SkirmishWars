@@ -85,7 +85,7 @@ genericEvent * GameEventSource::insertEvent()
 		ret = (genericEvent *) new EV_Attack();
 		break;
 	case R_PASS:
-		ret = (genericEvent *) new EV_Pass();
+		ret = (genericEvent *) new EV_RPass(); //PROPBAMOS CON R!!!!!!!!!!!!!!!!!!!!!!!
 		break;
 	case R_YOU_WON:
 		ret = (genericEvent *) new EV_YouWon();
@@ -95,6 +95,12 @@ genericEvent * GameEventSource::insertEvent()
 		break;
 	case R_QUIT:
 		ret = (genericEvent *) new EV_Quit();
+		break;
+	case BO_PURCHASE:
+		ret = (genericEvent *) new EV_BoPurchase();
+		break;
+	case BO_ATTACK:
+		ret = (genericEvent *) new EV_BoAttack();
 		break;
 	default:
 		break;
@@ -170,12 +176,13 @@ bool GameEventSource::isThereEvent()
 			((gameInterface->myMap->getTile(gameInterface->getAttacker().i,gameInterface->getAttacker().j)->getUnit()->getTeam()) == (gameInterface->playerMe->getTeam()))))
 			//si las coordenadas de attacker y defender estan bien seteadas:
 			{
-				gameInterface->myMap->possibleAttack((gameInterface->myMap->getTile(gameInterface->getAttacker().i, gameInterface->getAttacker().j)->getUnit()), gameInterface->getAttacker().i, gameInterface->getAttacker().j);
-				if ((gameInterface->myMap->canAttack[gameInterface->getDefender().i][gameInterface->getDefender().j]) == true)
+				//gameInterface->myMap->possibleAttack((gameInterface->myMap->getTile(gameInterface->getAttacker().i, gameInterface->getAttacker().j)->getUnit()), gameInterface->getAttacker().i, gameInterface->getAttacker().j);
+				if (1)//(gameInterface->myMap->canAttack[gameInterface->getDefender().i][gameInterface->getDefender().j]) == true)
 				{
 					evCode = ATTACK;
 					gameInterface->attacking = false;
 					ret = true;
+					cout << "se genera evento ATTACK!!!!!!!!!!!!!" << endl;
 				}
 			}
 	}
@@ -304,14 +311,17 @@ bool NetworkEventSource::isThereEvent()
 			ret = true;
 			break;
 		case OP_PASS: //sin campo de datos
+			cout << "ENTRA A IS THERE EVENT CON PASS" << endl;
 			evCode = R_PASS;
 			ret = true;
 			break;
 		case OP_MOVE:
 			evCode = R_MOVE;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
-			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-'0X41'));
-			gameInterface->setDefender((int)aux[3], (int)(aux[4]-'0X41'));
+			cout << "Attacker: i = " << (int)aux[1] << " j= " << (int)(aux[2]-0x41) << endl;
+			cout << "Defender: i = " << (int)aux[3] << " j= " << (int)(aux[4]-0x41) << endl;
+			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-0X41));
+			gameInterface->setDefender((int)aux[3], (int)(aux[4]-0X41));
 			ret = true;
 			break;
 		case OP_PURCHASE:
@@ -321,7 +331,7 @@ bool NetworkEventSource::isThereEvent()
 			r_unidad.insert(r_unidad.begin(), aux.begin() + 1, aux.begin() + 3); //para que meta lo que hay en pos 1 y 2 de aux, se pone hasta +3 porque no incluye esa, sino que hasta la anterior.
 			//r_fila_de = aux[1];
 			//r_col_de = aux[2];
-			gameInterface->setDefender((int)aux[1], (int)(aux[2]-'0X41'));
+			gameInterface->setDefender((int)aux[1], (int)(aux[2]-0X41));
 			//lo pasamos a string y lo guardamos en el tipo de newUnit adentro de networking:
 			for (char c : r_unidad) {
 				r_unidad_string.push_back(c);
@@ -348,9 +358,12 @@ bool NetworkEventSource::isThereEvent()
 			r_col_de = aux[4];
 			r_dado = aux[5];
 			*/
+
+			
 			gameInterface->setDie((int)aux[5]);
-			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-'0X41'));
-			gameInterface->setDefender((int)aux[3], (int)(aux[4]-'0X41'));
+			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-0X41));
+			gameInterface->setDefender((int)aux[3], (int)(aux[4]-0X41));
+			cout << "Se arma eventio attack" << endl;
 			
 			ret = true;
 			break;
@@ -417,7 +430,8 @@ genericEvent * NetworkEventSource::insertEvent()
 		ret = (genericEvent *) new EV_RIStart();
 		break;
 	case R_PASS:
-		ret = (genericEvent *) new EV_Rpass();
+		cout << "INSERT EVENT R PASS" << endl;
+		ret = (genericEvent *) new EV_RPass();
 		break;
 	case R_MOVE:
 		ret = (genericEvent *) new EV_Rmove();
@@ -445,6 +459,20 @@ genericEvent * NetworkEventSource::insertEvent()
 		break;
 	case ERR_DETECTED:		//VER si este case se deja o si se saca
 		ret = (genericEvent *) new EV_ErrDetected();
+		break;
+	case MOVE:		//VER si este case se deja o si se saca
+		cout << "IMPRIMIO ESTOOOOOOOOOOOOOOOOOOOO" << endl;
+		ret = (genericEvent *) new EV_Move();
+		break;
+	case PASS:		//VER si este case se deja o si se saca
+		cout << "INSERT EVENT PASS (networking)" << endl;
+		ret = (genericEvent *) new EV_Pass();
+		break;
+	case PURCHASE:		//VER si este case se deja o si se saca
+		ret = (genericEvent *) new EV_Purchase();
+		break;
+	case ATTACK:		//VER si este case se deja o si se saca
+		ret = (genericEvent *) new EV_Attack();
 		break;
 	default:
 		break;
@@ -554,14 +582,15 @@ genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 	case NEW_UNIT:
 		ret = (genericEvent *) new EV_NewUnit();
 		break;
-	case PURCHASE:
-		ret = (genericEvent *) new EV_Purchase();
+	case BO_PURCHASE:
+		ret = (genericEvent *) new EV_BoPurchase();
 		break;
 	case PASS:
+		cout << "insert event PASS" << endl;
 		ret = (genericEvent *) new EV_Pass();
 		break;
-	case ATTACK:
-		ret = (genericEvent *) new EV_Attack();
+	case BO_ATTACK:
+		ret = (genericEvent *) new EV_BoAttack();
 		break;
 
 	default:
