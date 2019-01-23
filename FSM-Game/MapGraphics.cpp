@@ -9,19 +9,19 @@ MapGraphics::MapGraphics()
 	}
 	
 	
-	attackButton = al_load_bitmap("resources/images/AttackButton.png");
+	attackButton = al_load_bitmap("resources/images/buttons/AttackButton.png");
 	if(!attackButton)
 	{
 		printf("Failed to create attack button!\n");
 	}
 
-	purchaseButton = al_load_bitmap("resources/images/purchase.png");
+	purchaseButton = al_load_bitmap("resources/images/buttons/PurchaseButton.png");
 	if (!purchaseButton)
 	{
 		printf("Failed to create purchase button!\n");
 	}
 
-	passButton = al_load_bitmap("resources/images/PASS.png");
+	passButton = al_load_bitmap("resources/images/buttons/PassButton.png");
 	if (!passButton)
 	{
 		printf("Failed to create pass button!\n");
@@ -48,6 +48,12 @@ MapGraphics::~MapGraphics()
 			if (unitsArray[i][j] != NULL) { al_destroy_bitmap(unitsArray[i][j]); }
 		}
 	}
+	al_destroy_bitmap(attackButton);
+	al_destroy_bitmap(passButton);
+	al_destroy_bitmap(purchaseButton);
+	al_destroy_font(menuFont);
+	al_destroy_display(display);
+
 }
 
 void MapGraphics::showMap(Game* gameInfo)
@@ -80,13 +86,15 @@ void MapGraphics::showMap(Game* gameInfo)
 		currItem = iterator1->getName() + ": $";
 		currItem += iterator1->getCost();
 		al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH + 20,
-			(al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0)*3) + (al_get_font_line_height(menuFont) * i), 0.0,
+			(al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0) * 3) + (al_get_font_line_height(menuFont) * i), 0.0,
 			currItem.c_str());
 		if (i < 8)
 		{
 			advance(iterator1, 1);
 		}
 	}
+
+	
 
 	//Imprimo en la pantalla todos los terrenos y buildings
 	for (int i = 0; i < (FILA); i++) {
@@ -108,17 +116,22 @@ void MapGraphics::showMap(Game* gameInfo)
 				
 				
 				//ACA VA LO DE IS SELECTED!!
-				//gameInfo->myMap->possibleMoves(gameInfo->myMap->getTile(i, j)->getUnit(), i, j);	//Esto no va aca!!
-				//for (int p = 0; p < (FILA); p++) {
-				//	for (int q = 0; q < (COLUMNA); q++) {
-				//		if (gameInfo->myMap->canMove[p][q]) {
-				//			al_draw_rectangle(q*T_WIDTH, p* T_HEIGHT,
-				//				(q*T_WIDTH) + T_WIDTH,
-				//				(p* T_HEIGHT) + T_HEIGHT,
-				//				al_color_name("green"), 4.0);
-				/*		}
+				//if(selected)
+				//{
+				gameInfo->myMap->possibleMoves(gameInfo->myMap->getTile(i, j)->getUnit(), i, j);	//Esto no va aca!!
+				for (int p = 0; p < (FILA); p++)
+				{
+					for (int q = 0; q < (COLUMNA); q++)
+					{
+						if (gameInfo->myMap->canMove[p][q])
+						{
+							al_draw_rectangle(q*T_WIDTH, p* T_HEIGHT,
+								(q*T_WIDTH) + T_WIDTH,
+								(p* T_HEIGHT) + T_HEIGHT,
+								al_color_name("green"), 4.0);
+						}
 					}
-				}*/
+				}
 			}
 		}
 	}
@@ -143,7 +156,6 @@ void MapGraphics::loadBitmaps(Map * map)
 				//despues rechequear lo del fog segun el equipo
 				if ((map->getTile(i, j)->getUnit() != NULL)) {
 					unitsArray[i][j] = al_load_bitmap(map->getTile(i, j)->getUnit()->getPath().c_str());
-					//cout << "path de la unit " << map->getTile(i, j)->getUnit()->getPath() << endl;
 				}
 				if ((map->getTile(i, j)->getBuilding() != NULL))
 					bitmapArray[i][j] = al_load_bitmap(map->getTile(i, j)->getBuilding()->getPath().c_str());

@@ -41,6 +41,7 @@ private:
 	string path;
 	string cost;
 	string mp;
+	string currentMp;
 	string defense;
 	string symbol;
 	Range range;
@@ -65,6 +66,7 @@ public:
 	void setName(string name);
 	void setCost(string cost);
 	void setMp(string mp);
+	void setCurrMp(string mp);
 	void setdefense(string defense);
 
 
@@ -91,9 +93,12 @@ public:
 	void setForestCost(string cost);
 	void setHillsCost(string cost);
 
+	void resetMp();
+
 	Range getRange();
 	string getdefense();
 	string getMp();
+	string getCurrMp();
 	string getCost();
 	int getHp();
 	string getPath();

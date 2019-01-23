@@ -17,7 +17,7 @@
 #include "basicXML.h"
 #include "Resources.h"
 
-#define XML_PATH	"resources.xml"
+#define XML_PATH	"resources/resources.xml"
 
 typedef char MYBYTE;
 

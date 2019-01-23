@@ -183,8 +183,7 @@ genericState* ST_WaitingMoveConfirmation::on_Move(genericEvent *ev, usefulInfo *
 {
 	cout << "G WAITING MOVE CONFIRMATION: ON MOVE" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
-	Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->setUnit(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit());
-	Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->setUnit(NULL);
+	Info->gameInterface->move();
 	return ret;
 }
 
@@ -210,24 +209,8 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 	if ((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) == NULL)
 	{
 		Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
-
-		// VOLVER A CAMBIAR!!!!!!!!!!!!!
-		//cout << "Defender: " << Info->gameInterface->getDefender().i << Info->gameInterface->getDefender().j << endl;
-		//cout << "Attacker: " << Info->gameInterface->getAttacker().i << Info->gameInterface->getAttacker().j << endl;
-		//Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()), Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j);
-		
-		/*cout << "Matrix CanMove" << endl;
-		for (int i = 0; i < FILA; i++)
-		{
-			for (int j = 0; j < COLUMNA; j++)
-			{
-				
-				cout << Info->gameInterface->myMap->canMove[i][j];
-			}
-			cout << endl;
-		}*/
-
-		if (1) //(Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender().i][Info->gameInterface->getDefender().j]))
+		Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()), Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j);
+		if ((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender().i][Info->gameInterface->getDefender().j]))
 		{
 			//cout << "ENTRA AL IF 1" << endl;
 			Info->gameInterface->moving = true;
@@ -242,7 +225,6 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 	else if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
 			((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
 	{
-		cout << "aca no tendria que entrar" << endl;
 		Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
 		//VER si hay que borrar tileSelected (?)
 		ret = (genericState *) new ST_WaitingDestination();
@@ -250,7 +232,6 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 	}
 	else
 	{
-		cout << "aca no tendria que entrar" << endl;
 		ret = (genericState *) new ST_WaitingDestination();
 		Info->gameInterface->moving = false;
 	}
@@ -652,8 +633,9 @@ genericState* ST_YouMoving::on_RMove(genericEvent *ev, usefulInfo * Info)
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()) != NULL) &&
 		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit())->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
 	{
+		//ACA SE ROMPE:
 		//Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getDefender().j)->getUnit()), Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j);
-		if (1)//((Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender().i][Info->gameInterface->getDefender().j]) == true)
+		if (1)//(Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender().i][Info->gameInterface->getDefender().j]) == true)
 		{
 			Info->gameInterface->move();
 		}

@@ -10,6 +10,13 @@
 #include "csvHandler.h"
 #include "genericEvent.h" //para poder usar el ENUM de los nombres de los tiles
 
+
+#ifdef DEBUG
+	//#define NOFOG	//Just for Debug
+#endif // DEBUG
+
+
+
 //typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
 
 #define ATTACK_TABLE "resources/terrainDefenseModifiers.csv"
@@ -35,7 +42,7 @@
 #define T_HEIGHT	M_HEIGHT/FILA
 #define T_WIDTH		M_WIDTH/COLUMNA
 #define FOG_IMAGE	"resources/images/fog.png"
-#define FONT_MENU	"resources/BAUHS93.otf"
+#define FONT_MENU	"resources/fonts/BAUHS93.otf"
 
 
 enum tabla

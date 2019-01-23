@@ -82,6 +82,7 @@ class UserEventSource : public genericEventSource
 {
 public:
 	UserEventSource(userInput* _userInterface, Game*_gameInterface); //VER que recibe aca (A LOS DOS JUGADORES, O UNA CLASE CON TODO EL JUEGO O QUE)
+	~UserEventSource();
 	bool isThereEvent();
 	/*eventCode dispachClick(int x, int y);*/
 	genericEvent* insertEvent();

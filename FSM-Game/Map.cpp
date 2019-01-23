@@ -7,6 +7,7 @@ Map::Map()
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
 			tilesArray[i][j] = new GenericTile;
+			canMove[i][j] = false;
 		}
 	}
 
@@ -202,7 +203,7 @@ if (!encontroTerrain) {
 
 }
 
-void Map::possibleMoves(Unit * currUnit, int i, int j)//, bool (&canMove)[FILA][COLUMNA])
+void Map::possibleMoves(Unit * currUnit, int i, int j)
 {
 
 	int matrixCost[FILA][COLUMNA];
@@ -211,7 +212,13 @@ void Map::possibleMoves(Unit * currUnit, int i, int j)//, bool (&canMove)[FILA][
 	{
 		for (int q = 0; q < COLUMNA; q++)
 		{
+#ifdef NOFOG
+			if (false)			//ESTO ES PARA DEBUG
+
+#endif // NOFOG
+#ifndef NOFOG
 			if (getTile(p, q)->getFog())
+#endif // !NOFOG
 			{
 				matrixCost[p][q] = CANNOT_MOVE;
 			}
@@ -225,60 +232,68 @@ void Map::possibleMoves(Unit * currUnit, int i, int j)//, bool (&canMove)[FILA][
 			}
 			else 
 			{
-				if (matrixDeTerrenoOrFacility[p][q] == "a")
+				if (matrixDeTerrenoOrFacility[p][q].compare("a") == 0)
 				{
 					matrixCost[p][q] = stoi(currUnit->getMc().road);
 				}
-				else if (matrixDeTerrenoOrFacility[p][q] == "r")
+				else if (matrixDeTerrenoOrFacility[p][q].compare("r") == 0)
 				{
 					matrixCost[p][q] = stoi(currUnit->getMc().river);
 				}
-				else if (matrixDeTerrenoOrFacility[p][q] == "f")
+				else if (matrixDeTerrenoOrFacility[p][q].compare("f") == 0)
 				{
 					matrixCost[p][q] = stoi(currUnit->getMc().forest);
 				}
-				else if (matrixDeTerrenoOrFacility[p][q] == "h")
+				else if (matrixDeTerrenoOrFacility[p][q].compare("h") == 0)
 				{
 					matrixCost[p][q] = stoi(currUnit->getMc().hills);
 				}
-				else if (matrixDeTerrenoOrFacility[p][q] == "t")
+				else if (matrixDeTerrenoOrFacility[p][q].compare("t") == 0)
 				{
 					matrixCost[p][q] = stoi(currUnit->getMc().plain);
 				}
 			}
+
 			canMove[p][q] = false;	//La seteo toda en false al principio
 		}
 	}
-	matrixCost[i][j] = 0;	//Seteo el lugar donde estoy en 0 (VER!!)
-	checkPossibleMoves(matrixCost, i, j, stoi(currUnit->getMp()));
-	/*cout << "Matrix CanMove" << endl;
-	for (int i = 0; i < FILA; i++)
-	{
-		for (int j = 0; j < COLUMNA; j++)
-		{
-
-			cout << canMove[i][j];
-		}
-
-		cout << endl;
-	}*/
+	
+	matrixCost[i][j] = 0;	//Seteo el lugar donde estoy en 0 (VER!! - es para la recursiva)
+	checkPossibleMoves(matrixCost, i, j, stoi(currUnit->getCurrMp()));
+	//canMove[i][j] = true;	//Seteo el lugar donde estoy en true
 }
 
+//void Map::checkPossibleMoves(int matrixCost[FILA][COLUMNA], int i, int j, int MP) {
+//	if ((0 <= i) && (i < FILA) && (0 <= j) && (j < COLUMNA) && (MP >= 0))
+//	{
+//		MP -= matrixCost[i][j];
+//		if (MP >= 0) {
+//			canMove[i][j] = true;
+//			checkPossibleMoves(matrixCost, i - 1, j, MP);
+//			checkPossibleMoves(matrixCost, i + 1, j, MP);
+//			checkPossibleMoves(matrixCost, i, j + 1, MP);
+//			checkPossibleMoves(matrixCost, i, j - 1, MP);
+//		}
+//	}
+//}
+
 void Map::checkPossibleMoves(int matrixCost[FILA][COLUMNA], int i, int j, int MP) {
-	if ((0 <= i) && (i < FILA) && (0 <= j) && (j < COLUMNA) && (MP >= 0))
+	
+	if ((MP - matrixCost[i - 1][j]) >= 0)
 	{
-		MP -= matrixCost[i][j];
-		if (MP >= 0) {
-			
-			//if (MP >= 0)//&&((getTile(i,j)->getUnit())==NULL)) 
-			//{
-				canMove[i][j] = true;
-			//}
-			checkPossibleMoves(matrixCost, i - 1, j, MP);
-			checkPossibleMoves(matrixCost, i + 1, j, MP);
-			checkPossibleMoves(matrixCost, i, j + 1, MP);
-			checkPossibleMoves(matrixCost, i, j - 1, MP);
-		}
+		canMove[i -1][j] = true;
+	}
+	if ((MP - matrixCost[i+1][j]) >= 0)
+	{
+		canMove[i + 1][j] = true;
+	}
+	if ((MP - matrixCost[i][j-1]) >= 0)
+	{
+		canMove[i][j-1] = true;
+	}
+	if ((MP - matrixCost[i][j+1]) >= 0)
+	{
+		canMove[i][j+1] = true;
 	}
 }
 
