@@ -44,7 +44,7 @@ typedef enum {
 
 
 	//Opciones de compra presionadas
-	OPT_1, OPT_2, OPT_3, OPT_4, OPT_5, OPT_6, OPT_7, OPT_8, OPT_9,
+	/*OPT_1, OPT_2, OPT_3, OPT_4, OPT_5, OPT_6, OPT_7, OPT_8, OPT_9,*/
 
 	END_PLAYING// VER SI ESTE ESTADO QUEDA O NO
 

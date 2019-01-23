@@ -235,18 +235,13 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 				(al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0) * 3) + (al_get_font_line_height(menuFont) * i) + al_get_font_line_height(menuFont))))
 		{
 			// Se apreto para comprar la unidad de numero i de la lista
-			
-				advance(it3, i);
-			
-#ifdef DEBUG
-			cout << "Se apreto comprar: " << it3->getName() << endl;
-#endif // DEBUG
+			advance(it3, i);
 			Unit *currUnit = new Unit(it3);
 			currUnit->setTeam(gameInfo->playerMe->getTeam());
 			gameInfo->setNewUnit(currUnit);
-			
-
-
+#ifdef DEBUG
+			cout << "Se apreto comprar: " << it3->getName() << endl;
+#endif // DEBUG
 			return NEW_UNIT;
 		}
 	
