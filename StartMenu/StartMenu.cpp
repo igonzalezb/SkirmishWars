@@ -84,7 +84,6 @@ void StartMenu::MenuEvents()
 				"", NULL, ALLEGRO_MESSAGEBOX_YES_NO))
 			{
 				do_exit = true;
-				exit(EXIT_SUCCESS);
 			}
 			break;
 		case ALLEGRO_EVENT_KEY_CHAR:
