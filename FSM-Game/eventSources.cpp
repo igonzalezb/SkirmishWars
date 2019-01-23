@@ -505,7 +505,7 @@ bool UserEventSource::isThereEvent()
 	bool ret = false;
 
 #ifdef DEBUG
-	al_set_window_title(graphics->getDisplay(), ("PLAYER: " + to_string(gameInterface->playerMe->getTeam())).c_str());
+	al_set_window_title(graphics->getDisplay(), ("SKIRMISH WARS - PLAYER: " + to_string(gameInterface->playerMe->getTeam())).c_str());
 #endif // DEBUG
 
 	al_register_event_source(event_queue, al_get_display_event_source(graphics->getDisplay()));

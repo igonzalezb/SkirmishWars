@@ -42,6 +42,7 @@ void video::playVideo(ALLEGRO_DISPLAY *display)
 	al_register_event_source(event_queue, al_get_video_event_source(video_s));
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
+	al_register_event_source(event_queue, al_get_mouse_event_source());
 	
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_flip_display();
@@ -62,7 +63,21 @@ void video::playVideo(ALLEGRO_DISPLAY *display)
 		case ALLEGRO_EVENT_DISPLAY_RESIZE:
 			al_acknowledge_resize(display);
 			break;
-		case ALLEGRO_EVENT_DISPLAY_CLOSE: case ALLEGRO_EVENT_VIDEO_FINISHED: case ALLEGRO_EVENT_KEY_DOWN:
+		case ALLEGRO_EVENT_DISPLAY_CLOSE:
+			
+			if (1 == al_show_native_message_box(
+				display,
+				"Warning",
+				"Are you sure you want to quit the game?",
+				"", NULL,ALLEGRO_MESSAGEBOX_YES_NO))
+			{
+				do_exit = true;
+				exit(EXIT_SUCCESS);
+			}
+			break;
+		case ALLEGRO_EVENT_VIDEO_FINISHED: 
+		case ALLEGRO_EVENT_KEY_DOWN: 
+		case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
 			al_close_video(video_s);
 			do_exit = true;
 			break;

@@ -43,6 +43,7 @@
 #define T_WIDTH		M_WIDTH/COLUMNA
 #define FOG_IMAGE	"resources/images/fog.png"
 #define FONT_MENU	"resources/fonts/BAUHS93.otf"
+#define DICE_FACE_PATH	"resources/images/dice/%d.png"
 
 
 enum tabla

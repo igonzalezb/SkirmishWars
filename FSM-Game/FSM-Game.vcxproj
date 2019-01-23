@@ -311,6 +311,12 @@
     <Image Include="resources\images\cards\modifiers.png" />
     <Image Include="resources\images\cards\nell.png" />
     <Image Include="resources\images\cards\sami.png" />
+    <Image Include="resources\images\dice\1.png" />
+    <Image Include="resources\images\dice\2.png" />
+    <Image Include="resources\images\dice\3.png" />
+    <Image Include="resources\images\dice\4.png" />
+    <Image Include="resources\images\dice\5.png" />
+    <Image Include="resources\images\dice\6.png" />
     <Image Include="resources\images\hq\b0.png" />
     <Image Include="resources\images\hq\b1.png" />
     <Image Include="resources\images\hq\g0.png" />

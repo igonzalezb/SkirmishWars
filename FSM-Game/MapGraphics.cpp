@@ -27,6 +27,12 @@ MapGraphics::MapGraphics()
 		printf("Failed to create pass button!\n");
 	}
 
+	displayIcon = al_load_bitmap("resources/images/icon.png");
+	if (!displayIcon)
+	{
+		printf("Failed to create displayIcon!\n");
+	}
+
 	menuFont = al_load_font(FONT_MENU, 30, 0);
 	if (!menuFont) {
 		fprintf(stderr, "failed to create menuFont!\n");
@@ -38,6 +44,8 @@ MapGraphics::MapGraphics()
 			unitsArray[i][j] = NULL;
 		}
 	}
+
+	al_set_display_icon(display, displayIcon);
 }
 
 MapGraphics::~MapGraphics()
@@ -114,21 +122,20 @@ void MapGraphics::showMap(Game* gameInfo)
 					al_get_bitmap_width(unitsArray[i][j]), al_get_bitmap_height(unitsArray[i][j]),
 					j*T_WIDTH, i* T_HEIGHT, T_WIDTH / 1.3, T_HEIGHT / 1.3, 0);
 				
-				
-				//ACA VA LO DE IS SELECTED!!
-				//if(selected)
-				//{
-				gameInfo->myMap->possibleMoves(gameInfo->myMap->getTile(i, j)->getUnit(), i, j);	//Esto no va aca!!
-				for (int p = 0; p < (FILA); p++)
+				if (gameInfo->myMap->getTile(i, j)->isSelected())
 				{
-					for (int q = 0; q < (COLUMNA); q++)
+					gameInfo->myMap->possibleMoves(gameInfo->myMap->getTile(i, j)->getUnit(), i, j);	
+					for (int p = 0; p < (FILA); p++)
 					{
-						if (gameInfo->myMap->canMove[p][q])
+						for (int q = 0; q < (COLUMNA); q++)
 						{
-							al_draw_rectangle(q*T_WIDTH, p* T_HEIGHT,
-								(q*T_WIDTH) + T_WIDTH,
-								(p* T_HEIGHT) + T_HEIGHT,
-								al_color_name("green"), 4.0);
+							if (gameInfo->myMap->canMove[p][q])
+							{
+								al_draw_rectangle(q*T_WIDTH, p* T_HEIGHT,
+									(q*T_WIDTH) + T_WIDTH,
+									(p* T_HEIGHT) + T_HEIGHT,
+									al_color_name("green"), 4.0);
+							}
 						}
 					}
 				}
@@ -181,6 +188,32 @@ void MapGraphics::loadBitmaps(Map * map)
 	}
 }
 
+void MapGraphics::setDisplayName(string _name)
+{
+	al_set_window_title(display, _name.c_str());
+}
+
+void MapGraphics::showDice(int _dice)
+{
+	if (diceFace != NULL) { al_destroy_bitmap(diceFace); }
+
+	string _path = DICE_FACE_PATH;
+	diceFace = al_load_bitmap(_path.c_str());
+	if (!diceFace)
+	{
+		cout << "ERROR loading dice Image" << endl;
+	}
+	int dx = ((al_get_display_width(display) / 2) - (al_get_bitmap_width(diceFace) / 2));
+	int dy = ((al_get_display_height(display) / 2) - (al_get_bitmap_format(diceFace) / 2));
+
+
+	al_draw_bitmap(diceFace, dx, dy, 0.0);
+
+
+	al_flip_display();
+
+}
+
 ALLEGRO_DISPLAY* MapGraphics::getDisplay()
 {
 	return display;
@@ -188,12 +221,14 @@ ALLEGRO_DISPLAY* MapGraphics::getDisplay()
 
 eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 {
+	
 	if (((0.0 < x) && (x < M_WIDTH)) && ((0.0 < y) && (y < M_HEIGHT)))
 	{
 		//Se cliqueo dentro del mapa
 		for (int i = 0; i < (FILA); i++) {
 			for (int j = 0; j < (COLUMNA); j++) {
 
+				gameInfo->myMap->getTile(i, j)->toogleIsSelected(false);
 				if (((((T_WIDTH * j) < x) && (x < ((T_WIDTH * j) + T_WIDTH)))) &&
 					((((T_HEIGHT * i) < y) && (y < ((T_HEIGHT * i) + T_HEIGHT)))))
 				{
@@ -202,7 +237,7 @@ eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
 					cout << "SE APRETO la fila:" << i << " , columna " << j << endl;
 #endif // DEBUG
 					gameInfo->setTileSelected(i, j);
-
+					gameInfo->myMap->getTile(i, j)->toogleIsSelected(true);
 					return TILE;
 				}
 			}
