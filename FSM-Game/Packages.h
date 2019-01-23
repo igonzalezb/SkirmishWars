@@ -25,7 +25,7 @@ typedef enum {
 	OP_YOU_START = 0x20, OP_I_START = 0x21, OP_PASS = 0x30, OP_MOVE = 0x31,
 	OP_PURCHASE = 0x32, OP_ATTACK = 0X33, OP_YOU_WON = 0x40, OP_PLAY_AGAIN = 0x50,
 	OP_GAME_OVER = 0x51, OP_ERROR = 0xFE, OP_QUIT = 0xFF
-}opCodes; 
+}opCodes; //CAMBIO EL OP_PASS = 0x30 POR 0x01 para probar. el ack que era 0x01 ahora le puse 0x30
 
 class genericPackage
 {

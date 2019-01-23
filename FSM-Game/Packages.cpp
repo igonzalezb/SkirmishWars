@@ -162,6 +162,7 @@ void Pass::setPackage()
 	std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_PASS);			//byte 1: encabezado
+	cout << "OPPPPPCODE PASS:"<<OP_PASS << endl;
 }
 
 void YouWon::setPackage()

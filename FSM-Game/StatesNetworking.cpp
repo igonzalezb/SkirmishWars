@@ -362,7 +362,7 @@ genericState* ST_WaitingAPlay::on_RAttack(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_WaitingAPlay::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
-	cout << "waitingAPlay: on R" << endl;
+	cout << "waitingAPlay: on R PASS, Y pasa a I PLAY" << endl;
 	genericState *ret = (genericState *) new ST_IPlay();
 	return ret;
 }

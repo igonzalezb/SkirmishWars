@@ -7,6 +7,7 @@ eventGenerator::eventGenerator(usefulInfo* _I) :buffer(16) //VER BUFFER 16 QUE O
 
 void eventGenerator::generateEvent()
 {
+
 	/*
 	if (I->softwareSrc->isThereEvent())
 	{

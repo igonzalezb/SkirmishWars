@@ -102,7 +102,7 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case PASS:
 			newState = currentState->on_Pass(ev, Info);
-			cout << "DISPATCH DE PASS" << endl;
+			cout << "DISPATCH DE PASS, en NETWORKING FSM" << endl;
 			break;
 		case MOVE:
 			newState = currentState->on_Move(ev, Info);

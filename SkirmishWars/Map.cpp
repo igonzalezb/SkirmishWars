@@ -116,7 +116,7 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 					if (strcmp(it2->getType().c_str(), matrix2[i][j].c_str()) == false) {
 						k = false;
 						//printf("Encontre: %s\n", it2->getName().c_str());
-						Building *currBuilding = new Building(it2->getHp(),it2->getName(), it2->getPath(), it2->getType(), team);
+						Building *currBuilding = new Building(it2->getCp(),it2->getName(), it2->getPath(), it2->getType(), team);
 						tilesArray[i][j]->addBuilding(currBuilding);
 					}
 				}

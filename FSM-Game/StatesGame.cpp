@@ -80,8 +80,12 @@ genericState* ST_GameIdle::on_RyouStart(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 {
+
+
+
 	cout << "GAME IDLE: ON R ISTART" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
+	
 	//Info->gameInterface->playerYou->setMoney(5);
 
 	//int i = 0, j = 0;

@@ -40,6 +40,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_Attack(ev, Info);
 			break;
 		case PASS:
+			cout << "DISPATCH DE PASS, EN GAME FSM" << endl;
 			newState = currentState->on_Pass(ev, Info);
 			break;
 		case TILE:

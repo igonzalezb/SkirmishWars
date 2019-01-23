@@ -259,8 +259,14 @@ bool NetworkEventSource::isThereEvent()
 #ifdef DEBUG
 	//	cout << "entra 2 (aca no deberia entrar)" << endl;
 #endif // DEBUG
+		if (networkInterface->getInputPackage()[0] == OP_PASS) {
+			cout << "OP_PASS==INPUT PACKKKKKKKK" << endl;
+		}
+		cout << "OP CODE RECIBIDO: " << (int)(MYBYTE)(networkInterface->getInputPackage()[0]) << endl;
+
 		switch (networkInterface->getInputPackage()[0])	//segun el tipo de paquete devuelvo el tipo de evento
 		{
+			
 		case OP_ACK: //sin campo de datos
 			evCode = R_ACK;
 			ret = true;
