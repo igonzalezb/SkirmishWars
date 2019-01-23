@@ -72,8 +72,8 @@ public:
 
 	//void attack(coordenadas attacker, coordenadas defender);//ESTA FUNCION SEGURAMENTE HAYA QUE MOVERLA A OTRO ARCHIVO (+ prolijo) Quizas no recibe nada y se usa lo de abajo attacker y defender.
 	//void attack();
-	void setAttacker(int tile);
-	void setDefender(int tile);
+	//void setAttacker(int tile);
+	//void setDefender(int tile);
 
 	void possibleMoves(Unit *currUnit, int i, int j);
 	void possibleAttack(Unit *currUnit, int i, int j);
