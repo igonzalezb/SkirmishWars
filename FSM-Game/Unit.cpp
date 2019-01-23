@@ -14,6 +14,7 @@ Unit::Unit(list<Unit>::iterator it)
 	path = it->getPath();
 	cost = it->getCost();
 	mp = it->getMp();
+	currentMp = it->getMp();
 	defense = it->getdefense();
 	symbol = it->getSymbol();
 	range = it->getRange();
@@ -55,6 +56,11 @@ void Unit::setCost(string cost)
 void Unit::setMp(string mp)
 {
 	this->mp = mp;
+}
+
+void Unit::setCurrMp(string mp)
+{
+	this->currentMp = mp;
 }
 
 void Unit::setdefense(string defense)
@@ -168,6 +174,11 @@ void Unit::setHillsCost(string cost)
 	this->mcost.hills = cost;
 }
 
+void Unit::resetMp()
+{
+	currentMp = mp;
+}
+
 Range Unit::getRange()
 {
 	return range;
@@ -181,6 +192,11 @@ string Unit::getdefense()
 string Unit::getMp()
 {
 	return mp;
+}
+
+string Unit::getCurrMp()
+{
+	return currentMp;
 }
 
 string Unit::getCost()

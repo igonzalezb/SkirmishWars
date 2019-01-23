@@ -10,6 +10,13 @@
 #include "csvHandler.h"
 #include "genericEvent.h" //para poder usar el ENUM de los nombres de los tiles
 
+
+#ifdef DEBUG
+	//#define NOFOG	//Just for Debug
+#endif // DEBUG
+
+
+
 //typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
 
 #define ATTACK_TABLE "resources/terrainDefenseModifiers.csv"
@@ -35,7 +42,7 @@
 #define T_HEIGHT	M_HEIGHT/FILA
 #define T_WIDTH		M_WIDTH/COLUMNA
 #define FOG_IMAGE	"resources/images/fog.png"
-#define FONT_MENU	"resources/BAUHS93.otf"
+#define FONT_MENU	"resources/fonts/BAUHS93.otf"
 
 
 enum tabla
@@ -72,8 +79,8 @@ public:
 
 	//void attack(coordenadas attacker, coordenadas defender);//ESTA FUNCION SEGURAMENTE HAYA QUE MOVERLA A OTRO ARCHIVO (+ prolijo) Quizas no recibe nada y se usa lo de abajo attacker y defender.
 	//void attack();
-	void setAttacker(int tile);
-	void setDefender(int tile);
+	//void setAttacker(int tile);
+	//void setDefender(int tile);
 
 	void possibleMoves(Unit *currUnit, int i, int j);
 	void possibleAttack(Unit *currUnit, int i, int j);

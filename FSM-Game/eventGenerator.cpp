@@ -29,8 +29,9 @@ void eventGenerator::generateEvent()
 		////if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
 		//else
 		//{
-			I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
-			I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+		I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
+		I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
+		I->userSrc->graphics->showMap(I->userSrc->gameInterface);
 		//}
 	}
 	if (I->gameSrc->isThereEvent())
@@ -45,6 +46,7 @@ void eventGenerator::generateEvent()
 		//if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
 		//else
 		//{
+		I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
 			I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
 			I->userSrc->graphics->showMap(I->userSrc->gameInterface);
 		//}
@@ -67,6 +69,7 @@ void eventGenerator::generateEvent()
 		////if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
 		//else //if (I->gameSrc->evCode != NO_EV)
 		//{
+		I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
 			I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
 			I->userSrc->graphics->showMap(I->userSrc->gameInterface);
 		//}

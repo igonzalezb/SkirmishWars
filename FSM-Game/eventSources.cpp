@@ -155,13 +155,13 @@ bool GameEventSource::isThereEvent()
 		//		//si el attacker es una unidad mia:
 		//	{
 				//gameInterface->myMap->possibleMoves((gameInterface->myMap->getTile(gameInterface->getAttacker().i,gameInterface->getAttacker().j)->getUnit()), gameInterface->getAttacker().i,gameInterface->getAttacker().j);
-				if (1)//(gameInterface->myMap->canMove[gameInterface->getDefender().i][gameInterface->getDefender().j]) == true)
-				{
+				//if ((gameInterface->myMap->canMove[gameInterface->getDefender().i][gameInterface->getDefender().j]) == true)
+				//{
 					cout << "ENTRO ACA !!!! SIIII  2" << endl;
 					evCode = MOVE;
 					gameInterface->moving = false;
 					ret = true;
-				}
+				//}
 			/*}
 		}*/
 	}
@@ -498,6 +498,11 @@ UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface
 	}
 
 	
+}
+
+UserEventSource::~UserEventSource()
+{
+	al_destroy_event_queue(event_queue);
 }
 
 bool UserEventSource::isThereEvent()

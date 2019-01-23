@@ -13,6 +13,42 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Mapas">
+      <UniqueIdentifier>{744f5a95-f5ac-4572-b411-2bcdce462884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images">
+      <UniqueIdentifier>{01883900-5cea-44ea-9437-c266e8f0fd52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images\Buttons">
+      <UniqueIdentifier>{2a627645-eb31-426c-b683-3ada9af2090c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images\Units">
+      <UniqueIdentifier>{16841ba3-29b7-4d8b-8912-4872c25bfaed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images\Buildings">
+      <UniqueIdentifier>{c55e47e5-54b1-4ade-8b5b-d66415d4a0aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images\Terrains">
+      <UniqueIdentifier>{daaceaa9-2592-435c-9293-393077db8685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images\Roads">
+      <UniqueIdentifier>{a0129d27-3343-4590-baca-0bdb4ca0521e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images\River">
+      <UniqueIdentifier>{2626bd78-a558-4048-86e9-5974162996ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images\Hq">
+      <UniqueIdentifier>{33191cec-e041-49e7-9f41-b5b50c46a8ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images\Cards">
+      <UniqueIdentifier>{081fc996-f36b-4d96-ad70-c497d39aac9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Documents">
+      <UniqueIdentifier>{28ae2c91-ed2c-4873-9ac5-9384181362e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Fonts">
+      <UniqueIdentifier>{572b690b-a6c5-4e2c-bd66-4778b35002fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="eventGenerator.cpp">
@@ -163,11 +199,429 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="resources.xml">
+    <Xml Include="resources\resources.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="resources\maps\BalancedArena.csv">
+      <Filter>Resource Files\Mapas</Filter>
+    </None>
+    <None Include="resources\maps\BalancedRing.csv">
+      <Filter>Resource Files\Mapas</Filter>
+    </None>
+    <None Include="resources\maps\BlancedCross.csv">
+      <Filter>Resource Files\Mapas</Filter>
+    </None>
+    <None Include="resources\maps\IslandWar.csv">
+      <Filter>Resource Files\Mapas</Filter>
+    </None>
+    <None Include="resources\maps\MystPi.csv">
+      <Filter>Resource Files\Mapas</Filter>
+    </None>
+    <None Include="resources\maps\Nascar.csv">
+      <Filter>Resource Files\Mapas</Filter>
+    </None>
+    <None Include="resources\maps\SanFranciscoBridge.csv">
+      <Filter>Resource Files\Mapas</Filter>
+    </None>
+    <None Include="resources\maps\SnakeArena.csv">
+      <Filter>Resource Files\Mapas</Filter>
+    </None>
+    <None Include="resources\maps\SuperS.csv">
+      <Filter>Resource Files\Mapas</Filter>
+    </None>
+    <None Include="resources\maps\WaterWorld.csv">
+      <Filter>Resource Files\Mapas</Filter>
+    </None>
+    <None Include="resources\documents\Consigna TP Final 2017.25.pdf">
+      <Filter>Resource Files\Documents</Filter>
+    </None>
+    <None Include="resources\documents\Skirmish Wars - Art.pdf">
+      <Filter>Resource Files\Documents</Filter>
+    </None>
+    <None Include="resources\documents\Skirmish Wars - Rules.pdf">
+      <Filter>Resource Files\Documents</Filter>
+    </None>
+    <None Include="resources\terrainDefenseModifiers.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\images\units\antiair_1.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\antiair_2.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\antiair_3.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\antiair_4.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\apc_1.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\apc_2.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\apc_3.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\apc_4.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\artillery_1.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\artillery_2.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\artillery_3.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\artillery_4.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\infantry_1.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\infantry_2.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\infantry_3.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\infantry_4.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\mech_1.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\mech_2.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\mech_3.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\mech_4.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\medtank_1.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\medtank_2.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\medtank_3.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\medtank_4.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\recon_1.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\recon_2.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\recon_3.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\recon_4.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\rocket_1.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\rocket_2.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\rocket_3.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\rocket_4.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\tank_1.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\tank_2.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\tank_3.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\units\tank_4.png">
+      <Filter>Resource Files\Images\Units</Filter>
+    </Image>
+    <Image Include="resources\images\building\b2.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\b4.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\city_0.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\city_1.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\city_2.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\city_3.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\city_4.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\factory_0.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\factory_1.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\factory_2.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\factory_3.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\factory_4.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\g2.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\g4.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\r2.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\r4.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\w2.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\w4.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\y2.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\building\y4.png">
+      <Filter>Resource Files\Images\Buildings</Filter>
+    </Image>
+    <Image Include="resources\images\terrain\forest.png">
+      <Filter>Resource Files\Images\Terrains</Filter>
+    </Image>
+    <Image Include="resources\images\terrain\hill.png">
+      <Filter>Resource Files\Images\Terrains</Filter>
+    </Image>
+    <Image Include="resources\images\terrain\plain.png">
+      <Filter>Resource Files\Images\Terrains</Filter>
+    </Image>
+    <Image Include="resources\images\river\i1.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\river\i2.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\river\l1.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\river\l2.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\river\l3.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\river\l4.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\river\t1.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\river\t2.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\river\t3.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\river\t4.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\river\x.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\river\x1.png">
+      <Filter>Resource Files\Images\River</Filter>
+    </Image>
+    <Image Include="resources\images\road\i1.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\i2.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\l1.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\l2.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\l3.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\l4.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\p.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\t1.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\t2.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\t3.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\t4.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\x.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\road\x1.png">
+      <Filter>Resource Files\Images\Roads</Filter>
+    </Image>
+    <Image Include="resources\images\hq\b0.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\b1.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\g0.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\g1.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\hq_0.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\hq_1.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\hq_2.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\hq_3.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\hq_4.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\r0.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\r1.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\y0.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\hq\y1.png">
+      <Filter>Resource Files\Images\Hq</Filter>
+    </Image>
+    <Image Include="resources\images\cards\0.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\1.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\2.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\3.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\4.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\5.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\6.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\7.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\8.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\andy.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\back.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\colin.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\grit.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\hachi.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\kanbei.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\max.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\modifiers.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\nell.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\cards\sami.png">
+      <Filter>Resource Files\Images\Cards</Filter>
+    </Image>
+    <Image Include="resources\images\buttons\AttackButton.png">
+      <Filter>Resource Files\Images\Buttons</Filter>
+    </Image>
+    <Image Include="resources\images\buttons\AttackButton1.png">
+      <Filter>Resource Files\Images\Buttons</Filter>
+    </Image>
+    <Image Include="resources\images\buttons\PassButton.png">
+      <Filter>Resource Files\Images\Buttons</Filter>
+    </Image>
+    <Image Include="resources\images\buttons\PassButton1.png">
+      <Filter>Resource Files\Images\Buttons</Filter>
+    </Image>
+    <Image Include="resources\images\buttons\PurchaseButton.png">
+      <Filter>Resource Files\Images\Buttons</Filter>
+    </Image>
+    <Image Include="resources\images\buttons\PurchaseButton1.png">
+      <Filter>Resource Files\Images\Buttons</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\fonts\BAUHS93.otf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="resources\fonts\BAUHS93.TTF">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

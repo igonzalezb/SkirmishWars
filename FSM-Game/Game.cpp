@@ -63,6 +63,35 @@ void Game::move()
 {
 	myMap->getTile(getDefender().i, getDefender().j)->setUnit(myMap->getTile(getAttacker().i, getAttacker().j)->getUnit());
 	myMap->getTile(getAttacker().i, getAttacker().j)->setUnit(NULL);
+
+	if (myMap->getTile(getDefender().i, getDefender().j)->getBuilding() != NULL)
+	{
+		myMap->getTile(getDefender().i, getDefender().j)->getUnit()->setCurrMp(to_string(stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getCurrMp()) - stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getMc().road)));
+	}
+	else
+	{
+		if (myMap->getTile(getDefender().i, getDefender().j)->getTerrain()->getType().compare("a") == 0)
+		{
+			myMap->getTile(getDefender().i, getDefender().j)->getUnit()->setCurrMp(to_string(stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getCurrMp()) - stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getMc().road)));
+		}
+		else if (myMap->getTile(getDefender().i, getDefender().j)->getTerrain()->getType().compare("r") == 0)
+		{
+			myMap->getTile(getDefender().i, getDefender().j)->getUnit()->setCurrMp(to_string(stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getCurrMp()) - stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getMc().river)));
+		}
+		else if (myMap->getTile(getDefender().i, getDefender().j)->getTerrain()->getType().compare("f") == 0)
+		{
+			myMap->getTile(getDefender().i, getDefender().j)->getUnit()->setCurrMp(to_string(stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getCurrMp()) - stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getMc().forest)));
+		}
+		else if (myMap->getTile(getDefender().i, getDefender().j)->getTerrain()->getType().compare("h") == 0)
+		{
+			myMap->getTile(getDefender().i, getDefender().j)->getUnit()->setCurrMp(to_string(stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getCurrMp()) - stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getMc().hills)));
+		}
+		else if (myMap->getTile(getDefender().i, getDefender().j)->getTerrain()->getType().compare("t") == 0)
+		{
+			myMap->getTile(getDefender().i, getDefender().j)->getUnit()->setCurrMp(to_string(stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getCurrMp()) - stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getMc().plain)));
+		}
+	}
+
 }
 
 //void Map::attack(coordenadas attacker, coordenadas defender) 

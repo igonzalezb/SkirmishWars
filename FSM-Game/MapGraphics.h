@@ -15,7 +15,7 @@
 #include "genericEvent.h"
 #include "Game.h"
 
-#define NOFOG	//Just for Debug
+
 
 class MapGraphics
 {
