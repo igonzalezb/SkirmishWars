@@ -26,7 +26,7 @@ typedef char MYBYTE;
 class Game
 {
 public:
-	Game();
+	Game(ALLEGRO_DISPLAY* display);
 	~Game(); //Ver cuando llamarlo
 	Player* playerMe;
 	Player* playerYou;
@@ -61,8 +61,8 @@ public:
 	Unit* getNewUnit();
 	int getDie();
 	void setDie(int Dado_);
-	void setPlaying(bool now);
-	bool getPlaying();
+	void setIamPlaying(bool now);
+	bool getIamPlaying();
 	bool moving;
 	bool attacking;
 	bool purchasing;
@@ -70,6 +70,7 @@ public:
 	void chooseWhoStarts();
 	bool playerChosen;
 	bool Istart;
+	
 private:
 	coordenadas attacker;
 	coordenadas defender;
@@ -81,7 +82,7 @@ private:
 	csvFile *defenseModifiers;
 	modifiers tableMatrix[14][5];
 	Unit *newUnit;
-	bool playing;
+	bool iAmPlaying;
 
 };
 //#endif // !GAME_H

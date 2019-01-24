@@ -12,9 +12,9 @@ Map::Map()
 	}
 
 
-	randomMap();
+	//randomMap();
 
-	mapFile = new csvFile(mapName, FILA, COLUMNA);
+	//mapFile = new csvFile(mapName, FILA, COLUMNA);
 	isMapReceivedOk = false; //DESPUES PONER EN FALSE
 
 
@@ -27,57 +27,52 @@ void Map::verifyMapReceived()
 	isMapReceivedOk = true;
 }
 
-void Map::setMapPath(string mapName)
-{
-	this->mapName = mapName;
-}
-
 void Map::randomMap()
 {
-//	int map = rand() % MAX_MAPS;
-//	
-//	switch (map)
-//	{
-//	case 0:
-//		mapName = MAP_0;
-//		break;
-//	case 1:
-//		mapName = MAP_1;
-//		break;
-//	case 2:
-//		mapName = MAP_2;
-//		break;
-//	case 3:
-//		mapName = MAP_3;
-//		break;
-//	case 4:
-//		mapName = MAP_4;
-//		break;
-//	case 5:
-//		mapName = MAP_5;
-//		break;
-////////////////////////////////////////////
-//	case 6:
-//		mapName = MAP_6;
-//		break;
-//	case 7:
-//		mapName = MAP_7;
-//		break;
-//	case 8:
-//		mapName = MAP_8;
-//		break;
-//	case 9:
-//		mapName = MAP_9;
-//		break;
-//	}
+	int map = rand() % MAX_MAPS;
+	
+	switch (map)
+	{
+	case 0:
+		mapName = MAP_0;
+		break;
+	case 1:
+		mapName = MAP_1;
+		break;
+	case 2:
+		mapName = MAP_2;
+		break;
+	case 3:
+		mapName = MAP_3;
+		break;
+	case 4:
+		mapName = MAP_4;
+		break;
+	case 5:
+		mapName = MAP_5;
+		break;
+//////////////////////////////////////////
+	case 6:
+		mapName = MAP_6;
+		break;
+	case 7:
+		mapName = MAP_7;
+		break;
+	case 8:
+		mapName = MAP_8;
+		break;
+	case 9:
+		mapName = MAP_9;
+		break;
+	}
 
-	mapName = MAP_1;		//VOVLER A CAMBIAR!!!!!
+	//mapName = MAP_1;		//VOVLER A CAMBIAR!!!!!
 
 #ifdef DEBUG
 	printf("%s\n", mapName.c_str());
 #endif // DEBUG
 
-
+	mapFile = new csvFile(mapName, FILA, COLUMNA);
 	
 }
 
@@ -341,9 +336,6 @@ void Map::checkPossibleAttacks(int matrixCost[FILA][COLUMNA], int i, int j, int 
 	}
 }
 
-
-
-
 string Map::getMapName()
 {
 	return mapName;
@@ -352,6 +344,8 @@ string Map::getMapName()
 void Map::setMapName(string mapName_)
 {
 	this->mapName = mapName_;
+	
+	mapFile = new csvFile(mapName, FILA, COLUMNA);
 }
 
 GenericTile* Map::getTile(int i, int j)

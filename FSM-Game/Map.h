@@ -11,9 +11,9 @@
 #include "genericEvent.h" //para poder usar el ENUM de los nombres de los tiles
 
 
-#ifdef DEBUG
-	//#define NOFOG	//Just for Debug
-#endif // DEBUG
+
+#define NOFOG	//Just for Debug
+
 
 
 
@@ -76,7 +76,6 @@ class Map
 public:
 	Map();
 	~Map();
-	void setMapPath(string mapName);
 	void randomMap();
 	void generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units);
 

@@ -210,12 +210,14 @@
     <ClCompile Include="Packages.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="StartMenu.cpp" />
     <ClCompile Include="StatesGame.cpp" />
     <ClCompile Include="StatesNetworking.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Tiles.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="userInput.cpp" />
+    <ClCompile Include="videoplayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllegroSetup.h" />
@@ -237,6 +239,7 @@
     <ClInclude Include="Packages.h" />
     <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="StartMenu.h" />
     <ClInclude Include="StatesGame.h" />
     <ClInclude Include="StatesNetworking.h" />
     <ClInclude Include="Terrain.h" />
@@ -244,6 +247,7 @@
     <ClInclude Include="Unit.h" />
     <ClInclude Include="usefulInfo.h" />
     <ClInclude Include="userInput.h" />
+    <ClInclude Include="videoplayer.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="resources\resources.xml" />

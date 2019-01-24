@@ -3,7 +3,7 @@
 #include "PlayerInfo.h"
 #include "Terrain.h"
 
-Game::Game()
+Game::Game(ALLEGRO_DISPLAY* display)
 {
 	char * xml_path = XML_PATH;
 	XML_Parser P = XML_ParserCreate(NULL);
@@ -21,15 +21,15 @@ Game::Game()
 	playerMe = new Player;
 	playerYou = new Player;
 	myMap = new Map;
-	graphics = new MapGraphics;
+	graphics = new MapGraphics(display);
 	notWinning = true;
 	
-	myMap->generateTilesArray(data->getBuildingList(), data->getTerrainList(), data->getUnitList());
+	//myMap->generateTilesArray(data->getBuildingList(), data->getTerrainList(), data->getUnitList());
 	
 	
 	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
 	generateDefenseModifiersTable();
-	playing = false;
+	iAmPlaying = false;
 	playerChosen = false;
 	Istart = false;
 }
@@ -92,10 +92,10 @@ void Game::move()
 		}
 	}
 
-
+	myMap->getTile(getDefender().i, getDefender().j)->toogleIsSelected(false);
 	myMap->updateFogOfWar(playerMe->getTeam());
 	graphics->loadBitmaps(myMap);
-	graphics->showMap(data, myMap, playerMe->getMoney());
+	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
 
 }
 
@@ -201,7 +201,7 @@ void Game::attack()
 
 	myMap->updateFogOfWar(playerMe->getTeam());
 	graphics->loadBitmaps(myMap);
-	graphics->showMap(data, myMap, playerMe->getMoney());
+	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
 }
 
 
@@ -236,7 +236,7 @@ void Game::captureProperty(Player* pAttacker, Player* pDefender)
 
 	myMap->updateFogOfWar(playerMe->getTeam());
 	graphics->loadBitmaps(myMap);
-	graphics->showMap(data, myMap, playerMe->getMoney());
+	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
 }
 
 void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado en defender.i y defender.j las coordenadas del lugar al que quieren poner la unidad nueva.
@@ -247,7 +247,7 @@ void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado e
 
 	myMap->updateFogOfWar(playerMe->getTeam());
 	graphics->loadBitmaps(myMap);
-	graphics->showMap(data, myMap, playerMe->getMoney());
+	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
 }
 
 bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE
@@ -357,14 +357,14 @@ void Game::setDie(int Dado_)
 	this->die = Dado_;
 }
 
-void Game::setPlaying(bool now)
+void Game::setIamPlaying(bool now)
 {
-	playing = now;
+	iAmPlaying = now;
 }
 
-bool Game::getPlaying()
+bool Game::getIamPlaying()
 {
-	return playing;
+	return iAmPlaying;
 }
 
 void Game::chooseWhoStarts()

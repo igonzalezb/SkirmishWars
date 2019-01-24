@@ -30,32 +30,42 @@ void Name::setPackage()
 	package.push_back((MYBYTE)OP_NAME); //en vez de NAME podria poner code.
 }
 
+ NameIs::NameIs(string nameIs) 
+ { 
+	 code = OP_NAME_IS; 
+	 this->nameIs = nameIs; 
+ }
+
 void NameIs::setPackage()
 {
-	string myName = "Malena0123456789w"; //RECIBIR NOMBRE!!!
-
-										 //std::vector<char> package;
+	//string myName = "Malena0123456789w"; //RECIBIR NOMBRE!!!										 //std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_NAME_IS); //sin el (MYBYTE) anda igual que con.my 
-	package.push_back((unsigned char)myName.size());
+	package.push_back((unsigned char)nameIs.size());
 #ifdef DEBUG
-	std::cout << myName.size() << std::endl;
+	std::cout << nameIs.size() << std::endl;
 #endif // DEBUG
 	//la siguiente linea equivale a la de arriba, pero dejo la de arriba para asegurarme el unsigned char (aunque se cumple en la de abajo)
 	//package.push_back(myName.size());//guarda el tamaño en asci (lo lee como en hexa) ej:41 int lo toma como 0x29
-	std::copy(myName.begin(), myName.end(), std::back_inserter(package));
+	std::copy(nameIs.begin(), nameIs.end(), std::back_inserter(package));
+}
+
+MapIs::MapIs(string mapName)
+{
+	code = OP_MAP_IS; 
+	this->mapName = mapName; 
 }
 
 void MapIs::setPackage()
 { //ANDA
-	string myMapsName = "hola_soy_el_mapa_soy_el_mapa"; //RECIBIR NOMBRE!!! sin extension.csv
+	//string myMapsName = "hola_soy_el_mapa_soy_el_mapa"; //RECIBIR NOMBRE!!! sin extension.csv
 	unsigned int checksum = 41; //RECIBIR VALOR!!! es un int (contador) que se guarda con la linea de abajo como un char para que este en hexa.
 
 								//std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_MAP_IS); //1 byte con el encabezado MAP_IS en hexa
-	package.push_back((unsigned char)myMapsName.size()); //tamaño del nombre del mapa
-	std::copy(myMapsName.begin(), myMapsName.end(), std::back_inserter(package));
+	package.push_back((unsigned char)mapName.size()); //tamaño del nombre del mapa
+	std::copy(mapName.begin(), mapName.end(), std::back_inserter(package));
 	package.push_back((unsigned char)checksum);
 }
 
@@ -229,9 +239,4 @@ genericPackage::genericPackage()
 
 genericPackage::~genericPackage()
 {
-}
-
-genericPackage::genericPackage(Game * gameInfo)
-{
-	this->gameInfo = gameInfo;
 }

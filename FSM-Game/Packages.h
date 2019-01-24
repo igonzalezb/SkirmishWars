@@ -32,11 +32,11 @@ class genericPackage
 public:
 	genericPackage();
 	~genericPackage();
-	genericPackage(Game* gameInfo);
+	//genericPackage(Game* gameInfo);
 	std::vector<char> package;
 	virtual void setPackage() = 0;
 	opCodes code;
-	Game* gameInfo;
+	//Game* gameInfo;
 };
 
 
@@ -57,15 +57,19 @@ public:
 
 class NameIs :public genericPackage
 {
+private:
+	string nameIs;
 public:
-	NameIs() { code = OP_NAME_IS; }
+	NameIs(string nameIs);
 	void setPackage();
 };
 
 class MapIs :public genericPackage
 {
+private:
+	string mapName;
 public:
-	MapIs() { code = OP_MAP_IS; }
+	MapIs(string mapName);
 	void setPackage();
 };
 

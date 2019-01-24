@@ -247,10 +247,10 @@ bool NetworkEventSource::isThereEvent()
 			gameInterface->playerMe->setTeam(EQUIPO2); //cliente es equipo 2
 			gameInterface->playerYou->setTeam(EQUIPO1); //server es equipo 1
 
-			gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
-			gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
-			gameInterface->graphics->loadBitmaps(gameInterface->myMap);
-			gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney());
+			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
+			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
+			//gameInterface->graphics->loadBitmaps(gameInterface->myMap);
+			//gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney());
 			
 
 		}
@@ -261,10 +261,10 @@ bool NetworkEventSource::isThereEvent()
 			gameInterface->playerMe->setTeam(EQUIPO1); //server equipo 1
 			gameInterface->playerYou->setTeam(EQUIPO2); //client equipo 2
 
-			gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
-			gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
-			gameInterface->graphics->loadBitmaps(gameInterface->myMap);
-			gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney());
+			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
+			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
+			//gameInterface->graphics->loadBitmaps(gameInterface->myMap);
+			//gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney());
 		}
 		ret = true;
 	}
@@ -304,6 +304,7 @@ bool NetworkEventSource::isThereEvent()
 				r_name_string.push_back(c);
 			}
 			gameInterface->playerYou->setName(r_name_string);
+			cout << "opponent's name: " << gameInterface->playerYou->getName() << endl;
 			ret = true;
 			break;
 		case OP_MAP_IS:
@@ -314,13 +315,19 @@ bool NetworkEventSource::isThereEvent()
 			aux.erase(aux.begin());
 			aux.erase(aux.begin());
 			r_map.clear();
-			r_map.insert(r_map.begin(), aux.begin(), aux.end());
-			
+			//r_map.insert(r_map.begin(), aux.begin(), aux.end());
+			r_map.insert(r_map.begin(), aux.begin(), aux.end()-1);
 			//lo pasamos a string y lo guardamos en el nombre del player:
-			for (char c : r_name) {
+			r_map_string.clear();
+			for (char c : r_map) {
 				r_map_string.push_back(c);
 			}
 			gameInterface->myMap->setMapName(r_map_string);
+			gameInterface->myMap->generateTilesArray(gameInterface->data->getBuildingList(), gameInterface->data->getTerrainList(), gameInterface->data->getUnitList());
+			gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
+			gameInterface->graphics->loadBitmaps(gameInterface->myMap);
+			gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney(), gameInterface->playerMe->getTeam());
+			
 			ret = true;
 			break;
 		case OP_YOU_START: //sin campo de datos
@@ -536,7 +543,7 @@ bool UserEventSource::isThereEvent()
 	bool ret = false;
 
 #ifdef DEBUG
-	gameInterface->graphics->setDisplayName("SKIRMISH WARS - PLAYER: " + to_string(gameInterface->playerMe->getTeam()));	//Esto no va aca
+	gameInterface->graphics->setDisplayName("SKIRMISH WARS - PLAYER: " + gameInterface->playerMe->getName());	//Esto no va aca
 #endif // DEBUG
 
 	al_register_event_source(event_queue, al_get_display_event_source(gameInterface->graphics->getDisplay()));
@@ -562,8 +569,12 @@ bool UserEventSource::isThereEvent()
 		case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
 			if (ev.mouse.button == 1)		//Para usar solo el click izquierdo
 			{
-				evCode = dispatchClick(ev.mouse.x, ev.mouse.y);
-				ret = true;
+				if (gameInterface->getIamPlaying())	//si no es mi turno no entro
+				{
+					evCode = dispatchClick(ev.mouse.x, ev.mouse.y);
+					ret = true;
+				}
+				
 			}
 			break;
 		case ALLEGRO_EVENT_KEY_UP:
@@ -576,9 +587,9 @@ bool UserEventSource::isThereEvent()
 			evCode = END_PLAYING;
 			ret = true;
 			break;
-		case ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
+		/*case ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
 			al_flip_display();
-			break;
+			break;*/
 		default:
 			ret = false;
 			break;
@@ -613,7 +624,7 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 #endif // DEBUG
 					gameInterface->setTileSelected(i, j);
 					gameInterface->myMap->getTile(i, j)->toogleIsSelected(true);
-					gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney());
+					gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney(), gameInterface->playerMe->getTeam());
 					return TILE;
 				}
 			}

@@ -22,8 +22,9 @@ class MapGraphics
 {
 public:
 	MapGraphics();
+	MapGraphics(ALLEGRO_DISPLAY *display);
 	~MapGraphics();
-	void showMap(Resources* data, Map* myMap, int player_money);
+	void showMap(Resources* data, Map* myMap, int player_money, int my_team);
 	void loadBitmaps(Map *map);
 	void setDisplayName(string _name);
 	//void setMap(Map *map);
@@ -35,14 +36,13 @@ public:
 
 private:
 	ALLEGRO_DISPLAY *display = NULL;
-	ALLEGRO_BITMAP *displayIcon = NULL;
 	ALLEGRO_BITMAP *bitmapArray[FILA][COLUMNA];
 	ALLEGRO_BITMAP *unitsArray[FILA][COLUMNA];
 	ALLEGRO_BITMAP *attackButton = NULL;
 	ALLEGRO_BITMAP *purchaseButton = NULL;
 	ALLEGRO_BITMAP *passButton = NULL;
 	ALLEGRO_BITMAP *diceFace = NULL;
-
+	ALLEGRO_FONT *hpFont = NULL;
 	ALLEGRO_FONT *menuFont = NULL;
 
 };

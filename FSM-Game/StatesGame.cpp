@@ -12,22 +12,7 @@ genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "GAME IDLE: ON I START" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
-	//Info->gameInterface->playerMe->setMoney(5);
-
-	//int i = 0, j = 0;
-	//for (i = 0; i < FILA; i++)
-	//{
-	//	for (j = 0; j < COLUMNA; j++)
-	//	{
-	//		//if (((Info->gameInterface->myMap->getTile(i,j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i,j)->getBuilding()) != NULL))
-	//		if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
-	//		{
-	//			Info->gameInterface->myMap->getTile(i,j)->getUnit()->setHp(8); //VER si este HP inicial por default ya esta cargado en algun lado
-	//		}
-	//}
-
-	//COMPLETAR 
-	Info->gameInterface->setPlaying(true);
+	Info->gameInterface->setIamPlaying(true);
 	return ret;
 }
 
@@ -35,22 +20,7 @@ genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "GAME IDLE: ON you START" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
-	//Info->gameInterface->playerYou->setMoney(5);
-
-	int i = 0, j = 0;
-	//for (i = 0; i < FILA; i++)
-	//{
-	//	for (j = 0; j < COLUMNA; j++)
-	//	{
-	//		//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
-	//		if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
-	//		{
-	//			Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-	//		}
-	//	}
-	//}
-	//COMPLETAR
-	Info->gameInterface->setPlaying(true);
+	Info->gameInterface->setIamPlaying(false);
 	return ret;
 }
 
@@ -58,50 +28,16 @@ genericState* ST_GameIdle::on_RyouStart(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "GAME IDLE: ON R you START" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
-	//Info->gameInterface->playerMe->setMoney(5);
-
-	//int i = 0, j = 0;
-	//for (i = 0; i < FILA; i++)
-	//{
-	//	for (j = 0; j < COLUMNA; j++)
-	//	{
-	//		//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
-	//		if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
-	//		{
-	//			Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-	//		}
-	//	}
-	//}
-	//COMPLETAR
-	Info->gameInterface->setPlaying(true);
+	Info->gameInterface->setIamPlaying(true);
 
 	return ret;
 }
 
 genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 {
-
-
-
 	cout << "GAME IDLE: ON R ISTART" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
-	
-	//Info->gameInterface->playerYou->setMoney(5);
-
-	//int i = 0, j = 0;
-	//for (i = 0; i < FILA; i++)
-	//{
-	//	for (j = 0; j < COLUMNA; j++)
-	//	{
-	//		//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL))
-	//		if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)
-	//		{
-	//			Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-	//		}
-	//	}
-	//}
-	//COMPLETAR
-	Info->gameInterface->setPlaying(true);
+	Info->gameInterface->setIamPlaying(false);
 	return ret;
 }
 
@@ -112,14 +48,6 @@ genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "G MOVING: ON TILE" << endl;
 	genericState *ret;
-	//HACER: cuando el mouse ve que se toca un tile del mapa,
-	//guardar esa info en la clase game en tileSelected y generar el evento TILE
-	//cout << (Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit())->getName() << endl;
-	
-	//cout << "Team playerMe:" << Info->gameInterface->playerMe->getTeam() << endl;
-	//cout << "Team tile:" << (Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) << endl;
-
-
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
 		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
 	{

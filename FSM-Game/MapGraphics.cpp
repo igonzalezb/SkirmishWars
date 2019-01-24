@@ -1,13 +1,8 @@
 #include "MapGraphics.h"
 
-MapGraphics::MapGraphics()
+MapGraphics::MapGraphics(ALLEGRO_DISPLAY * display)
 {
-	display = al_create_display(1000, 600);
-	if (!display)
-	{
-		printf("Failed to create display!\n");
-	}
-	
+	this->display = display;	
 	
 	attackButton = al_load_bitmap("resources/images/buttons/AttackButton.png");
 	if(!attackButton)
@@ -27,14 +22,15 @@ MapGraphics::MapGraphics()
 		printf("Failed to create pass button!\n");
 	}
 
-	displayIcon = al_load_bitmap("resources/images/icon.png");
-	if (!displayIcon)
-	{
-		printf("Failed to create displayIcon!\n");
-	}
+	
 
 	menuFont = al_load_font(FONT_MENU, 30, 0);
 	if (!menuFont) {
+		fprintf(stderr, "failed to create menuFont!\n");
+	}
+
+	hpFont = al_load_font(FONT_MENU, 20, 0);
+	if (!hpFont) {
 		fprintf(stderr, "failed to create menuFont!\n");
 	}
 
@@ -45,7 +41,6 @@ MapGraphics::MapGraphics()
 		}
 	}
 
-	al_set_display_icon(display, displayIcon);
 }
 
 MapGraphics::~MapGraphics()
@@ -64,7 +59,7 @@ MapGraphics::~MapGraphics()
 
 }
 
-void MapGraphics::showMap(Resources* data, Map* myMap, int player_money)
+void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, int my_team)
 {
 	al_clear_to_color(al_map_rgb(0.0, 170.0, 0.0));
 
@@ -111,9 +106,22 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money)
 			al_draw_scaled_bitmap(bitmapArray[i][j], 0.0, 0.0,
 				al_get_bitmap_width(bitmapArray[i][j]), al_get_bitmap_height(bitmapArray[i][j]),
 				j*T_WIDTH(display), i* T_HEIGHT(display), T_WIDTH(display), T_HEIGHT(display), 0);
+			if ((myMap->getTile(i, j)->getBuilding() != NULL) &&
+				(myMap->getTile(i, j)->isSelected()) && (!myMap->getTile(i, j)->getFog()))
+			{
+				al_draw_filled_rectangle((j*T_WIDTH(display)) - al_get_text_width(hpFont, to_string(myMap->getTile(i, j)->getBuilding()->getCp()).c_str())/2, 
+					(i* T_HEIGHT(display)),
+					(j*T_WIDTH(display)) + al_get_text_width(hpFont, to_string(myMap->getTile(i, j)->getBuilding()->getCp()).c_str())*(1.5), 
+					(i* T_HEIGHT(display)) + al_get_font_line_height(hpFont), al_color_name("white"));
+				al_draw_text(hpFont, al_color_name("black"),
+					(j*T_WIDTH(display)), (i* T_HEIGHT(display)), 0.0,
+					to_string(myMap->getTile(i, j)->getBuilding()->getCp()).c_str());
+
+			}
+
 		}
 	}
-	//Imprimo en la pantalla todas las unidades
+	//Imprimo en la pantalla todas las unidades, hp, cp y possible moves
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
 			
@@ -124,24 +132,45 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money)
 				
 				if (myMap->getTile(i, j)->isSelected())
 				{
-					myMap->possibleMoves(myMap->getTile(i, j)->getUnit(), i, j);	
-					for (int p = 0; p < (FILA); p++)
+					
+					if ((myMap->getTile(i, j)->getUnit()->getTeam() == my_team))
 					{
-						for (int q = 0; q < (COLUMNA); q++)
+						myMap->possibleMoves(myMap->getTile(i, j)->getUnit(), i, j);
+						for (int p = 0; p < (FILA); p++)
 						{
-							if (myMap->canMove[p][q])
+							for (int q = 0; q < (COLUMNA); q++)
 							{
-								al_draw_rectangle(q*T_WIDTH(display), p* T_HEIGHT(display),
-									(q*T_WIDTH(display)) + T_WIDTH(display),
-									(p* T_HEIGHT(display)) + T_HEIGHT(display),
-									al_color_name("green"), 4.0);
+								if (myMap->canMove[p][q])
+								{
+									al_draw_rectangle(q*T_WIDTH(display), p* T_HEIGHT(display),
+										(q*T_WIDTH(display)) + T_WIDTH(display),
+										(p* T_HEIGHT(display)) + T_HEIGHT(display),
+										al_color_name("green"), 4.0);
+								}
 							}
 						}
 					}
+					
+					if (!myMap->getTile(i, j)->getFog())
+					{
+						al_draw_filled_rectangle((j*T_WIDTH(display)) - al_get_text_width(hpFont, (to_string(myMap->getTile(i, j)->getUnit()->getHp())).c_str()) / 2,
+							(i* T_HEIGHT(display)),
+							(j*T_WIDTH(display)) + al_get_text_width(hpFont, (to_string(myMap->getTile(i, j)->getUnit()->getHp())).c_str())*1.5,
+							(i* T_HEIGHT(display)) + al_get_font_line_height(hpFont), al_color_name("white"));
 
-					myMap->getTile(i, j)->toogleIsSelected(false);
+						al_draw_text(hpFont, al_color_name("black"),
+							(j*T_WIDTH(display)), i* T_HEIGHT(display), ALLEGRO_ALIGN_LEFT,
+							(to_string(myMap->getTile(i, j)->getUnit()->getHp())).c_str());
+						/*al_draw_text(hpFont, al_color_name("black"),
+						(j*T_WIDTH(display)), i* T_HEIGHT(display) + al_get_font_line_height(hpFont), ALLEGRO_ALIGN_LEFT,
+						("MP " + myMap->getTile(i, j)->getUnit()->getCurrMp()).c_str());*/
+					}
+					
 				}
+				
 			}
+
+			myMap->getTile(i, j)->toogleIsSelected(false);
 		}
 	}
 
