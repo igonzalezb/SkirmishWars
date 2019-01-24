@@ -24,19 +24,23 @@ public:
 	~MapGraphics();
 	void showMap(Game* gameInfo);
 	void loadBitmaps(Map *map);
+	void setDisplayName(string _name);
 	//void setMap(Map *map);
-
+	void showDice(int _dice);
 	ALLEGRO_DISPLAY* getDisplay();
 
 	eventCode dispatchClick(int x, int y, Game *gameInfo);
 
 private:
 	ALLEGRO_DISPLAY *display = NULL;
+	ALLEGRO_BITMAP *displayIcon = NULL;
 	ALLEGRO_BITMAP *bitmapArray[FILA][COLUMNA];
 	ALLEGRO_BITMAP *unitsArray[FILA][COLUMNA];
 	ALLEGRO_BITMAP *attackButton = NULL;
 	ALLEGRO_BITMAP *purchaseButton = NULL;
 	ALLEGRO_BITMAP *passButton = NULL;
+	ALLEGRO_BITMAP *diceFace = NULL;
+
 	ALLEGRO_FONT *menuFont = NULL;
 
 };

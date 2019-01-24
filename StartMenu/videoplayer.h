@@ -6,6 +6,7 @@
 #include <allegro5\allegro_audio.h>
 #include <allegro5\allegro_acodec.h>
 #include <allegro5\allegro_video.h>
+#include <allegro5\allegro_native_dialog.h>
 
 class video
 {

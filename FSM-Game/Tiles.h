@@ -23,6 +23,7 @@ public:
 	Building* getBuilding();
 	Terrain* getTerrain();
 	bool isSelected();
+	void toogleIsSelected(bool _selected);
 
 private:
 	Unit *currUnit = NULL;

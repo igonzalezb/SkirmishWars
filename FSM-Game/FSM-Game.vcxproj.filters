@@ -49,6 +49,9 @@
     <Filter Include="Resource Files\Fonts">
       <UniqueIdentifier>{572b690b-a6c5-4e2c-bd66-4778b35002fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Images\Dice">
+      <UniqueIdentifier>{33b717d9-59ae-4576-9fee-de6cfdd4b061}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="eventGenerator.cpp">
@@ -614,6 +617,24 @@
     </Image>
     <Image Include="resources\images\buttons\PurchaseButton1.png">
       <Filter>Resource Files\Images\Buttons</Filter>
+    </Image>
+    <Image Include="resources\images\dice\1.png">
+      <Filter>Resource Files\Images\Dice</Filter>
+    </Image>
+    <Image Include="resources\images\dice\2.png">
+      <Filter>Resource Files\Images\Dice</Filter>
+    </Image>
+    <Image Include="resources\images\dice\3.png">
+      <Filter>Resource Files\Images\Dice</Filter>
+    </Image>
+    <Image Include="resources\images\dice\4.png">
+      <Filter>Resource Files\Images\Dice</Filter>
+    </Image>
+    <Image Include="resources\images\dice\5.png">
+      <Filter>Resource Files\Images\Dice</Filter>
+    </Image>
+    <Image Include="resources\images\dice\6.png">
+      <Filter>Resource Files\Images\Dice</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

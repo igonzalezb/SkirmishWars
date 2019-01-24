@@ -6,6 +6,7 @@
 GenericTile::GenericTile()
 {
 	fogOfWar = true;
+	_selected = false;
 }
 
 GenericTile::~GenericTile()
@@ -75,6 +76,11 @@ Terrain * GenericTile::getTerrain()
 bool GenericTile::isSelected()
 {
 	return _selected;
+}
+
+void GenericTile::toogleIsSelected(bool _selected)
+{
+	this->_selected = _selected;
 }
 
 void GenericTile::addTerrain(Terrain *currTerrain)
