@@ -76,6 +76,7 @@ class Map
 public:
 	Map();
 	~Map();
+	void setMapPath(string mapName);
 	void randomMap();
 	void generateTilesArray(list<Building> buildings, list<Terrain> terrains, list<Unit> units);
 
