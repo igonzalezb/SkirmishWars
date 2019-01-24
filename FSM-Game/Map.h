@@ -12,7 +12,7 @@
 
 
 #ifdef DEBUG
-	//#define NOFOG	//Just for Debug
+	#define NOFOG	//Just for Debug
 #endif // DEBUG
 
 
