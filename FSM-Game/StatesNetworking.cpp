@@ -270,7 +270,7 @@ genericState* ST_IPlay::on_Purchase(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "N ST I PLAY::onIpurchase" << endl;
 	genericState *ret = (genericState *) new ST_WaitingPlayAck();
-	Info->nextPkg = new Purchase();
+	Info->nextPkg = new Purchase(Info->gameInterface->getNewUnit()->getType(), Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j);
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PURCHASE
 	return ret;
 }
@@ -288,6 +288,16 @@ genericState* ST_IPlay::on_Attack(genericEvent *ev, usefulInfo * Info)
 genericState* ST_IPlay::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "N ST I PLAY::onIpass" << endl;
+	genericState *ret = (genericState *) new ST_WaitingAPlay();
+	Info->nextPkg = new Pass();
+	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PASS
+	cout << "se envio el paquete de pass" << endl;
+	return ret;
+}
+
+genericState* ST_IPlay::on_NoMoney(genericEvent *ev, usefulInfo * Info)
+{
+	cout << "N ST I PLAY::on no money" << endl;
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
 	Info->nextPkg = new Pass();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PASS
@@ -360,10 +370,12 @@ genericState* ST_WaitingAPlay::on_RAttack(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-genericState* ST_WaitingAPlay::on_RPass(genericEvent *ev, usefulInfo * Info)
+genericState* ST_WaitingAPlay::on_RPass(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
 	cout << "waitingAPlay: on R PASS, Y pasa a I PLAY" << endl;
 	genericState *ret = (genericState *) new ST_IPlay();
+
+
 	return ret;
 }
 

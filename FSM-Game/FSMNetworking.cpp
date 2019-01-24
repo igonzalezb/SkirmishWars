@@ -116,6 +116,10 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_Attack(ev, Info);
 			cout << "DISPATCH DE ATTACK" << endl;
 			break;
+		case NO_MONEY:
+			cout << "n: DISPATCH DE NO MONEY" << endl;
+			newState = currentState->on_NoMoney(ev, Info);
+			break;
 		default:
 			break;
 		}

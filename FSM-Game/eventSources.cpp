@@ -102,6 +102,9 @@ genericEvent * GameEventSource::insertEvent()
 	case BO_ATTACK:
 		ret = (genericEvent *) new EV_BoAttack();
 		break;
+	case NO_MONEY:
+		ret = (genericEvent *) new EV_BoAttack();
+		break;
 	default:
 		break;
 	}
@@ -135,6 +138,7 @@ bool GameEventSource::isThereEvent()
 		gameInterface->myMap->isMapReceivedOk = false;
 		ret = true;
 	}
+	//cout << "plata actual: " << gameInterface->playerMe->getMoney() << endl;
 	if ((gameInterface->playerMe->getMoney())<=0)
 	{
 		evCode = NO_MONEY;
@@ -189,6 +193,7 @@ bool GameEventSource::isThereEvent()
 
 	if (gameInterface->purchasing == true)
 	{
+		cout << "ENTRA A IS THERE EVENT, PORQUE PURCHASING = TRUE" << endl;
 		if (((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getBuilding()) != NULL) &&
 			(((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getBuilding()->getType()).compare("m")) == 0) &&
 			((gameInterface->myMap->getTile(gameInterface->getDefender().i,gameInterface->getDefender().j)->getBuilding()->getTeam()) == (gameInterface->playerMe->getTeam())) &&
@@ -333,25 +338,35 @@ bool NetworkEventSource::isThereEvent()
 		case OP_PURCHASE:
 			evCode = R_PURCHASE;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
+
+			//cout << "aux: " << aux << endl;
 			r_unidad.clear();
 			r_unidad.insert(r_unidad.begin(), aux.begin() + 1, aux.begin() + 3); //para que meta lo que hay en pos 1 y 2 de aux, se pone hasta +3 porque no incluye esa, sino que hasta la anterior.
 			//r_fila_de = aux[1];
 			//r_col_de = aux[2];
-			gameInterface->setDefender((int)aux[1], (int)(aux[2]-0X41));
+			gameInterface->setDefender((int)aux[3], (int)(aux[4]-0X41));
+		
 			//lo pasamos a string y lo guardamos en el tipo de newUnit adentro de networking:
+			r_unidad_string.clear();
 			for (char c : r_unidad) {
 				r_unidad_string.push_back(c);
 			}
-			
+			cout << "UNIT QUE COMPARA EL ITERADOR: " << r_unidad_string.c_str() << endl;
 			for (bool k = true; k && (it4 != gameInterface->data->getUnitList().end()); ++it4) {
 
+				cout << "lista con it4: " << it4->getType() << endl;
 				if (strcmp(it4->getType().c_str(), r_unidad_string.c_str()) == false) {
+					
 					k = false;
 					Unit *currUnit = new Unit(it4);
 					currUnit->setTeam(gameInterface->playerYou->getTeam());
 					gameInterface->setNewUnit(currUnit);
+					cout << "ENTRA AL IFFFFFFFFFF DEL ITERATOR, unidad cargada en New Unit: " << gameInterface->getNewUnit()->getName()<< endl;
 				}
 			}
+
+			cout << "HOLA! coordenada DEFENDER :  (I= " << (int)aux[1] << "; J=" << (int)(aux[2] - 0X41) << " )" << endl;
+			cout << "UNIDAD COMPRADA " << gameInterface->getNewUnit()->getName() << endl;
 			ret = true;
 			break;
 		case OP_ATTACK:

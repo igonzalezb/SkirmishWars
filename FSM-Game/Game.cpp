@@ -226,7 +226,7 @@ void Game::captureProperty(Player* pAttacker, Player* pDefender)
 
 void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado en defender.i y defender.j las coordenadas del lugar al que quieren poner la unidad nueva.
 {
-	myMap->getTile(defender.i,defender.j)->setUnit(newUnit);
+	myMap->getTile(defender.i, defender.j)->setUnit(newUnit);
 	myMap->getTile(defender.i, defender.j)->getUnit()->setTeam(player->getTeam());
 	player->setMoney((player->getMoney())-(stoi(newUnit->getCost())));
 }

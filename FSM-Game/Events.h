@@ -112,6 +112,13 @@ public:
 private:
 };
 
+class EV_NoMoney : public genericEvent
+{
+public:
+	EV_NoMoney() { ev = NO_MONEY; };
+private:
+};
+
 
 
 /*

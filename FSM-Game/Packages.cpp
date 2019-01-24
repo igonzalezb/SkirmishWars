@@ -112,19 +112,42 @@ void Move::setPackage()
 
 }
 
+Purchase::Purchase(string typeOfUnit, int defender_i_, int defender_j_)
+{
+	code = OP_PURCHASE;
+	this->unit = typeOfUnit;
+	this->defender_i = defender_i_;
+	this->defender_j = defender_j_;
+}
+
 void Purchase::setPackage()//ANDA
 {
-	string unidad = "infantry"; //RECIBIR EN MINUSCULA nombre de unidad que compro
-	MYBYTE fila = 0x0C;			//RECIBIR fila donde quiero poner la unidad (entre 0x00 y 0x0C)
-	MYBYTE columna = 0x41;		//RECIBIR columna donde quiero poner la unidad (entre 0x41 y 0x50)
+	//string unidad = "infantry"; //RECIBIR EN MINUSCULA nombre de unidad que compro
+	//MYBYTE fila = 0x0C;			//RECIBIR fila donde quiero poner la unidad (entre 0x00 y 0x0C)
+	//MYBYTE columna = 0x41;		//RECIBIR columna donde quiero poner la unidad (entre 0x41 y 0x50)
+
+	string unidad = unit;
+	MYBYTE fila = (MYBYTE)defender_i;
+	MYBYTE columna = ((MYBYTE)defender_j) + 0x41;
 
 	string unidadLetras1y2 = unidad.substr(0, 2); //agarro las dos primeras letras del nombre de la unidad
 												  //std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_PURCHASE);			//byte 1
 	std::copy(unidadLetras1y2.begin(), unidadLetras1y2.end(), std::back_inserter(package));	//bytes 2 y 3 (2 primeras letras de unidad)
+	//std::copy(unidad.begin(), unidad.end(), std::back_inserter(package));	//bytes 2 y 3 (2 primeras letras de unidad)
 	package.push_back((MYBYTE)fila);				//byte 4
 	package.push_back((MYBYTE)columna);				//byte 5
+
+	//PARA VER QUE SE MANDA:
+	string package_string;
+	for (char c : package) {
+		package_string.push_back(c);
+	}
+	cout << "PACKAGE QUE SE ENVIA: " << package_string << endl;
+	cout << "HOLA222!! COORDENADA ENVIADA DEL DEFENDER (defender_):  (I=  " << defender_i << "; J=" << defender_j << "  )";
+	cout << "HOLA222!! COORDENADA ENVIADA DEL DEFENDER ((MYBYYTE)):  (I=  " << (int)fila << "; J=" << (int)columna << "  )";
+
 }
 
 Attack::Attack(int attacker_i, int attacker_j, int defender_i, int defender_j, int dado) 

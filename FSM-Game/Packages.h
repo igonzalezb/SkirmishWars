@@ -104,8 +104,13 @@ public:
 
 class Purchase :public genericPackage
 {
+
+private:
+	string unit;
+	int defender_i;
+	int defender_j;
 public:
-	Purchase() { code = OP_PURCHASE; }
+	Purchase(string typeOfUnit, int defender_i, int defender_j);
 	void setPackage();
 };
 

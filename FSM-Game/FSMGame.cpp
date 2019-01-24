@@ -50,6 +50,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_NewUnit(ev, Info);
 			break;
 		case NO_MONEY:
+			cout << "DISPATCH DE no money, EN GAME FSM" << endl;
 			newState = currentState->on_NoMoney(ev, Info);
 			break;
 		case R_YOU_START:
