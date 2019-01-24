@@ -21,12 +21,12 @@ Game::Game()
 	playerMe = new Player;
 	playerYou = new Player;
 	myMap = new Map;
-	//graphics = new MapGraphics;
+	graphics = new MapGraphics;
 	notWinning = true;
+	
 	myMap->generateTilesArray(data->getBuildingList(), data->getTerrainList(), data->getUnitList());
 	
-	//graphics->loadBitmaps(myMap);
-
+	
 	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
 	generateDefenseModifiersTable();
 	playing = false;
@@ -91,6 +91,11 @@ void Game::move()
 			myMap->getTile(getDefender().i, getDefender().j)->getUnit()->setCurrMp(to_string(stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getCurrMp()) - stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getMc().plain)));
 		}
 	}
+
+
+	myMap->updateFogOfWar(playerMe->getTeam());
+	graphics->loadBitmaps(myMap);
+	graphics->showMap(data, myMap, playerMe->getMoney());
 
 }
 
@@ -192,6 +197,11 @@ void Game::attack()
 	attacker.j = NULL;
 	defender.i = NULL;
 	defender.j = NULL;
+
+
+	myMap->updateFogOfWar(playerMe->getTeam());
+	graphics->loadBitmaps(myMap);
+	graphics->showMap(data, myMap, playerMe->getMoney());
 }
 
 
@@ -222,6 +232,11 @@ void Game::captureProperty(Player* pAttacker, Player* pDefender)
 	attacker.j = NULL;
 	defender.i = NULL;
 	defender.j = NULL;
+
+
+	myMap->updateFogOfWar(playerMe->getTeam());
+	graphics->loadBitmaps(myMap);
+	graphics->showMap(data, myMap, playerMe->getMoney());
 }
 
 void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado en defender.i y defender.j las coordenadas del lugar al que quieren poner la unidad nueva.
@@ -229,6 +244,10 @@ void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado e
 	myMap->getTile(defender.i, defender.j)->setUnit(newUnit);
 	myMap->getTile(defender.i, defender.j)->getUnit()->setTeam(player->getTeam());
 	player->setMoney((player->getMoney())-(stoi(newUnit->getCost())));
+
+	myMap->updateFogOfWar(playerMe->getTeam());
+	graphics->loadBitmaps(myMap);
+	graphics->showMap(data, myMap, playerMe->getMoney());
 }
 
 bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE

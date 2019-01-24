@@ -12,7 +12,7 @@
 #include "PlayerInfo.h"
 #include "Map.h"
 
-//#include "MapGraphics.h"
+#include "MapGraphics.h"
 
 #include "basicXML.h"
 #include "Resources.h"
@@ -32,7 +32,7 @@ public:
 	Player* playerYou;
 	Map* myMap;
 	Resources* data;
-	//MapGraphics* graphics;
+	MapGraphics* graphics;
 	//coordinates  attacker; //POR AHORA ESTAS DOS LINEAS ESTAN EN MAP.H. VER SI QUEDAN AHI O SI SE SACAN Y SE PONEN ACA O DONDE!
 	//coordinates defender;
 	

@@ -11,9 +11,10 @@
 #include <allegro5\allegro_ttf.h>
 #include <allegro5\allegro_color.h>
 
+#include "Resources.h"
 #include "Map.h"
-#include "genericEvent.h"
-#include "Game.h"
+//#include "genericEvent.h"
+//#include "Game.h"
 
 
 
@@ -22,14 +23,15 @@ class MapGraphics
 public:
 	MapGraphics();
 	~MapGraphics();
-	void showMap(Game* gameInfo);
+	void showMap(Resources* data, Map* myMap, int player_money);
 	void loadBitmaps(Map *map);
 	void setDisplayName(string _name);
 	//void setMap(Map *map);
 	void showDice(int _dice);
 	ALLEGRO_DISPLAY* getDisplay();
 
-	eventCode dispatchClick(int x, int y, Game *gameInfo);
+	ALLEGRO_FONT* getMenuFont();
+	//eventCode dispatchClick(int x, int y, Game *gameInfo);
 
 private:
 	ALLEGRO_DISPLAY *display = NULL;

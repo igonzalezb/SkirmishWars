@@ -29,9 +29,9 @@ void eventGenerator::generateEvent()
 		////if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
 		//else
 		//{
-		I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
-		I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
-		I->userSrc->graphics->showMap(I->userSrc->gameInterface);
+		//I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
+		//I->gameInterface->graphics->loadBitmaps(I->gameInterface->myMap);
+		//I->gameInterface->graphics->showMap(I->userSrc->gameInterface->data, I->userSrc->gameInterface->myMap, I->userSrc->gameInterface->playerMe->getMoney());
 		//}
 	}
 	if (I->gameSrc->isThereEvent())
@@ -46,10 +46,10 @@ void eventGenerator::generateEvent()
 		//if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
 		//else
 		//{
-		I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
-			I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
-			I->userSrc->graphics->showMap(I->userSrc->gameInterface);
-		//}
+		//I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
+			//I->gameInterface->graphics->loadBitmaps(I->gameInterface->myMap);
+			//I->gameInterface->graphics->showMap(I->userSrc->gameInterface->data, I->userSrc->gameInterface->myMap, I->userSrc->gameInterface->playerMe->getMoney());
+			//}
 	}
 	/*
 	if (I->timeoutSrc->isThereEvent())
@@ -69,10 +69,10 @@ void eventGenerator::generateEvent()
 		////if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
 		//else //if (I->gameSrc->evCode != NO_EV)
 		//{
-		I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
-			I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
-			I->userSrc->graphics->showMap(I->userSrc->gameInterface);
-		//}
+		//I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
+			//I->gameInterface->graphics->loadBitmaps(I->gameInterface->myMap);
+			//I->gameInterface->graphics->showMap(I->userSrc->gameInterface->data, I->userSrc->gameInterface->myMap, I->userSrc->gameInterface->playerMe->getMoney());
+			//}
 	//
 	}
 	

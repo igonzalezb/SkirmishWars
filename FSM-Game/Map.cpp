@@ -71,7 +71,7 @@ void Map::randomMap()
 //		break;
 //	}
 
-	mapName = MAP_0;		//VOVLER A CAMBIAR!!!!!
+	mapName = MAP_1;		//VOVLER A CAMBIAR!!!!!
 
 #ifdef DEBUG
 	printf("%s\n", mapName.c_str());
