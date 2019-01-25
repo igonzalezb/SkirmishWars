@@ -49,6 +49,38 @@
         </buildings>
         <units>
                 <item>
+                        <name>Infantry</name>
+                        <code>in</code>
+                        <hp>8</hp>
+                        <cost>1</cost>
+                        <mp>3</mp>
+                        <defense>1</defense>
+                        <symbol>moon</symbol>
+                        <rangemin>1</rangemin> 
+                        <rangemax>1</rangemax>
+                        <plaincost>1</plaincost>
+                        <roadcost>1</roadcost>
+                        <forestcost>1</forestcost>
+                        <rivercost>2</rivercost>
+                        <hillscost>2</hillscost>
+                        <fpnormal>
+                                <moon>5</moon>
+                                <star>5</star>
+                                <square>5</square>
+                                <triangle>5</triangle>
+                                <circle>0</circle>
+                        </fpnormal>
+                        <fpreduced>
+                                <moon>3</moon>
+                                <star>3</star>
+                                <square>3</square>
+                                <triangle>4</triangle>
+                                <circle>0</circle>
+                        </fpreduced>
+
+                        <path>resources/images/units/infantry_%d.png</path>
+                </item>
+                <item>
                         <name>Mechs</name>
                         <code>me</code>
                         <path>resources/images/units/mech_%d.png</path>
@@ -81,73 +113,6 @@
                         
                 </item>
                 <item>
-                        <name>Infantry</name>
-                        <code>in</code>
-                        <hp>8</hp>
-                        <cost>1</cost>
-                        <mp>3</mp>
-                        <defense>1</defense>
-                        <symbol>moon</symbol>
-                        <rangemin>1</rangemin>
-                        <rangemax>1</rangemax>
-                        <plaincost>1</plaincost>
-                        <roadcost>1</roadcost>
-                        <forestcost>1</forestcost>
-                        <rivercost>2</rivercost>
-                        <hillscost>2</hillscost>
-                        <fpnormal>
-                                <moon>5</moon>
-                                <star>5</star>
-                                <square>5</square>
-                                <triangle>5</triangle>
-                                <circle>0</circle>
-                        </fpnormal>
-                        <fpreduced>
-                                <moon>3</moon>
-                                <star>3</star>
-                                <square>3</square>
-                                <triangle>4</triangle>
-                                <circle>0</circle>
-                        </fpreduced>
-                        
-                        <path>resources/images/units/infantry_%d.png</path>
-                </item>
-                <item>
-                        <name>Rocket</name>
-                        <code>ro</code>
-                        <hp>8</hp>
-                        <cost>15</cost>
-                        <mp>5</mp>
-                        <defense>3</defense>
-                        <symbol>square</symbol>
-                        
-                                <rangemin>3</rangemin>
-                                <rangemax>5</rangemax>
-                                <plaincost>2</plaincost>
-                                <roadcost>1</roadcost>
-                                <forestcost>3</forestcost>
-                                <rivercost>0</rivercost>
-                                <hillscost>0</hillscost>
-                        
-                        
-                                <fpnormal>
-                                        <moon>9</moon>
-                                        <star>11</star>
-                                        <square>10</square>
-                                        <triangle>0</triangle>
-                                        <circle>12</circle>
-                                </fpnormal>
-                                <fpreduced>
-                                        <moon>5</moon>
-                                        <star>10</star>
-                                        <square>7</square>
-                                        <triangle>0</triangle>
-                                        <circle>10</circle>
-                                </fpreduced>
-                        
-                        <path>resources/images/units/rocket_%d.png</path>
-                </item>
-                <item>
                         <name>Recon</name>
                         <code>re</code>
                         <hp>8</hp>
@@ -155,33 +120,33 @@
                         <mp>8</mp>
                         <defense>3</defense>
                         <symbol>square</symbol>
-                        
-                                <rangemin>1</rangemin>
-                                <rangemax>1</rangemax>
-                        
-                        
-                                <plaincost>2</plaincost>
-                                <roadcost>1</roadcost>
-                                <forestcost>3</forestcost>
-                                <rivercost>0</rivercost>
-                                <hillscost>0</hillscost>
-                        
-                        
-                                <fpnormal>
-                                        <moon>7</moon>
-                                        <star>7</star>
-                                        <square>7</square>
-                                        <triangle>6</triangle>
-                                        <circle>0</circle>
-                                </fpnormal>
-                                <fpreduced>
-                                        <moon>4</moon>
-                                        <star>6</star>
-                                        <square>5</square>
-                                        <triangle>4</triangle>
-                                        <circle>0</circle>
-                                </fpreduced>
-                        
+
+                        <rangemin>1</rangemin>
+                        <rangemax>1</rangemax>
+
+
+                        <plaincost>2</plaincost>
+                        <roadcost>1</roadcost>
+                        <forestcost>3</forestcost>
+                        <rivercost>0</rivercost>
+                        <hillscost>0</hillscost>
+
+
+                        <fpnormal>
+                                <moon>7</moon>
+                                <star>7</star>
+                                <square>7</square>
+                                <triangle>6</triangle>
+                                <circle>0</circle>
+                        </fpnormal>
+                        <fpreduced>
+                                <moon>4</moon>
+                                <star>6</star>
+                                <square>5</square>
+                                <triangle>4</triangle>
+                                <circle>0</circle>
+                        </fpreduced>
+
                         <path>resources/images/units/recon_%d.png</path>
                 </item>
                 <item>
@@ -214,6 +179,80 @@
                                 <circle>0</circle>
                         </fpreduced>
                         <path>resources/images/units/apc_%d.png</path>
+                </item>
+                <item>
+                        <name>Artillery</name>
+                        <code>ar</code>
+                        <hp>8</hp>
+                        <cost>6</cost>
+                        <mp>5</mp>
+                        <defense>4</defense>
+                        <symbol>star</symbol>
+
+                        <rangemin>2</rangemin>
+                        <rangemax>3</rangemax>
+
+
+                        <plaincost>1</plaincost>
+                        <roadcost>1</roadcost>
+                        <forestcost>2</forestcost>
+                        <rivercost>0</rivercost>
+                        <hillscost>0</hillscost>
+
+
+                        <fpnormal>
+                                <moon>9</moon>
+                                <star>11</star>
+                                <square>9</square>
+                                <triangle>0</triangle>
+                                <circle>12</circle>
+                        </fpnormal>
+                        <fpreduced>
+                                <moon>5</moon>
+                                <star>9</star>
+                                <square>6</square>
+                                <triangle>0</triangle>
+                                <circle>9</circle>
+                        </fpreduced>
+
+                        <path>resources/images/units/artillery_%d.png</path>
+                </item>
+                <item>
+                        <name>Tank</name>
+                        <code>ta</code>
+                        <hp>8</hp>
+                        <cost>7</cost>
+                        <mp>6</mp>
+                        <defense>6</defense>
+                        <symbol>star</symbol>
+
+                        <rangemin>1</rangemin>
+                        <rangemax>1</rangemax>
+
+
+                        <plaincost>1</plaincost>
+                        <roadcost>1</roadcost>
+                        <forestcost>2</forestcost>
+                        <rivercost>0</rivercost>
+                        <hillscost>0</hillscost>
+
+
+                        <fpnormal>
+                                <moon>7</moon>
+                                <star>10</star>
+                                <square>10</square>
+                                <triangle>6</triangle>
+                                <circle>6</circle>
+                        </fpnormal>
+                        <fpreduced>
+                                <moon>4</moon>
+                                <star>8</star>
+                                <square>6</square>
+                                <triangle>4</triangle>
+                                <circle>4</circle>
+                        </fpreduced>
+
+                        <path>resources/images/units/tank_%d.png</path>
                 </item>
                 <item>
                         <name>AntiAir</name>
@@ -253,78 +292,39 @@
                         <path>resources/images/units/antiair_%d.png</path>
                 </item>
                 <item>
-                        <name>Artillery</name>
-                        <code>ar</code>
+                        <name>Rocket</name>
+                        <code>ro</code>
                         <hp>8</hp>
-                        <cost>6</cost>
+                        <cost>15</cost>
                         <mp>5</mp>
-                        <defense>4</defense>
-                        <symbol>star</symbol>
-                        
-                                <rangemin>2</rangemin>
-                                <rangemax>3</rangemax>
-                        
-                        
-                                <plaincost>1</plaincost>
-                                <roadcost>1</roadcost>
-                                <forestcost>2</forestcost>
-                                <rivercost>0</rivercost>
-                                <hillscost>0</hillscost>
-                        
-                        
-                                <fpnormal>
-                                        <moon>9</moon>
-                                        <star>11</star>
-                                        <square>9</square>
-                                        <triangle>0</triangle>
-                                        <circle>12</circle>
-                                </fpnormal>
-                                <fpreduced>
-                                        <moon>5</moon>
-                                        <star>9</star>
-                                        <square>6</square>
-                                        <triangle>0</triangle>
-                                        <circle>9</circle>
-                                </fpreduced>
-                        
-                        <path>resources/images/units/artillery_%d.png</path>
-                </item>
-                <item>
-                        <name>Tank</name>
-                        <code>ta</code>
-                        <hp>8</hp>
-                        <cost>7</cost>
-                        <mp>6</mp>
-                        <defense>6</defense>
-                        <symbol>star</symbol>
-                        
-                                <rangemin>1</rangemin>
-                                <rangemax>1</rangemax>
-                        
-                        
-                                <plaincost>1</plaincost>
-                                <roadcost>1</roadcost>
-                                <forestcost>2</forestcost>
-                                <rivercost>0</rivercost>
-                                <hillscost>0</hillscost>
-                        
-                        
-                                <fpnormal>
-                                        <moon>7</moon>
-                                        <star>10</star>
-                                        <square>10</square>
-                                        <triangle>6</triangle>
-                                        <circle>6</circle>
-                                </fpnormal>
-                                <fpreduced>
-                                        <moon>4</moon>
-                                        <star>8</star>
-                                        <square>6</square>
-                                        <triangle>4</triangle>
-                                        <circle>4</circle>
-                                </fpreduced>
-                        
-                        <path>resources/images/units/tank_%d.png</path>
+                        <defense>3</defense>
+                        <symbol>square</symbol>
+
+                        <rangemin>3</rangemin>
+                        <rangemax>5</rangemax>
+                        <plaincost>2</plaincost>
+                        <roadcost>1</roadcost>
+                        <forestcost>3</forestcost>
+                        <rivercost>0</rivercost>
+                        <hillscost>0</hillscost>
+
+
+                        <fpnormal>
+                                <moon>9</moon>
+                                <star>11</star>
+                                <square>10</square>
+                                <triangle>0</triangle>
+                                <circle>12</circle>
+                        </fpnormal>
+                        <fpreduced>
+                                <moon>5</moon>
+                                <star>10</star>
+                                <square>7</square>
+                                <triangle>0</triangle>
+                                <circle>10</circle>
+                        </fpreduced>
+
+                        <path>resources/images/units/rocket_%d.png</path>
                 </item>
                 <item>
                         <name>MedTank</name>

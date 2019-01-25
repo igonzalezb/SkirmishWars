@@ -5,7 +5,7 @@
 
 GenericTile::GenericTile()
 {
-	fogOfWar = true;
+	fogOfWar = false;		//VOLVER A CAMBIAR!!!!!!!!!!!!!!!!!!!!!!!!
 	_selected = false;
 }
 

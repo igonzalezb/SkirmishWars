@@ -59,7 +59,7 @@ MapGraphics::~MapGraphics()
 
 }
 
-void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, int my_team)
+void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, TeamNumber my_team)
 {
 	al_clear_to_color(al_map_rgb(0.0, 170.0, 0.0));
 
@@ -136,6 +136,7 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, int my_
 					if ((myMap->getTile(i, j)->getUnit()->getTeam() == my_team))
 					{
 						myMap->possibleMoves(myMap->getTile(i, j)->getUnit(), i, j);
+						myMap->possibleAttack(myMap->getTile(i, j)->getUnit(), i, j, my_team);
 						for (int p = 0; p < (FILA); p++)
 						{
 							for (int q = 0; q < (COLUMNA); q++)
@@ -145,7 +146,17 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, int my_
 									al_draw_rectangle(q*T_WIDTH(display), p* T_HEIGHT(display),
 										(q*T_WIDTH(display)) + T_WIDTH(display),
 										(p* T_HEIGHT(display)) + T_HEIGHT(display),
-										al_color_name("green"), 4.0);
+										al_color_name("green"), 3.0);
+								}
+								if (myMap->canAttack[p][q])
+								{
+									
+									al_draw_filled_circle((q*T_WIDTH(display)) + T_WIDTH(display)/2, (p* T_HEIGHT(display)) + T_HEIGHT(display)/2, T_HEIGHT(display) / 3,al_color_name("red"));
+									
+									//al_draw_rectangle(q*T_WIDTH(display), p* T_HEIGHT(display),
+									//	(q*T_WIDTH(display)) + T_WIDTH(display),
+									//	(p* T_HEIGHT(display)) + T_HEIGHT(display),
+									//	al_color_name("red"), 3.0);
 								}
 							}
 						}

@@ -62,8 +62,31 @@ string Building::getName()
 
 void Building::setTeam(TeamNumber team)
 {
-	//type += to_string(team);			//PROBAR!!!!
+	/*if(type.size() > 2)
+		type += to_string(team);	*/		//PROBAR!!!!
 	this->team = team;
+}
+
+void Building::updatePath()
+{
+	int pos;
+	if ((pos = path.find('0')) != string::npos)
+	{
+		path.erase(pos, 1);
+		path.insert(pos, to_string(team));
+	}
+	if ((pos = path.find('1')) != string::npos)
+	{
+		path.erase(pos, 1);
+		path.insert(pos, to_string(team));
+	}
+	if ((pos = path.find('2')) != string::npos)
+	{
+		path.erase(pos, 1);
+		path.insert(pos, to_string(team));
+	}
+
+
 }
 
 TeamNumber Building::getTeam()

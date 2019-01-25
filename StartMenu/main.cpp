@@ -4,7 +4,23 @@
 ALLEGRO_FONT *font;
 
 int main (void)
-{	
+{
+	int myTeam = 2;
+	string path = "resources/images/hq/hq_1.png";
+	cout << "original: " << path << endl;
+	int pos;
+	string temp;
+	if ((pos = path.find('1')) != string::npos)
+	{
+		//temp = path.
+		path.erase(pos, 1);
+		path.insert(pos, to_string(myTeam));
+		//path.erase(pos + 1, pos+1);
+		//path.replace(pos, pos +1, to_string(myTeam));
+	}
+
+	cout << "nueva: " << path << endl;
+	/*
 	if (allegroStartup())
 	{
 		fprintf(stderr, "Failed to Start Allegro Configs!\n");
@@ -12,7 +28,7 @@ int main (void)
 
 	StartMenu mainMenu;
 	mainMenu.openApp();
-
+*/
 /////////////////ALLEGRO NATIVE DIALOGS/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*ALLEGRO_MESSAGEBOX_WARN
@@ -41,7 +57,7 @@ int main (void)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 		
-	al_rest(1.0);
+	//al_rest(1.0);
 
 	return EXIT_SUCCESS;
 }
