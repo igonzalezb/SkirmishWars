@@ -192,7 +192,7 @@ void Attack::setPackage()
 void Pass::setPackage()
 {
 	cout << "envia paquete PASS" << endl;
-	std::vector<char> package;
+	//std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_PASS);			//byte 1: encabezado
 	cout << "OPPPPPCODE PASS:"<<OP_PASS << endl;
@@ -200,35 +200,35 @@ void Pass::setPackage()
 
 void YouWon::setPackage()
 {
-	std::vector<char> package;
+	//std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_YOU_WON);			//byte 1: encabezado
 }
 
 void PlayAgain::setPackage()
 {
-	std::vector<char> package;
+	//std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_PLAY_AGAIN);		//byte 1: encabezado
 }
 
 void GameOver::setPackage()
 {
-	std::vector<char> package;
+	//std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_GAME_OVER);		//byte 1: encabezado
 }
 
 void Error_::setPackage()
 {
-	std::vector<char> package;
+	//std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_ERROR);			//byte 1: encabezado
 }
 
 void Quit::setPackage()
 {
-	std::vector<char> package;
+	//std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_QUIT);			//byte 1: encabezado
 }
