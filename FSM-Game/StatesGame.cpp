@@ -824,10 +824,9 @@ genericState* ST_YouAttacking::on_RPass(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->playerMe->setAmmountOfCities(Info->gameInterface->myMap);
 	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->getAmmountOfCities()) + 1) * 5);// se suma 1 porque el HQ tambien aporta $5 al inicio de cada jugada
-	al_set_display_icon(display, displayIcon);	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
+	for (int i = 0; i < FILA; i++)
 	{
-		for (j = 0; j < COLUMNA; j++)
+		for (int j = 0; j < COLUMNA; j++)
 		{
 			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
