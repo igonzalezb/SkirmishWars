@@ -541,7 +541,7 @@ bool UserEventSource::isThereEvent()
 {
 	//cout << "Entra a is there event de user" << endl;
 	bool ret = false;
-
+	int button;
 #ifdef DEBUG
 	gameInterface->graphics->setDisplayName("SKIRMISH WARS - PLAYER: " + gameInterface->playerMe->getName());	//Esto no va aca
 #endif // DEBUG
@@ -584,8 +584,19 @@ bool UserEventSource::isThereEvent()
 			}
 			break;
 		case ALLEGRO_EVENT_DISPLAY_CLOSE:
-			evCode = END_PLAYING;
-			ret = true;
+			if (button = al_show_native_message_box(
+				gameInterface->graphics->getDisplay(),
+				"QUIT GAME",
+				"Do you want to quit the game?",
+				NULL,
+				NULL,
+				ALLEGRO_MESSAGEBOX_YES_NO
+			))
+			{
+				evCode = END_PLAYING;
+				ret = true;
+			}
+			
 			break;
 		/*case ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
 			al_flip_display();

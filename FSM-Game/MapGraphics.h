@@ -10,7 +10,7 @@
 #include <allegro5\allegro_font.h>
 #include <allegro5\allegro_ttf.h>
 #include <allegro5\allegro_color.h>
-
+#include <allegro5\allegro_native_dialog.h>
 #include "Resources.h"
 #include "Map.h"
 //#include "genericEvent.h"
