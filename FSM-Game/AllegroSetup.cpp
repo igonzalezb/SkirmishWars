@@ -20,7 +20,19 @@ bool allegroStartup(void)
 
 						if (al_init_ttf_addon())
 						{
-							return EXIT_SUCCESS;
+							if (al_init_video_addon())
+							{
+								if (al_install_audio())
+								{
+									return EXIT_SUCCESS;
+								}
+								else
+									fprintf(stderr, "Unable to start audio addon \n");
+								//al_shutdown_video_addon();
+							}
+							else
+								fprintf(stderr, "Unable to start image addon \n");
+							al_shutdown_ttf_addon();
 						}
 						else
 							fprintf(stderr, "ERROR: Failed to initialize ttf addon\n");
@@ -56,10 +68,12 @@ bool allegroStartup(void)
 ////////////////////////////////////////////////////////////////////////////////////
 void allegroShutdown(void)
 {
+	//al_shutdown_video_addon();
 	al_shutdown_font_addon();
 	al_shutdown_image_addon();
 	al_uninstall_mouse();
 	al_uninstall_keyboard();
+	al_uninstall_audio();
 	al_shutdown_primitives_addon();
 	al_uninstall_system();
 }

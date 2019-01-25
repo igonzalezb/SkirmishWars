@@ -12,7 +12,7 @@
 #include "PlayerInfo.h"
 #include "Map.h"
 
-//#include "MapGraphics.h"
+#include "MapGraphics.h"
 
 #include "basicXML.h"
 #include "Resources.h"
@@ -26,19 +26,19 @@ typedef char MYBYTE;
 class Game
 {
 public:
-	Game();
+	Game(ALLEGRO_DISPLAY* display);
 	~Game(); //Ver cuando llamarlo
 	Player* playerMe;
 	Player* playerYou;
 	Map* myMap;
 	Resources* data;
-	//MapGraphics* graphics;
+	MapGraphics* graphics;
 	//coordinates  attacker; //POR AHORA ESTAS DOS LINEAS ESTAN EN MAP.H. VER SI QUEDAN AHI O SI SE SACAN Y SE PONEN ACA O DONDE!
 	//coordinates defender;
 	
 	void move();
 	void attack();
-	void captureProperty(Player* pAttacker, Player* pDefender);
+	void captureProperty(Player* pAttacker);
 	void setAttacker(coordenadas newAttacker);
 	void setAttacker(int i,int j);
 	void setDefender(coordenadas newDefender);
@@ -61,8 +61,8 @@ public:
 	Unit* getNewUnit();
 	int getDie();
 	void setDie(int Dado_);
-	void setPlaying(bool now);
-	bool getPlaying();
+	void setIamPlaying(bool now);
+	bool getIamPlaying();
 	bool moving;
 	bool attacking;
 	bool purchasing;
@@ -70,6 +70,7 @@ public:
 	void chooseWhoStarts();
 	bool playerChosen;
 	bool Istart;
+	
 private:
 	coordenadas attacker;
 	coordenadas defender;
@@ -81,7 +82,7 @@ private:
 	csvFile *defenseModifiers;
 	modifiers tableMatrix[14][5];
 	Unit *newUnit;
-	bool playing;
+	bool iAmPlaying;
 
 };
 //#endif // !GAME_H

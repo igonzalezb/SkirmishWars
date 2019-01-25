@@ -199,19 +199,24 @@ void StartMenu::dispachOption()		//HAY QUE SACAR LOS TEXT Y PONER QUE HAGA LAS A
 	case SETTINGS:
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_text(menuFont, al_map_rgb(100, 100, 100), 0.0, 0.0, 0.0, "Settings...");
+		redraw = true;
 		break;
 	case CREDITS:
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_text(menuFont, al_map_rgb(100, 100, 100), 0.0, 0.0, 0.0, "Credits...");
+		redraw = true;
 		break;
 	case QUIT_GAME:
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_text(menuFont, al_map_rgb(100, 100, 100), 0.0, 0.0, 0.0, "Quitting Game...");
+		do_exit = true;
+		redraw = false;
 		break;
 	}
 
 	al_flip_display();
 	al_rest(0.5);
+	
 }
 
 StartMenu::~StartMenu()
@@ -303,4 +308,14 @@ void StartMenu::printIpNameMenu()
 	al_draw_text(menuFont, al_color_name("white"), 10.0, al_get_font_line_height(menuFont) * 4, 0.0, userName.c_str());
 	al_flip_display();
 	redraw = false;
+}
+
+string StartMenu::getUserIP()
+{
+	return userIp;
+}
+
+string StartMenu::getUserName()
+{
+	return userName;
 }

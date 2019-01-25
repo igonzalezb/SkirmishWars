@@ -11,9 +11,9 @@ using namespace std;
 
 #define DISPLAY_WIDTH		1000
 #define DISPLAY_HEIGHT		600
-#define VIDEO_PATH		"Advance Wars.ogv"
-#define MENU_IMAGE_PATH		"banner.png"
-#define FONT_MENU		"BAUHS93.TTF"
+#define VIDEO_PATH		"resources/videos/Advance Wars.ogv"
+#define MENU_IMAGE_PATH		"resources/images/banner.png"
+#define FONT_MENU		"resources/fonts/BAUHS93.TTF"
 
 #define MAX_OPTIONS		4
 #define OPTION_1		"Start New Game"
@@ -54,6 +54,8 @@ public:
 
 	void dispacherIpNameMenu(ALLEGRO_EVENT ev);
 	void printIpNameMenu();
+	string getUserIP();
+	string getUserName();
 
 private:
 	ALLEGRO_DISPLAY *display;

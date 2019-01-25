@@ -11,9 +11,9 @@
 #include "genericEvent.h" //para poder usar el ENUM de los nombres de los tiles
 
 
-#ifdef DEBUG
-	//#define NOFOG	//Just for Debug
-#endif // DEBUG
+
+#define NOFOG	//Just for Debug
+
 
 
 
@@ -36,11 +36,17 @@
 #define MAX_MAPS	6
 #define CANNOT_MOVE	100
 
-#define M_HEIGHT	al_get_display_height(display)
-#define M_WIDTH		(al_get_display_width(display)*3.0/4.0)
+//#define M_HEIGHT	al_get_display_height(display)
+#define M_HEIGHT(x)	al_get_display_height(x)
+//#define M_WIDTH		(al_get_display_width(display)*3.0/4.0)
+#define M_WIDTH(x)	(al_get_display_width(x)*3.0/4.0)
+
 #define R_WIDTH		al_get_display_width(display)/4.0
-#define T_HEIGHT	M_HEIGHT/FILA
-#define T_WIDTH		M_WIDTH/COLUMNA
+//#define T_HEIGHT	M_HEIGHT/FILA
+#define T_HEIGHT(x)	M_HEIGHT(x)/FILA
+//#define T_WIDTH		M_WIDTH/COLUMNA
+#define T_WIDTH(x)	M_WIDTH(x)/COLUMNA
+
 #define FOG_IMAGE	"resources/images/fog.png"
 #define FONT_MENU	"resources/fonts/BAUHS93.otf"
 #define DICE_FACE_PATH	"resources/images/dice/%d.png"

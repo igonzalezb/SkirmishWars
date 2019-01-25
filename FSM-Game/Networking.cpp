@@ -128,7 +128,7 @@ void Networking::sendPackage(genericPackage *Pkg)
 	//cout << "entra 8: funcion send Package" << endl;
 #endif // DEBUG
 	Pkg->setPackage();
-
+	cout << "OP CODE ENVIADO: " << (int)(Pkg->code) << endl;
 	size_t len;
 	boost::system::error_code error;
 
@@ -182,7 +182,7 @@ bool Networking::receivePackage()
 		if (IamClient)
 		{
 			len = mySocket->read_some(boost::asio::buffer(buf), error);
-		//	cout << "BUF:" << buf<< endl;
+			//cout << "BUF:" << buf<< endl;
 #ifdef DEBUG
 			//cout << "entra adentro de receive package, a un do while CLIENT" << endl;
 #endif // DEBUG

@@ -53,7 +53,7 @@
                         <code>me</code>
                         <path>resources/images/units/mech_%d.png</path>
                         <hp>8</hp>
-                        <cost>3</cost>
+                        <cost>3</cost>  
                         <mp>2</mp>
                         <defense>2</defense>
                         <symbol>moon</symbol>

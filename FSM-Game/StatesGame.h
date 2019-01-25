@@ -105,7 +105,8 @@ class ST_WaitingLocation :public genericState
 class ST_WaitingPurchaseConfirmation :public genericState
 {
 	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
+	genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 

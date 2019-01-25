@@ -102,6 +102,9 @@ genericEvent * GameEventSource::insertEvent()
 	case BO_ATTACK:
 		ret = (genericEvent *) new EV_BoAttack();
 		break;
+	case NO_MONEY:
+		ret = (genericEvent *) new EV_BoAttack();
+		break;
 	default:
 		break;
 	}
@@ -135,6 +138,7 @@ bool GameEventSource::isThereEvent()
 		gameInterface->myMap->isMapReceivedOk = false;
 		ret = true;
 	}
+	//cout << "plata actual: " << gameInterface->playerMe->getMoney() << endl;
 	if ((gameInterface->playerMe->getMoney())<=0)
 	{
 		evCode = NO_MONEY;
@@ -189,6 +193,7 @@ bool GameEventSource::isThereEvent()
 
 	if (gameInterface->purchasing == true)
 	{
+		cout << "ENTRA A IS THERE EVENT, PORQUE PURCHASING = TRUE" << endl;
 		if (((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getBuilding()) != NULL) &&
 			(((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getBuilding()->getType()).compare("m")) == 0) &&
 			((gameInterface->myMap->getTile(gameInterface->getDefender().i,gameInterface->getDefender().j)->getBuilding()->getTeam()) == (gameInterface->playerMe->getTeam())) &&
@@ -241,6 +246,11 @@ bool NetworkEventSource::isThereEvent()
 			gameInterface->Istart = false;//ESTO ACA NO VA
 			gameInterface->playerMe->setTeam(EQUIPO2); //cliente es equipo 2
 			gameInterface->playerYou->setTeam(EQUIPO1); //server es equipo 1
+
+			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
+			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
+			//gameInterface->graphics->loadBitmaps(gameInterface->myMap);
+			//gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney());
 			
 
 		}
@@ -249,7 +259,12 @@ bool NetworkEventSource::isThereEvent()
 			evCode = CONNECTED_AS_SERVER;
 			gameInterface->Istart = true;//ESTO ACA NO VA
 			gameInterface->playerMe->setTeam(EQUIPO1); //server equipo 1
-			gameInterface->playerYou->setTeam(EQUIPO2); //client equipo 2 
+			gameInterface->playerYou->setTeam(EQUIPO2); //client equipo 2
+
+			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
+			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
+			//gameInterface->graphics->loadBitmaps(gameInterface->myMap);
+			//gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney());
 		}
 		ret = true;
 	}
@@ -259,8 +274,14 @@ bool NetworkEventSource::isThereEvent()
 #ifdef DEBUG
 	//	cout << "entra 2 (aca no deberia entrar)" << endl;
 #endif // DEBUG
+		if (networkInterface->getInputPackage()[0] == OP_PASS) {
+			cout << "OP_PASS==INPUT PACKKKKKKKK" << endl;
+		}
+		cout << "OP CODE RECIBIDO: " << (int)(MYBYTE)(networkInterface->getInputPackage()[0]) << endl;
+
 		switch (networkInterface->getInputPackage()[0])	//segun el tipo de paquete devuelvo el tipo de evento
 		{
+			
 		case OP_ACK: //sin campo de datos
 			evCode = R_ACK;
 			ret = true;
@@ -283,6 +304,7 @@ bool NetworkEventSource::isThereEvent()
 				r_name_string.push_back(c);
 			}
 			gameInterface->playerYou->setName(r_name_string);
+			cout << "opponent's name: " << gameInterface->playerYou->getName() << endl;
 			ret = true;
 			break;
 		case OP_MAP_IS:
@@ -293,13 +315,19 @@ bool NetworkEventSource::isThereEvent()
 			aux.erase(aux.begin());
 			aux.erase(aux.begin());
 			r_map.clear();
-			r_map.insert(r_map.begin(), aux.begin(), aux.end());
-			
+			//r_map.insert(r_map.begin(), aux.begin(), aux.end());
+			r_map.insert(r_map.begin(), aux.begin(), aux.end()-1);
 			//lo pasamos a string y lo guardamos en el nombre del player:
-			for (char c : r_name) {
+			r_map_string.clear();
+			for (char c : r_map) {
 				r_map_string.push_back(c);
 			}
 			gameInterface->myMap->setMapName(r_map_string);
+			gameInterface->myMap->generateTilesArray(gameInterface->data->getBuildingList(), gameInterface->data->getTerrainList(), gameInterface->data->getUnitList());
+			gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
+			gameInterface->graphics->loadBitmaps(gameInterface->myMap);
+			gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney(), gameInterface->playerMe->getTeam());
+			
 			ret = true;
 			break;
 		case OP_YOU_START: //sin campo de datos
@@ -327,25 +355,35 @@ bool NetworkEventSource::isThereEvent()
 		case OP_PURCHASE:
 			evCode = R_PURCHASE;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
+
+			//cout << "aux: " << aux << endl;
 			r_unidad.clear();
 			r_unidad.insert(r_unidad.begin(), aux.begin() + 1, aux.begin() + 3); //para que meta lo que hay en pos 1 y 2 de aux, se pone hasta +3 porque no incluye esa, sino que hasta la anterior.
 			//r_fila_de = aux[1];
 			//r_col_de = aux[2];
-			gameInterface->setDefender((int)aux[1], (int)(aux[2]-0X41));
+			gameInterface->setDefender((int)aux[3], (int)(aux[4]-0X41));
+		
 			//lo pasamos a string y lo guardamos en el tipo de newUnit adentro de networking:
+			r_unidad_string.clear();
 			for (char c : r_unidad) {
 				r_unidad_string.push_back(c);
 			}
-			
+			cout << "UNIT QUE COMPARA EL ITERADOR: " << r_unidad_string.c_str() << endl;
 			for (bool k = true; k && (it4 != gameInterface->data->getUnitList().end()); ++it4) {
 
+				cout << "lista con it4: " << it4->getType() << endl;
 				if (strcmp(it4->getType().c_str(), r_unidad_string.c_str()) == false) {
+					
 					k = false;
 					Unit *currUnit = new Unit(it4);
 					currUnit->setTeam(gameInterface->playerYou->getTeam());
 					gameInterface->setNewUnit(currUnit);
+					cout << "ENTRA AL IFFFFFFFFFF DEL ITERATOR, unidad cargada en New Unit: " << gameInterface->getNewUnit()->getName()<< endl;
 				}
 			}
+
+			cout << "HOLA! coordenada DEFENDER :  (I= " << (int)aux[1] << "; J=" << (int)(aux[2] - 0X41) << " )" << endl;
+			cout << "UNIDAD COMPRADA " << gameInterface->getNewUnit()->getName() << endl;
 			ret = true;
 			break;
 		case OP_ATTACK:
@@ -485,7 +523,7 @@ genericEvent * NetworkEventSource::insertEvent()
 //UserEventSource::UserEventSource()
 UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface):gameInterface(_gameInterface)
 {
-	graphics = new MapGraphics;
+	//graphics = new MapGraphics;
 	event_queue = al_create_event_queue();
 	if (!event_queue) {
 		fprintf(stderr, "failed to create event_quieue!\n");
@@ -503,12 +541,12 @@ bool UserEventSource::isThereEvent()
 {
 	//cout << "Entra a is there event de user" << endl;
 	bool ret = false;
-
+	int button;
 #ifdef DEBUG
-	al_set_window_title(graphics->getDisplay(), ("SKIRMISH WARS - PLAYER: " + to_string(gameInterface->playerMe->getTeam())).c_str());
+	gameInterface->graphics->setDisplayName("SKIRMISH WARS - PLAYER: " + gameInterface->playerMe->getName());	//Esto no va aca
 #endif // DEBUG
 
-	al_register_event_source(event_queue, al_get_display_event_source(graphics->getDisplay()));
+	al_register_event_source(event_queue, al_get_display_event_source(gameInterface->graphics->getDisplay()));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_mouse_event_source());
 
@@ -531,8 +569,12 @@ bool UserEventSource::isThereEvent()
 		case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
 			if (ev.mouse.button == 1)		//Para usar solo el click izquierdo
 			{
-				evCode = graphics->dispatchClick(ev.mouse.x, ev.mouse.y, gameInterface);
-				ret = true;
+				if (gameInterface->getIamPlaying())	//si no es mi turno no entro
+				{
+					evCode = dispatchClick(ev.mouse.x, ev.mouse.y);
+					ret = true;
+				}
+				
 			}
 			break;
 		case ALLEGRO_EVENT_KEY_UP:
@@ -542,12 +584,23 @@ bool UserEventSource::isThereEvent()
 			}
 			break;
 		case ALLEGRO_EVENT_DISPLAY_CLOSE:
-			evCode = END_PLAYING;
-			ret = true;
+			if (button = al_show_native_message_box(
+				gameInterface->graphics->getDisplay(),
+				"QUIT GAME",
+				"Do you want to quit the game?",
+				NULL,
+				NULL,
+				ALLEGRO_MESSAGEBOX_YES_NO
+			))
+			{
+				evCode = END_PLAYING;
+				ret = true;
+			}
+			
 			break;
-		case ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
+		/*case ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
 			al_flip_display();
-			break;
+			break;*/
 		default:
 			ret = false;
 			break;
@@ -563,12 +616,88 @@ bool UserEventSource::isThereEvent()
 	return ret;
 
 }
-//
-//eventCode UserEventSource::dispachClick(int x, int y)
-//{
-//	
-//}
 
+eventCode UserEventSource::dispatchClick(int x, int y)
+{
+	if (((0.0 < x) && (x < M_WIDTH(gameInterface->graphics->getDisplay()))) && ((0.0 < y) && (y < M_HEIGHT(gameInterface->graphics->getDisplay()))))
+	{
+		//Se cliqueo dentro del mapa
+		for (int i = 0; i < (FILA); i++) {
+			for (int j = 0; j < (COLUMNA); j++) {
+
+				gameInterface->myMap->getTile(i, j)->toogleIsSelected(false);
+				if (((((T_WIDTH(gameInterface->graphics->getDisplay()) * j) < x) && (x < ((T_WIDTH(gameInterface->graphics->getDisplay()) * j) + T_WIDTH(gameInterface->graphics->getDisplay()))))) &&
+					((((T_HEIGHT(gameInterface->graphics->getDisplay()) * i) < y) && (y < ((T_HEIGHT(gameInterface->graphics->getDisplay()) * i) + T_HEIGHT(gameInterface->graphics->getDisplay()))))))
+				{
+					//Se cliqueo en la posicion ij (i:fila(16). j:col(12))
+#ifdef DEBUG
+					cout << "SE APRETO la fila:" << i << " , columna " << j << endl;
+#endif // DEBUG
+					gameInterface->setTileSelected(i, j);
+					gameInterface->myMap->getTile(i, j)->toogleIsSelected(true);
+					gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney(), gameInterface->playerMe->getTeam());
+					return TILE;
+				}
+			}
+		}
+	}
+
+	else if ((((M_WIDTH(gameInterface->graphics->getDisplay()) < x) && (x < al_get_display_width(gameInterface->graphics->getDisplay())))) &&
+		((al_get_font_line_height(gameInterface->graphics->getMenuFont()) < y) && (y < (al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0)))))
+	{
+		//Se apreto ATTACK
+#ifdef DEBUG
+		cout << "Se apreto Attack" << endl;
+#endif // DEBUG
+		return BO_ATTACK;
+	}
+	else if (((M_WIDTH(gameInterface->graphics->getDisplay()) < x) && (x < al_get_display_width(gameInterface->graphics->getDisplay()))) &&
+		(((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0)) < y) && (y < ((al_get_font_line_height((gameInterface->graphics->getMenuFont())) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0) * 2)))))
+	{
+		//Se apreto PASS
+#ifdef DEBUG
+		cout << "Se apreto Pass" << endl;
+#endif // DEBUG
+		return PASS;
+	}
+
+	else if (((M_WIDTH(gameInterface->graphics->getDisplay()) < x) && (x < al_get_display_width(gameInterface->graphics->getDisplay()))) &&
+		(((((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0) * 2))) < y) && (y < (((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0) * 3))))))
+	{
+		//Se apreto PURCHASE
+#ifdef DEBUG
+		cout << "Se apreto Purchase\n" << endl;
+#endif // DEBUG
+		return BO_PURCHASE;
+	}
+
+	list<Unit>::iterator it3 = gameInterface->data->getUnitList().begin();
+	for (int i = 0; i < 9; i++)
+	{
+		if (((M_WIDTH(gameInterface->graphics->getDisplay()) + 20 < x) && (x < al_get_display_width(gameInterface->graphics->getDisplay())))
+			&& (((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0) * 3) + (al_get_font_line_height(gameInterface->graphics->getMenuFont()) * i)
+				< y) && (y <
+				(al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0) * 3) + (al_get_font_line_height(gameInterface->graphics->getMenuFont()) * i) + al_get_font_line_height(gameInterface->graphics->getMenuFont()))))
+		{
+			// Se apreto para comprar la unidad de numero i de la lista
+			advance(it3, i);
+			Unit *currUnit = new Unit(it3);
+			currUnit->setTeam(gameInterface->playerMe->getTeam());
+			gameInterface->setNewUnit(currUnit);
+#ifdef DEBUG
+			cout << "Se apreto comprar: " << it3->getName() << endl;
+#endif // DEBUG
+			return NEW_UNIT;
+		}
+
+	}
+
+#ifdef DEBUG
+	cout << "No se apreto nada relevante" << endl;
+#endif // DEBUG
+
+	return NO_EV;		//VER!!!!!
+}
 
 genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 {

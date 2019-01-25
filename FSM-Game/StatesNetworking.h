@@ -114,6 +114,7 @@ public:
 	genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
+	genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Iquit(genericEvent* ev, usefulInfo * Info);
 private:

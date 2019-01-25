@@ -20,6 +20,7 @@
 
 #include "basicXML.h"
 #include "AllegroSetup.h"
+#include "StartMenu.h"
 
 #define XML_PATH	"resources.xml"
 
@@ -27,21 +28,28 @@ using namespace std;
 
 int main()
 {
-
+	
+	if (allegroStartup())
+	{
+		al_show_native_message_box(NULL, "ERROR", "Failed to Install Allegro", "", NULL, ALLEGRO_MESSAGEBOX_ERROR);
+		exit(EXIT_FAILURE);
+	}
 	srand(time(NULL));
-
-	allegroStartup();
-
+	
 	/////////////////////////////////////////
-	std::cout << "Por favor ingrese la direccion IP del servidor a traves de la linea de comando.\n Ejemplo: 'Client.exe 192.168.0.50'" << std::endl;
-	std::cout << "Presione una tecla para salir." << std::endl;
+	//std::cout << "Por favor ingrese la direccion IP del servidor a traves de la linea de comando.\n Ejemplo: 'Client.exe 192.168.0.50'" << std::endl;
+	//std::cout << "Presione una tecla para salir." << std::endl;
 	//getchar();
+	StartMenu* mainMenu = new StartMenu;
+	mainMenu->openApp();
 
-	std::string opponentsIP = "localhost"; //CAMBIAR y ver donde recibirlo y como
-	//std::string opponentsIP = "25.4.70.130"; //CAMBIAR y ver donde recibirlo y como
+	std::string opponentsIP = "localhost";//mainMenu->getUserIP();  //"localhost"; //CAMBIAR y ver donde recibirlo y como
+	Game skirmish(mainMenu->getDisplay()); //Creo una instancia del juego
+	skirmish.playerMe->setName(mainMenu->getUserName());
+	
 	Networking communicator(opponentsIP);
 	userInput user;
-	Game skirmish; //Creo una instancia del juego
+	
 	GameEventSource gameSource(&skirmish);
 	UserEventSource userSource(&user,&skirmish);
 	NetworkEventSource networkSource(&communicator,&skirmish);
@@ -54,6 +62,7 @@ int main()
 	eventGenerator evGen(&Info);
 	FSMGame gameFSM;
 	FSMNetworking networkingFSM;
+	
 	
 
 	//Terminal.putClear("Listening on port 69...");

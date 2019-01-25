@@ -55,7 +55,7 @@ genericState* ST_S_WaitingName::on_Rname(genericEvent *ev, usefulInfo * Info)
 	cout << "ST S 3" << endl;
 #endif // DEBUG
 	genericState *ret = (genericState *) new ST_S_WaitingNameIsAck();
-	Info->nextPkg = new NameIs();
+	Info->nextPkg = new NameIs(Info->gameInterface->playerMe->getName());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete NAME IS
 	return ret;
 }
@@ -68,7 +68,15 @@ genericState* ST_S_WaitingNameIsAck::on_Rack(genericEvent *ev, usefulInfo * Info
 	cout << "ST S 4" << endl;
 #endif // DEBUG
 	genericState *ret = (genericState *) new ST_S_WaitingMapIsAck();
-	Info->nextPkg = new MapIs();
+
+	Info->gameInterface->myMap->randomMap();
+	Info->gameInterface->myMap->generateTilesArray(Info->gameInterface->data->getBuildingList(), Info->gameInterface->data->getTerrainList(), Info->gameInterface->data->getUnitList());	
+	Info->gameInterface->myMap->updateFogOfWar(Info->gameInterface->playerMe->getTeam());
+	Info->gameInterface->graphics->loadBitmaps(Info->gameInterface->myMap);
+	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam());
+	
+	
+	Info->nextPkg = new MapIs(Info->gameInterface->myMap->getMapName());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete MAP IS
 	cout << "TERMINO DE MANDAR EL MAPA" << endl;
 	return ret;
@@ -96,6 +104,7 @@ genericState* ST_S_WaitingWhoStarts::on_IStart(genericEvent *ev, usefulInfo * In
 	cout << "ST S PLAYING" << endl;
 #endif // DEBUG
 	genericState *ret = (genericState *) new ST_S_WaitingIPlayAck();
+	Info->gameInterface->setIamPlaying(true);
 	Info->nextPkg = new IStart();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete I START
 	return ret;
@@ -107,6 +116,7 @@ genericState* ST_S_WaitingWhoStarts::on_YouStart(genericEvent *ev, usefulInfo * 
 	cout << "ST S YOU PLAYING" << endl;
 #endif // DEBUG
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
+	Info->gameInterface->setIamPlaying(false);
 	Info->nextPkg = new YouStart();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete YOU START
 	return ret;
@@ -133,7 +143,7 @@ genericState* ST_C_WaitingName::on_Rname(genericEvent *ev, usefulInfo * Info)
 	cout << "ST C 2" << endl;
 #endif // DEBUG
 	genericState *ret = (genericState *) new ST_C_WaitingNameIsAck();
-	Info->nextPkg = new NameIs();
+	Info->nextPkg = new NameIs(Info->gameInterface->playerMe->getName());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete MAP IS
 	return ret;
 }
@@ -202,6 +212,7 @@ genericState* ST_C_WaitingWhoStarts::on_RyouStart(genericEvent *ev, usefulInfo *
 	cout << "ST C 6: C_WaitingWhoStarts::on_RyouStart" << endl;
 #endif // DEBUG
 	genericState *ret = (genericState *) new ST_IPlay();
+	Info->gameInterface->setIamPlaying(true);
 	//Info->nextPkg = new Ack();
 	//Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ACK
 	return ret;
@@ -213,6 +224,7 @@ genericState* ST_C_WaitingWhoStarts::on_RIStart(genericEvent *ev, usefulInfo * I
 	cout << "ST c  R I START" << endl;
 #endif // DEBUG
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
+	Info->gameInterface->setIamPlaying(false);
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ACK
 	return ret;
@@ -270,7 +282,7 @@ genericState* ST_IPlay::on_Purchase(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "N ST I PLAY::onIpurchase" << endl;
 	genericState *ret = (genericState *) new ST_WaitingPlayAck();
-	Info->nextPkg = new Purchase();
+	Info->nextPkg = new Purchase(Info->gameInterface->getNewUnit()->getType(), Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j);
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PURCHASE
 	return ret;
 }
@@ -289,6 +301,18 @@ genericState* ST_IPlay::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "N ST I PLAY::onIpass" << endl;
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
+	Info->gameInterface->setIamPlaying(false);
+	Info->nextPkg = new Pass();
+	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PASS
+	cout << "se envio el paquete de pass" << endl;
+	return ret;
+}
+
+genericState* ST_IPlay::on_NoMoney(genericEvent *ev, usefulInfo * Info)
+{
+	cout << "N ST I PLAY::on no money" << endl;
+	genericState *ret = (genericState *) new ST_WaitingAPlay();
+	Info->gameInterface->setIamPlaying(false);
 	Info->nextPkg = new Pass();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PASS
 	cout << "se envio el paquete de pass" << endl;
@@ -360,10 +384,11 @@ genericState* ST_WaitingAPlay::on_RAttack(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-genericState* ST_WaitingAPlay::on_RPass(genericEvent *ev, usefulInfo * Info)
+genericState* ST_WaitingAPlay::on_RPass(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
-	cout << "waitingAPlay: on R" << endl;
+	cout << "waitingAPlay: on R PASS, Y pasa a I PLAY" << endl;
 	genericState *ret = (genericState *) new ST_IPlay();
+	Info->gameInterface->setIamPlaying(true);
 	return ret;
 }
 
