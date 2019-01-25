@@ -42,17 +42,18 @@ bool Player::doIStart()
 void Player::setAmmountOfCities(Map* myMap)
 {
 	cities = 0;
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
+	for (int i = 0; i < FILA; i++)
 	{
-		for (j = 0; j < COLUMNA; j++)
+		for (int j = 0; j < COLUMNA; j++)
 		{
 			/*if ()
 			cout << "Building Type: " << myMap->getTile(i, j)->getBuilding()->getType() << endl;
 			cout << "Unit team: " << myMap->getTile(i, j)->getUnit()->getTeam() << endl;*/
 			if (((myMap->getTile(i, j)->getBuilding()) != NULL) && (myMap->getTile(i, j)->getUnit() != NULL) &&					//Chequeo si hay building
-				((myMap->getTile(i, j)->getBuilding()->getType()).compare("c")==0) &&	//Chequeo si es una city
-				((myMap->getTile(i, j)->getUnit()->getTeam()) == (team)))			//Chequeo si es del player que busco
+				(((myMap->getTile(i, j)->getBuilding()->getType()).compare("c1")==0) || 
+				((myMap->getTile(i, j)->getBuilding()->getType()).compare("c2") == 0)) &&	//Chequeo si es una city
+				((myMap->getTile(i, j)->getUnit()->getTeam()) == (team))&&
+				(myMap->getTile(i, j)->getBuilding()->getTeam()==(team)))			//Chequeo si es del player que busco
 			{
 				cities++;
 			}

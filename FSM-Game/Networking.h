@@ -15,8 +15,8 @@
 //#include <Windows.h> //ver si sacar
 #include "Packages.h"
 
-#define CONNECTION_PORT_C "69"	//puerto TFTP
-#define CONNECTION_PORT_S 69	//puerto TFTP
+#define CONNECTION_PORT_C "13225"	//puerto TFTP
+#define CONNECTION_PORT_S 13225	//puerto TFTP
 //#define CONNECTION_PORT "13225"	//puerto TFTP
 //#define CONNECTION_PORT 13225	//puerto TFTP
 #define PACKAGE_MAX_SIZE 516	

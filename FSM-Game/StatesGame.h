@@ -17,6 +17,7 @@ public:
 };*/
 
 
+ 
 class ST_GameIdle :public genericState //FUNCIONAN
 {
 	genericState* on_IStart(genericEvent* ev, usefulInfo * Info);

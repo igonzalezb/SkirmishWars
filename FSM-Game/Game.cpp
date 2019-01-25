@@ -207,7 +207,8 @@ void Game::attack()
 //antes de llamar a esta funcion debo setear el attacker con la unidad que este encima de un building que no es propio 
 void Game::captureProperty(Player* pAttacker)
 {
-
+	cout << "ENTROOOOOOOO CAPTURE PROPERTY!!!!!" << endl;
+	cout <<"Cp original=" <<myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp() << endl;
 	
 		if ((myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp()) < 5)//Si la unidad que conquista esta reducida
 		{
@@ -217,6 +218,7 @@ void Game::captureProperty(Player* pAttacker)
 		{
 			myMap->getTile(attacker.i, attacker.j)->getBuilding()->setCp((myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp()) - 2);
 		}
+	cout << "Cp luego de la captura=" << myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp() << endl;
 	
 	//HACER: Girar carta de la property o mostrar en algun  lado un contador con el valor nuevo del CP de la property atacada
 

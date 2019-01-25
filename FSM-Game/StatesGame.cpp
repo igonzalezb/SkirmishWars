@@ -6,6 +6,8 @@
 #include <fstream>
 #include <sstream>
 
+void setCaptureProperty(Player* player, Game* gameInterface);
+
 /////////////////////////////// ST_GameIdle ///////////////////////////////
 
 genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
@@ -88,50 +90,9 @@ genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info) //ESTO PON
 {
 	cout << "G MOVING: ON PASS" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
-	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities())+1)*5);
+	Info->gameInterface->setIamPlaying(false);
 
-	for (int i = 0; i < FILA; i++)
-	{
-		for (int j = 0; j < COLUMNA; j++)
-		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getTeam())==Info->gameInterface->playerYou->getTeam())&&
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
-				{
-					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-				}
-			}
-
-
-
-			//CAPPPPPPPPPPPPPPPPPPPPPPPPTURAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA DE PROOOOOOOOOOOOOPIEDAD
-			// antes de llamar a esta funcion debo setear el attacker con la unidad que este encima de un building que no es propio
-			//if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-			//	(((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getType().compare("infantry")) == 0) || 
-			//	((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getType().compare("mech")) == 0)) &&
-			//	((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())) &&
-			//	(Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getTeam() != (Info->gameInterface->playerMe->getTeam())))
-			//{
-			//		Info->gameInterface->setAttacker(i, j);
-			//		Info->gameInterface->captureProperty(Info->gameInterface->playerMe);
-			//		if ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getCp()) <= 0)
-			//		{
-			//			cout << "SE CAPTURO POR COMPLETO!!!!(I=" << i << "; J=" << j << ")" << endl;
-			//			cout << "CP DEL BUILDING=" << Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getCp() << endl;
-			//			//en el tile donde estaba antes el building del oponente, poner el mismo building pero de mi equipo.
-			//			Info->gameInterface->myMap->getTile(i, j)->getBuilding()->setTeam(Info->gameInterface->playerMe->getTeam());
-			//		}
-			//		cout << "CAPTURE PERO NO DEL TODO EN (I=" << i << ";J=" << j << ")" << endl;
-			//		cout << "CP DEL BUILDING=" << Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getCp() << endl;
-			//}
-
-		}
-	}
-	//ACA HAY QUE AGREGAR LA CAPTURA DE PROPIEDADES
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
 	return ret;
 }
 
@@ -222,8 +183,8 @@ genericState* ST_WaitingDestination::on_Pass(genericEvent* ev, usefulInfo * Info
 {
 	cout << "G WaitingDestination::on_Pass" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
-
-	//COMPLETAR 
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
 
 	return ret;
 }
@@ -272,27 +233,8 @@ genericState* ST_Attacking::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "G Attacking::on_Pass" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
-	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
-
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
-				{
-					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-				}
-			}
-		}
-	}
-	//COMPLETAR 
-
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
 	return ret;
 }
 
@@ -354,8 +296,8 @@ genericState* ST_WaitingDefender::on_Pass(genericEvent* ev, usefulInfo * Info)
 {
 	cout << "ST_WaitingDefender::on_Pass" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
-
-	//COMPLETAR 
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
 
 	return ret;
 }
@@ -392,26 +334,63 @@ genericState* ST_WaitingPurchaseConfirmation::on_NoMoney(genericEvent *ev, usefu
 {
 	cout << "G waiting purchase confirm::on_NoMoney" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
 	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
 	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
 
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
+	for (int i = 0; i < FILA; i++)
 	{
-		for (j = 0; j < COLUMNA; j++)
+		for (int j = 0; j < COLUMNA; j++)
 		{
 			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
+				((Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getTeam()) == Info->gameInterface->playerYou->getTeam()) &&
 				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
 			{
+
 				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
 				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
 				{
 					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
 				}
 			}
+
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)) {
+				Info->gameInterface->myMap->getTile(i, j)->getUnit()->resetMp();
+			}
+
+
+			//CAPTURA DE PROPIEDAD
+			//antes de llamar a esta funcion debo setear el attacker con la unidad que este encima de un building que no es propio
+			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
+				(((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getType().compare("in")) == 0) ||
+				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getType().compare("me")) == 0)) &&
+					((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())) &&
+				(Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getTeam() != (Info->gameInterface->playerYou->getTeam())))
+			{
+				Info->gameInterface->setAttacker(i, j);
+				Info->gameInterface->captureProperty(Info->gameInterface->playerYou);
+				if ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getCp()) <= 0)
+				{
+					cout << "SE CAPTURO POR COMPLETO!!!!(I=" << i << "; J=" << j << ")" << endl;
+					cout << "CP DEL BUILDING=" << Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getCp() << endl;
+					//en el tile donde estaba antes el building del oponente, poner el mismo building pero de mi equipo.
+					Info->gameInterface->myMap->getTile(i, j)->getBuilding()->setTeam(Info->gameInterface->playerYou->getTeam());
+					if (Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q1" || Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q2") {
+
+						Info->gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(8);
+					}
+					else
+					{
+						Info->gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(4);
+					}
+				}
+				cout << "CAPTURE PERO NO DEL TODO EN (I=" << i << ";J=" << j << ")" << endl;
+				cout << "CP DEL BUILDING=" << Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getCp() << endl;
+
+			}
+
 		}
 	}
-	//COMPLETAR 
 
 	return ret;
 }
@@ -421,27 +400,8 @@ genericState* ST_WaitingPurchaseConfirmation::on_Pass(genericEvent *ev, usefulIn
 {
 	cout << "G waiting purchase confirm::on_Pass" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
-	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
-
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
-				{
-					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-				}
-			}
-		}
-	}
-	//COMPLETAR 
-
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
 	return ret;
 }
 
@@ -458,8 +418,6 @@ genericState* ST_WaitingPurchaseConfirmation::on_Pass(genericEvent *ev, usefulIn
 //
 //	return ret;
 //}
-
-
 
 genericState* ST_Purchasing::on_NewUnit(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
 {
@@ -486,26 +444,8 @@ genericState* ST_Purchasing::on_Pass(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "ST_Purchasing::on_Pass" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
-	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
-
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
-				{
-					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-				}
-			}
-		}
-	}
-	//COMPLETAR 
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
 
 	return ret;
 }
@@ -513,26 +453,8 @@ genericState* ST_Purchasing::on_Pass(genericEvent *ev, usefulInfo * Info)
 genericState* ST_Purchasing::on_NoMoney(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
-	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
-
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
-				{
-					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-				}
-			}
-		}
-	}
-	//COMPLETAR 
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
 	return ret;
 }
 
@@ -579,26 +501,8 @@ genericState* ST_WaitingLocation::on_Pass(genericEvent* ev, usefulInfo * Info)
 {
 	cout << "ST_WaitingLocation::on_Pass" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
-	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
-
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
-				{
-					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-				}
-			}
-		}
-	}
-	//COMPLETAR 
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
 
 	return ret;
 }
@@ -606,26 +510,8 @@ genericState* ST_WaitingLocation::on_Pass(genericEvent* ev, usefulInfo * Info)
 genericState* ST_WaitingLocation::on_NoMoney(genericEvent* ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
-	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
-
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
-				{
-					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-				}
-			}
-		}
-	}
-	//COMPLETAR 
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
 
 	return ret;
 }
@@ -721,26 +607,8 @@ genericState* ST_YouMoving::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "entra a on_RPass" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
-	Info->gameInterface->playerMe->setAmmountOfCities(Info->gameInterface->myMap);
-	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->getAmmountOfCities()) + 1) * 5);
-
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
-				{
-					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-				}
-			}
-		}
-	}
-	//COMPLETAR 
+	Info->gameInterface->setIamPlaying(true);
+	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
 
 	return ret;
 }
@@ -822,24 +690,8 @@ genericState* ST_YouAttacking::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "ST_YouAttacking::on_RPass" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
-	Info->gameInterface->playerMe->setAmmountOfCities(Info->gameInterface->myMap);
-	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->getAmmountOfCities()) + 1) * 5);// se suma 1 porque el HQ tambien aporta $5 al inicio de cada jugada
-	for (int i = 0; i < FILA; i++)
-	{
-		for (int j = 0; j < COLUMNA; j++)
-		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
-				{
-					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-				}
-			}
-		}
-	}
-//COMPLETAR 
+	Info->gameInterface->setIamPlaying(true);
+	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
 
 	return ret;
 }
@@ -898,27 +750,8 @@ genericState* ST_YouPurchasing::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "ST_YouPurchasing::on_RPass" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
-	Info->gameInterface->playerMe->setAmmountOfCities(Info->gameInterface->myMap);
-	Info->gameInterface->playerMe->setMoney(((Info->gameInterface->playerMe->getAmmountOfCities()) + 1) * 5);
-
-	int i = 0, j = 0;
-	for (i = 0; i < FILA; i++)
-	{
-		for (j = 0; j < COLUMNA; j++)
-		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
-			{
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
-				{
-					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-				}
-			}
-		}
-	}
-	//COMPLETAR 
-
+	Info->gameInterface->setIamPlaying(true);
+	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
 	return ret;
 }
 
@@ -931,3 +764,72 @@ genericState *ret = (genericState *) new ST_Moving();
 
 return ret;
 }*/
+
+
+
+void setCaptureProperty(Player* player, Game* gameInterface)
+{
+	player->setAmmountOfCities(gameInterface->myMap);
+	player->setMoney((player->getMoney()) + (((player->getAmmountOfCities()) + 1) * 5));
+
+
+	for (int i = 0; i < FILA; i++)
+	{
+		for (int j = 0; j < COLUMNA; j++)
+		{
+			if (((gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
+				((gameInterface->myMap->getTile(i, j)->getBuilding()->getTeam()) == player->getTeam()) &&
+				((gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (player->getTeam())))
+			{
+
+				gameInterface->myMap->getTile(i, j)->getUnit()->setHp((gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
+				if ((gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
+				{
+					gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
+				}
+			}
+
+			if (((gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)) {
+				gameInterface->myMap->getTile(i, j)->getUnit()->resetMp();
+			}
+
+
+
+			//CAPTURA DE PROPIEDAD
+			//antes de llamar a esta funcion debo setear el attacker con la unidad que este encima de un building que no es propio
+			if (((gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
+				((((gameInterface->myMap->getTile(i, j)->getUnit()->getType().compare("in1")) == 0) ||
+				((gameInterface->myMap->getTile(i, j)->getUnit()->getType().compare("me1")) == 0)) ||
+					(((gameInterface->myMap->getTile(i, j)->getUnit()->getType().compare("in2")) == 0) ||
+					((gameInterface->myMap->getTile(i, j)->getUnit()->getType().compare("me2")) == 0))) &&
+						((gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (player->getTeam())) &&
+				(gameInterface->myMap->getTile(i, j)->getBuilding()->getTeam() != (player->getTeam())))
+			{
+				gameInterface->setAttacker(i, j);
+				gameInterface->captureProperty(player);
+				if ((gameInterface->myMap->getTile(i, j)->getBuilding()->getCp()) <= 0)
+				{
+					cout << "SE CAPTURO POR COMPLETO!!!!(I=" << i << "; J=" << j << ")" << endl;
+					cout << "CP DEL BUILDING=" << gameInterface->myMap->getTile(i, j)->getBuilding()->getCp() << endl;
+					//en el tile donde estaba antes el building del oponente, poner el mismo building pero de mi equipo.
+					gameInterface->myMap->getTile(i, j)->getBuilding()->setTeam(player->getTeam());
+					if (gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q1" || gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q2") {
+
+						gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(8);
+					}
+					else
+					{
+						gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(4);
+					}
+				}
+				cout << "CAPTURE PERO NO DEL TODO EN (I=" << i << ";J=" << j << ")" << endl;
+				cout << "CP DEL BUILDING=" << gameInterface->myMap->getTile(i, j)->getBuilding()->getCp() << endl;
+
+			}
+
+			
+
+		}
+	}
+
+}
