@@ -8,7 +8,8 @@ Game::Game(ALLEGRO_DISPLAY* display)
 	char * xml_path = XML_PATH;
 	XML_Parser P = XML_ParserCreate(NULL);
 	FILE * fp = fopen(xml_path, "rb");
-	
+
+
 	data = new Resources;
 
 	XML_SetStartElementHandler(P, startTagCallback);	// Función que va a encontrar cuando aparece un Start tag;
