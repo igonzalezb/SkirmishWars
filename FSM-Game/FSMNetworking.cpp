@@ -120,6 +120,12 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			cout << "n: DISPATCH DE NO MONEY" << endl;
 			newState = currentState->on_NoMoney(ev, Info);
 			break;
+		case ONE_MIN_TIMEOUT:
+			newState = currentState->on_OneMinTimeout(ev, Info);
+			break;
+		case TWO_HALF_MIN_TIMEOUT:
+			newState = currentState->on_TwoHalfMinTimeout(ev, Info);
+			break;
 		default:
 			break;
 		}

@@ -10,7 +10,6 @@
 #include "FSMNetworking.h"
 #include "eventSources.h"
 #include "userInput.h"
-//#include "Screen.h"
 //#include "Networking.h"
 //#include "Game.h"
 #include <string>
@@ -50,6 +49,7 @@ int main()
 	Networking communicator(opponentsIP);
 	userInput user;
 	
+	TimeoutEventSource timeoutSource;
 	GameEventSource gameSource(&skirmish);
 	UserEventSource userSource(&user,&skirmish);
 	NetworkEventSource networkSource(&communicator,&skirmish);
@@ -57,32 +57,25 @@ int main()
 	//NetworkEventSource networkSource(&Server);
 	//UserEventSource userSource(&Terminal);
 	//usefulInfo Info(&userSource, &Timeout, &networkSource, &fileSystem, &Software);
-	usefulInfo Info(&userSource,&gameSource,&networkSource);
+	usefulInfo Info(&userSource,&gameSource,&networkSource, &timeoutSource);
 	genericEvent *ev;
 	eventGenerator evGen(&Info);
 	FSMGame gameFSM;
 	FSMNetworking networkingFSM;
 	
 	
-
-	//Terminal.putClear("Listening on port 69...");
-	cout << "Listening on port 69..." << endl; //VER EN QUE PUERTO
+	cout << "Listening on port 13225..." << endl;
 	communicator.startConnection();
-	//Terminal.putNext("Connection established");
 	communicator.justConnected = 1;
 	//networkSource.evCode = CONNECTED; //VEEEEER COMO MODIFICAR ESE evCode!!!!!!!!!!!!!!!
 	cout << "Connection established" << endl;
 
 	do
 	{
-		//cout << "do while del main" << endl;
 		evGen.generateEvent();
 		ev = evGen.getNextEvent();
 		if (ev != nullptr)
 		{
-#ifdef DEBUG
-		//	cout << "entra 5: entro porque ev distinto de nullptr" << endl;
-#endif // DEBUG
 			networkingFSM.dispatch(ev, &Info);
 			gameFSM.dispatch(ev, &Info);
 		}
