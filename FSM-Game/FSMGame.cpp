@@ -87,7 +87,6 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 		case R_QUIT:
 			newState = currentState->on_Rquit(ev, Info);
 			break;
-			break;
 		case BO_ATTACK:
 			newState = currentState->on_BoAttack(ev, Info);
 			break;
@@ -104,6 +103,12 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case TWO_HALF_MIN_TIMEOUT:
 			newState = currentState->on_TwoHalfMinTimeout(ev, Info);
+			break;
+		case YOU_WON:
+			newState = currentState->on_YouWon(ev, Info);
+			break;
+		case YOU_DIDNT_WIN:
+			newState = currentState->on_YouDidntWin(ev, Info);
 			break;
 		default:
 			break;

@@ -53,10 +53,10 @@ public:
 	//void setDestino(coordenadas destino);
 	//coordenadas getOrigen();
 	//coordenadas getDestino();
-	bool didHeWin();
 	void generateDefenseModifiersTable();
-	void setNotWinning(bool nWinning);
-	bool getNotWinning();
+	void setYouWinning(bool winning_);
+	bool didHeWin();
+	bool getYouWinning();
 	void setNewUnit(Unit* unit);
 	Unit* getNewUnit();
 	int getDie();
@@ -70,6 +70,9 @@ public:
 	void chooseWhoStarts();
 	bool playerChosen;
 	bool Istart;
+
+	void setEndPlaying(bool endPlaying_);
+	bool getEndPlaying();
 	
 private:
 	coordenadas attacker;
@@ -78,10 +81,11 @@ private:
 	int die;
 	//coordenadas origen;
 	//coordenadas destino;
-	bool notWinning;
+	bool youWinning;
 	csvFile *defenseModifiers;
 	modifiers tableMatrix[14][5];
 	Unit *newUnit;
 	bool iAmPlaying;
+	bool endPlaying;
 };
 //#endif // !GAME_H

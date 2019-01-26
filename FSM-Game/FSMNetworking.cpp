@@ -126,6 +126,9 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 		case TWO_HALF_MIN_TIMEOUT:
 			newState = currentState->on_TwoHalfMinTimeout(ev, Info);
 			break;
+		case YOU_WON:
+			newState = currentState->on_YouWon(ev, Info);
+			break;
 		default:
 			break;
 		}

@@ -66,9 +66,10 @@ genericState* ST_S_WaitingName::on_Rname(genericEvent *ev, usefulInfo * Info)
 genericState* ST_S_WaitingName::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
 	cout << "N WAITING WHO STARTS: ON 2,5 MIN TIMEOUT" << endl;
-	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	genericState *ret = (genericState *) new ST_WaitingConnection(); //VER ESTADO!! se perdio comunicacion
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 
@@ -99,9 +100,10 @@ genericState* ST_S_WaitingNameIsAck::on_Rack(genericEvent *ev, usefulInfo * Info
 genericState* ST_S_WaitingNameIsAck::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
 	cout << "N WAITING NAME IS ACK: ON 2,5 MIN TIMEOUT" << endl;
-	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	genericState *ret = (genericState *) new ST_WaitingConnection(); //VER ESTADO!! se perdio comunicacion
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 
@@ -123,9 +125,10 @@ genericState* ST_S_WaitingMapIsAck::on_Rack(genericEvent *ev, usefulInfo * Info)
 genericState* ST_S_WaitingMapIsAck::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
 	cout << "N WAITING MAP IS ACK: ON 2,5 MIN TIMEOUT" << endl;
-	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	genericState *ret = (genericState *) new ST_WaitingConnection(); //VER ESTADO!! se perdio comunicacion
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 
@@ -168,9 +171,10 @@ genericState* ST_S_WaitingIPlayAck::on_Rack(genericEvent *ev, usefulInfo * Info)
 genericState* ST_S_WaitingIPlayAck::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
 	cout << "N WAITING I PLAY: ON 2,5 MIN TIMEOUT" << endl;
-	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	genericState *ret = (genericState *) new ST_WaitingConnection(); //VER ESTADO!! se perdio comunicacion
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 
@@ -196,9 +200,10 @@ genericState* ST_C_WaitingName::on_Rname(genericEvent *ev, usefulInfo * Info)
 genericState* ST_C_WaitingName::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
 	cout << "N WAITING NAME: ON 2,5 MIN TIMEOUT" << endl;
-	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	genericState *ret = (genericState *) new ST_WaitingConnection(); //VER ESTADO!! se perdio comunicacion
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 
@@ -219,9 +224,10 @@ genericState* ST_C_WaitingNameIsAck::on_Rack(genericEvent *ev, usefulInfo * Info
 genericState* ST_C_WaitingNameIsAck::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
 	cout << "N WAITING NAME IS ACK: ON 2,5 MIN TIMEOUT" << endl;
-	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	genericState *ret = (genericState *) new ST_WaitingConnection(); //VER ESTADO!! se perdio comunicacion
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 
@@ -398,6 +404,14 @@ genericState* ST_IPlay::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //
 	return ret;
 }
 
+genericState* ST_IPlay::on_RYouWon(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	cout << "I Play: on R YOU WON" << endl;
+	genericState *ret = (genericState *) new ST_WaitingPlayingAgainConfirmation();
+	Info->gameInterface->setIamPlaying(true);
+	return ret;
+}
+
 /*
 genericState* ST_IPlay::on_Timeout(genericEvent *ev, usefulInfo * Info)
 {
@@ -429,9 +443,18 @@ genericState* ST_WaitingPlayAck::on_Rack(genericEvent *ev, usefulInfo * Info)
 genericState* ST_WaitingPlayAck::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
 	cout << "N WAITING PLAY ACK: ON 2,5 MIN TIMEOUT" << endl;
-	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	genericState *ret = (genericState *) new ST_WaitingConnection(); //VER ESTADO!! se perdio comunicacion
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingPlayAck::on_RYouWon(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	cout << "waiting Play ack: on R YOU WON" << endl;
+	genericState *ret = (genericState *) new ST_WaitingPlayingAgainConfirmation();
+	Info->gameInterface->setIamPlaying(true);
 	return ret;
 }
 
@@ -480,6 +503,90 @@ genericState* ST_WaitingAPlay::on_RPass(genericEvent *ev, usefulInfo * Info) //N
 	Info->gameInterface->setIamPlaying(true);
 	return ret;
 }
+
+genericState* ST_WaitingAPlay::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	cout << "N WAITING a PLAY: ON 2,5 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_WaitingConnection(); //VER ESTADO!! se perdio comunicacion
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingAPlay::on_RYouWon(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	cout << "waitingAPlay: on R YOU WON" << endl;
+	genericState *ret = (genericState *) new ST_WaitingPlayingAgainConfirmation();
+	Info->gameInterface->setIamPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingAPlay::on_YouWon(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	cout << "N WAITING a PLAY: ON 2,5 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_WaitingYouWonResponse(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new YouWon();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	return ret;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+genericState* ST_WaitingYouWonResponse::on_RplayAgain(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	genericState *ret = (genericState *) new ST_WaitingMyConfirmation();
+}
+
+genericState* ST_WaitingYouWonResponse::on_RgameOver(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+genericState* ST_WaitingMyConfirmation::on_PlayAgain(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	genericState *ret = (genericState *) new ST_S_WaitingNameIsAck(); //PARA MANDARLE EL MAP IS
+}
+
+genericState* ST_WaitingMyConfirmation::on_GameOver(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	genericState *ret = (genericState *) new ST_WaitingGameOverAck();
+	Info->nextPkg = new GameOver();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+genericState* ST_WaitingGameOverAck::on_Rack(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	genericState *ret = (genericState *) new ST_WaitingConnection(); //PARA MANDARLE EL MAP IS
+	//Info->gameInterface->
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+genericState* ST_WaitingPlayingAgainConfirmation::on_PlayAgain(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	cout << "waitingAPlay: on R YOU WON" << endl;
+	genericState *ret = (genericState *) new ST_C_WaitingMapIs();
+	Info->gameInterface->setIamPlaying(true);
+	Info->nextPkg = new PlayAgain();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	return ret;
+}
+
+genericState* ST_WaitingPlayingAgainConfirmation::on_GameOver(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+//	cout << "waitingAPlay: on R YOU WON" << endl;
+	genericState *ret = (genericState *) new ST_WaitingConnection();//jejejejeeee
+	Info->gameInterface->setIamPlaying(true);
+	Info->nextPkg = new GameOver();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	//APAGAAAAAAAAAAAAR!!!!!!!!!!!!!!!!!!!!
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
 
 
 /////////////////////////// ST_WaitingToAttack //////////////////////////////

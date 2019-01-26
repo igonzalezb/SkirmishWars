@@ -70,6 +70,13 @@ public:
 private:
 };
 
+class EV_YouDidntWin : public genericEvent
+{
+public:
+	EV_YouDidntWin() { ev = YOU_DIDNT_WIN; };
+private:
+};
+
 class EV_PlayAgain : public genericEvent
 {
 public:

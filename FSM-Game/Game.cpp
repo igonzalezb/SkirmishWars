@@ -23,7 +23,7 @@ Game::Game(ALLEGRO_DISPLAY* display)
 	playerYou = new Player;
 	myMap = new Map;
 	graphics = new MapGraphics(display);
-	notWinning = true;
+	youWinning = false;
 	
 	//myMap->generateTilesArray(data->getBuildingList(), data->getTerrainList(), data->getUnitList());
 	
@@ -33,6 +33,7 @@ Game::Game(ALLEGRO_DISPLAY* display)
 	iAmPlaying = false;
 	playerChosen = false;
 	Istart = false;
+	endPlaying = false;
 }
 
 Game::~Game()
@@ -247,40 +248,40 @@ void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado e
 
 bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE
 {
-	//int i, j;
-	//for(i=0;i<FILA;i++)
-	//{
-	//	for (j = 0; j < COLUMNA; j++)
-	//	{
-	//		if (((myMap->getTile(i,j)->getUnit()) != NULL)&&
-	//			((myMap->getTile(i, j)->getUnit()->getTeam())==(playerYou->getTeam())))
-	//		{
-	//			notWinning = false;
-	//		}
-	//		if ((myMap->getTile(i,j)->getBuilding()!=NULL)&&
-	//			((myMap->getTile(i, j)->getBuilding()->getType()).compare("HQ"))&&
-	//			((myMap->getTile(i,j)->getBuilding()->getTeam())==playerYou->getTeam()))//REVISAR como esta cargado el type del HQ 
-	//		{
-	//			notWinning = false;
-	//		}
-	//	}
-	//}
-	//if (!notWinning) //VER SI ESTE if VA AL GENERADOR DE EVENTOS!!!!!!!!!!!!!!
-	//{
-	//	return true;
-	//	//GENERAR EL EVENTO YOU WON
-	//}
-	return false;
+	int i, j;
+	int hq = 0, units = 0;
+	for (i = 0; i < FILA; i++)
+	{
+		for (j = 0; j < COLUMNA; j++)
+		{
+			if (((myMap->getTile(i,j)->getUnit()) != NULL)&&
+				((myMap->getTile(i, j)->getUnit()->getTeam())==(playerMe->getTeam())))
+			{
+				units++;
+			}
+			if ((myMap->getTile(i,j)->getBuilding()!=NULL)&&
+				(((myMap->getTile(i, j)->getBuilding()->getType()).compare("q1")) || ((myMap->getTile(i, j)->getBuilding()->getType()).compare("q1"))) &&
+				((myMap->getTile(i,j)->getBuilding()->getTeam())==playerMe->getTeam()))
+			{
+				hq++;
+			}
+		}
+	}
+	if((units==0)||(hq=0))		//Si no tengo mas unidades o no tengo mas HQ, significa que el otro gana.
+	{
+		youWinning = true;
+	}
+	return youWinning;
 }
 
-void Game::setNotWinning(bool nWinning)
+void Game::setYouWinning(bool youWinning_)
 {
-	notWinning = nWinning;
+	youWinning = youWinning_;
 }
 
-bool Game::getNotWinning()
+bool Game::getYouWinning()
 {
-	return notWinning;
+	return youWinning;
 }
 
 /////////////////////////////////// PASAR LAS SIGUIENTES FUNCIONES ACA
@@ -371,5 +372,15 @@ void Game::chooseWhoStarts()
 		iAmPlaying = true;
 	}
 	playerChosen = true;
+}
+
+void Game::setEndPlaying(bool endPlaying_)
+{
+	endPlaying = endPlaying_;
+}
+
+bool Game::getEndPlaying()
+{
+	return endPlaying;
 }
 

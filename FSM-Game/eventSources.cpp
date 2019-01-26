@@ -127,7 +127,6 @@ bool GameEventSource::isThereEvent()
 		cout << "IS THERE EVENG:I START o YOU START" << endl;
 		gameInterface->playerChosen = false; //probando
 	}
-
 	if (gameInterface->myMap->isMapReceivedOk)
 	{
 		cout << "GENERA EVENTO MAP OK" << endl;
@@ -141,10 +140,14 @@ bool GameEventSource::isThereEvent()
 		evCode = NO_MONEY;
 		ret = true;
 	}
-
-	if (!(gameInterface->getNotWinning()))
+	if (gameInterface->didHeWin())
 	{
 		evCode = YOU_WON; //VER en que parte se setea nuevamente notWinning en true (probablemente cuando arranca el juego)
+		ret = true;
+	}
+	else
+	{
+		evCode = YOU_DIDNT_WIN;
 		ret = true;
 	}
 	if (gameInterface->moving==true)
@@ -198,6 +201,10 @@ bool GameEventSource::isThereEvent()
 			gameInterface->purchasing = false;
 			ret = true;
 		}
+	}
+	if (gameInterface->getEndPlaying())
+	{
+		evCode = END_PLAYING;
 	}
 
 	return ret;
@@ -741,7 +748,14 @@ TimeoutEventSource::TimeoutEventSource()
 bool TimeoutEventSource::isThereEvent()
 {
 	timeout = false;
-	if (((clock() - tInicial1) > ONE_MIN * CLOCKS_PER_SEC) && timerRunning1)
+	if (((clock() - tInicial2) > TWO_HALF_MIN * CLOCKS_PER_SEC) && timerRunning2)
+	{
+		timeout = true;
+		//timerRunning = false;
+		//timeoutsCount++;
+		evCode = TWO_HALF_MIN_TIMEOUT;
+	}
+	else if (((clock() - tInicial1) > ONE_MIN * CLOCKS_PER_SEC) && timerRunning1)
 	{
 		timeout = true;
 		//timerRunning = false; //MODIFICARLO DESDE AFUERA CON stopTimer!!!!
@@ -764,13 +778,6 @@ bool TimeoutEventSource::isThereEvent()
 	{
 		timeout = true;
 		evCode = THIRTY_SEC_LEFT;
-	}
-	else if (((clock() - tInicial2) > TWO_HALF_MIN * CLOCKS_PER_SEC) && timerRunning2)
-	{
-		timeout = true;
-		//timerRunning = false;
-		//timeoutsCount++;
-		evCode = TWO_HALF_MIN_TIMEOUT;
 	}
 	else 
 	{
@@ -808,7 +815,7 @@ void TimeoutEventSource::stopTimer2()
 
 genericEvent * TimeoutEventSource::insertEvent()
 {
-	genericEvent * ret;
+	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
 
 	switch (evCode)
 	{
@@ -817,6 +824,12 @@ genericEvent * TimeoutEventSource::insertEvent()
 		break;
 	case TWO_HALF_MIN_TIMEOUT:
 		ret = (genericEvent *) new EV_TwoHalfMinTimeout;
+		break;
+	case TEN_SEC_LEFT:
+		ret = (genericEvent *) new EV_TenSecLeft;
+		break;
+	case THIRTY_SEC_LEFT:
+		ret = (genericEvent *) new EV_ThirtySecLeft;
 		break;
 	default:
 		break;

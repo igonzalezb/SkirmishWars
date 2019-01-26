@@ -101,7 +101,9 @@ public:
 	genericState* on_RAttack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RPass(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_TwoHalfMinTimeout(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
+	genericState* on_TwoHalfMinTimeout(genericEvent* ev, usefulInfo * Info);
+	genericState* on_YouWon(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
 private:
 };
@@ -115,6 +117,7 @@ public:
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info);
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Iquit(genericEvent* ev, usefulInfo * Info);
 private:
 };
@@ -124,6 +127,7 @@ class ST_WaitingPlayAck : public genericState
 public:
 	genericState* on_Rack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_TwoHalfMinTimeout(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
 private:
 };
 
@@ -151,6 +155,29 @@ public:
 	//genericState* on_Rtimeout(genericEvent* ev, usefulInfo * Info);
 private:
 };
+
+class ST_WaitingPlayingAgainConfirmation: public genericState
+{
+	genericState* on_PlayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
+	genericState* on_GameOver(genericEvent *ev, usefulInfo * Info);
+}
+
+class ST_WaitingYouWonResponse : public genericState
+{
+	genericState* on_RplayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
+	genericState* on_RgameOver(genericEvent *ev, usefulInfo * Info);
+}
+
+class ST_WaitingMyConfirmation : public genericState
+{
+	genericState* on_PlayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
+	genericState* on_GameOver(genericEvent *ev, usefulInfo * Info);
+}
+
+class ST_WaitingGameOverAck : public genericState
+{
+	genericState* on_Rack(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
+}
 
 
 #endif // !STATESNETWORKING_H

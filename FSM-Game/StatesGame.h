@@ -65,7 +65,7 @@ class ST_Attacking :public genericState
 	genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_WaitingDefender :public genericState
@@ -74,17 +74,14 @@ class ST_WaitingDefender :public genericState
 	genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_LastMove(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_WaitingAttackConfirmation :public genericState //ACA se estaria esperando la coordenada de la unidad que se va a mover
 {
 	genericState* on_Attack(genericEvent* ev, usefulInfo * Info); //HACER ESTAS, COPIANDO AL RESTO
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_Purchasing :public genericState
@@ -123,8 +120,7 @@ class ST_YouMoving :public genericState
 	genericState* on_RAttack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RPass(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_LastMove(genericEvent* ev, usefulInfo * Info); //aca creo que esto no va
-	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
+	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_YouAttacking :public genericState
@@ -141,6 +137,24 @@ class ST_YouPurchasing :public genericState
 	genericState* on_RPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RPass(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
+};
+
+class ST_AnalysingVictoryHQ :public genericState
+{
+	genericState* on_YouDidntWin(genericEvent* ev, usefulInfo * Info);
+	genericState* on_YouWon(genericEvent* ev, usefulInfo * Info);
+};
+
+class ST_AnalysingVictoryUnits :public genericState
+{
+	genericState* on_YouDidntWin(genericEvent* ev, usefulInfo * Info);
+	genericState* on_YouWon(genericEvent* ev, usefulInfo * Info);
+};
+
+class ST_WaitingPlayingAgainConfirmation :public genericState
+{
+	genericState* on_PlayAgain(genericEvent* ev, usefulInfo * Info);
+	genericState* on_GameOver(genericEvent* ev, usefulInfo * Info);
 };
 
 ////////////////////////////////////////////////
