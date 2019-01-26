@@ -110,32 +110,32 @@ genericEvent * GameEventSource::insertEvent()
 
 bool GameEventSource::isThereEvent()
 {
-//	cout << "entra a is there event del game" << endl;
 	bool ret = false;
 
 	if (gameInterface->playerChosen)
 	{
 		if (gameInterface->Istart)
 		{
-		//	cout << "IS THERE EVENG:I START" << endl;
-			//evCode = I_START;
 			evCode = I_START;
 		}
 		else
 			evCode = YOU_START;
 		ret = true;
+#ifdef DEBUG
 		cout << "IS THERE EVENG:I START o YOU START" << endl;
+#endif // DEBUG
 		gameInterface->playerChosen = false; //probando
 	}
 
 	if (gameInterface->myMap->isMapReceivedOk)
 	{
+#ifdef DEBUG
 		cout << "GENERA EVENTO MAP OK" << endl;
+#endif // DEBUG		
 		evCode = MAP_OK;
 		gameInterface->myMap->isMapReceivedOk = false;
 		ret = true;
 	}
-	//cout << "plata actual: " << gameInterface->playerMe->getMoney() << endl;
 	if ((gameInterface->playerMe->getMoney())<=0)
 	{
 		evCode = NO_MONEY;
@@ -158,7 +158,6 @@ bool GameEventSource::isThereEvent()
 				//gameInterface->myMap->possibleMoves((gameInterface->myMap->getTile(gameInterface->getAttacker().i,gameInterface->getAttacker().j)->getUnit()), gameInterface->getAttacker().i,gameInterface->getAttacker().j);
 				//if ((gameInterface->myMap->canMove[gameInterface->getDefender().i][gameInterface->getDefender().j]) == true)
 				//{
-					//cout << "ENTRO ACA !!!! SIIII  2" << endl;
 					evCode = MOVE;
 					gameInterface->moving = false;
 					ret = true;
@@ -180,14 +179,20 @@ bool GameEventSource::isThereEvent()
 					evCode = ATTACK;
 					gameInterface->attacking = false;
 					ret = true;
+#ifdef DEBUG
 					cout << "se genera evento ATTACK!" << endl;
+#endif // DEBUG
+
+					
 				}
 			}
 	}
 
 	if (gameInterface->purchasing == true)
 	{
+#ifdef DEBUG
 		cout << "ENTRA A IS THERE EVENT, PORQUE PURCHASING = TRUE" << endl;
+#endif // DEBUG		
 		if (((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getBuilding()) != NULL) &&
 			(((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getBuilding()->getType()).compare("m")) == 0) &&
 			((gameInterface->myMap->getTile(gameInterface->getDefender().i,gameInterface->getDefender().j)->getBuilding()->getTeam()) == (gameInterface->playerMe->getTeam())) &&
@@ -215,7 +220,6 @@ NetworkEventSource::NetworkEventSource(Networking *_networkInterface,Game* _game
 //Chequea si se recibió algo y se guarda la info correspondiente en r_algo en caso de haberla
 bool NetworkEventSource::isThereEvent()
 {
-	//cout << "entra a is there event de networking" << endl;
 	//unsigned char blockLow, blockHigh;
 	bool ret = false;
 	list<Unit>::iterator it4 = gameInterface->data->getUnitList().begin();
@@ -232,7 +236,7 @@ bool NetworkEventSource::isThereEvent()
 		//evCode = CONNECTED;
 		networkInterface->justConnected = false;
 #ifdef DEBUG
-		//cout << "ENTRA 1" << endl;
+		cout << "ENTRA 1" << endl;
 #endif // DEBUG
 		if (networkInterface->IamClient)
 		{
@@ -241,12 +245,6 @@ bool NetworkEventSource::isThereEvent()
 			gameInterface->playerMe->setTeam(EQUIPO2); //cliente es equipo 2
 			gameInterface->playerYou->setTeam(EQUIPO1); //server es equipo 1
 
-			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
-			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
-			//gameInterface->graphics->loadBitmaps(gameInterface->myMap);
-			//gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney());
-			
-
 		}
 		else
 		{
@@ -254,11 +252,6 @@ bool NetworkEventSource::isThereEvent()
 			//gameInterface->Istart = true;//ESTO ACA NO VA
 			gameInterface->playerMe->setTeam(EQUIPO1); //server equipo 1
 			gameInterface->playerYou->setTeam(EQUIPO2); //client equipo 2
-
-			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
-			//gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
-			//gameInterface->graphics->loadBitmaps(gameInterface->myMap);
-			//gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney());
 		}
 		ret = true;
 	}
@@ -266,13 +259,8 @@ bool NetworkEventSource::isThereEvent()
 	else if (networkInterface->receivePackage())	//verifica si se recibio algo
 	{
 #ifdef DEBUG
-	//	cout << "entra 2 (aca no deberia entrar)" << endl;
+	//	cout << "entra 2 " << endl;
 #endif // DEBUG
-		/*if (networkInterface->getInputPackage()[0] == OP_PASS) {
-			cout << "OP_PASS==INPUT PACKKKKKKKK" << endl;
-		}
-		cout << "OP CODE RECIBIDO: " << (int)(MYBYTE)(networkInterface->getInputPackage()[0]) << endl;*/
-
 		switch (networkInterface->getInputPackage()[0])	//segun el tipo de paquete devuelvo el tipo de evento
 		{
 			
@@ -298,12 +286,16 @@ bool NetworkEventSource::isThereEvent()
 				r_name_string.push_back(c);
 			}
 			gameInterface->playerYou->setName(r_name_string);
-			cout << "opponent's name: " << gameInterface->playerYou->getName() << endl;
+#ifdef DEBUG
+			cout << "Opponent's Name: " << gameInterface->playerYou->getName() << endl;
+#endif // DEBUG			
 			ret = true;
 			break;
 		case OP_MAP_IS:
 			evCode = R_MAP_IS;
+#ifdef	DEBUG
 			cout << "GENERA EL EVENTO MAP IS" << endl;
+#endif	//DEBUG
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 			i = static_cast<int>(aux[1]);
 			aux.erase(aux.begin());
@@ -321,10 +313,6 @@ bool NetworkEventSource::isThereEvent()
 			r_map_string.pop_back();
 			gameInterface->myMap->setMapName(r_map_string);
 			gameInterface->myMap->generateTilesArray(gameInterface->data->getBuildingList(), gameInterface->data->getTerrainList(), gameInterface->data->getUnitList());
-			gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());
-			gameInterface->graphics->loadBitmaps(gameInterface->myMap);
-			gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney(), gameInterface->playerMe->getTeam());
-			
 			ret = true;
 			break;
 		case OP_YOU_START: //sin campo de datos
@@ -336,15 +324,16 @@ bool NetworkEventSource::isThereEvent()
 			ret = true;
 			break;
 		case OP_PASS: //sin campo de datos
-			//cout << "ENTRA A IS THERE EVENT CON PASS" << endl;
 			evCode = R_PASS;
 			ret = true;
 			break;
 		case OP_MOVE:
 			evCode = R_MOVE;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
-			cout << "Attacker: i = " << (int)aux[1] << " j= " << (int)(aux[2]-0x41) << endl;
-			cout << "Defender: i = " << (int)aux[3] << " j= " << (int)(aux[4]-0x41) << endl;
+#ifdef DEBUG
+			cout << "Attacker: i = " << (int)aux[1] << " j= " << (int)(aux[2] - 0x41) << endl;
+			cout << "Defender: i = " << (int)aux[3] << " j= " << (int)(aux[4] - 0x41) << endl;
+#endif // DEBUG
 			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-0X41));
 			gameInterface->setDefender((int)aux[3], (int)(aux[4]-0X41));
 			ret = true;
@@ -352,8 +341,6 @@ bool NetworkEventSource::isThereEvent()
 		case OP_PURCHASE:
 			evCode = R_PURCHASE;
 			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
-
-			//cout << "aux: " << aux << endl;
 			r_unidad.clear();
 			r_unidad.insert(r_unidad.begin(), aux.begin() + 1, aux.begin() + 3); //para que meta lo que hay en pos 1 y 2 de aux, se pone hasta +3 porque no incluye esa, sino que hasta la anterior.
 			//r_fila_de = aux[1];
@@ -365,22 +352,32 @@ bool NetworkEventSource::isThereEvent()
 			for (char c : r_unidad) {
 				r_unidad_string.push_back(c);
 			}
+#ifdef DEBUG
 			cout << "UNIT QUE COMPARA EL ITERADOR: " << r_unidad_string.c_str() << endl;
+#endif // DEBUG
 			for (bool k = true; k && (it4 != gameInterface->data->getUnitList().end()); ++it4) {
 
-				cout << "lista con it4: " << it4->getType() << endl;
+#ifdef DEBUG
+			cout << "lista con it4: " << it4->getType() << endl;
+#endif // DEBUG
 				if (strcmp(it4->getType().c_str(), r_unidad_string.c_str()) == false) {
 					
 					k = false;
 					Unit *currUnit = new Unit(it4);
 					currUnit->setTeam(gameInterface->playerYou->getTeam());
 					gameInterface->setNewUnit(currUnit);
-					cout << "ENTRA AL IFFFFFFFFFF DEL ITERATOR, unidad cargada en New Unit: " << gameInterface->getNewUnit()->getName()<< endl;
-				}
-			}
+#ifdef DEBUG
+					cout << "ENTRA AL IFFFFFFFFFF DEL ITERATOR, unidad cargada en New Unit: " << gameInterface->getNewUnit()->getName() << endl;
 
+#endif // DEBUG
+					}
+			}
+#ifdef DEBUG
 			cout << "HOLA! coordenada DEFENDER :  (I= " << (int)aux[1] << "; J=" << (int)(aux[2] - 0X41) << " )" << endl;
 			cout << "UNIDAD COMPRADA " << gameInterface->getNewUnit()->getName() << endl;
+
+#endif // DEBUG
+
 			ret = true;
 			break;
 		case OP_ATTACK:
@@ -398,8 +395,9 @@ bool NetworkEventSource::isThereEvent()
 			gameInterface->setDie((int)aux[5]);
 			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-0X41));
 			gameInterface->setDefender((int)aux[3], (int)(aux[4]-0X41));
+#ifdef DEBUG
 			cout << "Se arma eventio attack" << endl;
-			
+#endif // DEBUG
 			ret = true;
 			break;
 		case OP_YOU_WON: //sin campo de datos
@@ -465,7 +463,9 @@ genericEvent * NetworkEventSource::insertEvent()
 		ret = (genericEvent *) new EV_RIStart();
 		break;
 	case R_PASS:
+#ifdef DEBUG
 		cout << "INSERT EVENT R PASS" << endl;
+#endif // DEBUG
 		ret = (genericEvent *) new EV_RPass();
 		break;
 	case R_MOVE:
@@ -496,11 +496,11 @@ genericEvent * NetworkEventSource::insertEvent()
 		ret = (genericEvent *) new EV_ErrDetected();
 		break;
 	case MOVE:		//VER si este case se deja o si se saca
-		cout << "IMPRIMIO ESTOOOOOOOOOOOOOOOOOOOO" << endl;
+		//cout << "IMPRIMIO ESTOOOOOOOOOOOOOOOOOOOO" << endl;
 		ret = (genericEvent *) new EV_Move();
 		break;
 	case PASS:		//VER si este case se deja o si se saca
-		cout << "INSERT EVENT PASS (networking)" << endl;
+		//cout << "INSERT EVENT PASS (networking)" << endl;
 		ret = (genericEvent *) new EV_Pass();
 		break;
 	case PURCHASE:		//VER si este case se deja o si se saca
@@ -540,10 +540,10 @@ bool UserEventSource::isThereEvent()
 	int button;
 	
 #ifdef DEBUG	//MOVERLO!!!!
-	if(gameInterface->getIamPlaying())
-		gameInterface->graphics->setDisplayName("SKIRMISH WARS - YOUR TURN");	//Esto no va aca
-	else
-		gameInterface->graphics->setDisplayName("SKIRMISH WARS - OPPONENT TURN");	//Esto no va aca
+	//if(gameInterface->getIamPlaying())
+	//	gameInterface->graphics->setDisplayName("SKIRMISH WARS - YOUR TURN");	//Esto no va aca
+	//else
+	//	gameInterface->graphics->setDisplayName("SKIRMISH WARS - OPPONENT TURN");	//Esto no va aca
 	
 #endif // DEBUG
 
@@ -610,6 +610,7 @@ bool UserEventSource::isThereEvent()
 
 eventCode UserEventSource::dispatchClick(int x, int y)
 {
+	int button;
 	if (((0.0 < x) && (x < M_WIDTH(gameInterface->graphics->getDisplay()))) && ((0.0 < y) && (y < M_HEIGHT(gameInterface->graphics->getDisplay()))))
 	{
 		//Se cliqueo dentro del mapa
@@ -617,6 +618,11 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 			for (int j = 0; j < (COLUMNA); j++) {
 
 				gameInterface->myMap->getTile(i, j)->toogleIsSelected(false);
+			}
+		}
+
+		for (int i = 0; i < (FILA); i++) {
+			for (int j = 0; j < (COLUMNA); j++) {
 				if (((((T_WIDTH(gameInterface->graphics->getDisplay()) * j) < x) && (x < ((T_WIDTH(gameInterface->graphics->getDisplay()) * j) + T_WIDTH(gameInterface->graphics->getDisplay()))))) &&
 					((((T_HEIGHT(gameInterface->graphics->getDisplay()) * i) < y) && (y < ((T_HEIGHT(gameInterface->graphics->getDisplay()) * i) + T_HEIGHT(gameInterface->graphics->getDisplay()))))))
 				{
@@ -626,7 +632,6 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 #endif // DEBUG
 					gameInterface->setTileSelected(i, j);
 					gameInterface->myMap->getTile(i, j)->toogleIsSelected(true);
-					gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney(), gameInterface->playerMe->getTeam());
 					return TILE;
 				}
 			}
@@ -634,41 +639,70 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 	}
 
 	else if ((((M_WIDTH(gameInterface->graphics->getDisplay()) < x) && (x < al_get_display_width(gameInterface->graphics->getDisplay())))) &&
-		((al_get_font_line_height(gameInterface->graphics->getMenuFont()) < y) && (y < (al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0)))))
+		((al_get_font_line_height(gameInterface->graphics->getMenuFont()) < y) && (y < (al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0)))))
 	{
 		//Se apreto ATTACK
 #ifdef DEBUG
 		cout << "Se apreto Attack" << endl;
 #endif // DEBUG
-		return BO_ATTACK;
+
+		if ((button = al_show_native_message_box(
+			gameInterface->graphics->getDisplay(),
+			"WARNING",
+			"Are you sure you want to attack?",
+			"If you click \"yes\", you will no longer be able to move.",
+			NULL,
+			ALLEGRO_MESSAGEBOX_YES_NO)) == 1)
+		{
+			return BO_ATTACK;
+		}
+			
 	}
 	else if (((M_WIDTH(gameInterface->graphics->getDisplay()) < x) && (x < al_get_display_width(gameInterface->graphics->getDisplay()))) &&
-		(((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0)) < y) && (y < ((al_get_font_line_height((gameInterface->graphics->getMenuFont())) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0) * 2)))))
+		(((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0)) < y) && (y < ((al_get_font_line_height((gameInterface->graphics->getMenuFont())) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0) * 2)))))
 	{
 		//Se apreto PASS
 #ifdef DEBUG
 		cout << "Se apreto Pass" << endl;
 #endif // DEBUG
-		return PASS;
+		if ((button = al_show_native_message_box(
+			gameInterface->graphics->getDisplay(),
+			"WARNING",
+			"Are you sure you want to pass your turn?", NULL, NULL,
+			ALLEGRO_MESSAGEBOX_YES_NO)) == 1)
+		{
+			return PASS;
+		}
+		
 	}
 
 	else if (((M_WIDTH(gameInterface->graphics->getDisplay()) < x) && (x < al_get_display_width(gameInterface->graphics->getDisplay()))) &&
-		(((((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0) * 2))) < y) && (y < (((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0) * 3))))))
+		(((((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0) * 2))) < y) && (y < (((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0) * 3))))))
 	{
 		//Se apreto PURCHASE
 #ifdef DEBUG
 		cout << "Se apreto Purchase\n" << endl;
 #endif // DEBUG
-		return BO_PURCHASE;
+
+		if ((button = al_show_native_message_box(
+			gameInterface->graphics->getDisplay(),
+			"WARNING",
+			"Are you sure you want to purchase?",
+			"If you click \"yes\", you will no longer be able to move & attack.",
+			NULL,
+			ALLEGRO_MESSAGEBOX_YES_NO)) == 1)
+		{
+			return BO_PURCHASE;
+		}		
 	}
 
 	list<Unit>::iterator it3 = gameInterface->data->getUnitList().begin();
 	for (int i = 0; i < 9; i++)
 	{
 		if (((M_WIDTH(gameInterface->graphics->getDisplay()) + 20 < x) && (x < al_get_display_width(gameInterface->graphics->getDisplay())))
-			&& (((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0) * 3) + (al_get_font_line_height(gameInterface->graphics->getMenuFont()) * i)
+			&& (((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0) * 3) + (al_get_font_line_height(gameInterface->graphics->getMenuFont()) * i)
 				< y) && (y <
-				(al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 8.0) * 3) + (al_get_font_line_height(gameInterface->graphics->getMenuFont()) * i) + al_get_font_line_height(gameInterface->graphics->getMenuFont()))))
+				(al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0) * 3) + (al_get_font_line_height(gameInterface->graphics->getMenuFont()) * i) + al_get_font_line_height(gameInterface->graphics->getMenuFont()))))
 		{
 			// Se apreto para comprar la unidad de numero i de la lista
 			advance(it3, i);
@@ -711,7 +745,6 @@ genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 		ret = (genericEvent *) new EV_BoPurchase();
 		break;
 	case PASS:
-		cout << "insert event PASS" << endl;
 		ret = (genericEvent *) new EV_Pass();
 		break;
 	case BO_ATTACK:
@@ -736,12 +769,15 @@ TimeoutEventSource::TimeoutEventSource()
 	timerRunning2 = false;
 	//timeoutsCount1 = 0;
 	//timeoutsCount2 = 0;
+	timeout10s = false;
+	timeout30s = false;
+	timeoutCount1 = false;
 }
 
 bool TimeoutEventSource::isThereEvent()
 {
 	timeout = false;
-	if (((clock() - tInicial1) > ONE_MIN * CLOCKS_PER_SEC) && timerRunning1)
+	if (((clock() - tInicial1) >= ONE_MIN * CLOCKS_PER_SEC) && timerRunning1)
 	{
 		timeout = true;
 		//timerRunning = false; //MODIFICARLO DESDE AFUERA CON stopTimer!!!!
@@ -755,22 +791,33 @@ bool TimeoutEventSource::isThereEvent()
 			evCode = ONE_MIN_TIMEOUT;
 		//}
 	}
-	else if (((clock() - tInicial1) > FIFTY_SEC * CLOCKS_PER_SEC) && timerRunning1)
+	else if (((clock() - tInicial1) >= FIFTY_SEC * CLOCKS_PER_SEC) && timerRunning1 && (timeout10s == false))
 	{
 		timeout = true;
+		timeout10s = true;
+		timeoutCount1++;
 		evCode = TEN_SEC_LEFT;
 	}
-	else if (((clock() - tInicial1) > THIRTY_SEC * CLOCKS_PER_SEC) && timerRunning1)
+	else if (((clock() - tInicial1) >= THIRTY_SEC * CLOCKS_PER_SEC) && timerRunning1 && (timeout30s == false))
 	{
 		timeout = true;
+		timeout30s = true;
+		timeoutCount1++;
 		evCode = THIRTY_SEC_LEFT;
 	}
-	else if (((clock() - tInicial2) > TWO_HALF_MIN * CLOCKS_PER_SEC) && timerRunning2)
+	else if (((clock() - tInicial2) >= TWO_HALF_MIN * CLOCKS_PER_SEC) && timerRunning2)
 	{
 		timeout = true;
 		//timerRunning = false;
-		//timeoutsCount++;
+		timeoutCount1++;
 		evCode = TWO_HALF_MIN_TIMEOUT;
+	}
+	else if (((clock() - tInicial1) >= timeoutCount1 * CLOCKS_PER_SEC) && timerRunning1)
+	{
+	timeout = true;
+	cout << "1 sec" << endl;
+	evCode = ONE_SEC_TIMEOUT;
+	timeoutCount1++;
 	}
 	else 
 	{
@@ -785,7 +832,9 @@ void TimeoutEventSource::startTimer1()
 	//timeout1 = false;	//Se setea la variable de control en false, indicando que no ha ocurrido timeout
 	tInicial1 = clock();
 	timerRunning1 = true;
-	//timeoutsCount1 = 0;
+	timeout10s = false;
+	timeout30s = false;
+	timeoutCount1 = 0;
 }
 
 void TimeoutEventSource::startTimer2()
@@ -793,22 +842,29 @@ void TimeoutEventSource::startTimer2()
 	//timeout2 = false;	//Se setea la variable de control en false, indicando que no ha ocurrido timeout
 	tInicial2 = clock();
 	timerRunning2 = true;
-	//timeoutsCount2 = 0;
+	//timeoutCount2 = 0;
 }
 
 void TimeoutEventSource::stopTimer1()
 {
 	timerRunning1 = false;
+	timeoutCount1 = 0;
 }
 
 void TimeoutEventSource::stopTimer2()
 {
 	timerRunning2 = false;
+	//timeoutCount2 = 0;
+}
+
+unsigned int TimeoutEventSource::getTimeoutCount1()
+{
+	return timeoutCount1;
 }
 
 genericEvent * TimeoutEventSource::insertEvent()
 {
-	genericEvent * ret;
+	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
 
 	switch (evCode)
 	{
@@ -817,6 +873,15 @@ genericEvent * TimeoutEventSource::insertEvent()
 		break;
 	case TWO_HALF_MIN_TIMEOUT:
 		ret = (genericEvent *) new EV_TwoHalfMinTimeout;
+		break;
+	case TEN_SEC_LEFT:
+		ret = (genericEvent *) new EV_TenSecLeft;
+		break;
+	case THIRTY_SEC_LEFT:
+		ret = (genericEvent *) new EV_ThirtySecLeft;
+		break;
+	case ONE_SEC_TIMEOUT:
+		ret = (genericEvent *) new EV_OneSecTimeout;
 		break;
 	default:
 		break;

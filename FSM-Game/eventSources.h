@@ -3,7 +3,7 @@
 #ifndef EVENTSOURCES_H
 #define EVENTSOURCES_H
 
-#define DEBUG true
+//#define DEBUG true
 
 #include <string>
 #include <vector>
@@ -110,15 +110,19 @@ public:
 	void startTimer2();
 	void stopTimer1();
 	void stopTimer2();
+	unsigned int getTimeoutCount1();
 	genericEvent* insertEvent();
 private:
 	clock_t tInicial1;
 	clock_t tInicial2;
-	//unsigned int timeoutsCount1;
-	//unsigned int timeoutsCount2;
+	unsigned int timeoutCount1;
+	unsigned int timeoutCount2;
 	bool timeout;	//Si está en true se cumplió el tiempo.
 	bool timerRunning1;
 	bool timerRunning2;
+
+	bool timeout10s;
+	bool timeout30s;
 };
 
 

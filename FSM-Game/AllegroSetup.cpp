@@ -24,39 +24,45 @@ bool allegroStartup(void)
 							{
 								if (al_install_audio())
 								{
-									return EXIT_SUCCESS;
+									if (al_init_acodec_addon())
+									{
+										return EXIT_SUCCESS;
+									}
+									else
+										printf("Unable to start audiocodec addon \n");
+										
 								}
 								else
-									fprintf(stderr, "Unable to start audio addon \n");
+									printf("Unable to start audio addon \n");
 								//al_shutdown_video_addon();
 							}
 							else
-								fprintf(stderr, "Unable to start image addon \n");
+								printf("Unable to start image addon \n");
 							al_shutdown_ttf_addon();
 						}
 						else
-							fprintf(stderr, "ERROR: Failed to initialize ttf addon\n");
+							printf("ERROR: Failed to initialize ttf addon\n");
 						al_shutdown_font_addon();
 						al_shutdown_image_addon();
 					}
 					else
-						fprintf(stderr, "ERROR: Failed to initialize image addon\n");
+						printf("ERROR: Failed to initialize image addon\n");
 					al_uninstall_mouse();
 				}
 				else
-					fprintf(stderr, "ERROR: Failed to install mouse\n");
+					printf("ERROR: Failed to install mouse\n");
 				al_uninstall_keyboard();
 			}
 			else
-				fprintf(stderr, "ERROR: Failed to install keyboard\n");
+				printf("ERROR: Failed to install keyboard\n");
 			al_shutdown_primitives_addon();
 		}
 		else
-			fprintf(stderr, "ERROR: Failed to load primitives addon \n");
+			printf("ERROR: Failed to load primitives addon \n");
 		al_uninstall_system();
 	}
 	else
-		fprintf(stderr, "ERROR: Failed to initialize allegro system\n");
+		printf("ERROR: Failed to initialize allegro system\n");
 
 	return EXIT_FAILURE;
 }

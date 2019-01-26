@@ -2,7 +2,7 @@
 #ifndef GENERICSTATE_H
 #define GENERICSTATE_H
 
-#define DEBUG true
+//#define DEBUG true
 
 #include "usefulInfo.h"
 #include "genericEvent.h"
@@ -50,6 +50,7 @@ public:
 	virtual genericState* on_NewUnit(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_YouWon(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	virtual genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	

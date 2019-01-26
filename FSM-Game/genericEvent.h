@@ -1,7 +1,7 @@
 #ifndef GENERICEVENT_H
 #define GENERICEVENT_H
 
-#define DEBUG true
+//#define DEBUG true
 
 #include <string>
 
@@ -50,7 +50,7 @@ typedef enum {
 
 	//EVENTOS generados por Timeout
 	//TIMEOUT//, CONNECTION_FAIL
-	ONE_MIN_TIMEOUT, TWO_HALF_MIN_TIMEOUT, TEN_SEC_LEFT, THIRTY_SEC_LEFT
+	ONE_MIN_TIMEOUT, TWO_HALF_MIN_TIMEOUT, TEN_SEC_LEFT, THIRTY_SEC_LEFT, ONE_SEC_TIMEOUT
 
 } eventCode;
 

@@ -84,9 +84,9 @@ genericState* ST_S_WaitingNameIsAck::on_Rack(genericEvent *ev, usefulInfo * Info
 
 	Info->gameInterface->myMap->randomMap();
 	Info->gameInterface->myMap->generateTilesArray(Info->gameInterface->data->getBuildingList(), Info->gameInterface->data->getTerrainList(), Info->gameInterface->data->getUnitList());	
-	Info->gameInterface->myMap->updateFogOfWar(Info->gameInterface->playerMe->getTeam());
-	Info->gameInterface->graphics->loadBitmaps(Info->gameInterface->myMap);
-	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam());
+	//Info->gameInterface->myMap->updateFogOfWar(Info->gameInterface->playerMe->getTeam());
+	//Info->gameInterface->graphics->loadBitmaps(Info->gameInterface->myMap);
+	//Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam());
 	
 	Info->gameInterface->myMap->setChecksum();
 	Info->nextPkg = new MapIs(Info->gameInterface->myMap->getMapName(), Info->gameInterface->myMap->getChecksum());

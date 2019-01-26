@@ -2,8 +2,12 @@
 
 StartMenu::StartMenu()
 {
-	//al_set_new_display_flags(ALLEGRO_RESIZABLE);
+	//ALLEGRO_MONITOR_INFO info;
+	//al_get_monitor_info(0, &info);
+	//printf("%i x %i", info.x2 - info.x1, info.y2 - info.y1);
 
+	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	//display = al_create_display(info.x2 - info.x1, info.y2 - info.y1);
 	display = al_create_display(DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	if (!display) {
 		fprintf(stderr, "failed to create display!\n");
@@ -44,8 +48,8 @@ StartMenu::StartMenu()
 
 void StartMenu::openApp()
 {
-	//sw_v = new video(VIDEO_PATH);
-	//sw_v->playVideo(display);
+	sw_v = new video(VIDEO_PATH);
+	sw_v->playVideo(display);
 	
 	onIpNameInput = false;
 	redraw = false;
@@ -284,7 +288,10 @@ void StartMenu::dispacherIpNameMenu(ALLEGRO_EVENT ev)
 			onIpNameInput = false;						//ACA SE TENDRIA QUE ENVIAR LOS DATOS Y SALIR DEL MENU!!!
 			do_exit = true;
 			al_clear_to_color(al_map_rgb(0, 0, 0));
-			al_draw_text(menuFont, al_map_rgb(100, 100, 100), 0.0, 0.0, 0.0, "LOADING...");
+			al_draw_text(menuFont, al_map_rgb(100, 100, 100),
+				(al_get_display_width(display) / 2) - al_get_text_width(menuFont, "LOADING...")/2,
+				(al_get_display_height(display) / 2) - al_get_font_line_height(menuFont)/2,
+				0.0, "LOADING...");
 			al_flip_display();
 		
 		}

@@ -3,7 +3,7 @@
 #ifndef STATESNETWORKING_H
 #define STATESNETWORKING_H
 
-#define DEBUG true
+//#define DEBUG true
 
 #include "genericState.h"
 

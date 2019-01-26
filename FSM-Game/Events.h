@@ -1,7 +1,7 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 
-#define DEBUG true
+//#define DEBUG true
 
 //#include "Screen.h"
 #include "genericEvent.h"
@@ -386,6 +386,13 @@ class EV_ThirtySecLeft : public genericEvent
 {
 public:
 	EV_ThirtySecLeft() { ev = THIRTY_SEC_LEFT; };
+private:
+};
+
+class EV_OneSecTimeout : public genericEvent
+{
+public:
+	EV_OneSecTimeout() { ev = ONE_SEC_TIMEOUT; };
 private:
 };
 

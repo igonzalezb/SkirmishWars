@@ -3,7 +3,7 @@
 #ifndef STATESGAME_H
 #define STATESGAME_H
 
-#define DEBUG true
+//#define DEBUG true
 
 #include "genericState.h"
 //#include "PlayerInfo.h"
@@ -54,7 +54,7 @@ class ST_WaitingMoveConfirmation :public genericState //ACA se estaria esperando
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Attack(genericEvent* ev, usefulInfo * Info); //HACER ESTAS, COPIANDO AL RESTO
 	//genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
@@ -83,7 +83,7 @@ class ST_WaitingAttackConfirmation :public genericState //ACA se estaria esperan
 	genericState* on_Attack(genericEvent* ev, usefulInfo * Info); //HACER ESTAS, COPIANDO AL RESTO
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Purchase(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 

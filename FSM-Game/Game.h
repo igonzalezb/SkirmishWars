@@ -2,7 +2,7 @@
 //#ifndef GAME_H
 //#define GAME_H
 
-#define DEBUG true
+//#define DEBUG true
 
 #include <iostream>
 #include <string>

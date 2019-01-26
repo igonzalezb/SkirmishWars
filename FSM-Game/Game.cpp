@@ -94,9 +94,9 @@ void Game::move()
 	}
 
 	myMap->getTile(getDefender().i, getDefender().j)->toogleIsSelected(false);
-	myMap->updateFogOfWar(playerMe->getTeam());
-	graphics->loadBitmaps(myMap);
-	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
+	//myMap->updateFogOfWar(playerMe->getTeam());
+	//graphics->loadBitmaps(myMap);
+	//graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
 
 }
 
@@ -107,9 +107,9 @@ void Game::attack()
 	int firepower, inicialDamage, finalDamage, dieOnChart;
 	//if (stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getHp()) < 5)
 
-	if (myMap->getTile(attacker.i, attacker.j)->getUnit() != NULL) {
+	/*if (myMap->getTile(attacker.i, attacker.j)->getUnit() != NULL) {
 		cout << "HP de UNIT attacker:" << myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp() << endl;
-	}
+	}*/
 
 	if (myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp() < 5) //menor a 5 significa REDUCED
 	{
@@ -147,7 +147,7 @@ void Game::attack()
 
 	//die= rand() % 7 + 1; //VERIFICAR si esto tira un valor random entre 1 y 6.
 
-	cout << "DADO: " << die << endl;
+	//cout << "DADO: " << die << endl;
 
 	int columna;
 	string defenderTerrain = myMap->getTile(attacker.i, attacker.j)->getTerrain()->getType();
@@ -181,11 +181,11 @@ void Game::attack()
 	{
 		finalDamage++;
 	}
-	cout << "final damage = " << finalDamage << endl;
+	//cout << "final damage = " << finalDamage << endl;
 
 	myMap->getTile(defender.i, defender.j)->getUnit()->setHp((myMap->getTile(defender.i, defender.j)->getUnit()->getHp()) - finalDamage);
 
-	cout << "HP luego del attack: " << myMap->getTile(defender.i, defender.j)->getUnit()->getHp() << endl;
+	//cout << "HP luego del attack: " << myMap->getTile(defender.i, defender.j)->getUnit()->getHp() << endl;
 
 	if ((myMap->getTile(defender.i, defender.j)->getUnit()->getHp())<=0)
 	{
@@ -200,16 +200,16 @@ void Game::attack()
 	defender.j = NULL;
 
 
-	myMap->updateFogOfWar(playerMe->getTeam());
-	graphics->loadBitmaps(myMap);
-	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
+//	myMap->updateFogOfWar(playerMe->getTeam());
+//	graphics->loadBitmaps(myMap);
+//	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
 }
 
 //antes de llamar a esta funcion debo setear el attacker con la unidad que este encima de un building que no es propio 
 void Game::captureProperty(Player* pAttacker)
 {
-	cout << "ENTROOOOOOOO CAPTURE PROPERTY!!!!!" << endl;
-	cout <<"Cp original=" <<myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp() << endl;
+	//cout << "ENTROOOOOOOO CAPTURE PROPERTY!!!!!" << endl;
+	//cout <<"Cp original=" <<myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp() << endl;
 	
 		if ((myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp()) < 5)//Si la unidad que conquista esta reducida
 		{
@@ -219,7 +219,7 @@ void Game::captureProperty(Player* pAttacker)
 		{
 			myMap->getTile(attacker.i, attacker.j)->getBuilding()->setCp((myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp()) - 2);
 		}
-	cout << "Cp luego de la captura=" << myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp() << endl;
+	//cout << "Cp luego de la captura=" << myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp() << endl;
 	
 	//HACER: Girar carta de la property o mostrar en algun  lado un contador con el valor nuevo del CP de la property atacada
 
@@ -229,9 +229,9 @@ void Game::captureProperty(Player* pAttacker)
 	defender.j = NULL;
 
 
-	myMap->updateFogOfWar(playerMe->getTeam());
-	graphics->loadBitmaps(myMap);
-	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
+//	myMap->updateFogOfWar(playerMe->getTeam());
+//	graphics->loadBitmaps(myMap);
+//	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
 }
 
 void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado en defender.i y defender.j las coordenadas del lugar al que quieren poner la unidad nueva.
@@ -240,9 +240,9 @@ void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado e
 	myMap->getTile(defender.i, defender.j)->getUnit()->setTeam(player->getTeam());
 	player->setMoney((player->getMoney())-(stoi(newUnit->getCost())));
 
-	myMap->updateFogOfWar(playerMe->getTeam());
-	graphics->loadBitmaps(myMap);
-	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
+//	myMap->updateFogOfWar(playerMe->getTeam());
+//	graphics->loadBitmaps(myMap);
+//	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
 }
 
 bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE

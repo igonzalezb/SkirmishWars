@@ -2,7 +2,12 @@
 
 MapGraphics::MapGraphics(ALLEGRO_DISPLAY * display)
 {
-	this->display = display;	
+	this->display = display;
+
+	if (!al_reserve_samples(RESERVED_SAMPLES))
+	{
+		printf("failed to reserve samples!\n");
+	}
 	
 	attackButton = al_load_bitmap("resources/images/buttons/AttackButton.png");
 	if(!attackButton)
@@ -26,13 +31,28 @@ MapGraphics::MapGraphics(ALLEGRO_DISPLAY * display)
 
 	menuFont = al_load_font(FONT_MENU, 30, 0);
 	if (!menuFont) {
-		fprintf(stderr, "failed to create menuFont!\n");
+		printf("failed to create menuFont!\n");
 	}
 
 	hpFont = al_load_font(FONT_MENU, 20, 0);
 	if (!hpFont) {
-		fprintf(stderr, "failed to create menuFont!\n");
+		printf("failed to create menuFont!\n");
 	}
+
+
+	beep = al_load_sample("resources/sounds/beep.wav");
+
+	if (!beep) {
+		printf("Failed to create sound beep!\n");
+	}
+
+	gameover = al_load_sample("resources/sounds/game_over.wav");
+
+	if (!gameover) {
+		printf("Failed to create sound game_over!\n");
+	}
+
+
 
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
@@ -59,30 +79,30 @@ MapGraphics::~MapGraphics()
 
 }
 
-void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, TeamNumber my_team)
+void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, TeamNumber my_team, unsigned int time)
 {
 	al_clear_to_color(al_map_rgb(0.0, 170.0, 0.0));
 
 	//if()
 
 	//Imprimo en pantalla el dinero
-	string money_text = "MONEY: $" + to_string(player_money);
-	al_draw_textf(menuFont, al_map_rgb(255, 255, 255), M_WIDTH(display) + 20, 0.0, 0.0, money_text.c_str());
+	al_draw_textf(menuFont, al_color_name("white"), M_WIDTH(display) + 20, 0.0, 0.0, (("Time Left: ") + to_string(time)).c_str());
+	al_draw_textf(menuFont, al_map_rgb(255, 255, 255), al_get_display_width(display) - al_get_text_width(menuFont, ("$ " + to_string(player_money)).c_str()), 0.0, 0.0, ("$" + to_string(player_money)).c_str());
 	
 	//Imprimo el boton ATTACK en la pantalla
 	al_draw_scaled_bitmap(attackButton, 0.0, 0.0,
 		al_get_bitmap_width(attackButton), al_get_bitmap_height(attackButton),
-		M_WIDTH(display), al_get_font_line_height(menuFont), R_WIDTH, M_HEIGHT(display) / 8.0, 0);
+		M_WIDTH(display), al_get_font_line_height(menuFont), R_WIDTH, M_HEIGHT(display) / 9.0, 0);
 	
 	//Imprimo el boton PASS en la pantalla
 	al_draw_scaled_bitmap(passButton, 0.0, 0.0,
 		al_get_bitmap_width(passButton), al_get_bitmap_height(passButton),
-		M_WIDTH(display), al_get_font_line_height(menuFont) + (M_HEIGHT(display) / 8.0), R_WIDTH, M_HEIGHT(display) / 8.0, 0);
+		M_WIDTH(display), al_get_font_line_height(menuFont) + (M_HEIGHT(display) / 9.0), R_WIDTH, M_HEIGHT(display) / 9.0, 0);
 
 	//Imprimo el boton PURCHASE en la pantalla
 	al_draw_scaled_bitmap(purchaseButton, 0.0, 0.0,
 		al_get_bitmap_width(purchaseButton), al_get_bitmap_height(purchaseButton),
-		M_WIDTH(display), al_get_font_line_height(menuFont) + (M_HEIGHT(display) / 8.0)*2, R_WIDTH, M_HEIGHT(display) / 8.0, 0);
+		M_WIDTH(display), al_get_font_line_height(menuFont) + (M_HEIGHT(display) / 9.0)*2, R_WIDTH, M_HEIGHT(display) / 9.0, 0);
 
 	//Imprimo en la pantalla la lista de unidades para comprar
 	list<Unit>::iterator iterator1 = data->getUnitList().begin();
@@ -91,7 +111,7 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, TeamNum
 		currItem = iterator1->getName() + ": $";
 		currItem += iterator1->getCost();
 		al_draw_text(menuFont, al_map_rgb(255, 255, 255), M_WIDTH(display) + 20,
-			(al_get_font_line_height(menuFont) + (M_HEIGHT(display) / 8.0) * 3) + (al_get_font_line_height(menuFont) * i), 0.0,
+			(al_get_font_line_height(menuFont) + (M_HEIGHT(display) / 9.0) * 3) + (al_get_font_ascent(menuFont) * i), 0.0,
 			currItem.c_str());
 		if (i < 8)
 		{
@@ -182,7 +202,7 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, TeamNum
 				
 			}
 
-			myMap->getTile(i, j)->toogleIsSelected(false);
+			//myMap->getTile(i, j)->toogleIsSelected(false);
 		}
 	}
 
@@ -257,93 +277,39 @@ void MapGraphics::showDice(int _dice)
 
 }
 
+void MapGraphics::playTenSecSound()
+{
+	al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+}
+
+void MapGraphics::playThirtySecSound()
+{
+	al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+}
+
+void MapGraphics::playOneMinSound()
+{
+	al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+}
+
+void MapGraphics::playGameOverSound()
+{
+	al_play_sample(gameover, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+}
+
 ALLEGRO_DISPLAY* MapGraphics::getDisplay()
 {
 	return display;
 }
 
+//void MapGraphics::showTime(unsigned int time)
+//{
+//	al_draw_textf(menuFont, al_color_name("white"), M_WIDTH(display) + 20, 0.0, 0.0, (("Time Left: ") + to_string(time)).c_str());
+//	al_flip_display();
+//
+//}
+
 ALLEGRO_FONT * MapGraphics::getMenuFont()
 {
 	return menuFont;
 }
-
-//eventCode MapGraphics::dispatchClick(int x, int y, Game * gameInfo)
-//{	
-//	if (((0.0 < x) && (x < M_WIDTH)) && ((0.0 < y) && (y < M_HEIGHT)))
-//	{
-//		//Se cliqueo dentro del mapa
-//		for (int i = 0; i < (FILA); i++) {
-//			for (int j = 0; j < (COLUMNA); j++) {
-//
-//				gameInfo->myMap->getTile(i, j)->toogleIsSelected(false);
-//				if (((((T_WIDTH * j) < x) && (x < ((T_WIDTH * j) + T_WIDTH)))) &&
-//					((((T_HEIGHT * i) < y) && (y < ((T_HEIGHT * i) + T_HEIGHT)))))
-//				{
-//					//Se cliqueo en la posicion ij (i:fila(16). j:col(12))
-//#ifdef DEBUG
-//					cout << "SE APRETO la fila:" << i << " , columna " << j << endl;
-//#endif // DEBUG
-//					gameInfo->setTileSelected(i, j);
-//					gameInfo->myMap->getTile(i, j)->toogleIsSelected(true);
-//					return TILE;
-//				}
-//			}
-//		}
-//	}
-//
-//	else if ((((M_WIDTH < x) && (x < al_get_display_width(display)))) && 
-//		((al_get_font_line_height(menuFont) < y) && (y < (al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0)))))
-//	{
-//		//Se apreto ATTACK
-//#ifdef DEBUG
-//		cout << "Se apreto Attack" << endl;
-//#endif // DEBUG
-//		return BO_ATTACK;
-//	}
-//	else if (((M_WIDTH < x) && (x < al_get_display_width(display))) &&
-//		(((al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0)) < y) && (y < ((al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0)*2)))))
-//	{
-//		//Se apreto PASS
-//#ifdef DEBUG
-//		cout << "Se apreto Pass" << endl;
-//#endif // DEBUG
-//		return PASS;
-//	}
-//
-//	else if (((M_WIDTH < x) && (x < al_get_display_width(display))) && 
-//		(((((al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0) * 2))) < y) && (y < (((al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0) * 3))))))
-//	{
-//		//Se apreto PURCHASE
-//#ifdef DEBUG
-//		cout << "Se apreto Purchase\n" << endl;
-//#endif // DEBUG
-//		return BO_PURCHASE;
-//	}
-//
-//	list<Unit>::iterator it3 = gameInfo->data->getUnitList().begin();
-//	for (int i = 0; i < 9; i++) 
-//	{
-//		if (((M_WIDTH + 20 < x) && (x < al_get_display_width(display)))
-//			&& (((al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0) * 3) + (al_get_font_line_height(menuFont) * i)
-//				< y) && (y <
-//				(al_get_font_line_height(menuFont) + (M_HEIGHT / 8.0) * 3) + (al_get_font_line_height(menuFont) * i) + al_get_font_line_height(menuFont))))
-//		{
-//			// Se apreto para comprar la unidad de numero i de la lista
-//			advance(it3, i);
-//			Unit *currUnit = new Unit(it3);
-//			currUnit->setTeam(gameInfo->playerMe->getTeam());
-//			gameInfo->setNewUnit(currUnit);
-//#ifdef DEBUG
-//			cout << "Se apreto comprar: " << it3->getName() << endl;
-//#endif // DEBUG
-//			return NEW_UNIT;
-//		}
-//	
-//	}
-//
-//#ifdef DEBUG
-//	cout << "No se apreto nada relevante" << endl;
-//#endif // DEBUG
-//
-//	return NO_EV;		//VER!!!!!
-//}

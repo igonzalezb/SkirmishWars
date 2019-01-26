@@ -43,7 +43,7 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case R_PASS:
 			newState = currentState->on_RPass(ev, Info);
-			cout << "DISPATCHER DE NETWORKING EN R PASS" << endl;
+			//cout << "DISPATCHER DE NETWORKING EN R PASS" << endl;
 			break;
 		case R_MOVE:
 			newState = currentState->on_RMove(ev, Info);
@@ -90,34 +90,34 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case MAP_OK:
 			newState = currentState->on_MapOk(ev, Info);
-			cout << "DISPATCH DE MAP OK" << endl;
+			//cout << "DISPATCH DE MAP OK" << endl;
 			break;
 		case I_START:
 			newState = currentState->on_IStart(ev, Info);
-			cout << "DISPATCH DE I START" << endl;
+			//cout << "DISPATCH DE I START" << endl;
 			break;
 		case YOU_START:
 			newState = currentState->on_YouStart(ev, Info);
-			cout << "DISPATCH DE YOU START" << endl;
+			//cout << "DISPATCH DE YOU START" << endl;
 			break;
 		case PASS:
 			newState = currentState->on_Pass(ev, Info);
-			cout << "DISPATCH DE PASS, en NETWORKING FSM" << endl;
+			//cout << "DISPATCH DE PASS, en NETWORKING FSM" << endl;
 			break;
 		case MOVE:
 			newState = currentState->on_Move(ev, Info);
-			cout << "DISPATCH DE MOVE" << endl;
+			//cout << "DISPATCH DE MOVE" << endl;
 			break;
 		case PURCHASE:
 			newState = currentState->on_Purchase(ev, Info);
-			cout << "DISPATCH DE PURCHASE" << endl;
+			//cout << "DISPATCH DE PURCHASE" << endl;
 			break;
 		case ATTACK:
 			newState = currentState->on_Attack(ev, Info);
-			cout << "DISPATCH DE ATTACK" << endl;
+			//cout << "DISPATCH DE ATTACK" << endl;
 			break;
 		case NO_MONEY:
-			cout << "n: DISPATCH DE NO MONEY" << endl;
+			//cout << "n: DISPATCH DE NO MONEY" << endl;
 			newState = currentState->on_NoMoney(ev, Info);
 			break;
 		case ONE_MIN_TIMEOUT:

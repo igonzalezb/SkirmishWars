@@ -93,13 +93,12 @@ void Map::setChecksum()
 	for (unsigned int n = 1; n < archivo.length(); n++)
 	{
 		m = index[n - 1] ^ archivo.at(n);
-		cout << "m: " << m << endl;
 		index[n] = Tabla[m];
 	}
 
 	////cout << "m: " << m << endl;
 	checksum = index[archivo.length()-1];
-	cout << "Checksum: " << checksum << endl;
+	//cout << "Checksum: " << checksum << endl;
 	//isMapReceivedOk = true;
 
 	lectura.close();

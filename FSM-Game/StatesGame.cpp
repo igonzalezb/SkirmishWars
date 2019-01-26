@@ -89,6 +89,7 @@ genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info) //ESTO PON
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -167,7 +168,7 @@ genericState* ST_WaitingDestination::on_Pass(genericEvent* ev, usefulInfo * Info
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
-
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -189,6 +190,17 @@ genericState* ST_WaitingMoveConfirmation::on_Move(genericEvent *ev, usefulInfo *
 	Info->timeoutSrc->startTimer1();
 	return ret;
 }
+
+genericState* ST_WaitingMoveConfirmation::on_Pass(genericEvent* ev, usefulInfo * Info)
+{
+	cout << "G Waiting move confirm::on_Pass" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
 
 genericState* ST_WaitingMoveConfirmation::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
@@ -243,6 +255,7 @@ genericState* ST_Attacking::on_Pass(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -293,9 +306,6 @@ genericState* ST_WaitingDefender::on_Tile(genericEvent* ev, usefulInfo * Info)
 genericState* ST_WaitingDefender::on_BoPurchase(genericEvent* ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_Purchasing();
-
-	//COMPLETAR 
-
 	return ret;
 }
 
@@ -305,7 +315,7 @@ genericState* ST_WaitingDefender::on_Pass(genericEvent* ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
-
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -338,6 +348,15 @@ genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulIn
 	return ret;
 }
 
+genericState* ST_WaitingAttackConfirmation::on_Pass(genericEvent* ev, usefulInfo * Info)
+{
+	cout << "G Waiting attack confirm::on_Pass" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
 genericState* ST_WaitingAttackConfirmation::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
 	cout << "G WAITING ATTACK CONFIRM: ON 1 MIN TIMEOUT" << endl;
@@ -364,9 +383,6 @@ genericState* ST_Purchasing::on_NewUnit(genericEvent *ev, usefulInfo * Info) //V
 		ret = (genericState *) new ST_Purchasing();
 		Info->gameInterface->purchasing = false;
 	}
-
-	//COMPLETAR 
-
 	return ret;
 }
 
@@ -376,7 +392,7 @@ genericState* ST_Purchasing::on_Pass(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
-
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -442,7 +458,7 @@ genericState* ST_WaitingLocation::on_Pass(genericEvent* ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
-
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -546,6 +562,7 @@ genericState* ST_WaitingPurchaseConfirmation::on_Pass(genericEvent *ev, usefulIn
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -655,7 +672,7 @@ genericState* ST_YouMoving::on_RPass(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->setIamPlaying(true);
 	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
-
+	Info->timeoutSrc->startTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -715,7 +732,7 @@ genericState* ST_YouAttacking::on_RPass(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->setIamPlaying(true);
 	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
-
+	Info->timeoutSrc->startTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -765,6 +782,7 @@ genericState* ST_YouPurchasing::on_RPass(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->setIamPlaying(true);
 	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
+	Info->timeoutSrc->startTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -831,7 +849,7 @@ void setCaptureProperty(Player* player, Game* gameInterface)
 						gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(4);
 					}
 					gameInterface->graphics->loadBitmaps(gameInterface->myMap);
-					gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney(), gameInterface->playerMe->getTeam());
+//					gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney(), gameInterface->playerMe->getTeam());
 				}
 				cout << "CAPTURE PERO NO DEL TODO EN (I=" << i << ";J=" << j << ")" << endl;
 				cout << "CP DEL BUILDING=" << gameInterface->myMap->getTile(i, j)->getBuilding()->getCp() << endl;

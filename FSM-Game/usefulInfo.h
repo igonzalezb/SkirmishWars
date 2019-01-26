@@ -1,7 +1,7 @@
 #ifndef USEFULINFO_H
 #define USEFULINFO_H
 
-#define DEBUG true
+//#define DEBUG true
 
 #include <string>
 #include "eventSources.h"

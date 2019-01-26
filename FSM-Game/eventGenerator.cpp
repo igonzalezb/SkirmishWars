@@ -19,37 +19,10 @@ void eventGenerator::generateEvent()
 	if (I->networkSrc->isThereEvent())
 	{
 		buffer.push_back(I->networkSrc->insertEvent());
-
-
-		//if ((I->gameSrc->evCode == TILE) || (I->gameSrc->evCode == MOVE) || (I->gameSrc->evCode == NEW_UNIT)) //PARA PROBAR!!!!!!
-		//{
-		//	I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
-		//	I->userSrc->graphics->showMap(I->userSrc->gameInterface);
-		//}
-		////if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
-		//else
-		//{
-		//I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
-		//I->gameInterface->graphics->loadBitmaps(I->gameInterface->myMap);
-		//I->gameInterface->graphics->showMap(I->userSrc->gameInterface->data, I->userSrc->gameInterface->myMap, I->userSrc->gameInterface->playerMe->getMoney());
-		//}
 	}
 	if (I->gameSrc->isThereEvent())
 	{
 		buffer.push_back(I->gameSrc->insertEvent());
-
-		//if ((I->gameSrc->evCode == TILE) || (I->gameSrc->evCode == MOVE) || (I->gameSrc->evCode == NEW_UNIT) || (I->gameSrc->evCode == I_START) || (I->gameSrc->evCode == YOU_START)) //PARA PROBAR!!!!!!
-		//{
-		//	I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
-		//	I->userSrc->graphics->showMap(I->userSrc->gameInterface);
-		//}
-		//if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
-		//else
-		//{
-		//I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
-			//I->gameInterface->graphics->loadBitmaps(I->gameInterface->myMap);
-			//I->gameInterface->graphics->showMap(I->userSrc->gameInterface->data, I->userSrc->gameInterface->myMap, I->userSrc->gameInterface->playerMe->getMoney());
-			//}
 	}
 	
 
@@ -62,20 +35,6 @@ void eventGenerator::generateEvent()
 	if (I->userSrc->isThereEvent())
 	{
 		buffer.push_back(I->userSrc->insertEvent());
-
-		//if ((I->gameSrc->evCode == TILE) || (I->gameSrc->evCode == MOVE) || (I->gameSrc->evCode == NEW_UNIT) || (I->gameSrc->evCode == I_START) || (I->gameSrc->evCode == YOU_START)) //PARA PROBAR!!!!!!
-		//{
-		//	I->userSrc->graphics->loadBitmaps(I->gameInterface->myMap);
-		//	I->userSrc->graphics->showMap(I->userSrc->gameInterface);
-		//}
-		////if (I->gameSrc->evCode != NO_EV) //PARA PROBAR!!!!!!
-		//else //if (I->gameSrc->evCode != NO_EV)
-		//{
-		//I->gameInterface->myMap->updateFogOfWar(I->gameInterface->playerMe->getTeam());
-			//I->gameInterface->graphics->loadBitmaps(I->gameInterface->myMap);
-			//I->gameInterface->graphics->showMap(I->userSrc->gameInterface->data, I->userSrc->gameInterface->myMap, I->userSrc->gameInterface->playerMe->getMoney());
-			//}
-	//
 	}
 	
 

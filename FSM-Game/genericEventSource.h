@@ -1,7 +1,7 @@
 #ifndef GENERICEVENTSOURCE_H
 #define GENERICEVENTSOURCE_H
 
-#define DEBUG true
+//#define DEBUG true
 
 #include "genericEvent.h"
 

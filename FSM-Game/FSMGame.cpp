@@ -31,7 +31,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case MOVE:
 			newState = currentState->on_Move(ev, Info);
-			cout << "entro al switch de MOVE" << endl;
+			//cout << "entro al switch de MOVE" << endl;
 			break;
 		case PURCHASE:
 			newState = currentState->on_Purchase(ev, Info);
@@ -40,7 +40,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_Attack(ev, Info);
 			break;
 		case PASS:
-			cout << "DISPATCH DE PASS, EN GAME FSM" << endl;
+			//cout << "DISPATCH DE PASS, EN GAME FSM" << endl;
 			newState = currentState->on_Pass(ev, Info);
 			break;
 		case TILE:
@@ -50,7 +50,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_NewUnit(ev, Info);
 			break;
 		case NO_MONEY:
-			cout << "DISPATCH DE no money, EN GAME FSM" << endl;
+			//cout << "DISPATCH DE no money, EN GAME FSM" << endl;
 			newState = currentState->on_NoMoney(ev, Info);
 			break;
 		case R_YOU_START:
@@ -69,7 +69,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_RPurchase(ev, Info);
 			break;
 		case R_ATTACK:
-			cout << "DISPATCH R_ATTACK" << endl;
+			//cout << "DISPATCH R_ATTACK" << endl;
 			newState = currentState->on_RAttack(ev, Info);
 			break;
 		case R_YOU_WON:
@@ -96,8 +96,6 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case ERR_DETECTED:
 			newState = currentState->on_ErrDetected(ev, Info); //VER si este caso se deja o no 
-															   //si lo saco, sacar tambien de generic_states.h, genericEvent.h
-													   // se se deja, VER donde agregar en States.h
 			break;
 		case ONE_MIN_TIMEOUT:
 			newState = currentState->on_OneMinTimeout(ev, Info);
