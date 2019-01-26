@@ -126,7 +126,6 @@ bool GameEventSource::isThereEvent()
 #endif // DEBUG
 		gameInterface->playerChosen = false; //probando
 	}
-
 	if (gameInterface->myMap->isMapReceivedOk)
 	{
 #ifdef DEBUG
@@ -141,10 +140,14 @@ bool GameEventSource::isThereEvent()
 		evCode = NO_MONEY;
 		ret = true;
 	}
-
-	if (!(gameInterface->getNotWinning()))
+	if (gameInterface->didHeWin())
 	{
 		evCode = YOU_WON; //VER en que parte se setea nuevamente notWinning en true (probablemente cuando arranca el juego)
+		ret = true;
+	}
+	else
+	{
+		evCode = YOU_DIDNT_WIN;
 		ret = true;
 	}
 	if (gameInterface->moving==true)
@@ -203,6 +206,10 @@ bool GameEventSource::isThereEvent()
 			gameInterface->purchasing = false;
 			ret = true;
 		}
+	}
+	if (gameInterface->getEndPlaying())
+	{
+		evCode = END_PLAYING;
 	}
 
 	return ret;

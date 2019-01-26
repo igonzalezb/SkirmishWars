@@ -20,7 +20,7 @@ public:
 	virtual genericState* on_NoEv(genericEvent* ev) { return nullptr; }
 
 	virtual genericState* on_WaitingConnection(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	virtual genericState* on_Connected(genericEvent* ev, usefulInfo * Info) { return nullptr; } //Este creo que se borra
+	//virtual genericState* on_Connected(genericEvent* ev, usefulInfo * Info) { return nullptr; } //Este creo que se borra
 
 	virtual genericState* on_ConnectedAsServer(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_ConnectedAsClient(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -52,6 +52,9 @@ public:
 	virtual genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_YouWon(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
+	virtual genericState* on_YouWon(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_YouDidntWin(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+
 	virtual genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	
 	//virtual genericState* on_Timeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -73,6 +76,8 @@ public:
 	virtual genericState* on_RPurchase(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_RAttack(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+
+	virtual genericState* on_WaitingPlayingAgainConfirmation(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	virtual genericState* on_RplayAgain(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_RgameOver(genericEvent* ev, usefulInfo * Info) { return nullptr; }
