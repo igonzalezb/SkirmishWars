@@ -814,14 +814,16 @@ void setCaptureProperty(Player* player, Game* gameInterface)
 					//en el tile donde estaba antes el building del oponente, poner el mismo building pero de mi equipo.
 					gameInterface->myMap->getTile(i, j)->getBuilding()->setTeam(player->getTeam());
 					gameInterface->myMap->getTile(i, j)->getBuilding()->updatePath();
-					//if (gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q1" || gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q2") {
+					if (gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q1" || gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q2") {
 
-					//	gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(8);
-					//}
-					//else
-					//{
-					//	gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(4);
-					//}
+						gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(8);
+					}
+					else
+					{
+						gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(4);
+					}
+					gameInterface->graphics->loadBitmaps(gameInterface->myMap);
+					gameInterface->graphics->showMap(gameInterface->data, gameInterface->myMap, gameInterface->playerMe->getMoney(), gameInterface->playerMe->getTeam());
 				}
 				cout << "CAPTURE PERO NO DEL TODO EN (I=" << i << ";J=" << j << ")" << endl;
 				cout << "CP DEL BUILDING=" << gameInterface->myMap->getTile(i, j)->getBuilding()->getCp() << endl;

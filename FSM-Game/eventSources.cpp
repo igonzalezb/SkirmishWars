@@ -161,7 +161,7 @@ bool GameEventSource::isThereEvent()
 				//gameInterface->myMap->possibleMoves((gameInterface->myMap->getTile(gameInterface->getAttacker().i,gameInterface->getAttacker().j)->getUnit()), gameInterface->getAttacker().i,gameInterface->getAttacker().j);
 				//if ((gameInterface->myMap->canMove[gameInterface->getDefender().i][gameInterface->getDefender().j]) == true)
 				//{
-					cout << "ENTRO ACA !!!! SIIII  2" << endl;
+					//cout << "ENTRO ACA !!!! SIIII  2" << endl;
 					evCode = MOVE;
 					gameInterface->moving = false;
 					ret = true;
@@ -177,13 +177,13 @@ bool GameEventSource::isThereEvent()
 			((gameInterface->myMap->getTile(gameInterface->getAttacker().i,gameInterface->getAttacker().j)->getUnit()->getTeam()) == (gameInterface->playerMe->getTeam())))
 			//si las coordenadas de attacker y defender estan bien seteadas:
 			{
-				//gameInterface->myMap->possibleAttack((gameInterface->myMap->getTile(gameInterface->getAttacker().i, gameInterface->getAttacker().j)->getUnit()), gameInterface->getAttacker().i, gameInterface->getAttacker().j);
-				if (1)//(gameInterface->myMap->canAttack[gameInterface->getDefender().i][gameInterface->getDefender().j]) == true)
+				gameInterface->myMap->possibleAttack((gameInterface->myMap->getTile(gameInterface->getAttacker().i, gameInterface->getAttacker().j)->getUnit()), gameInterface->getAttacker().i, gameInterface->getAttacker().j, gameInterface->playerMe->getTeam());
+				if ((gameInterface->myMap->canAttack[gameInterface->getDefender().i][gameInterface->getDefender().j]) == true)
 				{
 					evCode = ATTACK;
 					gameInterface->attacking = false;
 					ret = true;
-					cout << "se genera evento ATTACK!!!!!!!!!!!!!" << endl;
+					cout << "se genera evento ATTACK!" << endl;
 				}
 			}
 	}
@@ -203,7 +203,6 @@ bool GameEventSource::isThereEvent()
 		}
 	}
 
-	//COMPLETAR
 	return ret;
 }
 
@@ -240,7 +239,7 @@ bool NetworkEventSource::isThereEvent()
 		if (networkInterface->IamClient)
 		{
 			evCode = CONNECTED_AS_CLIENT;
-			gameInterface->Istart = false;//ESTO ACA NO VA
+			//gameInterface->Istart = false;//ESTO ACA NO VA
 			gameInterface->playerMe->setTeam(EQUIPO2); //cliente es equipo 2
 			gameInterface->playerYou->setTeam(EQUIPO1); //server es equipo 1
 
@@ -254,7 +253,7 @@ bool NetworkEventSource::isThereEvent()
 		else
 		{
 			evCode = CONNECTED_AS_SERVER;
-			gameInterface->Istart = true;//ESTO ACA NO VA
+			//gameInterface->Istart = true;//ESTO ACA NO VA
 			gameInterface->playerMe->setTeam(EQUIPO1); //server equipo 1
 			gameInterface->playerYou->setTeam(EQUIPO2); //client equipo 2
 
@@ -271,10 +270,10 @@ bool NetworkEventSource::isThereEvent()
 #ifdef DEBUG
 	//	cout << "entra 2 (aca no deberia entrar)" << endl;
 #endif // DEBUG
-		if (networkInterface->getInputPackage()[0] == OP_PASS) {
+		/*if (networkInterface->getInputPackage()[0] == OP_PASS) {
 			cout << "OP_PASS==INPUT PACKKKKKKKK" << endl;
 		}
-		cout << "OP CODE RECIBIDO: " << (int)(MYBYTE)(networkInterface->getInputPackage()[0]) << endl;
+		cout << "OP CODE RECIBIDO: " << (int)(MYBYTE)(networkInterface->getInputPackage()[0]) << endl;*/
 
 		switch (networkInterface->getInputPackage()[0])	//segun el tipo de paquete devuelvo el tipo de evento
 		{
@@ -336,7 +335,7 @@ bool NetworkEventSource::isThereEvent()
 			ret = true;
 			break;
 		case OP_PASS: //sin campo de datos
-			cout << "ENTRA A IS THERE EVENT CON PASS" << endl;
+			//cout << "ENTRA A IS THERE EVENT CON PASS" << endl;
 			evCode = R_PASS;
 			ret = true;
 			break;
@@ -536,20 +535,20 @@ UserEventSource::~UserEventSource()
 
 bool UserEventSource::isThereEvent()
 {
-	//cout << "Entra a is there event de user" << endl;
 	bool ret = false;
 	int button;
-#ifdef DEBUG
-	gameInterface->graphics->setDisplayName("SKIRMISH WARS - PLAYER: " + gameInterface->playerMe->getName());	//Esto no va aca
+	
+#ifdef DEBUG	//MOVERLO!!!!
+	if(gameInterface->getIamPlaying())
+		gameInterface->graphics->setDisplayName("SKIRMISH WARS - YOUR TURN");	//Esto no va aca
+	else
+		gameInterface->graphics->setDisplayName("SKIRMISH WARS - OPPONENT TURN");	//Esto no va aca
+	
 #endif // DEBUG
 
 	al_register_event_source(event_queue, al_get_display_event_source(gameInterface->graphics->getDisplay()));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_mouse_event_source());
-
-	//graphics->loadBitmaps(gameInterface->myMap);	 //AGREGAR DENUEVO DES[PUES
-	//graphics->showMap(gameInterface);
-
 	if (al_is_event_queue_empty(event_queue))
 	{
 		ret = false;
@@ -557,8 +556,6 @@ bool UserEventSource::isThereEvent()
 	else
 	{
 		ALLEGRO_EVENT ev;
-
-		//al_wait_for_event(event_queue, &ev);
 		al_get_next_event(event_queue, &ev);
 
 		switch (ev.type)
@@ -605,10 +602,6 @@ bool UserEventSource::isThereEvent()
 
 
 	}
-
-#ifdef DEBUG
-	//cout << "Salgo de isThereEvent del USER" << endl;
-#endif // DEBUG
 
 	return ret;
 
@@ -693,7 +686,7 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 	cout << "No se apreto nada relevante" << endl;
 #endif // DEBUG
 
-	return NO_EV;		//VER!!!!!
+	return NO_EV;
 }
 
 genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
@@ -729,20 +722,3 @@ genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 	}
 	return ret;
 }
-
-
-/*
-UserEventSource::UserEventSource()
-{
-}
-
-bool UserEventSource::isThereEvent()
-{
-
-}
-
-genericEvent * UserEventSource::insertEvent()
-{
-
-}
-*/

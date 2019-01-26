@@ -106,7 +106,7 @@ public:
 	bool isMapReceivedOk;
 private:
 	string mapName;
-	csvFile *mapFile;
+	csvFile* mapFile;
 	//csvFile *defenseModifiers;
 	string matrixDeTerrenoOrFacility[FILA][COLUMNA];
 

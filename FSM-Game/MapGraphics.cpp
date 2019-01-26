@@ -63,6 +63,8 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, TeamNum
 {
 	al_clear_to_color(al_map_rgb(0.0, 170.0, 0.0));
 
+	//if()
+
 	//Imprimo en pantalla el dinero
 	string money_text = "MONEY: $" + to_string(player_money);
 	al_draw_textf(menuFont, al_map_rgb(255, 255, 255), M_WIDTH(display) + 20, 0.0, 0.0, money_text.c_str());
@@ -109,12 +111,12 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, TeamNum
 			if ((myMap->getTile(i, j)->getBuilding() != NULL) &&
 				(myMap->getTile(i, j)->isSelected()) && (!myMap->getTile(i, j)->getFog()))
 			{
-				al_draw_filled_rectangle((j*T_WIDTH(display)) - al_get_text_width(hpFont, to_string(myMap->getTile(i, j)->getBuilding()->getCp()).c_str())/2, 
-					(i* T_HEIGHT(display)),
-					(j*T_WIDTH(display)) + al_get_text_width(hpFont, to_string(myMap->getTile(i, j)->getBuilding()->getCp()).c_str())*(1.5), 
-					(i* T_HEIGHT(display)) + al_get_font_line_height(hpFont), al_color_name("white"));
+				al_draw_filled_rectangle((j*T_WIDTH(display)) + ((T_WIDTH(display)) / 1.5) - al_get_text_width(hpFont, to_string(myMap->getTile(i, j)->getBuilding()->getCp()).c_str())/2,
+					(i* T_HEIGHT(display)) + (T_HEIGHT(display)) / 2,
+					(j*T_WIDTH(display)) + ((T_WIDTH(display)) / 1.5) + al_get_text_width(hpFont, to_string(myMap->getTile(i, j)->getBuilding()->getCp()).c_str())*(1.5),
+					(i* T_HEIGHT(display)) + (T_HEIGHT(display)) / 2 + al_get_font_line_height(hpFont), al_color_name("white"));
 				al_draw_text(hpFont, al_color_name("black"),
-					(j*T_WIDTH(display)), (i* T_HEIGHT(display)), 0.0,
+					(j*T_WIDTH(display)) + (T_WIDTH(display))/1.5, (i* T_HEIGHT(display)) + (T_HEIGHT(display))/2, 0.0,
 					to_string(myMap->getTile(i, j)->getBuilding()->getCp()).c_str());
 
 			}
@@ -152,7 +154,6 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, TeamNum
 								{
 									
 									al_draw_filled_circle((q*T_WIDTH(display)) + T_WIDTH(display)/2, (p* T_HEIGHT(display)) + T_HEIGHT(display)/2, T_HEIGHT(display) / 3,al_color_name("red"));
-									
 									//al_draw_rectangle(q*T_WIDTH(display), p* T_HEIGHT(display),
 									//	(q*T_WIDTH(display)) + T_WIDTH(display),
 									//	(p* T_HEIGHT(display)) + T_HEIGHT(display),

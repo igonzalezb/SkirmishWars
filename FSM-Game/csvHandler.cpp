@@ -22,6 +22,7 @@ void csvFile::readFile()
 {
 	ifstream lectura;
 	lectura.open(fileName, ios::in);
+	//matrix2
 	if (!lectura.is_open()) std::cout << "ERROR: File Open" << '\n';
 	for (int i = 0; (i < rows) && lectura.good(); i++) {
 		for (int j = 0; (j < cols) && lectura.good(); j++) {

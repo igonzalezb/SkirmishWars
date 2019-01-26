@@ -17,6 +17,7 @@ public:
 private:
 	string fileName;
 	string **matrix;
+	string* matrix2;
 	int rows;
 	int cols;
 

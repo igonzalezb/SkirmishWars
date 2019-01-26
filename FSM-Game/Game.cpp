@@ -364,8 +364,12 @@ bool Game::getIamPlaying()
 
 void Game::chooseWhoStarts()
 {
-	//Istart = rand() % 2;
-	Istart = true;
+	Istart = rand() % 2;
+	//Istart = true;
+	if (Istart)
+	{
+		iAmPlaying = true;
+	}
 	playerChosen = true;
 }
 
