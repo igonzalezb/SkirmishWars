@@ -292,7 +292,7 @@ void Map::checkPossibleMoves(int matrixCost[FILA][COLUMNA], int i, int j, int MP
 	}
 }
 
-void Map::possibleAttack(Unit * currUnit, int i, int j)
+void Map::possibleAttack(Unit * currUnit, int i, int j, TeamNumber myTeam)
 {
 
 	int matrixCost[FILA][COLUMNA];
@@ -315,24 +315,29 @@ void Map::possibleAttack(Unit * currUnit, int i, int j)
 	}
 
 	matrixCost[i][j] = 0;
-	checkPossibleAttacks(matrixCost, i, j, stoi(currUnit->getRange().max));
+	
+	checkPossibleAttacks(matrixCost, i, j, stoi(currUnit->getRange().max), myTeam, true);
+	matrixCost[i][j] = 1;
+	checkPossibleAttacks(matrixCost, i, j, stoi(currUnit->getRange().min), myTeam, false);
+	canAttack[i][j] = false;
 }
 
 
-void Map::checkPossibleAttacks(int matrixCost[FILA][COLUMNA], int i, int j, int Range) {
+void Map::checkPossibleAttacks(int matrixCost[FILA][COLUMNA], int i, int j, int Range, TeamNumber myTeam, bool _canmove) {
 	if ((0 <= i) && (i < FILA) && (0 <= j) && (j < COLUMNA) && (Range >= 0))
 	{
-		if (Range >= 0) {
+		//if (RangeMax >= 0) {
 			Range -= matrixCost[i][j];
-			if ((Range >= 0) && ((getTile(i, j)->getFog()) == false))//&& ((getTile(i, j)->getUnit()) == NULL))
+			
+			if ((Range >= 0))// && (getTile(i, j)->getUnit() != NULL) && (getTile(i, j)->getUnit()->getTeam() != myTeam))
 			{
-				canAttack[i][j] = true;
+				canAttack[i][j] = _canmove;
 			}
-			checkPossibleAttacks(matrixCost, i - 1, j, Range);
-			checkPossibleAttacks(matrixCost, i + 1, j, Range);
-			checkPossibleAttacks(matrixCost, i, j + 1, Range);
-			checkPossibleAttacks(matrixCost, i, j - 1, Range);
-		}
+			checkPossibleAttacks(matrixCost, i - 1, j, Range, myTeam, _canmove);
+			checkPossibleAttacks(matrixCost, i + 1, j, Range, myTeam, _canmove);
+			checkPossibleAttacks(matrixCost, i, j + 1, Range, myTeam, _canmove);
+			checkPossibleAttacks(matrixCost, i, j - 1, Range, myTeam, _canmove);
+		//}
 	}
 }
 

@@ -24,7 +24,7 @@ public:
 	MapGraphics();
 	MapGraphics(ALLEGRO_DISPLAY *display);
 	~MapGraphics();
-	void showMap(Resources* data, Map* myMap, int player_money, int my_team);
+	void showMap(Resources* data, Map* myMap, int player_money, TeamNumber my_team);
 	void loadBitmaps(Map *map);
 	void setDisplayName(string _name);
 	//void setMap(Map *map);

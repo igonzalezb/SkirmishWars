@@ -45,4 +45,5 @@ public:
 	string getType();
 	void setType(string type);
 	void removeFog();
+	void updatePath();
 };

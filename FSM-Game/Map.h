@@ -12,7 +12,7 @@
 
 
 
-#define NOFOG	//Just for Debug
+//#define NOFOG	//Just for Debug
 
 
 
@@ -90,9 +90,9 @@ public:
 	//void setDefender(int tile);
 
 	void possibleMoves(Unit *currUnit, int i, int j);
-	void possibleAttack(Unit *currUnit, int i, int j);
+	void possibleAttack(Unit *currUnit, int i, int j, TeamNumber myTeam);
 	void checkPossibleMoves(int matrixCost[FILA][COLUMNA], int i, int j, int MP);
-	void checkPossibleAttacks(int matrixCost[FILA][COLUMNA], int i, int j, int Range);
+	void checkPossibleAttacks(int matrixCost[FILA][COLUMNA], int i, int j, int Range, TeamNumber myTeam, bool _canmove);
 
 
 	//void generateDefenseModifiersTable();
