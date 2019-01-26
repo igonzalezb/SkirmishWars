@@ -22,10 +22,15 @@
 
 #include "MapGraphics.h"
 
-/*
-#define ONE_MINUTE		60
-#define MAX_TIMEOUTS	5
-*/
+
+
+
+//#define ONE_MINUTE		60
+//#define TWO_HALF_MINUTES	150 
+#define ONE_MINUTE			15
+#define TWO_HALF_MINUTES	150 
+#define MAX_TIMEOUTS		5 //VER ESTO!!!!!!
+
 
 
 class GameEventSource : public genericEventSource
@@ -96,23 +101,25 @@ private:
 };
 
 
-
-/*
-class UserEventSource : public genericEventSource
+class TimeoutEventSource : public genericEventSource
 {
 public:
-	UserEventSource( *_userInterface); // ver aca que onda
+	TimeoutEventSource();
 	bool isThereEvent();
+	void startTimer1();
+	void startTimer2();
+	void stopTimer1();
+	void stopTimer2();
 	genericEvent* insertEvent();
-	//std::string getCommand();	//getter del commando ingresado
 private:
-	//std::vector<std::string> words;	//Vector para separar los argumentos ingresados
-	std::vector<char> buffer;
-	std::string command;
-
-	int inputChar;
-	char ** args;
+	clock_t tInicial1;
+	clock_t tInicial2;
+	//unsigned int timeoutsCount1;
+	//unsigned int timeoutsCount2;
+	bool timeout;	//Si está en true se cumplió el tiempo.
+	bool timerRunning1;
+	bool timerRunning2;
 };
-*/
+
 
 #endif // !EVENTSOURCES_H

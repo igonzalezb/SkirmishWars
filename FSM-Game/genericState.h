@@ -20,7 +20,7 @@ public:
 	virtual genericState* on_NoEv(genericEvent* ev) { return nullptr; }
 
 	virtual genericState* on_WaitingConnection(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	virtual genericState* on_Connected(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_Connected(genericEvent* ev, usefulInfo * Info) { return nullptr; } //Este creo que se borra
 
 	virtual genericState* on_ConnectedAsServer(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_ConnectedAsClient(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -35,7 +35,6 @@ public:
 	virtual genericState* on_MapOk(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_ErrDetected(genericEvent* ev, usefulInfo * Info) { return nullptr; } //VER si esto se deja o no.
 
-	//ESTOS DOS VER SI SE BORRAN O QUE HACER:
 	virtual genericState* on_IPlay(genericEvent* ev, usefulInfo * Info) { return nullptr; } //VER si estos dos se usan en la fsm del juego o no.
 	virtual genericState* on_YouPlay(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_IStart(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -53,8 +52,11 @@ public:
 	virtual genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	virtual genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	
 	//virtual genericState* on_Timeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-
+	virtual genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_TwoHalfMinTimeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	//virtual genericState* on_ConnectionFailed(genericEvent* ev, usefulInfo * Info) { return nullptr; } //VER SI QUEDA
 
 	virtual genericState* on_Rack(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Rname(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -74,7 +76,8 @@ public:
 
 	virtual genericState* on_Rerror_(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Rquit(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	//virtual genericState* on_Rtimeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	
+	//virtual genericState* on_RTimeout(genericEvent* ev, usefulInfo * Info) { return nullptr; } //se va a recibir error o algo asi. VER BIEN
 
 
 	void setLastEvent(eventCode lastEvent) { this->lastEvent = lastEvent; }   //setter
@@ -84,7 +87,6 @@ public:
 
 protected:
 	eventCode lastEvent;
-	//std::string fileToTransfer;
 };
 
 #endif // !GENERICSTATE_H

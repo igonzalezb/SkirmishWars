@@ -9,12 +9,12 @@
 void setCaptureProperty(Player* player, Game* gameInterface);
 
 /////////////////////////////// ST_GameIdle ///////////////////////////////
-
 genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "GAME IDLE: ON I START" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->setIamPlaying(true);
+	Info->timeoutSrc->startTimer1();
 	return ret;
 }
 
@@ -31,7 +31,7 @@ genericState* ST_GameIdle::on_RyouStart(genericEvent *ev, usefulInfo * Info)
 	cout << "GAME IDLE: ON R you START" << endl;
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->setIamPlaying(true);
-
+	Info->timeoutSrc->startTimer1();
 	return ret;
 }
 
@@ -45,7 +45,6 @@ genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 
 
 /////////////////////////////// ST_Moving ///////////////////////////////
-
 genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "G MOVING: ON TILE" << endl;
@@ -73,7 +72,6 @@ genericState* ST_Moving::on_BoAttack(genericEvent *ev, usefulInfo * Info)//Se en
 	cout << "G MOVING: ATTACK" << endl;
 	//El ataque se hace despues, una vez que ya se entro a este estado por primera vez.
 	genericState *ret = (genericState *) new ST_Attacking();
-
 	return ret;
 }
 
@@ -81,7 +79,6 @@ genericState* ST_Moving::on_BoPurchase(genericEvent *ev, usefulInfo * Info) //VE
 {
 	cout << "G MOVING: ON PURCHASE" << endl;
 	genericState *ret = (genericState *) new ST_Purchasing();
-
 	return ret;
 }
 
@@ -91,33 +88,18 @@ genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info) //ESTO PON
 	cout << "G MOVING: ON PASS" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
-
 	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
 	return ret;
 }
 
-////////////////////////////////////////
-genericState* ST_WaitingMoveConfirmation::on_Move(genericEvent *ev, usefulInfo * Info)
+genericState* ST_Moving::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
-	cout << "G WAITING MOVE CONFIRMATION: ON MOVE" << endl;
-	genericState *ret = (genericState *) new ST_Moving();
-	Info->gameInterface->move();
-	return ret;
-}
-
-///////////////////////////////////////
-/////////////////////////////////////
-
-/*
-genericState* ST_Moving::on_Timeout(genericEvent *ev, usefulInfo * Info)
-{
+	cout << "G MOVING: ON 1 MIN TIMEOUT" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
-
-	//COMPLETAR 
-
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
-*/
 
 /////////////////////////////// ST_WaitingDestination //////////////////////
 genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info)
@@ -189,9 +171,35 @@ genericState* ST_WaitingDestination::on_Pass(genericEvent* ev, usefulInfo * Info
 	return ret;
 }
 
-/////////////////////////////// ST_Attacking ///////////////////////////////
-//si se apretan los tiles, guardar la info en attacker y defender. Cuando se presione el boton ATTACK, recien ahi GENERAR EVENTO ATTACK! (ver donde se hacen estas cosas)
+genericState* ST_WaitingDestination::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "G WAITING DESTINATION: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
 
+/////////////////////////// ST_WaitingMoveConfirmation ///////////////////////////////
+genericState* ST_WaitingMoveConfirmation::on_Move(genericEvent *ev, usefulInfo * Info)
+{
+	cout << "G WAITING MOVE CONFIRMATION: ON MOVE" << endl;
+	genericState *ret = (genericState *) new ST_Moving();
+	Info->gameInterface->move();
+	Info->timeoutSrc->startTimer1();
+	return ret;
+}
+
+genericState* ST_WaitingMoveConfirmation::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "G WAITING MOVE CONFIRMATION: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+/////////////////////////////// ST_Attacking ///////////////////////////////
 genericState* ST_Attacking::on_Tile(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "G Attacking::on_Tile" << endl;
@@ -238,15 +246,14 @@ genericState* ST_Attacking::on_Pass(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-/*
-genericState* ST_Attacking::on_Timeout(genericEvent *ev, usefulInfo * Info)
+genericState* ST_Attacking::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
+	cout << "G ATTACKING: ON 1 MIN TIMEOUT" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
-
-	//COMPLETAR 
-
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
-}*/
+}
 
 /////////////////////////////// ST_WaitingDefender //////////////////////////
 genericState* ST_WaitingDefender::on_Tile(genericEvent* ev, usefulInfo * Info) 
@@ -302,6 +309,15 @@ genericState* ST_WaitingDefender::on_Pass(genericEvent* ev, usefulInfo * Info)
 	return ret;
 }
 
+genericState* ST_WaitingDefender::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "G WAITING DEFENDER: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
 /////////////////////////////// ST_WaitingAttackConfirmation ///////////////////////////////
 genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
@@ -312,6 +328,7 @@ genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulIn
 	{
 		Info->gameInterface->setDie(rand() % 6 + 1); //VERIFICAR si esto tira un valor random entre 1 y 6.
 		Info->gameInterface->attack();
+		Info->timeoutSrc->startTimer1();
 	}
 	//else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getBuilding()) != NULL)
 	//{
@@ -321,12 +338,139 @@ genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulIn
 	return ret;
 }
 
+genericState* ST_WaitingAttackConfirmation::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "G WAITING ATTACK CONFIRM: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+
+/////////////////////////////// ST_Purchasing ///////////////////////////////
+genericState* ST_Purchasing::on_NewUnit(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
+{
+	genericState *ret;
+
+	cout << " G Purhcasing: on new unit" << endl;
+	if ((stoi(Info->gameInterface->getNewUnit()->getCost()))<=(Info->gameInterface->playerMe->getMoney()))
+	{//Si alcanza la plata para comprar esa unidad, cambio de estado
+		ret = (genericState *) new ST_WaitingLocation();
+		Info->gameInterface->purchasing = false;
+	}
+	else
+	{//Si no alcanza la plata para comprar esa unidad, espera que se elija una nueva unidad.
+		ret = (genericState *) new ST_Purchasing();
+		Info->gameInterface->purchasing = false;
+	}
+
+	//COMPLETAR 
+
+	return ret;
+}
+
+genericState* ST_Purchasing::on_Pass(genericEvent *ev, usefulInfo * Info)
+{
+	cout << "ST_Purchasing::on_Pass" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+
+	return ret;
+}
+
+genericState* ST_Purchasing::on_NoMoney(genericEvent *ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	return ret;
+}
+
+genericState* ST_Purchasing::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "G PURCHASING: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+/////////////////////////////// ST_WaitingLocation ///////////////////////////////
+
+genericState* ST_WaitingLocation::on_Tile(genericEvent* ev, usefulInfo * Info)
+{
+	cout << "ST_WaitingLocation::on_Tile" << endl;
+	genericState *ret;
+	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding())!=NULL)&&
+		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding()->getType()).compare("m"))==0)&&
+		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding()->getTeam()) == (Info->gameInterface->playerMe->getTeam()))&&
+		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) == NULL))
+	{
+		Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
+		ret = (genericState *) new ST_WaitingPurchaseConfirmation();
+		Info->gameInterface->purchasing = true;
+	}
+	else
+	{//Si el tile presionado es uno invalido para meterle una nueva unit, quedarse en este estado
+		ret = (genericState *) new ST_WaitingLocation();
+		Info->gameInterface->purchasing = false;
+	}
+	return ret;
+}
+
+genericState* ST_WaitingLocation::on_NewUnit(genericEvent* ev, usefulInfo * Info)
+{
+	cout << "waiting location: on new unit" << endl;
+	genericState *ret;
+
+	if ((stoi(Info->gameInterface->getNewUnit()->getCost())) <= (Info->gameInterface->playerMe->getMoney()))
+	{//Si alcanza la plata para comprar esa unidad, cambio de estado
+		ret = (genericState *) new ST_WaitingLocation();
+	}
+	else
+	{//Si no alcanza la plata para comprar esa unidad, espera que se elija una nueva unidad.
+		ret = (genericState *) new ST_Purchasing();
+	}
+	return ret;
+}
+
+genericState* ST_WaitingLocation::on_Pass(genericEvent* ev, usefulInfo * Info)
+{
+	cout << "ST_WaitingLocation::on_Pass" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+
+	return ret;
+}
+
+genericState* ST_WaitingLocation::on_NoMoney(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+
+	return ret;
+}
+
+genericState* ST_WaitingLocation::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "G WAITING LOCATION: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
 /////////////////////////////// ST_WaitingPurchaseConfirmation ///////////////////////////////
 genericState* ST_WaitingPurchaseConfirmation::on_Purchase(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "waiting purchase confirmation: on purchase" << endl;
 	genericState *ret = (genericState *) new ST_Purchasing();
 	Info->gameInterface->purchase(Info->gameInterface->playerMe);
+	Info->timeoutSrc->startTimer1();
 	return ret;
 }
 
@@ -405,6 +549,16 @@ genericState* ST_WaitingPurchaseConfirmation::on_Pass(genericEvent *ev, usefulIn
 	return ret;
 }
 
+genericState* ST_WaitingPurchaseConfirmation::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "G WAITING PURCHASE CONRIM: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+
 /////////////////////////////// ST_Purchasing ///////////////////////////////
 //PURCHASING::ON PURCHASE PROBABLEMENTE DESAPAREZCA!!!!!!!
 //genericState* ST_Purchasing::on_Purchase(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
@@ -418,114 +572,6 @@ genericState* ST_WaitingPurchaseConfirmation::on_Pass(genericEvent *ev, usefulIn
 //
 //	return ret;
 //}
-
-genericState* ST_Purchasing::on_NewUnit(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
-{
-	genericState *ret;
-
-	cout << " G Purhcasing: on new unit" << endl;
-	if ((stoi(Info->gameInterface->getNewUnit()->getCost()))<=(Info->gameInterface->playerMe->getMoney()))
-	{//Si alcanza la plata para comprar esa unidad, cambio de estado
-		ret = (genericState *) new ST_WaitingLocation();
-		Info->gameInterface->purchasing = false;
-	}
-	else
-	{//Si no alcanza la plata para comprar esa unidad, espera que se elija una nueva unidad.
-		ret = (genericState *) new ST_Purchasing();
-		Info->gameInterface->purchasing = false;
-	}
-
-	//COMPLETAR 
-
-	return ret;
-}
-
-genericState* ST_Purchasing::on_Pass(genericEvent *ev, usefulInfo * Info)
-{
-	cout << "ST_Purchasing::on_Pass" << endl;
-	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->setIamPlaying(false);
-	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
-
-	return ret;
-}
-
-genericState* ST_Purchasing::on_NoMoney(genericEvent *ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->setIamPlaying(false);
-	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
-	return ret;
-}
-
-/////////////////////////////// ST_WaitingLocation ///////////////////////////////
-
-genericState* ST_WaitingLocation::on_Tile(genericEvent* ev, usefulInfo * Info)
-{
-	cout << "ST_WaitingLocation::on_Tile" << endl;
-	genericState *ret;
-	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding())!=NULL)&&
-		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding()->getType()).compare("m"))==0)&&
-		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getBuilding()->getTeam()) == (Info->gameInterface->playerMe->getTeam()))&&
-		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) == NULL))
-	{
-		Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
-		ret = (genericState *) new ST_WaitingPurchaseConfirmation();
-		Info->gameInterface->purchasing = true;
-	}
-	else
-	{//Si el tile presionado es uno invalido para meterle una nueva unit, quedarse en este estado
-		ret = (genericState *) new ST_WaitingLocation();
-		Info->gameInterface->purchasing = false;
-	}
-	return ret;
-}
-
-genericState* ST_WaitingLocation::on_NewUnit(genericEvent* ev, usefulInfo * Info)
-{
-	cout << "waiting location: on new unit" << endl;
-	genericState *ret;
-
-	if ((stoi(Info->gameInterface->getNewUnit()->getCost())) <= (Info->gameInterface->playerMe->getMoney()))
-	{//Si alcanza la plata para comprar esa unidad, cambio de estado
-		ret = (genericState *) new ST_WaitingLocation();
-	}
-	else
-	{//Si no alcanza la plata para comprar esa unidad, espera que se elija una nueva unidad.
-		ret = (genericState *) new ST_Purchasing();
-	}
-	return ret;
-}
-
-genericState* ST_WaitingLocation::on_Pass(genericEvent* ev, usefulInfo * Info)
-{
-	cout << "ST_WaitingLocation::on_Pass" << endl;
-	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->setIamPlaying(false);
-	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
-
-	return ret;
-}
-
-genericState* ST_WaitingLocation::on_NoMoney(genericEvent* ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_YouMoving();
-	Info->gameInterface->setIamPlaying(false);
-	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
-
-	return ret;
-}
-
-/*
-genericState* ST_WaitingLocation::on_Timeout(genericEvent *ev, usefulInfo * Info)
-{
-genericState *ret = (genericState *) new ST_Moving();
-
-//COMPLETAR
-
-return ret;
-}
-*/
 
 /////////////////////////////// ST_YouMoving ///////////////////////////////
 
@@ -613,18 +659,6 @@ genericState* ST_YouMoving::on_RPass(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-/*
-genericState* ST_YouMoving::on_Timeout(genericEvent *ev, usefulInfo * Info)
-{
-genericState *ret = (genericState *) new ST_Moving();
-
-//COMPLETAR
-
-return ret;
-}
-*/
-
-
 /////////////////////////////// ST_YouAttacking ///////////////////////////////
 
 genericState* ST_YouAttacking::on_RAttack(genericEvent *ev, usefulInfo * Info)
@@ -675,17 +709,6 @@ genericState* ST_YouAttacking::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-/*
-genericState* ST_YouAttacking::on_LastAttack(genericEvent *ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_YouPurchasing();
-
-	//COMPLETAR 
-
-	return ret;
-}
-*/
-
 genericState* ST_YouAttacking::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "ST_YouAttacking::on_RPass" << endl;
@@ -696,18 +719,8 @@ genericState* ST_YouAttacking::on_RPass(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-/*
-genericState* ST_YouAttacking::on_Timeout(genericEvent *ev, usefulInfo * Info)
-{
-genericState *ret = (genericState *) new ST_Moving();
-
-//COMPLETAR
-
-return ret;
-}*/
 
 /////////////////////////////// ST_YouPurchasing ///////////////////////////////
-
 genericState* ST_YouPurchasing::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 {
 
@@ -755,19 +768,14 @@ genericState* ST_YouPurchasing::on_RPass(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
-/*
-genericState* ST_YouPurchasing::on_Timeout(genericEvent *ev, usefulInfo * Info)
-{
-genericState *ret = (genericState *) new ST_Moving();
 
-//COMPLETAR
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
-return ret;
-}*/
-
-
-
-void setCaptureProperty(Player* player, Game* gameInterface)
+// SET CAPTURE PROPERTY TIENE QUE IR A GAME CPP!!!!!!!!!!!!!
+void setCaptureProperty(Player* player, Game* gameInterface) 
 {
 	player->setAmmountOfCities(gameInterface->myMap);
 	player->setMoney((player->getMoney()) + (((player->getAmmountOfCities()) + 1) * 5));

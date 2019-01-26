@@ -98,19 +98,6 @@ public:
 private:
 };
 
-class EV_BoAttack : public genericEvent
-{
-public:
-	EV_BoAttack() { ev = BO_ATTACK; };
-private:
-};
-
-class EV_BoPurchase : public genericEvent
-{
-public:
-	EV_BoPurchase() { ev = BO_PURCHASE; };
-private:
-};
 
 class EV_NoMoney : public genericEvent
 {
@@ -345,43 +332,59 @@ class EV_NewUnit : public genericEvent
 {
 public:
 	EV_NewUnit() { ev = NEW_UNIT; };
-
 private:
-
 };
 
-/*
-//SOFTWARE EVENTS
-
-class EV_ConnectionFailed : public genericEvent
+class EV_BoAttack : public genericEvent
 {
 public:
-EV_ConnectionFailed() { ev = CONNECTION_FAIL; };
-
+	EV_BoAttack() { ev = BO_ATTACK; };
 private:
-
 };
 
-class EV_LastData : public genericEvent
+class EV_BoPurchase : public genericEvent
 {
 public:
-EV_LastData() { ev = LAST_DATA; };
-
+	EV_BoPurchase() { ev = BO_PURCHASE; };
 private:
-
 };
+
 
 //TIMEOUT EVENT
 
-class EV_Timeout : public genericEvent
+/*class EV_Timeout : public genericEvent
 {
 public:
 EV_Timeout() { ev = TIMEOUT; };
 
 private:
 
+};*/
+
+class EV_OneMinTimeout : public genericEvent
+{
+public:
+	EV_OneMinTimeout() { ev = ONE_MIN_TIMEOUT; };
+private:
 };
-*/
+
+class EV_TwoHalfMinTimeout : public genericEvent
+{
+public:
+	EV_TwoHalfMinTimeout() { ev = TWO_HALF_MIN_TIMEOUT; };
+private:
+};
+
+//class EV_ConnectionFailed : public genericEvent
+//{
+//public:
+//	EV_ConnectionFailed() { ev = CONNECTION_FAIL; };
+//
+//private:
+//
+//};
+
+
 
 #endif // !EVENTS_H
 

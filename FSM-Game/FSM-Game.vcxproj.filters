@@ -219,7 +219,6 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="resources\maps\BalancedArena.csv">
       <Filter>Resource Files\Mapas</Filter>
     </None>
@@ -262,6 +261,7 @@
     <None Include="resources\terrainDefenseModifiers.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\images\units\antiair_1.png">

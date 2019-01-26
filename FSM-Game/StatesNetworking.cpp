@@ -23,6 +23,7 @@ genericState* ST_WaitingConnection::on_ConnectedAsServer(genericEvent *ev, usefu
 genericState* ST_WaitingConnection::on_ConnectedAsClient(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_C_WaitingName();//ESTO VAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	Info->timeoutSrc->startTimer2();
 	//genericState *ret = (genericState *) new ST_C_WaitingWhoStarts();
 #ifdef DEBUG
 	cout << " ST C 1" << endl;
@@ -57,8 +58,20 @@ genericState* ST_S_WaitingName::on_Rname(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_S_WaitingNameIsAck();
 	Info->nextPkg = new NameIs(Info->gameInterface->playerMe->getName());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete NAME IS
+	Info->timeoutSrc->stopTimer2();
 	return ret;
 }
+
+
+genericState* ST_S_WaitingName::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "N WAITING WHO STARTS: ON 2,5 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	return ret;
+}
+
 
 /////////////////////////////// ST_S_WaitingNameIsAck ///////////////////////////////
 
@@ -78,7 +91,17 @@ genericState* ST_S_WaitingNameIsAck::on_Rack(genericEvent *ev, usefulInfo * Info
 	
 	Info->nextPkg = new MapIs(Info->gameInterface->myMap->getMapName());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete MAP IS
+	Info->timeoutSrc->stopTimer2();
 	cout << "TERMINO DE MANDAR EL MAPA" << endl;
+	return ret;
+}
+
+genericState* ST_S_WaitingNameIsAck::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "N WAITING NAME IS ACK: ON 2,5 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
 	return ret;
 }
 
@@ -91,8 +114,18 @@ genericState* ST_S_WaitingMapIsAck::on_Rack(genericEvent *ev, usefulInfo * Info)
 #endif // DEBUG
 	Info->gameInterface->chooseWhoStarts();
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts();
+	Info->timeoutSrc->stopTimer2();
 	//Info->nextPkg = new MapIs();
 	//Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete MAP IS
+	return ret;
+}
+
+genericState* ST_S_WaitingMapIsAck::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "N WAITING MAP IS ACK: ON 2,5 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
 	return ret;
 }
 
@@ -107,6 +140,7 @@ genericState* ST_S_WaitingWhoStarts::on_IStart(genericEvent *ev, usefulInfo * In
 	Info->gameInterface->setIamPlaying(true);
 	Info->nextPkg = new IStart();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete I START
+	Info->timeoutSrc->startTimer2();
 	return ret;
 }
 
@@ -127,6 +161,16 @@ genericState* ST_S_WaitingWhoStarts::on_YouStart(genericEvent *ev, usefulInfo * 
 genericState* ST_S_WaitingIPlayAck::on_Rack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_IPlay();
+	Info->timeoutSrc->stopTimer2();
+	return ret;
+}
+
+genericState* ST_S_WaitingIPlayAck::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "N WAITING I PLAY: ON 2,5 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
 	return ret;
 }
 
@@ -145,8 +189,19 @@ genericState* ST_C_WaitingName::on_Rname(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_C_WaitingNameIsAck();
 	Info->nextPkg = new NameIs(Info->gameInterface->playerMe->getName());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete MAP IS
+	Info->timeoutSrc->stopTimer2();
 	return ret;
 }
+
+genericState* ST_C_WaitingName::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "N WAITING NAME: ON 2,5 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	return ret;
+}
+
 /////////////////////////////// ST_C_WaitingNameIsAck ///////////////////////////////
 
 genericState* ST_C_WaitingNameIsAck::on_Rack(genericEvent *ev, usefulInfo * Info)
@@ -157,6 +212,16 @@ genericState* ST_C_WaitingNameIsAck::on_Rack(genericEvent *ev, usefulInfo * Info
 	genericState *ret = (genericState *) new ST_C_WaitingNameIs();
 	Info->nextPkg = new Name();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete MAP IS
+	Info->timeoutSrc->stopTimer2();
+	return ret;
+}
+
+genericState* ST_C_WaitingNameIsAck::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "N WAITING NAME IS ACK: ON 2,5 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
 	return ret;
 }
 
@@ -274,6 +339,7 @@ genericState* ST_IPlay::on_Move(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_WaitingPlayAck();
 	Info->nextPkg = new Move(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j, Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j);
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete MOVE
+	Info->timeoutSrc->startTimer2();
 	cout << "se envio el paquete de move" << endl;
 	return ret;
 }
@@ -284,6 +350,7 @@ genericState* ST_IPlay::on_Purchase(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_WaitingPlayAck();
 	Info->nextPkg = new Purchase(Info->gameInterface->getNewUnit()->getType(), Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j);
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PURCHASE
+	Info->timeoutSrc->startTimer2();
 	return ret;
 }
 
@@ -294,6 +361,7 @@ genericState* ST_IPlay::on_Attack(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_WaitingPlayAck();
 	Info->nextPkg = new Attack(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j, Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j, Info->gameInterface->getDie());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ATTACK
+	Info->timeoutSrc->startTimer2();
 	return ret;
 }
 
@@ -316,6 +384,17 @@ genericState* ST_IPlay::on_NoMoney(genericEvent *ev, usefulInfo * Info)
 	Info->nextPkg = new Pass();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PASS
 	cout << "se envio el paquete de pass" << endl;
+	return ret;
+}
+
+genericState* ST_IPlay::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "N WAITING PLAY ACK: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_WaitingAPlay(); //VER ESTADO!! se perdio comunicacion
+	Info->gameInterface->setIamPlaying(false);
+	Info->nextPkg = new Pass();
+	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PASS
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
 	return ret;
 }
 
@@ -343,6 +422,16 @@ genericState* ST_WaitingPlayAck::on_Rack(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "Waiting play ACK: on R ACK" << endl;
 	genericState *ret = (genericState *) new ST_IPlay();
+	Info->timeoutSrc->startTimer2();
+	return ret;
+}
+
+genericState* ST_WaitingPlayAck::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "N WAITING PLAY ACK: ON 2,5 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
 	return ret;
 }
 
@@ -392,6 +481,8 @@ genericState* ST_WaitingAPlay::on_RPass(genericEvent *ev, usefulInfo * Info) //N
 	return ret;
 }
 
+
+/////////////////////////// ST_WaitingToAttack //////////////////////////////
 genericState* ST_WaitingToAttack::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_WaitingAPlay();

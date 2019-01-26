@@ -91,7 +91,6 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 		case BO_ATTACK:
 			newState = currentState->on_BoAttack(ev, Info);
 			break;
-			break;
 		case BO_PURCHASE:
 			newState = currentState->on_BoPurchase(ev, Info);
 			break;
@@ -100,11 +99,11 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 															   //si lo saco, sacar tambien de generic_states.h, genericEvent.h
 													   // se se deja, VER donde agregar en States.h
 			break;
-		case CONNECTED:
-#ifdef DEBUG
-			cout << "entra 6: dispatcher en CONNECTED" << endl;
-#endif // DEBUG
-			newState = currentState->on_Connected(ev, Info);
+		case ONE_MIN_TIMEOUT:
+			newState = currentState->on_OneMinTimeout(ev, Info);
+			break;
+		case TWO_HALF_MIN_TIMEOUT:
+			newState = currentState->on_TwoHalfMinTimeout(ev, Info);
 			break;
 		default:
 			break;

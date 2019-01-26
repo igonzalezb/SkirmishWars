@@ -51,11 +51,13 @@ void eventGenerator::generateEvent()
 			//I->gameInterface->graphics->showMap(I->userSrc->gameInterface->data, I->userSrc->gameInterface->myMap, I->userSrc->gameInterface->playerMe->getMoney());
 			//}
 	}
-	/*
+	
+
 	if (I->timeoutSrc->isThereEvent())
 	{
 	buffer.push_back(I->timeoutSrc->insertEvent());
-	}*/
+	}
+
 
 	if (I->userSrc->isThereEvent())
 	{
@@ -81,15 +83,11 @@ void eventGenerator::generateEvent()
 
 genericEvent * eventGenerator::getNextEvent()
 {
-	//cout << "entra ACA" << endl;
 	genericEvent * ret;
 	if (buffer.size() != 0)
 	{
 		ret = buffer.front();	//carga en re t el primer elemento del buffer
 		buffer.pop_front();	//elimina el ultimo elemento del buffer
-#ifdef DEBUG
-	//	cout << "entra 4: entro a get next event" << endl;
-#endif // DEBUG
 	}
 	else
 	{

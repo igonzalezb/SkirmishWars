@@ -2,17 +2,14 @@
 //guardar esa info en la clase game en tileSelected y generar el evento TILE
 
 #include "eventSources.h"
-//#include "Screen.h"
 #include "Events.h"
-//#include <boost\algorithm\string\classification.hpp>
-//#include <boost\algorithm\string\split.hpp>
-//#include <boost\date_time\posix_time\posix_time.hpp>
+#include <boost\algorithm\string\classification.hpp>
+#include <boost\algorithm\string\split.hpp>
+#include <boost\date_time\posix_time\posix_time.hpp>
 using namespace std;
 
-//CAMBIAAAAAAAAAAAR TODO ESTE ARCHIVO ADAPTANDO PARA EL GAAAAAMEEEEEEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 /*****  GAME EVENT SOURCE  *****/
-
-
 GameEventSource::GameEventSource(Game *_gameInterface):gameInterface(_gameInterface)
 {
 
@@ -517,7 +514,7 @@ genericEvent * NetworkEventSource::insertEvent()
 
 
 /////////////////////USER EVENT SOURCES ///////////////////////////////////////////////
-//UserEventSource::UserEventSource()
+/*****  USER EVENT SOURCE  *****/
 UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface):gameInterface(_gameInterface)
 {
 	//graphics = new MapGraphics;
@@ -731,18 +728,91 @@ genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 }
 
 
-/*
-UserEventSource::UserEventSource()
+/*****  TIMEOUTS EVENT SOURCE  *****/
+
+TimeoutEventSource::TimeoutEventSource()
 {
+	timeout = false;
+	//timeout1 = false;
+	//timeout2 = false;
+	timerRunning1 = false;
+	timerRunning2 = false;
+	//timeoutsCount1 = 0;
+	//timeoutsCount2 = 0;
 }
 
-bool UserEventSource::isThereEvent()
+bool TimeoutEventSource::isThereEvent()
 {
-
+	timeout = false;
+	if (((clock() - tInicial1) > ONE_MINUTE * CLOCKS_PER_SEC) && timerRunning1)
+	{
+		timeout = true;
+		//timerRunning = false; //MODIFICARLO DESDE AFUERA CON stopTimer!!!!
+		//timeoutsCount++;
+		//if (timeoutsCount == MAX_TIMEOUTS)
+		//{
+		//	evCode = CONNECTION_FAIL;
+		//}
+		//else
+		//{
+			evCode = ONE_MIN_TIMEOUT;
+		//}
+	}
+	else if (((clock() - tInicial2) > TWO_HALF_MINUTES * CLOCKS_PER_SEC) && timerRunning2)
+	{
+		timeout = true;
+		//timerRunning = false;
+		//timeoutsCount++;
+		evCode = TWO_HALF_MIN_TIMEOUT;
+	}
+	else 
+	{
+		timeout = false;
+		evCode = NO_EV;
+	}
+	return timeout;
 }
 
-genericEvent * UserEventSource::insertEvent()
+void TimeoutEventSource::startTimer1()
 {
-
+	//timeout1 = false;	//Se setea la variable de control en false, indicando que no ha ocurrido timeout
+	tInicial1 = clock();
+	timerRunning1 = true;
+	//timeoutsCount1 = 0;
 }
-*/
+
+void TimeoutEventSource::startTimer2()
+{
+	//timeout2 = false;	//Se setea la variable de control en false, indicando que no ha ocurrido timeout
+	tInicial2 = clock();
+	timerRunning2 = true;
+	//timeoutsCount2 = 0;
+}
+
+void TimeoutEventSource::stopTimer1()
+{
+	timerRunning1 = false;
+}
+
+void TimeoutEventSource::stopTimer2()
+{
+	timerRunning2 = false;
+}
+
+genericEvent * TimeoutEventSource::insertEvent()
+{
+	genericEvent * ret;
+
+	switch (evCode)
+	{
+	case ONE_MIN_TIMEOUT:
+		ret = (genericEvent *) new EV_OneMinTimeout;
+		break;
+	case TWO_HALF_MIN_TIMEOUT:
+		ret = (genericEvent *) new EV_TwoHalfMinTimeout;
+		break;
+	default:
+		break;
+	}
+	return ret;
+}
