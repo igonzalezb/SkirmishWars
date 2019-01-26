@@ -48,16 +48,18 @@ void NameIs::setPackage()
 	std::copy(nameIs.begin(), nameIs.end(), std::back_inserter(package));
 }
 
-MapIs::MapIs(string mapName)
+MapIs::MapIs(string mapName,char checksum)
 {
 	code = OP_MAP_IS; 
 	this->mapName = mapName; 
+
+	this->checksum = checksum;
 }
 
 void MapIs::setPackage()
-{ //ANDA
-	//string myMapsName = "hola_soy_el_mapa_soy_el_mapa"; //RECIBIR NOMBRE!!! sin extension.csv
-	unsigned int checksum = 41; //RECIBIR VALOR!!! es un int (contador) que se guarda con la linea de abajo como un char para que este en hexa.
+{ 
+
+	//unsigned int checksum = 41; //RECIBIR VALOR!!! es un int (contador) que se guarda con la linea de abajo como un char para que este en hexa.
 
 								//std::vector<char> package;
 	package.clear();

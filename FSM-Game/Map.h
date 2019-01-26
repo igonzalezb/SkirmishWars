@@ -101,7 +101,10 @@ public:
 	string getMapName();
 	void setMapName(string mapName_);
 	void verifyMapReceived();
-
+	void setChecksum(); //esta es la que calcula el checksum
+	unsigned char getChecksum();
+	void setChecksumReceived(unsigned char checksumReceived_);
+	unsigned char getChecksumReceived();
 
 	bool isMapReceivedOk;
 private:
@@ -109,11 +112,11 @@ private:
 	csvFile* mapFile;
 	//csvFile *defenseModifiers;
 	string matrixDeTerrenoOrFacility[FILA][COLUMNA];
-
+	unsigned char checksum;
+	unsigned char checksumReceived;
 	//modifiers tableMatrix[14][5];
 
 	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
 	//coordenadas attacker; //HACER: INICIARLAS EN NULL
 	//coordenadas defender; //HACER: INICIAR EN NULL
-
 };

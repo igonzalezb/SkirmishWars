@@ -83,6 +83,5 @@ private:
 	modifiers tableMatrix[14][5];
 	Unit *newUnit;
 	bool iAmPlaying;
-
 };
 //#endif // !GAME_H

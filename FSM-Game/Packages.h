@@ -68,8 +68,9 @@ class MapIs :public genericPackage
 {
 private:
 	string mapName;
+	char checksum;
 public:
-	MapIs(string mapName);
+	MapIs(string mapName, char checksum);
 	void setPackage();
 };
 

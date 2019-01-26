@@ -223,6 +223,7 @@ bool NetworkEventSource::isThereEvent()
 	std::vector<MYBYTE> aux; //en vez de MYBYTE se puede poner char ( que es lo que estaba) pero es lo mismo
 	std::string auxstr; //ver si lo voy a usar o no
 	int i;
+	unsigned char temp;
 
 	//VER COMO HACER PARA QUE APAREZCA UN EVENTO DE CONNECTED!!! CON SERVER. NO SE PUEDE
 
@@ -309,12 +310,15 @@ bool NetworkEventSource::isThereEvent()
 			aux.erase(aux.begin());
 			r_map.clear();
 			//r_map.insert(r_map.begin(), aux.begin(), aux.end());
-			r_map.insert(r_map.begin(), aux.begin(), aux.end()-1);
+			r_map.insert(r_map.begin(), aux.begin(), aux.end());
 			//lo pasamos a string y lo guardamos en el nombre del player:
 			r_map_string.clear();
 			for (char c : r_map) {
 				r_map_string.push_back(c);
 			}
+			temp = r_map_string.back(); //el último char es el checksum
+			gameInterface->myMap->setChecksumReceived(temp);
+			r_map_string.pop_back();
 			gameInterface->myMap->setMapName(r_map_string);
 			gameInterface->myMap->generateTilesArray(gameInterface->data->getBuildingList(), gameInterface->data->getTerrainList(), gameInterface->data->getUnitList());
 			gameInterface->myMap->updateFogOfWar(gameInterface->playerMe->getTeam());

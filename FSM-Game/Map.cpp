@@ -22,6 +22,19 @@ Map::Map()
 
 void Map::verifyMapReceived()
 {
+	setChecksum();
+	if (checksum == checksumReceived)
+	{
+		isMapReceivedOk = true;
+	}
+	else
+	{
+		isMapReceivedOk = false;
+	}
+}
+
+void Map::setChecksum()
+{
 	ifstream lectura;
 	string archivo, temp;
 	lectura.open(mapName, ios::in);
@@ -85,11 +98,26 @@ void Map::verifyMapReceived()
 	}
 
 	////cout << "m: " << m << endl;
-	char checksum = index[archivo.length()-1];
+	checksum = index[archivo.length()-1];
 	cout << "Checksum: " << checksum << endl;
-	isMapReceivedOk = true;
+	//isMapReceivedOk = true;
 
 	lectura.close();
+}
+
+unsigned char Map::getChecksum()
+{
+	return checksum;
+}
+
+void Map::setChecksumReceived(unsigned char checksumReceived_)
+{
+	checksumReceived = checksumReceived_;
+}
+
+unsigned char Map::getChecksumReceived()
+{
+	return checksumReceived;
 }
 
 void Map::randomMap()

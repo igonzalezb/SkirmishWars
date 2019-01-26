@@ -88,8 +88,8 @@ genericState* ST_S_WaitingNameIsAck::on_Rack(genericEvent *ev, usefulInfo * Info
 	Info->gameInterface->graphics->loadBitmaps(Info->gameInterface->myMap);
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam());
 	
-	Info->gameInterface->myMap->verifyMapReceived();
-	Info->nextPkg = new MapIs(Info->gameInterface->myMap->getMapName());
+	Info->gameInterface->myMap->setChecksum();
+	Info->nextPkg = new MapIs(Info->gameInterface->myMap->getMapName(), Info->gameInterface->myMap->getChecksum());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete MAP IS
 	Info->timeoutSrc->stopTimer2();
 	cout << "TERMINO DE MANDAR EL MAPA" << endl;
