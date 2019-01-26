@@ -56,6 +56,8 @@ public:
 	//virtual genericState* on_Timeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_TwoHalfMinTimeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	//virtual genericState* on_TenSecLeft(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	//virtual genericState* on_ThirtySecLeft(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	//virtual genericState* on_ConnectionFailed(genericEvent* ev, usefulInfo * Info) { return nullptr; } //VER SI QUEDA
 
 	virtual genericState* on_Rack(genericEvent* ev, usefulInfo * Info) { return nullptr; }

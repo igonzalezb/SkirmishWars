@@ -25,10 +25,10 @@
 
 
 
-//#define ONE_MINUTE		60
-//#define TWO_HALF_MINUTES	150 
-#define ONE_MINUTE			15
-#define TWO_HALF_MINUTES	150 
+#define THIRTY_SEC			30
+#define FIFTY_SEC			50
+#define ONE_MIN				60
+#define TWO_HALF_MIN		150 
 #define MAX_TIMEOUTS		5 //VER ESTO!!!!!!
 
 

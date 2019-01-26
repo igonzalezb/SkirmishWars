@@ -10,6 +10,7 @@
 #include "FSMNetworking.h"
 #include "eventSources.h"
 #include "userInput.h"
+#include "Viewer.h"
 //#include "Networking.h"
 //#include "Game.h"
 #include <string>
@@ -62,7 +63,7 @@ int main()
 	eventGenerator evGen(&Info);
 	FSMGame gameFSM;
 	FSMNetworking networkingFSM;
-	
+	Viewer viewer;
 	
 	cout << "Listening on port 13225..." << endl;
 	communicator.startConnection();
@@ -78,6 +79,7 @@ int main()
 		{
 			networkingFSM.dispatch(ev, &Info);
 			gameFSM.dispatch(ev, &Info);
+			viewer.dispatch(ev, &Info);
 		}
 		/*if (skirmish.getPlaying())
 		{

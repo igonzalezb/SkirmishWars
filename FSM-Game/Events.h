@@ -375,6 +375,21 @@ public:
 private:
 };
 
+class EV_TenSecLeft : public genericEvent
+{
+public:
+	EV_TenSecLeft() { ev = TEN_SEC_LEFT; };
+private:
+};
+
+class EV_ThirtySecLeft : public genericEvent
+{
+public:
+	EV_ThirtySecLeft() { ev = THIRTY_SEC_LEFT; };
+private:
+};
+
+
 //class EV_ConnectionFailed : public genericEvent
 //{
 //public:

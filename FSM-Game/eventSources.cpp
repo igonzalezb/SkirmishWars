@@ -741,7 +741,7 @@ TimeoutEventSource::TimeoutEventSource()
 bool TimeoutEventSource::isThereEvent()
 {
 	timeout = false;
-	if (((clock() - tInicial1) > ONE_MINUTE * CLOCKS_PER_SEC) && timerRunning1)
+	if (((clock() - tInicial1) > ONE_MIN * CLOCKS_PER_SEC) && timerRunning1)
 	{
 		timeout = true;
 		//timerRunning = false; //MODIFICARLO DESDE AFUERA CON stopTimer!!!!
@@ -755,7 +755,17 @@ bool TimeoutEventSource::isThereEvent()
 			evCode = ONE_MIN_TIMEOUT;
 		//}
 	}
-	else if (((clock() - tInicial2) > TWO_HALF_MINUTES * CLOCKS_PER_SEC) && timerRunning2)
+	else if (((clock() - tInicial1) > FIFTY_SEC * CLOCKS_PER_SEC) && timerRunning1)
+	{
+		timeout = true;
+		evCode = TEN_SEC_LEFT;
+	}
+	else if (((clock() - tInicial1) > THIRTY_SEC * CLOCKS_PER_SEC) && timerRunning1)
+	{
+		timeout = true;
+		evCode = THIRTY_SEC_LEFT;
+	}
+	else if (((clock() - tInicial2) > TWO_HALF_MIN * CLOCKS_PER_SEC) && timerRunning2)
 	{
 		timeout = true;
 		//timerRunning = false;
