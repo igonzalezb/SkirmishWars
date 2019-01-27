@@ -2,7 +2,7 @@
 //#ifndef GAME_H
 //#define GAME_H
 
-//#define DEBUG true
+#define DEBUG true
 
 #include <iostream>
 #include <string>
@@ -73,6 +73,12 @@ public:
 
 	void setEndPlaying(bool endPlaying_);
 	bool getEndPlaying();
+
+	void setIWantToPlayAgain(bool playAgain);
+	bool getIWantToPlayAgain();
+	void setYouWantToPlayAgain(bool playAgain);
+	bool getYouWantToPlayAgain();
+
 	
 private:
 	coordenadas attacker;
@@ -87,5 +93,7 @@ private:
 	Unit *newUnit;
 	bool iAmPlaying;
 	bool endPlaying;
+	bool IWantToPlayAgain;
+	bool youWantToPlayAgain;
 };
 //#endif // !GAME_H

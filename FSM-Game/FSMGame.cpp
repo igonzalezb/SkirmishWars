@@ -108,6 +108,10 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 		case YOU_DIDNT_WIN:
 			newState = currentState->on_YouDidntWin(ev, Info);
 			break;
+		//case END_PLAYING: //ver si queda
+		//	newState = currentState->on_YouDidntWin(ev, Info);
+		//	break;
+		//	//AGRUEGE ESTO, NO SE SI VA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		default:
 			break;
 		}

@@ -2,7 +2,7 @@
 #ifndef GENERICSTATE_H
 #define GENERICSTATE_H
 
-//#define DEBUG true
+#define DEBUG true
 
 #include "usefulInfo.h"
 #include "genericEvent.h"
@@ -15,7 +15,7 @@ public:
 	//lo que se indica devolviendo nullptr. Al ser virtuales, las clases 
 	//de los estados especificos que heredan a genericState pueden redefinir 
 	//que respuesta tomar ante los eventos que no son inesperados para ese estado en especifico.
-
+	//genericState(eventCode evCode) { lastEvent = evCode; };
 	
 	virtual genericState* on_NoEv(genericEvent* ev) { return nullptr; }
 
@@ -50,7 +50,7 @@ public:
 	virtual genericState* on_NewUnit(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	virtual genericState* on_YouWon(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+
 
 	virtual genericState* on_YouWon(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_YouDidntWin(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -90,7 +90,7 @@ public:
 
 	void setLastEvent(eventCode lastEvent) { this->lastEvent = lastEvent; }   //setter
 	eventCode getLastEvent() { return lastEvent; }    //getter de last event
-													  //std::string getSelectedFile() { return fileToTransfer; }
+												  //std::string getSelectedFile() { return fileToTransfer; }
 													  //void setFileToTransfer(std::string selectedFile) { this->fileToTransfer = selectedFile; }
 
 protected:

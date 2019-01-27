@@ -19,9 +19,11 @@ GameEventSource::GameEventSource(Game *_gameInterface):gameInterface(_gameInterf
 genericEvent * GameEventSource::insertEvent()
 {
 	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
+	//ret->setLastEvent(evCode);
 	switch (evCode)
 	{
 	case MAP_OK: //ESTE CREO QUE SE BORRA DE ACA
+		cout << "insert event de map ok" << endl;
 		ret = (genericEvent *) new EV_MapOk();
 		break;
 	case YOU_START:
@@ -105,6 +107,10 @@ genericEvent * GameEventSource::insertEvent()
 	default:
 		break;
 	}
+	//ret->setEventType(evCode);
+	//genericEvent * ret2 = (genericEvent *) new EV_ErrDetected();
+	//ret2->setEventType(evCode);
+	//setLastEvent(ret2);
 	return ret;
 }
 
@@ -140,16 +146,29 @@ bool GameEventSource::isThereEvent()
 		evCode = NO_MONEY;
 		ret = true;
 	}
-	if (gameInterface->didHeWin())
+
+	/////////////////////////////////////////////////////////////////
+	if ((gameInterface->getYouWinning()))
+	//if (gameInterface->didHeWin())
 	{
+#ifdef DEBUG
+		cout << "entra a you won" << endl;
+#endif // DEBUG
+
 		evCode = YOU_WON; //VER en que parte se setea nuevamente notWinning en true (probablemente cuando arranca el juego)
 		ret = true;
 	}
-	else
+	/*else
 	{
-		evCode = YOU_DIDNT_WIN;
+		evCode = YOU_DIDNT_WIN;	//IMPORTANTE!! YO NECESITO ESTE EVENTO EN UNA PARTE. PONER UN FLAG
 		ret = true;
+	}*/
+	//////////////////////////////////////////////////////////////////
+	if (gameInterface->getIWantToPlayAgain())
+	{
+		evCode = PLAY_AGAIN;
 	}
+
 	if (gameInterface->moving==true)
 	{
 		//if ((gameInterface->myMap->getTile(gameInterface->getDefender().i,gameInterface->getDefender().j)->getUnit()) == NULL)
@@ -519,6 +538,8 @@ genericEvent * NetworkEventSource::insertEvent()
 	default:
 		break;
 	}
+
+	//ret->setEventType(evCode);
 	return ret;
 }
 
@@ -582,19 +603,21 @@ bool UserEventSource::isThereEvent()
 		case ALLEGRO_EVENT_KEY_UP:
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 				evCode = END_PLAYING;
+				gameInterface->setEndPlaying(true);
 				ret = true;
 			}
 			break;
 		case ALLEGRO_EVENT_DISPLAY_CLOSE:
-			if (button = al_show_native_message_box(
+			if ((button = al_show_native_message_box(
 				gameInterface->graphics->getDisplay(),
 				"QUIT GAME",
 				"Do you want to quit the game?",
 				NULL,
 				NULL,
 				ALLEGRO_MESSAGEBOX_YES_NO
-			))
+			)) == 1)
 			{
+				gameInterface->setEndPlaying(true);
 				evCode = END_PLAYING;
 				ret = true;
 			}
@@ -740,6 +763,7 @@ genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 		ret = (genericEvent *) new EV_NoEv();
 		break;
 	case END_PLAYING:
+		cout << "insert event end playing, desde user" << endl;
 		ret = (genericEvent *) new EV_EndPlaying();
 		break;
 	case TILE:

@@ -90,7 +90,7 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case MAP_OK:
 			newState = currentState->on_MapOk(ev, Info);
-			//cout << "DISPATCH DE MAP OK" << endl;
+			cout << "DISPATCH DE MAP OK" << endl;
 			break;
 		case I_START:
 			newState = currentState->on_IStart(ev, Info);
@@ -132,11 +132,12 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 		default:
 			break;
 		}
-
 		if (newState != nullptr)
 		{
 			delete currentState;
 			currentState = newState;
 		}
+
+
 	}
 }

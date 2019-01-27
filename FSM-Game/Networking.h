@@ -2,7 +2,7 @@
 #define NETWORKING_H
 
 //#define SERVER_IP "localhost"
-//#define DEBUG true
+#define DEBUG true
 
 #include <iostream>
 #include <string>

@@ -302,6 +302,22 @@ ALLEGRO_DISPLAY* MapGraphics::getDisplay()
 	return display;
 }
 
+bool MapGraphics::doIwantToPlayAgain()
+{
+	int button = al_show_native_message_box(
+		getDisplay(),
+		"GAME OVER",
+		"Do you want to play again?",
+		NULL, NULL, ALLEGRO_MESSAGEBOX_YES_NO);
+
+	if (button == 1)
+	{
+		return true;
+	}
+	else
+		return false;
+}
+
 //void MapGraphics::showTime(unsigned int time)
 //{
 //	al_draw_textf(menuFont, al_color_name("white"), M_WIDTH(display) + 20, 0.0, 0.0, (("Time Left: ") + to_string(time)).c_str());

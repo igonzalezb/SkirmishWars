@@ -36,6 +36,7 @@ public:
 	void playOneMinSound();
 	void playGameOverSound();
 	ALLEGRO_DISPLAY* getDisplay();
+	bool doIwantToPlayAgain();
 	//void showTime(unsigned int time);
 
 	ALLEGRO_FONT* getMenuFont();

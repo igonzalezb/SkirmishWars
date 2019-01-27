@@ -22,6 +22,10 @@ Map::Map()
 
 void Map::verifyMapReceived()
 {
+#ifdef DEBUG
+	cout << "Entro a verifymapreceived" << endl;
+#endif // DEBUG
+
 	setChecksum();
 	if (checksum == checksumReceived)
 	{

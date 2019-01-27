@@ -3,7 +3,7 @@
 #ifndef STATESGAME_H
 #define STATESGAME_H
 
-//#define DEBUG true
+#define DEBUG true
 
 #include "genericState.h"
 //#include "PlayerInfo.h"
@@ -154,7 +154,7 @@ class ST_AnalysingVictoryUnits :public genericState
 	genericState* on_YouWon(genericEvent* ev, usefulInfo * Info);
 };
 
-class ST_WaitingPlayingAgainConfirmation :public genericState
+class ST_G_WaitingPlayingAgainConfirmation :public genericState
 {
 	genericState* on_PlayAgain(genericEvent* ev, usefulInfo * Info);
 	genericState* on_GameOver(genericEvent* ev, usefulInfo * Info);

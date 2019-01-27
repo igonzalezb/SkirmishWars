@@ -1,7 +1,7 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 
-//#define DEBUG true
+#define DEBUG true
 
 //#include "Screen.h"
 #include "genericEvent.h"

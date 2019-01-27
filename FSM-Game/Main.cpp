@@ -20,6 +20,7 @@
 #include "basicXML.h"
 #include "AllegroSetup.h"
 #include "StartMenu.h"
+#include "Viewer.h"
 
 #define XML_PATH	"resources.xml"
 
@@ -62,7 +63,7 @@ int main()
 	eventGenerator evGen(&Info);
 	FSMGame gameFSM;
 	FSMNetworking networkingFSM;
-	
+	Viewer gameviewer;
 	
 	cout << "Listening on port 13225..." << endl;
 	communicator.startConnection();
@@ -78,18 +79,24 @@ int main()
 		{
 			networkingFSM.dispatch(ev, &Info);
 			gameFSM.dispatch(ev, &Info);
-		}
-		/*if (skirmish.getPlaying())
-		{
-			cout << "MOSTRAR LA PANTALLA" << endl;
-			Info.userSrc->graphics->loadBitmaps(skirmish.myMap);
-			Info.userSrc->graphics->showMap(&skirmish);
-		}*/
+			gameviewer.dispatch(ev, &Info);
 
-	} while (((gameFSM.getCurrentState())->getLastEvent() != END_PLAYING) ||
-		((networkingFSM.getCurrentState())->getLastEvent() != END_PLAYING));//VER BIEN ESTO
+		}
+		if ((gameFSM.getCurrentState()->getLastEvent() != CONNECTED_AS_CLIENT) || (networkingFSM.getCurrentState()->getLastEvent() != CONNECTED_AS_CLIENT))
+		{
+			cout << "game last event: " << gameFSM.getCurrentState()->getLastEvent() << endl;
+			cout << "networking last event: " << networkingFSM.getCurrentState()->getLastEvent() << endl;
+		}
+	} while (1);// ev->getEventType() != END_PLAYING);
+		
+		//(((gameFSM.getCurrentState())->getLastEvent() != END_PLAYING) &&
+		//((networkingFSM.getCurrentState())->getLastEvent() != END_PLAYING));//VER BIEN ESTO
+
+
 	//while (FSM.getCurrentState()->getLastEvent() != QUIT); //ver bien si este QUIT queda el mismo o si hay que cambiarlo
-	//getchar();
+	
+
+	return EXIT_SUCCESS;
 }
 
 

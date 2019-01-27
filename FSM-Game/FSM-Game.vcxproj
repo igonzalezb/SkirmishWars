@@ -218,6 +218,7 @@
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="userInput.cpp" />
     <ClCompile Include="videoplayer.cpp" />
+    <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllegroSetup.h" />
@@ -248,6 +249,7 @@
     <ClInclude Include="usefulInfo.h" />
     <ClInclude Include="userInput.h" />
     <ClInclude Include="videoplayer.h" />
+    <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="resources\resources.xml" />

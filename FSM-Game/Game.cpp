@@ -24,7 +24,8 @@ Game::Game(ALLEGRO_DISPLAY* display)
 	myMap = new Map;
 	graphics = new MapGraphics(display);
 	youWinning = false;
-	
+	IWantToPlayAgain = false;
+	youWantToPlayAgain = false;
 	//myMap->generateTilesArray(data->getBuildingList(), data->getTerrainList(), data->getUnitList());
 	
 	
@@ -365,6 +366,10 @@ bool Game::getIamPlaying()
 
 void Game::chooseWhoStarts()
 {
+#ifdef DEBUG
+	cout << "Entra al random de who starts" << endl;
+#endif // DEBUG
+
 	Istart = rand() % 2;
 	//Istart = true;
 	if (Istart)
@@ -382,5 +387,25 @@ void Game::setEndPlaying(bool endPlaying_)
 bool Game::getEndPlaying()
 {
 	return endPlaying;
+}
+
+void Game::setIWantToPlayAgain(bool playAgain)
+{
+	IWantToPlayAgain = playAgain;
+}
+
+bool Game::getIWantToPlayAgain()
+{
+	return IWantToPlayAgain;
+}
+
+void Game::setYouWantToPlayAgain(bool playAgain)
+{
+	youWantToPlayAgain = playAgain;
+}
+
+bool Game::getYouWantToPlayAgain()
+{
+	return youWantToPlayAgain;
 }
 

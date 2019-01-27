@@ -3,7 +3,7 @@
 #ifndef EVENTSOURCES_H
 #define EVENTSOURCES_H
 
-//#define DEBUG true
+#define DEBUG true
 
 #include <string>
 #include <vector>

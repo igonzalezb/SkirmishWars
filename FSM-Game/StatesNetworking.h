@@ -3,7 +3,7 @@
 #ifndef STATESNETWORKING_H
 #define STATESNETWORKING_H
 
-//#define DEBUG true
+#define DEBUG true
 
 #include "genericState.h"
 
@@ -160,24 +160,24 @@ class ST_WaitingPlayingAgainConfirmation: public genericState
 {
 	genericState* on_PlayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
 	genericState* on_GameOver(genericEvent *ev, usefulInfo * Info);
-}
+};
 
 class ST_WaitingYouWonResponse : public genericState
 {
 	genericState* on_RplayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
 	genericState* on_RgameOver(genericEvent *ev, usefulInfo * Info);
-}
+};
 
 class ST_WaitingMyConfirmation : public genericState
 {
 	genericState* on_PlayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
 	genericState* on_GameOver(genericEvent *ev, usefulInfo * Info);
-}
+};
 
 class ST_WaitingGameOverAck : public genericState
 {
 	genericState* on_Rack(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
-}
+};
 
 
 #endif // !STATESNETWORKING_H

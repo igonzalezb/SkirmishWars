@@ -275,7 +275,8 @@ genericState* ST_Attacking::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info
 genericState* ST_Attacking::on_RYouWon(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
 	cout << "G ATTACKING: ON r you won" << endl;
-	genericState *ret = (genericState *) new ST_WaitingPlayingAgainConfirmation();
+	genericState *ret = (genericState *) new ST_G_WaitingPlayingAgainConfirmation();
+	Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
@@ -343,8 +344,9 @@ genericState* ST_WaitingDefender::on_OneMinTimeout(genericEvent *ev, usefulInfo 
 
 genericState* ST_WaitingDefender::on_RYouWon(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
-	cout << "G WAITING DEFENDER: ON r you won" << endl;
-	genericState *ret = (genericState *) new ST_WaitingPlayingAgainConfirmation();
+	cout << "G waiting defender: ON r you won" << endl;
+	genericState *ret = (genericState *) new ST_G_WaitingPlayingAgainConfirmation();
+	Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
@@ -390,7 +392,8 @@ genericState* ST_WaitingAttackConfirmation::on_OneMinTimeout(genericEvent *ev, u
 genericState* ST_WaitingAttackConfirmation::on_RYouWon(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
 	cout << "G waiting attack confirm: ON r you won" << endl;
-	genericState *ret = (genericState *) new ST_WaitingPlayingAgainConfirmation();
+	genericState *ret = (genericState *) new ST_G_WaitingPlayingAgainConfirmation();
+	Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
@@ -703,10 +706,13 @@ genericState* ST_YouMoving::on_RPass(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_AnalysingVictoryHQ();
 	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
 	Info->timeoutSrc->startTimer1(); //CHEQUEAR
+	return ret;
+}
 genericState* ST_YouMoving::on_RYouWon(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
-	cout << "G you moving: ON r you won" << endl;
-	genericState *ret = (genericState *) new ST_WaitingPlayingAgainConfirmation();
+	cout << "G you movinG: ON r you won" << endl;
+	genericState *ret = (genericState *) new ST_G_WaitingPlayingAgainConfirmation();
+	Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
@@ -860,7 +866,7 @@ genericState* ST_AnalysingVictoryUnits::on_YouWon(genericEvent *ev, usefulInfo *
 }
 
 ////////////////////////// ST_WaitingPlayingAgainConfirmation /////////////////////////
-genericState* ST_WaitingPlayingAgainConfirmation::on_PlayAgain(genericEvent* ev, usefulInfo * Info)
+genericState* ST_G_WaitingPlayingAgainConfirmation::on_PlayAgain(genericEvent* ev, usefulInfo * Info)
 {
 	cout << "waiting playing again confirm: on playing again." << endl;
 	genericState *ret = (genericState *) new ST_GameIdle(); //VER
@@ -868,7 +874,7 @@ genericState* ST_WaitingPlayingAgainConfirmation::on_PlayAgain(genericEvent* ev,
 	return ret;
 }
 
-genericState* ST_WaitingPlayingAgainConfirmation::on_GameOver(genericEvent* ev, usefulInfo * Info)
+genericState* ST_G_WaitingPlayingAgainConfirmation::on_GameOver(genericEvent* ev, usefulInfo * Info)
 {
 	cout << "THE END." << endl;
 	genericState *ret = (genericState *) new ST_GameIdle(); //VER

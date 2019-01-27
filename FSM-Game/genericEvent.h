@@ -1,7 +1,7 @@
 #ifndef GENERICEVENT_H
 #define GENERICEVENT_H
 
-//#define DEBUG true
+#define DEBUG true
 
 #include <string>
 
@@ -46,7 +46,7 @@ typedef enum {
 	//Opciones de compra presionadas
 	/*OPT_1, OPT_2, OPT_3, OPT_4, OPT_5, OPT_6, OPT_7, OPT_8, OPT_9,*/
 
-	END_PLAYING,// VER SI ESTE ESTADO QUEDA O NO
+	END_PLAYING,
 
 	//EVENTOS generados por Timeout
 	//TIMEOUT//, CONNECTION_FAIL
@@ -60,7 +60,7 @@ class genericEvent
 public:
 	genericEvent() { ev = NO_EV; }//por default, se setea el tipo de evento en NO_EV. Si otra clase hereda genericEvent, puede cambiar el constructor para setear el evento como el que corresponda
 	eventCode getEventType() { return ev; }	//getter del tipo de evento
-
+	//void setEventType(eventCode ev) { this->ev = ev; }
 protected:
 	//std::string selectedFile;
 	eventCode ev;

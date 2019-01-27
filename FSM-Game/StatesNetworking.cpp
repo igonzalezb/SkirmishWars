@@ -112,7 +112,7 @@ genericState* ST_S_WaitingNameIsAck::on_TwoHalfMinTimeout(genericEvent *ev, usef
 genericState* ST_S_WaitingMapIsAck::on_Rack(genericEvent *ev, usefulInfo * Info)
 {
 #ifdef DEBUG
-	cout << "ST S 4.1" << endl;
+	cout << "recibe el ack despues de mandar el map is" << endl;
 #endif // DEBUG
 	Info->gameInterface->chooseWhoStarts();
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts();
@@ -265,7 +265,7 @@ genericState* ST_C_WaitingMapIs::on_RmapIs(genericEvent *ev, usefulInfo * Info)
 genericState* ST_C_WaitingMapConfirmation::on_MapOk(genericEvent *ev, usefulInfo * Info)
 {
 #ifdef DEBUG
-	cout << "ST C 5" << endl;
+	cout << "waiting map confirm: on map ok" << endl;
 #endif // DEBUG
 	genericState *ret = (genericState *) new ST_C_WaitingWhoStarts();
 	Info->nextPkg = new Ack();
@@ -300,37 +300,6 @@ genericState* ST_C_WaitingWhoStarts::on_RIStart(genericEvent *ev, usefulInfo * I
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ACK
 	return ret;
 }
-
-/*
-genericState* ST_C_WaitingWhoStarts::on_Rmove(genericEvent *ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_WaitingAPlay();
-	Info->nextPkg = new Ack();
-	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ACK
-	return ret;
-}
-
-genericState* ST_C_WaitingWhoStarts::on_Rpurchase(genericEvent *ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_WaitingAPlay();
-	Info->nextPkg = new Ack();
-	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ACK
-	return ret;
-}
-
-genericState* ST_C_WaitingWhoStarts::on_Rattack(genericEvent *ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_WaitingToAttack();
-	return ret;
-}
-
-genericState* ST_C_WaitingWhoStarts::on_Rpass(genericEvent *ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_IPlay();
-	return ret;
-}
-*/
-
 
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// IN COMMON ////////////////////////////////////
@@ -537,17 +506,25 @@ genericState* ST_WaitingAPlay::on_YouWon(genericEvent *ev, usefulInfo * Info) //
 genericState* ST_WaitingYouWonResponse::on_RplayAgain(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
 	genericState *ret = (genericState *) new ST_WaitingMyConfirmation();
+	Info->gameInterface->setYouWantToPlayAgain(true);
+	return ret;
 }
 
 genericState* ST_WaitingYouWonResponse::on_RgameOver(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
-
+	genericState *ret = (genericState *) new ST_WaitingConnection();
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setYouWantToPlayAgain(false);
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 genericState* ST_WaitingMyConfirmation::on_PlayAgain(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
 	genericState *ret = (genericState *) new ST_S_WaitingNameIsAck(); //PARA MANDARLE EL MAP IS
+	return ret;
 }
 
 genericState* ST_WaitingMyConfirmation::on_GameOver(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
@@ -555,6 +532,7 @@ genericState* ST_WaitingMyConfirmation::on_GameOver(genericEvent *ev, usefulInfo
 	genericState *ret = (genericState *) new ST_WaitingGameOverAck();
 	Info->nextPkg = new GameOver();
 	Info->networkInterface->sendPackage(Info->nextPkg);
+	return ret;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -562,6 +540,7 @@ genericState* ST_WaitingGameOverAck::on_Rack(genericEvent *ev, usefulInfo * Info
 {
 	genericState *ret = (genericState *) new ST_WaitingConnection(); //PARA MANDARLE EL MAP IS
 	//Info->gameInterface->
+	return ret;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
