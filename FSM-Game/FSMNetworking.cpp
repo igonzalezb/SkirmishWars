@@ -129,6 +129,9 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 		case YOU_WON:
 			newState = currentState->on_YouWon(ev, Info);
 			break;
+		case END_PLAYING:
+			newState = currentState->on_Pass(ev, Info); //para probarrrrrrrrrrrrrrrrr
+			break;
 		default:
 			break;
 		}
@@ -136,6 +139,7 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 		{
 			delete currentState;
 			currentState = newState;
+			currentState->setLastEvent(ev->getEventType()); //PROBANDO PARA END PLAYING
 		}
 
 

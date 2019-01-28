@@ -106,11 +106,12 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_YouWon(ev, Info);
 			break;
 		case YOU_DIDNT_WIN:
+			cout << "DISPATCHER G YOU DIDNT WIN" << endl;
 			newState = currentState->on_YouDidntWin(ev, Info);
 			break;
-		//case END_PLAYING: //ver si queda
-		//	newState = currentState->on_YouDidntWin(ev, Info);
-		//	break;
+		case END_PLAYING: //ver si queda
+			newState = currentState->on_Pass(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+			break;
 		//	//AGRUEGE ESTO, NO SE SI VA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		default:
 			break;
@@ -120,6 +121,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 		{
 			delete currentState;
 			currentState = newState;
+			currentState->setLastEvent(ev->getEventType()); //PROBANDO PARA END PLAYING
 		}
 	}
 }

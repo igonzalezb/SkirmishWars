@@ -130,10 +130,74 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 	else if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
 			((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
 	{
-		Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
-		//VER si hay que borrar tileSelected (?)
-		ret = (genericState *) new ST_WaitingDestination();
-		Info->gameInterface->moving = false;
+		////////////////////////////////////////// VIEJO, SIN APC ////////////////////////////////////////// !!!!!!!!!!!!!!!!!!!!!!
+
+		/////////////////////////////////////////////////////////////////////////////////////////////////////
+		cout << "DEFENDER:ES UNA UNIDAD Y ES PROPIA" << endl;
+		cout << "UNIDAD ATACANTE:" << Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType() << endl;
+		cout << "UNIDAD DEFENDER:" << Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType() << endl;
+		if (Info->gameInterface->arregloNaveAPC[1] != NULL)
+		{
+			cout << "arreglo en [1]:" << Info->gameInterface->arregloNaveAPC[1] << endl;
+		}
+		else
+		{
+			cout << "ARREGLO EN [1] == NULL" << endl;
+		}
+		////////////////////////////////////////// nuevo con apc /////////////////////////////////////
+		if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap11")) ||
+			(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap22"))) &&
+			((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("ap11") == 0) ||
+			(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("ap22") == 0)) &&
+			(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j) == Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j))&&
+			(Info->gameInterface->arregloNaveAPC[0]!=NULL))
+			//habilita el desembarco de unidad
+		{
+			cout << "ATTACKER Y DEFENDER  APC... ENTRA AL IF" << endl;
+			Info->gameInterface->myMap->getTile((Info->gameInterface->getTileSelected().i) - 1, Info->gameInterface->getTileSelected().j)->setUnit(Info->gameInterface->arregloNaveAPC[0]);
+
+			if (Info->gameInterface->arregloNaveAPC[1] != NULL)
+			{
+				Info->gameInterface->myMap->getTile((Info->gameInterface->getTileSelected().i) , (Info->gameInterface->getTileSelected().j)-1)->setUnit(Info->gameInterface->arregloNaveAPC[1]);
+			}
+			//hay que agregar un estado para q el usuario elija el lugar dnd desembarcar
+			Info->gameInterface->moving = false;
+
+		}
+		else if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("in1") == 0) ||
+			(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("in2") == 0) ||
+			(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("me1") == 0) ||
+			(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("me2") == 0)) &&
+			((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap11")) ||
+			(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap22"))) &&
+				(Info->gameInterface->arregloNaveAPC[1] == NULL))
+			//habilito la carga de unidad al apc
+		{
+			cout << "ATTACKER ES UN IN O ME Y DEFENDER ES UN APC... ENTRA AL ELSE IF" << endl;
+			//movimiento in o me a acp -> abordar acp
+			Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
+
+				//arreglo-> insert mech
+			if (Info->gameInterface->arregloNaveAPC[0] == NULL)
+			{
+				Info->gameInterface->arregloNaveAPC[0] = Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit();
+				Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->setUnit(NULL);
+			}
+			else
+			{
+				Info->gameInterface->arregloNaveAPC[1] = Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit();
+				Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->setUnit(NULL);
+			}
+			Info->gameInterface->moving = false;
+		}
+			/////////////////////////////////////////////////// /n/ue/vo //hasta aca
+		else
+		{
+			Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
+			//VER si hay que borrar tileSelected (?)
+			ret = (genericState *) new ST_WaitingDestination();
+			Info->gameInterface->moving = false;
+		}
 	}
 	else
 	{
@@ -700,11 +764,13 @@ genericState* ST_YouMoving::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_YouMoving::on_RPass(genericEvent *ev, usefulInfo * Info)
 {
-	cout << "entra a on_RPass" << endl;
+	cout << "g you moving on_RPass" << endl;
 	//genericState *ret = (genericState *) new ST_Moving();
 	//Info->gameInterface->setIamPlaying(true);
 	genericState *ret = (genericState *) new ST_AnalysingVictoryHQ();
 	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
+	Info->gameInterface->didHeWin();
+	Info->gameInterface->setAnalyseVictory(true); //agrego esto!!!!!!!!!!!!
 	Info->timeoutSrc->startTimer1(); //CHEQUEAR
 	return ret;
 }
@@ -775,6 +841,8 @@ genericState* ST_YouAttacking::on_RPass(genericEvent *ev, usefulInfo * Info)
 	//Info->gameInterface->setIamPlaying(true);
 	genericState *ret = (genericState *) new ST_AnalysingVictoryHQ();
 	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
+	Info->gameInterface->didHeWin();
+	Info->gameInterface->setAnalyseVictory(true); //agrego esto!!!!!!!!!!!!
 	Info->timeoutSrc->startTimer1(); //CHEQUEAR
 	return ret;
 }
@@ -826,6 +894,9 @@ genericState* ST_YouPurchasing::on_RPass(genericEvent *ev, usefulInfo * Info)
 	//Info->gameInterface->setIamPlaying(true);
 	genericState *ret = (genericState *) new ST_AnalysingVictoryHQ();
 	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
+	Info->gameInterface->didHeWin();
+	Info->gameInterface->setAnalyseVictory(true); //agrego esto!!!!!!!!!!!!
+	Info->timeoutSrc->startTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -836,6 +907,7 @@ genericState* ST_AnalysingVictoryHQ::on_YouDidntWin(genericEvent *ev, usefulInfo
 	cout << "juego yo. El otro no gano." << endl;
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->setIamPlaying(true);
+	Info->gameInterface->setAnalyseVictory(false); //	CHEQUEAR!!!!!
 	return ret;
 }
 

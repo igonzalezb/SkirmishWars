@@ -53,6 +53,9 @@ genericEvent * GameEventSource::insertEvent()
 	case YOU_WON:
 		ret = (genericEvent *) new EV_YouWon();
 		break;
+	case YOU_DIDNT_WIN:
+		ret = (genericEvent *) new EV_YouDidntWin();
+		break;
 	case PLAY_AGAIN:
 		ret = (genericEvent *) new EV_PlayAgain();
 		break;
@@ -110,7 +113,7 @@ genericEvent * GameEventSource::insertEvent()
 	//ret->setEventType(evCode);
 	//genericEvent * ret2 = (genericEvent *) new EV_ErrDetected();
 	//ret2->setEventType(evCode);
-	//setLastEvent(ret2);
+	//setLastEvent(evCode);
 	return ret;
 }
 
@@ -148,25 +151,42 @@ bool GameEventSource::isThereEvent()
 	}
 
 	/////////////////////////////////////////////////////////////////
-	if ((gameInterface->getYouWinning()))
-	//if (gameInterface->didHeWin())
+//	if ((gameInterface->getYouWinning()))
+//	//if (gameInterface->didHeWin())
+//	{
+//#ifdef DEBUG
+//		cout << "entra a you won" << endl;
+//#endif // DEBUG
+//
+//		evCode = YOU_WON; //VER en que parte se setea nuevamente notWinning en true (probablemente cuando arranca el juego)
+//		ret = true;
+//	}
+//	/*else
+//	{
+//		evCode = YOU_DIDNT_WIN;	//IMPORTANTE!! YO NECESITO ESTE EVENTO EN UNA PARTE. PONER UN FLAG
+//		ret = true;
+//	}*/
+	////////////////////////////////////////////////////////////////// CON ESTO DE ACA, SE SACARIA EL IF DE ARRIBA DE ESTAS LINEAS, CON EL YOU WON!
+	if (gameInterface->getAnalyseVictory())
 	{
-#ifdef DEBUG
-		cout << "entra a you won" << endl;
-#endif // DEBUG
-
-		evCode = YOU_WON; //VER en que parte se setea nuevamente notWinning en true (probablemente cuando arranca el juego)
+		if (gameInterface->getYouWinning())
+		{
+			cout << "GENERA YOU WON" << endl;
+			evCode = YOU_WON;
+		}
+		else
+		{
+			cout << "GENERA YOU didnt win" << endl;
+			evCode = YOU_DIDNT_WIN;
+		}
+		gameInterface->setAnalyseVictory(false);
 		ret = true;
 	}
-	/*else
-	{
-		evCode = YOU_DIDNT_WIN;	//IMPORTANTE!! YO NECESITO ESTE EVENTO EN UNA PARTE. PONER UN FLAG
-		ret = true;
-	}*/
-	//////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////
 	if (gameInterface->getIWantToPlayAgain())
 	{
 		evCode = PLAY_AGAIN;
+		ret = true;
 	}
 
 	if (gameInterface->moving==true)

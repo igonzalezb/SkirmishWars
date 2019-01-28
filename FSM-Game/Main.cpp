@@ -80,21 +80,22 @@ int main()
 			networkingFSM.dispatch(ev, &Info);
 			gameFSM.dispatch(ev, &Info);
 			gameviewer.dispatch(ev, &Info);
-
 		}
-		if ((gameFSM.getCurrentState()->getLastEvent() != CONNECTED_AS_CLIENT) || (networkingFSM.getCurrentState()->getLastEvent() != CONNECTED_AS_CLIENT))
+		/*if ((gameFSM.getCurrentState()->getLastEvent() != CONNECTED_AS_CLIENT) || (networkingFSM.getCurrentState()->getLastEvent() != CONNECTED_AS_CLIENT))
 		{
 			cout << "game last event: " << gameFSM.getCurrentState()->getLastEvent() << endl;
 			cout << "networking last event: " << networkingFSM.getCurrentState()->getLastEvent() << endl;
-		}
-	} while (1);// ev->getEventType() != END_PLAYING);
+		}*/
+	} while (((gameFSM.getCurrentState())->getLastEvent() != END_PLAYING) &&
+		((networkingFSM.getCurrentState())->getLastEvent() != END_PLAYING));
+		
+		//(ev->getEventType() != END_PLAYING);// ev->getEventType() != END_PLAYING);
 		
 		//(((gameFSM.getCurrentState())->getLastEvent() != END_PLAYING) &&
 		//((networkingFSM.getCurrentState())->getLastEvent() != END_PLAYING));//VER BIEN ESTO
 
 
 	//while (FSM.getCurrentState()->getLastEvent() != QUIT); //ver bien si este QUIT queda el mismo o si hay que cambiarlo
-	
 
 	return EXIT_SUCCESS;
 }

@@ -35,6 +35,12 @@ Game::Game(ALLEGRO_DISPLAY* display)
 	playerChosen = false;
 	Istart = false;
 	endPlaying = false;
+	analyseVictory = false;
+
+	arregloNaveAPC[0] = NULL;
+	arregloNaveAPC[1] = NULL;
+
+	cout << "arr[1]=" << arregloNaveAPC[1] << endl;
 }
 
 Game::~Game()
@@ -407,5 +413,15 @@ void Game::setYouWantToPlayAgain(bool playAgain)
 bool Game::getYouWantToPlayAgain()
 {
 	return youWantToPlayAgain;
+}
+
+void Game::setAnalyseVictory(bool analyse)
+{
+	analyseVictory = analyse;
+}
+
+bool Game::getAnalyseVictory()
+{
+	return analyseVictory;
 }
 
