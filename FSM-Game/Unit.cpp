@@ -29,6 +29,17 @@ Unit::~Unit()
 {
 }
 
+bool Unit::arregloNaveAPCisEmpty()
+{
+	for (int i = 0; i < 2; i++)
+	{
+		if (arregloNaveAPC[i]->getType() == "in1"|| arregloNaveAPC[i]->getType() == "in2")
+		{
+
+		}
+	}
+}
+
 void Unit::setHp(int _hp)
 {
 

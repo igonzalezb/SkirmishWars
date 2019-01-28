@@ -16,6 +16,8 @@ genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(true);
 	Info->timeoutSrc->startTimer1();
 	Info->gameInterface->setYouWinning(false);
+
+
 	return ret;
 }
 
@@ -25,6 +27,7 @@ genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	Info->gameInterface->setYouWinning(false);
+
 	return ret;
 }
 

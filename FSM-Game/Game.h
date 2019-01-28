@@ -78,7 +78,7 @@ public:
 	bool getIWantToPlayAgain();
 	void setYouWantToPlayAgain(bool playAgain);
 	bool getYouWantToPlayAgain();
-	Unit* arregloNaveAPC[1];
+
 	void setAnalyseVictory(bool analyse);
 	bool getAnalyseVictory();
 	

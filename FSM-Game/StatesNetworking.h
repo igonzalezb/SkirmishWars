@@ -174,10 +174,17 @@ class ST_WaitingMyConfirmation : public genericState
 	genericState* on_GameOver(genericEvent *ev, usefulInfo * Info);
 };
 
+class  ST_WaitingYourConfirmation : public genericState
+{
+	genericState* on_RplayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
+	genericState* on_RgameOver(genericEvent *ev, usefulInfo * Info);
+};
+
 class ST_WaitingGameOverAck : public genericState
 {
 	genericState* on_Rack(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
 };
+
 
 
 #endif // !STATESNETWORKING_H

@@ -524,6 +524,8 @@ genericState* ST_WaitingYouWonResponse::on_RgameOver(genericEvent *ev, usefulInf
 genericState* ST_WaitingMyConfirmation::on_PlayAgain(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
 	genericState *ret = (genericState *) new ST_S_WaitingNameIsAck(); //PARA MANDARLE EL MAP IS
+	Info->nextPkg = new PlayAgain();//CHEQUEAR SI ESTA BIEN ACA MANDAR EL PLAY AGAIN (creo que si)
+	Info->networkInterface->sendPackage(Info->nextPkg);
 	return ret;
 }
 
@@ -538,17 +540,17 @@ genericState* ST_WaitingMyConfirmation::on_GameOver(genericEvent *ev, usefulInfo
 ///////////////////////////////////////////////////////////////////////////////////////////
 genericState* ST_WaitingGameOverAck::on_Rack(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
-	genericState *ret = (genericState *) new ST_WaitingConnection(); //PARA MANDARLE EL MAP IS
-	//Info->gameInterface->
+	genericState *ret = (genericState *) new ST_WaitingConnection(); //PARA MANDARLE EL MAP IS	
+	Info->gameInterface->setEndPlaying(true); //VER SI PONER ESTO ACA O EN EL SIGUIENTE ESTADO!!!!!!!!!!!!!!
 	return ret;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 genericState* ST_WaitingPlayingAgainConfirmation::on_PlayAgain(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
-	cout << "waitingAPlay: on R YOU WON" << endl;
-	genericState *ret = (genericState *) new ST_C_WaitingMapIs();
-	Info->gameInterface->setIamPlaying(true);
+	cout << "waiting playing again confirm: on play again" << endl;
+	genericState *ret = (genericState *) new ST_WaitingYourConfirmation();
+	Info->gameInterface->setIamPlaying(false);
 	Info->nextPkg = new PlayAgain();
 	Info->networkInterface->sendPackage(Info->nextPkg);
 	return ret;
@@ -556,15 +558,51 @@ genericState* ST_WaitingPlayingAgainConfirmation::on_PlayAgain(genericEvent *ev,
 
 genericState* ST_WaitingPlayingAgainConfirmation::on_GameOver(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
-//	cout << "waitingAPlay: on R YOU WON" << endl;
-	genericState *ret = (genericState *) new ST_WaitingConnection();//jejejejeeee
+	cout << "waiting playing again confirm: on game over" << endl;
+	genericState *ret = (genericState *) new ST_WaitingGameOverAck();
 	Info->gameInterface->setIamPlaying(true);
 	Info->nextPkg = new GameOver();
 	Info->networkInterface->sendPackage(Info->nextPkg);
 	//APAGAAAAAAAAAAAAR!!!!!!!!!!!!!!!!!!!!
-	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////
+genericState* ST_WaitingYourConfirmation::on_RplayAgain(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	cout << "waiting playing again confirm: on r play again" << endl;
+	genericState *ret = (genericState *) new ST_C_WaitingMapIs();
+	Info->gameInterface->setIamPlaying(true);
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	return ret;
+}
+
+genericState* ST_WaitingYourConfirmation::on_RgameOver(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+{
+	cout << "waitingAPlay: on R YOU WON" << endl;
+	genericState *ret = (genericState *) new ST_WaitingConnection();
+	Info->gameInterface->setIamPlaying(true);
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setEndPlaying(true); //VER SI PONER ESTO ACA O EN EL SIGUIENTE ESTADO!!!!!!!!!!!!!!
+	return ret;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//genericState* ST_WaitingGameOverAck::on_Rack(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
+//{
+//	cout << "waiting gam e over ack: on R ack" << endl;
+//	genericState *ret = (genericState *) new ST_C_WaitingMapIs();
+//	Info->gameInterface->setIamPlaying(true);
+//	Info->nextPkg = new PlayAgain();
+//	Info->networkInterface->sendPackage(Info->nextPkg);
+//	Info->gameInterface->setEndPlaying(true); //VER SI PONER ESTO ACA O EN EL SIGUIENTE ESTADO!!!!!!!!!!!!!!
+//	return ret;
+//}
+
+
+
 
 
 

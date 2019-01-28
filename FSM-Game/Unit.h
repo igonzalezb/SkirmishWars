@@ -110,4 +110,6 @@ public:
 	FP getFpNormal();
 	MovementCost getMc();
 	void removeFog();
+	Unit* arregloNaveAPC[1];
+	bool arregloNaveAPCisEmpty()
 };

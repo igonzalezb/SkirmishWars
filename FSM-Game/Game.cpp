@@ -37,10 +37,7 @@ Game::Game(ALLEGRO_DISPLAY* display)
 	endPlaying = false;
 	analyseVictory = false;
 
-	arregloNaveAPC[0] = NULL;
-	arregloNaveAPC[1] = NULL;
 
-	cout << "arr[1]=" << arregloNaveAPC[1] << endl;
 }
 
 Game::~Game()
