@@ -248,6 +248,9 @@ genericState* ST_WaitingUnboardingLocation::on_Tile(genericEvent *ev, usefulInfo
 {
 	cout << "on ST_WaitingUnboardingLocation::on_Tile" << endl;
 	genericState *ret;
+
+	//if (((Info->gameInterface->getTileSelected().i > 0)&& //HACER ANALISIS PARA CADA CASO DE LOS CUATRO, POR SEPARADO!!!!!!!!!!
+
 	if (((Info->gameInterface->getTileSelected().i == ((Info->gameInterface->getAttacker().i) + 1)) &&
 		Info->gameInterface->getTileSelected().j == Info->gameInterface->getAttacker().j) ||
 		((Info->gameInterface->getTileSelected().i == ((Info->gameInterface->getAttacker().i) - 1)) &&
