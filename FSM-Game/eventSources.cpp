@@ -207,6 +207,20 @@ bool GameEventSource::isThereEvent()
 			/*}
 		}*/
 	}
+	if (gameInterface->boardingAPC == true)
+	{
+		//Info->gameInterface->boardUnit();
+		evCode = MOVE;
+		gameInterface->boardingAPC = false;
+		ret = true;
+	}
+	if (gameInterface->unboardingAPC == true)
+	{
+		//Info->gameInterface->unboardUnit();
+		evCode = MOVE;
+		gameInterface->unboardingAPC = false;
+		ret = true;
+	}
 	if (gameInterface->attacking == true)
 	{
 		if (((gameInterface->myMap->getTile(gameInterface->getDefender().i, gameInterface->getDefender().j)->getUnit()) != NULL) &&
@@ -866,7 +880,7 @@ bool TimeoutEventSource::isThereEvent()
 	else if (((clock() - tInicial1) >= timeoutCount1 * CLOCKS_PER_SEC) && timerRunning1)
 	{
 	timeout = true;
-	cout << "1 sec" << endl;
+	//cout << "1 sec" << endl;
 	evCode = ONE_SEC_TIMEOUT;
 	timeoutCount1++;
 	}

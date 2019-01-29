@@ -131,7 +131,7 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 		}
 	}
 	else if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
-			((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
+		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
 	{
 		////////////////////////////////////////// VIEJO, SIN APC ////////////////////////////////////////// !!!!!!!!!!!!!!!!!!!!!!
 
@@ -139,61 +139,42 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 		cout << "DEFENDER:ES UNA UNIDAD Y ES PROPIA" << endl;
 		cout << "UNIDAD ATACANTE:" << Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType() << endl;
 		cout << "UNIDAD DEFENDER:" << Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType() << endl;
-		if (Info->gameInterface->arregloNaveAPC[1] != NULL)
-		{
-			cout << "arreglo en [1]:" << Info->gameInterface->arregloNaveAPC[1] << endl;
-		}
-		else
-		{
-			cout << "ARREGLO EN [1] == NULL" << endl;
-		}
+
+
 		////////////////////////////////////////// nuevo con apc /////////////////////////////////////
-		if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap11")) ||
-			(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap22"))) &&
+		if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap11")==0) ||
+			(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap22")==0)) &&
 			((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("ap11") == 0) ||
 			(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("ap22") == 0)) &&
-			(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j) == Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j))&&
-			(Info->gameInterface->arregloNaveAPC[0]!=NULL))
+				(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j) == Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)) &&
+			(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->arregloNaveAPCisEmpty() == false))
 			//habilita el desembarco de unidad
 		{
 			cout << "ATTACKER Y DEFENDER  APC... ENTRA AL IF" << endl;
-			Info->gameInterface->myMap->getTile((Info->gameInterface->getTileSelected().i) - 1, Info->gameInterface->getTileSelected().j)->setUnit(Info->gameInterface->arregloNaveAPC[0]);
 
-			if (Info->gameInterface->arregloNaveAPC[1] != NULL)
-			{
-				Info->gameInterface->myMap->getTile((Info->gameInterface->getTileSelected().i) , (Info->gameInterface->getTileSelected().j)-1)->setUnit(Info->gameInterface->arregloNaveAPC[1]);
-			}
-			//hay que agregar un estado para q el usuario elija el lugar dnd desembarcar
-			Info->gameInterface->moving = false;
+			ret = (genericState *) new ST_WaitingUnboardingLocation;
+			
 
 		}
 		else if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("in1") == 0) ||
 			(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("in2") == 0) ||
 			(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("me1") == 0) ||
 			(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("me2") == 0)) &&
-			((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap11")) ||
-			(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap22"))) &&
-				(Info->gameInterface->arregloNaveAPC[1] == NULL))
+			((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap11")==0) ||
+			(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap22")==0)) &&
+				(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->arregloNaveAPChavePlace() == true))
 			//habilito la carga de unidad al apc
 		{
+			cout << "HAY LUGAR EN EL ARREGLO   " << endl;;
 			cout << "ATTACKER ES UN IN O ME Y DEFENDER ES UN APC... ENTRA AL ELSE IF" << endl;
 			//movimiento in o me a acp -> abordar acp
 			Info->gameInterface->setDefender(Info->gameInterface->getTileSelected());
 
-				//arreglo-> insert mech
-			if (Info->gameInterface->arregloNaveAPC[0] == NULL)
-			{
-				Info->gameInterface->arregloNaveAPC[0] = Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit();
-				Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->setUnit(NULL);
-			}
-			else
-			{
-				Info->gameInterface->arregloNaveAPC[1] = Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit();
-				Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->setUnit(NULL);
-			}
+			Info->gameInterface->boardingAPC = true;
+			ret = (genericState *) new ST_WaitingBoardingConfirmation;
 			Info->gameInterface->moving = false;
 		}
-			/////////////////////////////////////////////////// /n/ue/vo //hasta aca
+		/////////////////////////////////////////////////// /n/ue/vo //hasta aca
 		else
 		{
 			Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
@@ -207,7 +188,7 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 		ret = (genericState *) new ST_WaitingDestination();
 		Info->gameInterface->moving = false;
 	}
-	
+
 	cout << "Saliendo..." << endl;
 	return ret;
 }
@@ -251,6 +232,62 @@ genericState* ST_WaitingDestination::on_OneMinTimeout(genericEvent *ev, usefulIn
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////
+genericState* ST_WaitingBoardingConfirmation::on_Move(genericEvent *ev, usefulInfo * Info)
+{
+	cout << "G WAITING boarding CONFIRMATION: ON MOVE" << endl;
+	genericState *ret = (genericState *) new ST_Moving();
+	Info->gameInterface->boardUnit();
+	Info->timeoutSrc->startTimer1();
+	return ret;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+genericState* ST_WaitingUnboardingLocation::on_Tile(genericEvent *ev, usefulInfo * Info)
+{
+	cout << "on ST_WaitingUnboardingLocation::on_Tile" << endl;
+	genericState *ret;
+	if (((Info->gameInterface->getTileSelected().i == ((Info->gameInterface->getAttacker().i) + 1)) &&
+		Info->gameInterface->getTileSelected().j == Info->gameInterface->getAttacker().j) ||
+		((Info->gameInterface->getTileSelected().i == ((Info->gameInterface->getAttacker().i) - 1)) &&
+			Info->gameInterface->getTileSelected().j == Info->gameInterface->getAttacker().j) ||
+			((Info->gameInterface->getTileSelected().i == Info->gameInterface->getAttacker().i )&&
+		(Info->gameInterface->getTileSelected().j == ((Info->gameInterface->getAttacker().j + 1)))) ||
+				((Info->gameInterface->getTileSelected().i == (Info->gameInterface->getAttacker().i)) &&
+		(Info->gameInterface->getTileSelected().j == (Info->gameInterface->getAttacker().j - 1))))
+	{
+
+		if ((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL)
+		{
+			Info->gameInterface->setDefender(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j);
+			ret = (genericState *) new ST_WaitingUnboardingConfirmation();
+			Info->gameInterface->unboardingAPC = true;
+		}
+		else
+		{
+			ret = (genericState *) new ST_WaitingUnboardingLocation();
+		}
+	}
+	else
+	{
+		ret = (genericState *) new ST_WaitingUnboardingLocation();
+		Info->gameInterface->unboardingAPC = false;
+	}
+	return ret;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+genericState* ST_WaitingUnboardingConfirmation::on_Move(genericEvent *ev, usefulInfo * Info)
+{
+	cout << "G WAITING UNboarding CONFIRMATION: ON MOVE" << endl;
+	genericState *ret = (genericState *) new ST_Moving();
+	Info->gameInterface->unboardUnit();
+	Info->timeoutSrc->startTimer1();
+	return ret;
+}
+
+
 
 /////////////////////////// ST_WaitingMoveConfirmation ///////////////////////////////
 genericState* ST_WaitingMoveConfirmation::on_Move(genericEvent *ev, usefulInfo * Info)
@@ -701,13 +738,34 @@ genericState* ST_YouMoving::on_RMove(genericEvent *ev, usefulInfo * Info)
 	{
 		//ACA SE ROMPE:
 		//Info->gameInterface->myMap->possibleMoves((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getDefender().j)->getUnit()), Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j);
-		if (1)//(Info->gameInterface->myMap->canMove[Info->gameInterface->getDefender().i][Info->gameInterface->getDefender().j]) == true)
+		
+		cout << "ENTRO A MOVER ALGO" << endl;
+		//cout << "DEFENDER" << Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit()->getType() << endl;
+		//cout << "ATTACKER" << Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType() << endl;
+		cout << "team del defender:" << Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit()->getTeam() << endl;
+
+
+		if (Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit() != NULL)
 		{
-			Info->gameInterface->move();
+			if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit()->getType().compare("ap11") == 0) ||
+				(Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit()->getType().compare("ap22") == 0)) &&
+				((Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
+			{
+				cout << "defender es apc" << endl;
+				Info->gameInterface->boardUnit();
+			}
+			else if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("ap11") == 0) ||
+				(Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getType().compare("ap22") == 0)) &&
+				((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
+			{
+				cout << "attacker es apc" << endl;
+				Info->gameInterface->unboardUnit();
+			}
 		}
-		else 
+		else
 		{
-			//COMPLETAR: TIRAR ERROR O VER QUE SE HACE (QUIZAS NO SE HACE NADA)
+			cout << "movimiento normal" << endl;
+			Info->gameInterface->move();
 		}
 	}
 

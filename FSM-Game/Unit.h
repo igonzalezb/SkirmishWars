@@ -111,5 +111,6 @@ public:
 	MovementCost getMc();
 	void removeFog();
 	Unit* arregloNaveAPC[1];
-	bool arregloNaveAPCisEmpty()
+	bool arregloNaveAPCisEmpty();
+	bool arregloNaveAPChavePlace();
 };

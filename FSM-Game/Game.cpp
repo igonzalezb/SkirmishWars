@@ -36,8 +36,11 @@ Game::Game(ALLEGRO_DISPLAY* display)
 	Istart = false;
 	endPlaying = false;
 	analyseVictory = false;
-
-
+	moving = false;
+	attacking = false;
+	purchasing = false;
+	boardingAPC = false;
+	unboardingAPC = false;
 }
 
 Game::~Game()
@@ -244,7 +247,12 @@ void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado e
 	myMap->getTile(defender.i, defender.j)->setUnit(newUnit);
 	myMap->getTile(defender.i, defender.j)->getUnit()->setTeam(player->getTeam());
 	player->setMoney((player->getMoney())-(stoi(newUnit->getCost())));
-
+	cout << "SE COMPRO Y SE ESTA COMPARANDO CONNNN:" << newUnit->getType() << endl;
+	if (newUnit->getType().compare("ap11") == 0 || newUnit->getType().compare("ap22") == 0)
+	{
+		myMap->getTile(defender.i, defender.j)->getUnit()->arregloNaveAPC[0] = NULL;
+		myMap->getTile(defender.i, defender.j)->getUnit()->arregloNaveAPC[1] = NULL;
+	}
 //	myMap->updateFogOfWar(playerMe->getTeam());
 //	graphics->loadBitmaps(myMap);
 //	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
@@ -422,3 +430,46 @@ bool Game::getAnalyseVictory()
 	return analyseVictory;
 }
 
+void Game::boardUnit()
+{
+	cout << "ENTRA A BOARDUNITTTTTT!!" << endl;
+	if (myMap->getTile((getDefender().i),getDefender().j)->getUnit()->arregloNaveAPC[0] == NULL)
+	{
+		cout << "ENTRA AL PRIMER IFFFFFFF!!!!!!!!" << endl;
+		//el arreglo en 0 esta vacio asiq cargo la unidad ahi
+		myMap->getTile(getDefender().i,getDefender().j)->getUnit()->arregloNaveAPC[0] = myMap->getTile(getAttacker().i, getAttacker().j)->getUnit();
+		myMap->getTile(getAttacker().i, getAttacker().j)->setUnit(NULL);
+	
+
+	}
+
+	else if(myMap->getTile((getDefender().i), getDefender().j)->getUnit()->arregloNaveAPC[1] == NULL)
+	{
+		cout << "ENTRA AL SEGUNDO IFFFFFFFFFFFF" << endl;
+		//el arreglo en 1 esta vacio asiq cargo la unidad ahi
+		myMap->getTile(getDefender().i, getDefender().j)->getUnit()->arregloNaveAPC[1] = myMap->getTile(getAttacker().i, getAttacker().j)->getUnit();
+		myMap->getTile(getAttacker().i, getAttacker().j)->setUnit(NULL);
+
+	}
+
+}
+
+void Game::unboardUnit()
+{
+	cout << "ENTRA A unBOARDUNITTTTTT!!" << endl;
+	if (myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[1] != NULL)
+	{
+		//esta cargado el arreglo en 1 asiq descargo esa unidad
+		cout << "DESCARGA LA UNIDAD EN [1]" << endl;
+		myMap->getTile(getDefender().i, getDefender().j)->setUnit(myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[1]);
+
+	}
+	else
+	{
+		cout << "DESCARGA LA UNIDAD EN [0]" << endl;
+		//esta cargardo el arreglo en 0 asiq descargo esa unidad
+		myMap->getTile(getDefender().i, getDefender().j)->setUnit(myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[0]);
+	}
+		
+		
+}

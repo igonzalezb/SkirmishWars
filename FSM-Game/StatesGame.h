@@ -59,6 +59,21 @@ class ST_WaitingMoveConfirmation :public genericState //ACA se estaria esperando
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 
+class ST_WaitingUnboardingLocation :public genericState
+{
+	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
+};
+
+class ST_WaitingBoardingConfirmation :public genericState
+{
+	genericState* on_Move(genericEvent* ev, usefulInfo * Info);
+};
+
+class ST_WaitingUnboardingConfirmation :public genericState
+{
+	genericState* on_Move(genericEvent* ev, usefulInfo * Info);
+};
+
 class ST_Attacking :public genericState
 {
 	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);

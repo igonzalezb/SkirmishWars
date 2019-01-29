@@ -29,16 +29,34 @@ Unit::~Unit()
 {
 }
 
+bool Unit::arregloNaveAPChavePlace()
+{
+	cout << "en arreglo have place esta llegando" << arregloNaveAPC[0] <<"||" <<arregloNaveAPC[1] << endl;
+	if(arregloNaveAPC[0]==NULL|| arregloNaveAPC[1] == NULL)
+	{
+		return true;
+	}
+	return false;
+}
 bool Unit::arregloNaveAPCisEmpty()
 {
-	for (int i = 0; i < 2; i++)
-	{
-		if (arregloNaveAPC[i]->getType() == "in1"|| arregloNaveAPC[i]->getType() == "in2")
-		{
 
-		}
+	//if (((arregloNaveAPC[0]->getType().compare("in1")==0) || (arregloNaveAPC[0]->getType().compare("in2")==0) || (arregloNaveAPC[0]->getType().compare("me1")==0) || (arregloNaveAPC[0]->getType().compare("me2")==0)) ||
+	//	((arregloNaveAPC[1]->getType().compare("in1")==0) || (arregloNaveAPC[1]->getType().compare("in2")==0) || (arregloNaveAPC[1]->getType().compare("me1")==0) || (arregloNaveAPC[1]->getType().compare("me2")==0)))
+
+	//{
+	//	return false;
+	//}
+	//return true;
+	cout << "en arreglo is empty esta llegando" << arregloNaveAPC[0] << "||" << arregloNaveAPC[1] << endl;
+		if(arregloNaveAPC[0]==NULL && arregloNaveAPC[1] == NULL)
+	{
+		return true;
 	}
+	return false;
 }
+
+
 
 void Unit::setHp(int _hp)
 {

@@ -63,7 +63,12 @@ public:
 	void setDie(int Dado_);
 	void setIamPlaying(bool now);
 	bool getIamPlaying();
+	void boardUnit();
+	void unboardUnit();
+
 	bool moving;
+	bool boardingAPC;
+	bool unboardingAPC;
 	bool attacking;
 	bool purchasing;
 
@@ -81,6 +86,8 @@ public:
 
 	void setAnalyseVictory(bool analyse);
 	bool getAnalyseVictory();
+
+
 	
 private:
 	coordenadas attacker;
@@ -98,5 +105,6 @@ private:
 	bool IWantToPlayAgain;
 	bool youWantToPlayAgain;
 	bool analyseVictory;
+
 };
 //#endif // !GAME_H
