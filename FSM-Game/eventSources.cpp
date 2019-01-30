@@ -937,7 +937,8 @@ genericEvent * TimeoutEventSource::insertEvent()
 		ret = (genericEvent *) new EV_OneMinTimeout;
 		break;
 	case TWO_HALF_MIN_TIMEOUT:
-		ret = (genericEvent *) new EV_TwoHalfMinTimeout;
+		//ret = (genericEvent *) new EV_TwoHalfMinTimeout;
+		ret = (genericEvent *) new EV_EndPlaying; //probandooooooooooooooooooooooooooooooooo
 		break;
 	case TEN_SEC_LEFT:
 		ret = (genericEvent *) new EV_TenSecLeft;

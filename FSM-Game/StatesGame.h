@@ -59,20 +59,28 @@ class ST_WaitingMoveConfirmation :public genericState //ACA se estaria esperando
 	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
 };
 
+class ST_WaitingBoardingConfirmation :public genericState 
+{
+	genericState* on_Move(genericEvent* ev, usefulInfo * Info); 
+};
+
+class ST_WaitingUnboardingConfirmation :public genericState
+{
+	genericState* on_Move(genericEvent* ev, usefulInfo * Info); //se envia paquete move
+};
+
 class ST_WaitingUnboardingLocation :public genericState
 {
 	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
 };
 
-class ST_WaitingBoardingConfirmation :public genericState
+class ST_WaitingUnboardingLocationConfirmation :public genericState
 {
-	genericState* on_Move(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Move(genericEvent* ev, usefulInfo * Info); //se envia el segundo paquete move
 };
 
-class ST_WaitingUnboardingConfirmation :public genericState
-{
-	genericState* on_Move(genericEvent* ev, usefulInfo * Info);
-};
+
+
 
 class ST_Attacking :public genericState
 {
@@ -139,6 +147,11 @@ class ST_YouMoving :public genericState
 	genericState* on_RPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RPass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
+};
+
+class ST_YouUnboardingUnit :public genericState
+{
+	genericState* on_RMove(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_YouAttacking :public genericState

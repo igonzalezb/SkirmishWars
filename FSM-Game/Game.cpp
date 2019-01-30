@@ -245,10 +245,10 @@ void Game::captureProperty(Player* pAttacker)
 void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado en defender.i y defender.j las coordenadas del lugar al que quieren poner la unidad nueva.
 {
 	myMap->getTile(defender.i, defender.j)->setUnit(newUnit);
-	myMap->getTile(defender.i, defender.j)->getUnit()->setTeam(player->getTeam());
+	//myMap->getTile(defender.i, defender.j)->getUnit()->setTeam(player->getTeam());
 	player->setMoney((player->getMoney())-(stoi(newUnit->getCost())));
 	cout << "SE COMPRO Y SE ESTA COMPARANDO CONNNN:" << newUnit->getType() << endl;
-	if (newUnit->getType().compare("ap11") == 0 || newUnit->getType().compare("ap22") == 0)
+	if (newUnit->getType().compare("ap1") == 0 || newUnit->getType().compare("ap2") == 0)
 	{
 		myMap->getTile(defender.i, defender.j)->getUnit()->arregloNaveAPC[0] = NULL;
 		myMap->getTile(defender.i, defender.j)->getUnit()->arregloNaveAPC[1] = NULL;
@@ -462,13 +462,14 @@ void Game::unboardUnit()
 		//esta cargado el arreglo en 1 asiq descargo esa unidad
 		cout << "DESCARGA LA UNIDAD EN [1]" << endl;
 		myMap->getTile(getDefender().i, getDefender().j)->setUnit(myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[1]);
-
+		myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[1] == NULL;
 	}
 	else
 	{
 		cout << "DESCARGA LA UNIDAD EN [0]" << endl;
 		//esta cargardo el arreglo en 0 asiq descargo esa unidad
 		myMap->getTile(getDefender().i, getDefender().j)->setUnit(myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[0]);
+		myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[0] != NULL;
 	}
 		
 		

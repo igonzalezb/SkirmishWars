@@ -348,6 +348,7 @@ genericState* ST_IPlay::on_Pass(genericEvent *ev, usefulInfo * Info)
 	Info->nextPkg = new Pass();
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PASS
 	cout << "se envio el paquete de pass" << endl;
+	//Info->timeoutSrc->startTimer2(); //ACA NO VA 
 	return ret;
 }
 
@@ -405,6 +406,7 @@ genericState* ST_WaitingPlayAck::on_Rack(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "Waiting play ACK: on R ACK" << endl;
 	genericState *ret = (genericState *) new ST_IPlay();
+	Info->timeoutSrc->stopTimer2(); //esta quizas no haga falta
 	Info->timeoutSrc->startTimer2();
 	return ret;
 }
