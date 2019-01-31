@@ -709,7 +709,7 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 #ifdef DEBUG
 		cout << "Se apreto Attack" << endl;
 #endif // DEBUG
-		if (!gameInterface->graphics->wasAttackWarningShown())
+		if (!gameInterface->graphics->wasAttackWarningShown() && gameInterface->graphics->getWarningsOnOff())
 		{
 			if ((button = al_show_native_message_box(
 				gameInterface->graphics->getDisplay(),
@@ -737,14 +737,20 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 #ifdef DEBUG
 		cout << "Se apreto Pass" << endl;
 #endif // DEBUG
-		if ((button = al_show_native_message_box(
-			gameInterface->graphics->getDisplay(),
-			"WARNING",
-			"Are you sure you want to pass your turn?", NULL, NULL,
-			ALLEGRO_MESSAGEBOX_YES_NO)) == 1)
+		if (gameInterface->graphics->getWarningsOnOff())
 		{
-			return PASS;
+			if ((button = al_show_native_message_box(
+				gameInterface->graphics->getDisplay(),
+				"WARNING",
+				"Are you sure you want to pass your turn?", NULL, NULL,
+				ALLEGRO_MESSAGEBOX_YES_NO)) == 1)
+			{
+				return PASS;
+			}
 		}
+		else
+			return PASS;
+		
 		
 	}
 
@@ -756,7 +762,7 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 		cout << "Se apreto Purchase\n" << endl;
 #endif // DEBUG
 
-		if (!gameInterface->graphics->wasPurchaseWarningShown())
+		if (!gameInterface->graphics->wasPurchaseWarningShown() && gameInterface->graphics->getWarningsOnOff())
 		{
 			if ((button = al_show_native_message_box(
 				gameInterface->graphics->getDisplay(),

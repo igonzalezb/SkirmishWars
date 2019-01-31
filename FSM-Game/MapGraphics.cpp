@@ -63,6 +63,10 @@ MapGraphics::MapGraphics(ALLEGRO_DISPLAY * display)
 
 	attackWarningShown = false;
 	purchaseWarningShown = false;
+
+	warningsOnOff = true;
+	soundEffectsOnOff = true;
+	backgroundMusicOnOff = true;
 }
 
 MapGraphics::~MapGraphics()
@@ -85,10 +89,13 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, TeamNum
 {
 	al_clear_to_color(al_map_rgb(0.0, 170.0, 0.0));
 
-	//if()
-
-	//Imprimo en pantalla el dinero
-	al_draw_textf(menuFont, al_color_name("white"), M_WIDTH(display) + 20, 0.0, 0.0, (("Time Left: ") + to_string(time)).c_str());
+	//Imprimo en pantalla el dinero y tiempo
+	if((time == 10) || (time == 30) || (time == 0))
+		al_draw_textf(menuFont, al_color_name("red"), M_WIDTH(display) + 20, 0.0, 0.0, (("Time Left: ") + to_string(time)).c_str());
+	else
+		al_draw_textf(menuFont, al_color_name("white"), M_WIDTH(display) + 20, 0.0, 0.0, (("Time Left: ") + to_string(time)).c_str());
+		
+	
 	al_draw_textf(menuFont, al_map_rgb(255, 255, 255), al_get_display_width(display) - al_get_text_width(menuFont, ("$ " + to_string(player_money)).c_str()), 0.0, 0.0, ("$" + to_string(player_money)).c_str());
 	
 	//Imprimo el boton ATTACK en la pantalla
@@ -281,22 +288,26 @@ void MapGraphics::showDice(int _dice)
 
 void MapGraphics::playTenSecSound()
 {
-	al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+	if(!soundEffectsOnOff)
+		al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 void MapGraphics::playThirtySecSound()
 {
-	al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+	if (!soundEffectsOnOff)
+		al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 void MapGraphics::playOneMinSound()
 {
-	al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+	if (!soundEffectsOnOff)
+		al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 void MapGraphics::playGameOverSound()
 {
-	al_play_sample(gameover, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+	if (!soundEffectsOnOff)
+		al_play_sample(gameover, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 ALLEGRO_DISPLAY* MapGraphics::getDisplay()
@@ -343,4 +354,24 @@ void MapGraphics::setPurchaseWarningShown(bool a)
 ALLEGRO_FONT * MapGraphics::getMenuFont()
 {
 	return menuFont;
+}
+
+void MapGraphics::setBackgroundMusicOnOff(bool a)
+{
+	backgroundMusicOnOff = a;
+}
+
+void MapGraphics::setSoundEffectsOnOff(bool a)
+{
+	soundEffectsOnOff = a;
+}
+
+void MapGraphics::setWarningsOnOff(bool a)
+{
+	warningsOnOff = a;
+}
+
+bool MapGraphics::getWarningsOnOff()
+{
+	return warningsOnOff;
 }

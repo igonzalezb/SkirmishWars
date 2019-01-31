@@ -29,6 +29,12 @@ StartMenu::StartMenu()
 		fprintf(stderr, "failed to create display!\n");
 	}
 
+	pointer = al_load_bitmap(POINTER);
+	if (!pointer)
+	{
+		fprintf(stderr, "failed to load pointer!\n");
+	}
+
 	event_queue1 = al_create_event_queue();
 	if (!event_queue1) {
 		fprintf(stderr, "failed to create event_quieue1!\n");
@@ -41,6 +47,11 @@ StartMenu::StartMenu()
 	onIpNameInput = false;
 	redraw = false;
 	do_exit = false;
+	onSettings = false;
+
+	backgroundMusic = true;
+	sounds = true;
+	warnings = true;
 	boxInput = IP_BOX;
 	maxLenIp = "000.000.000.000";
 
@@ -76,18 +87,25 @@ void StartMenu::MenuEvents()
 		switch (ev.type)
 		{
 		case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-			if (!onIpNameInput)
+			if (ev.mouse.button == 1)		//Para usar solo el click izquierdo
 			{
-				if (ev.mouse.button == 1)		//Para usar solo el click izquierdo
+				if (!onIpNameInput && !onSettings)
 				{
-					optionClicked = dispachClick(ev.mouse.x, ev.mouse.y);
-					dispachOption();
+				
+					optionClicked = dispatchClick(ev.mouse.x, ev.mouse.y);
+					dispatchOption();
+				
 				}
+				else if (onSettings)
+				{
+					dispatcherSettings(ev.mouse.x, ev.mouse.y);
+				}
+
 			}
 			break;
 		case ALLEGRO_EVENT_MOUSE_AXES:
-			if (!onIpNameInput)
-				dispachMovement(ev.mouse.x, ev.mouse.y);
+			if (!onIpNameInput && !onSettings)
+				dispatchMovement(ev.mouse.x, ev.mouse.y);
 			break;
 		case ALLEGRO_EVENT_DISPLAY_RESIZE:
 			al_acknowledge_resize(display);
@@ -105,11 +123,20 @@ void StartMenu::MenuEvents()
 			break;
 		case ALLEGRO_EVENT_KEY_CHAR:
 			if (onIpNameInput) {
-				dispacherIpNameMenu(ev);
+				dispatcherIpNameMenu(ev);
 			}
 			else if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
 			{
-				do_exit = true;
+				if (onSettings)
+				{
+					onSettings = false;
+					redraw = true;
+				}
+				else
+				{
+					do_exit = true;
+					exit(EXIT_SUCCESS);		//VER DE CAMBIARLO
+				}
 			}
 			break;
 		}
@@ -117,6 +144,8 @@ void StartMenu::MenuEvents()
 		{
 			if (onIpNameInput)
 				printIpNameMenu();
+			else if (onSettings)
+				printSettings();
 			else
 				updateMenuDisplay();
 			redraw = false;
@@ -126,7 +155,7 @@ void StartMenu::MenuEvents()
 
 }
 
-int StartMenu::dispachClick(int x, int y)
+int StartMenu::dispatchClick(int x, int y)
 {
 	int bbx, bby, bbw, bbh;
 	int click = MAX_OPTIONS + 1;
@@ -161,7 +190,7 @@ int StartMenu::dispachClick(int x, int y)
 	
 }
 
-void StartMenu::dispachMovement(int x, int y)
+void StartMenu::dispatchMovement(int x, int y)
 {
 	int bbx, bby, bbw, bbh;
 	for (int i = 0; i< MAX_OPTIONS; i++)
@@ -202,19 +231,16 @@ void StartMenu::updateMenuDisplay()
 	al_flip_display();
 }
 
-void StartMenu::dispachOption()		//HAY QUE SACAR LOS TEXT Y PONER QUE HAGA LAS ACCIONES
+void StartMenu::dispatchOption()		//HAY QUE SACAR LOS TEXT Y PONER QUE HAGA LAS ACCIONES
 {
 	switch (optionClicked)
 	{
 	case START_NEW_GAME:
 		redraw = true;
 		onIpNameInput = true;
-		printIpNameMenu();
-		//dispacherIpNameMenu(ev);
 		break;
 	case SETTINGS:
-		al_clear_to_color(al_map_rgb(0, 0, 0));
-		al_draw_text(menuFont, al_map_rgb(100, 100, 100), 0.0, 0.0, 0.0, "Settings...");
+		onSettings = true;
 		redraw = true;
 		break;
 	case CREDITS:
@@ -250,7 +276,7 @@ StartMenu::~StartMenu()
 	allegroShutdown();
 }
 
-void StartMenu::dispacherIpNameMenu(ALLEGRO_EVENT ev)
+void StartMenu::dispatcherIpNameMenu(ALLEGRO_EVENT ev)
 {
 	switch (ev.keyboard.keycode)
 	{
@@ -325,6 +351,7 @@ void StartMenu::dispacherIpNameMenu(ALLEGRO_EVENT ev)
 
 void StartMenu::printIpNameMenu()
 {
+	redraw = false;
 	al_clear_to_color(al_color_name("blue"));
 
 	al_draw_text(menuFont, al_color_name("white"), 0.0, 0.0, 0.0, "Insert Partners IP: ");
@@ -334,8 +361,84 @@ void StartMenu::printIpNameMenu()
 	al_draw_text(menuFont, al_color_name("white"), 0.0, al_get_font_line_height(menuFont) * 3, 0.0, "Insert Name: ");
 	al_draw_rectangle(5.0, al_get_font_line_height(menuFont) * 4, al_get_text_width(menuFont, "A") * MAX_NAME_LEN, al_get_font_line_height(menuFont) * 5, al_color_name("white"), 5.0);
 	al_draw_text(menuFont, al_color_name("white"), 10.0, al_get_font_line_height(menuFont) * 4, 0.0, userName.c_str());
+	if(boxInput == IP_BOX)
+		al_draw_scaled_bitmap(pointer, 0.0, 0.0, al_get_bitmap_width(pointer), al_get_bitmap_height(pointer),
+			
+			al_get_text_width(menuFont, maxLenIp.c_str()) + 15.0, al_get_font_line_height(menuFont), al_get_font_line_height(menuFont), al_get_font_line_height(menuFont), 0.0);
+	else
+		al_draw_scaled_bitmap(pointer, 0.0, 0.0, al_get_bitmap_width(pointer), al_get_bitmap_height(pointer),
+			
+			al_get_text_width(menuFont, "A") * MAX_NAME_LEN, al_get_font_line_height(menuFont)*4, al_get_font_line_height(menuFont), al_get_font_line_height(menuFont), 0.0);
+	
+	
 	al_flip_display();
+	
+}
+
+void StartMenu::printSettings()
+{
 	redraw = false;
+	al_clear_to_color(al_color_name("blue"));
+	al_draw_text(menuFont, al_color_name("white"), 50.0, 0.0, 0.0, "SETTINGS");
+
+	if(backgroundMusic)
+		al_draw_text(menuFont, al_color_name("white"), 10.0, al_get_font_line_height(menuFont),     0.0, "Background Music     ON");
+	else
+		al_draw_text(menuFont, al_color_name("white"), 10.0, al_get_font_line_height(menuFont),     0.0, "Background Music     OFF");
+	if(sounds)
+		al_draw_text(menuFont, al_color_name("white"), 10.0, al_get_font_line_height(menuFont) * 2, 0.0, "Sound Effects              ON");
+	else
+		al_draw_text(menuFont, al_color_name("white"), 10.0, al_get_font_line_height(menuFont) * 2, 0.0, "Sound Effects              OFF");
+	if(warnings)
+		al_draw_text(menuFont, al_color_name("white"), 10.0, al_get_font_line_height(menuFont) * 3, 0.0, "Warning Messages     ON");
+	else
+		al_draw_text(menuFont, al_color_name("white"), 10.0, al_get_font_line_height(menuFont) * 3, 0.0, "Warning Messages     OFF");
+
+
+	al_draw_text(menuFont, al_color_name("white"), al_get_display_width(display)/2 - al_get_text_width(menuFont, "DONE")/2, al_get_display_height(display) - al_get_font_line_height(menuFont), 0.0, "DONE");
+
+	al_flip_display();
+}
+
+void StartMenu::dispatcherSettings(int x, int y)
+{
+	if ((10.0 < x) && (x < al_get_text_width(menuFont, "Warnings Messages    OFF")))
+	{
+		if ((al_get_font_line_height(menuFont) < y) && ((al_get_font_line_height(menuFont) * 2) > y))
+		{
+			//Background Music
+			redraw = true;
+			if (backgroundMusic)
+				backgroundMusic = false;
+			else
+				backgroundMusic = true;
+		}
+		if (((al_get_font_line_height(menuFont)*2) < y) && ((al_get_font_line_height(menuFont) * 3) > y))
+		{
+			//Sound Effects
+			redraw = true;
+			if (sounds)
+				sounds = false;
+			else
+				sounds = true;
+		}
+		if (((al_get_font_line_height(menuFont)*3) < y) && ((al_get_font_line_height(menuFont) * 4) > y))
+		{
+			//Warning Messages
+			redraw = true;
+			if (warnings)
+				warnings = false;
+			else
+				warnings = true;
+		}
+
+	}
+	if (((x > (al_get_display_width(display)/2 - al_get_text_width(menuFont, "DONE") / 2)) && (x < (al_get_display_width(display)/2 + al_get_text_width(menuFont, "DONE") / 2))) &&
+		((y > (al_get_display_height(display) - al_get_font_line_height(menuFont))) && (y < al_get_display_height(display))))
+	{
+		onSettings = false;
+		redraw = true;
+	}
 }
 
 string StartMenu::getUserIP()
@@ -346,4 +449,19 @@ string StartMenu::getUserIP()
 string StartMenu::getUserName()
 {
 	return userName;
+}
+
+bool StartMenu::getBackgroundMusicOnOff()
+{
+	return backgroundMusic;
+}
+
+bool StartMenu::getSoundEffectsOnOff()
+{
+	return sounds;
+}
+
+bool StartMenu::getWarningsOnOff()
+{
+	return warnings;
 }
