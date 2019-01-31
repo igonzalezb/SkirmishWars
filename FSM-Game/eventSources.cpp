@@ -764,9 +764,15 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 	for (int i = 0; i < 9; i++)
 	{
 		if (((M_WIDTH(gameInterface->graphics->getDisplay()) + 20 < x) && (x < al_get_display_width(gameInterface->graphics->getDisplay())))
-			&& (((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0) * 3) + (al_get_font_line_height(gameInterface->graphics->getMenuFont()) * i)
+
+			&& (((al_get_font_line_height(gameInterface->graphics->getMenuFont()) + 
+			(M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0) * 3) + 
+				(al_get_font_ascent(gameInterface->graphics->getMenuFont()) * i)
 				< y) && (y <
-				(al_get_font_line_height(gameInterface->graphics->getMenuFont()) + (M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0) * 3) + (al_get_font_line_height(gameInterface->graphics->getMenuFont()) * i) + al_get_font_line_height(gameInterface->graphics->getMenuFont()))))
+				(al_get_font_line_height(gameInterface->graphics->getMenuFont()) + 
+					(M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0) * 3) + 
+					(al_get_font_ascent(gameInterface->graphics->getMenuFont()) * (i+1))))) //+ 
+					//al_get_font_line_height(gameInterface->graphics->getMenuFont()))))
 		{
 			// Se apreto para comprar la unidad de numero i de la lista
 			advance(it3, i);
