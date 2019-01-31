@@ -37,6 +37,10 @@ public:
 	void playGameOverSound();
 	ALLEGRO_DISPLAY* getDisplay();
 	bool doIwantToPlayAgain();
+	void setPurchaseWarningShown(bool a);
+	void setAttackWarningShown(bool a);
+	bool wasPurchaseWarningShown();
+	bool wasAttackWarningShown();
 	//void showTime(unsigned int time);
 
 	ALLEGRO_FONT* getMenuFont();
@@ -53,4 +57,6 @@ private:
 	ALLEGRO_FONT *menuFont = NULL;
 	ALLEGRO_SAMPLE *beep = NULL;
 	ALLEGRO_SAMPLE *gameover = NULL;
+	bool purchaseWarningShown;
+	bool attackWarningShown;
 };

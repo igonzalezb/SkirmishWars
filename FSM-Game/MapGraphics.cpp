@@ -61,6 +61,8 @@ MapGraphics::MapGraphics(ALLEGRO_DISPLAY * display)
 		}
 	}
 
+	attackWarningShown = false;
+	purchaseWarningShown = false;
 }
 
 MapGraphics::~MapGraphics()
@@ -318,12 +320,25 @@ bool MapGraphics::doIwantToPlayAgain()
 		return false;
 }
 
-//void MapGraphics::showTime(unsigned int time)
-//{
-//	al_draw_textf(menuFont, al_color_name("white"), M_WIDTH(display) + 20, 0.0, 0.0, (("Time Left: ") + to_string(time)).c_str());
-//	al_flip_display();
-//
-//}
+void MapGraphics::setAttackWarningShown(bool a)
+{
+	attackWarningShown = a;
+}
+
+bool MapGraphics::wasPurchaseWarningShown()
+{
+	return purchaseWarningShown;
+}
+
+bool MapGraphics::wasAttackWarningShown()
+{
+	return attackWarningShown;
+}
+
+void MapGraphics::setPurchaseWarningShown(bool a)
+{
+	purchaseWarningShown = a;
+}
 
 ALLEGRO_FONT * MapGraphics::getMenuFont()
 {

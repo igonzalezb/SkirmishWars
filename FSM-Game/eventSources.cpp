@@ -709,17 +709,25 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 #ifdef DEBUG
 		cout << "Se apreto Attack" << endl;
 #endif // DEBUG
-
-		if ((button = al_show_native_message_box(
-			gameInterface->graphics->getDisplay(),
-			"WARNING",
-			"Are you sure you want to attack?",
-			"If you click \"yes\", you will no longer be able to move.",
-			NULL,
-			ALLEGRO_MESSAGEBOX_YES_NO)) == 1)
+		if (!gameInterface->graphics->wasAttackWarningShown())
+		{
+			if ((button = al_show_native_message_box(
+				gameInterface->graphics->getDisplay(),
+				"WARNING",
+				"Are you sure you want to attack?",
+				"If you click \"yes\", you will no longer be able to move.",
+				NULL,
+				ALLEGRO_MESSAGEBOX_YES_NO)) == 1)
+			{
+				gameInterface->graphics->setAttackWarningShown(false);
+				return BO_ATTACK;
+			}
+		}
+		else
 		{
 			return BO_ATTACK;
 		}
+		
 			
 	}
 	else if (((M_WIDTH(gameInterface->graphics->getDisplay()) < x) && (x < al_get_display_width(gameInterface->graphics->getDisplay()))) &&
@@ -748,16 +756,25 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 		cout << "Se apreto Purchase\n" << endl;
 #endif // DEBUG
 
-		if ((button = al_show_native_message_box(
-			gameInterface->graphics->getDisplay(),
-			"WARNING",
-			"Are you sure you want to purchase?",
-			"If you click \"yes\", you will no longer be able to move & attack.",
-			NULL,
-			ALLEGRO_MESSAGEBOX_YES_NO)) == 1)
+		if (!gameInterface->graphics->wasPurchaseWarningShown())
+		{
+			if ((button = al_show_native_message_box(
+				gameInterface->graphics->getDisplay(),
+				"WARNING",
+				"Are you sure you want to purchase?",
+				"If you click \"yes\", you will no longer be able to move & attack.",
+				NULL,
+				ALLEGRO_MESSAGEBOX_YES_NO)) == 1)
+			{
+				gameInterface->graphics->setPurchaseWarningShown(true);
+				return BO_PURCHASE;
+			}
+		}
+		else
 		{
 			return BO_PURCHASE;
-		}		
+		}
+				
 	}
 
 	list<Unit>::iterator it3 = gameInterface->data->getUnitList().begin();

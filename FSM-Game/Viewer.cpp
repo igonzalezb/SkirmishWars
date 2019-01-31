@@ -111,7 +111,8 @@ void Viewer::on_IStart(genericEvent * ev, usefulInfo * Info)
 	Info->gameInterface->myMap->updateFogOfWar(Info->gameInterface->playerMe->getTeam());
 	Info->gameInterface->graphics->loadBitmaps(Info->gameInterface->myMap);
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
-
+	Info->gameInterface->graphics->setAttackWarningShown(false);
+	Info->gameInterface->graphics->setPurchaseWarningShown(false);
 }
 
 void Viewer::on_YouStart(genericEvent * ev, usefulInfo * Info)
@@ -120,7 +121,8 @@ void Viewer::on_YouStart(genericEvent * ev, usefulInfo * Info)
 	Info->gameInterface->myMap->updateFogOfWar(Info->gameInterface->playerMe->getTeam());
 	Info->gameInterface->graphics->loadBitmaps(Info->gameInterface->myMap);
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
-
+	Info->gameInterface->graphics->setAttackWarningShown(false);
+	Info->gameInterface->graphics->setPurchaseWarningShown(false);
 }
 
 void Viewer::on_RyouStart(genericEvent * ev, usefulInfo * Info)
@@ -129,7 +131,8 @@ void Viewer::on_RyouStart(genericEvent * ev, usefulInfo * Info)
 	Info->gameInterface->myMap->updateFogOfWar(Info->gameInterface->playerMe->getTeam());
 	Info->gameInterface->graphics->loadBitmaps(Info->gameInterface->myMap);
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
-
+	Info->gameInterface->graphics->setAttackWarningShown(false);
+	Info->gameInterface->graphics->setPurchaseWarningShown(false);
 }
 
 void Viewer::on_RIStart(genericEvent * ev, usefulInfo * Info)
@@ -138,7 +141,8 @@ void Viewer::on_RIStart(genericEvent * ev, usefulInfo * Info)
 	Info->gameInterface->myMap->updateFogOfWar(Info->gameInterface->playerMe->getTeam());
 	Info->gameInterface->graphics->loadBitmaps(Info->gameInterface->myMap);
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
-
+	Info->gameInterface->graphics->setAttackWarningShown(false);
+	Info->gameInterface->graphics->setPurchaseWarningShown(false);
 }
 
 void Viewer::on_Tile(genericEvent * ev, usefulInfo * Info)
@@ -149,6 +153,8 @@ void Viewer::on_Tile(genericEvent * ev, usefulInfo * Info)
 
 void Viewer::on_Pass(genericEvent * ev, usefulInfo * Info)
 {
+	Info->gameInterface->graphics->setAttackWarningShown(false);
+	Info->gameInterface->graphics->setPurchaseWarningShown(false);
 	if (Info->gameInterface->getIamPlaying())
 		Info->gameInterface->graphics->setDisplayName("SKIRMISH WARS - YOUR TURN");
 	else
@@ -157,6 +163,8 @@ void Viewer::on_Pass(genericEvent * ev, usefulInfo * Info)
 
 void Viewer::on_RPass(genericEvent * ev, usefulInfo * Info)
 {
+	Info->gameInterface->graphics->setAttackWarningShown(false);
+	Info->gameInterface->graphics->setPurchaseWarningShown(false);
 	if (Info->gameInterface->getIamPlaying())
 		Info->gameInterface->graphics->setDisplayName("SKIRMISH WARS - YOUR TURN");
 	else
