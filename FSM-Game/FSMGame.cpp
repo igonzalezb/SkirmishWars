@@ -82,7 +82,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_RgameOver(ev, Info);
 			break;
 		case R_ERROR_:
-			newState = currentState->on_Rerror_(ev, Info);
+			newState = currentState->on_Rerror(ev, Info);
 			break;
 		case R_QUIT:
 			newState = currentState->on_Rquit(ev, Info);

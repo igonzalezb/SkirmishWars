@@ -382,23 +382,49 @@ genericState* ST_IPlay::on_RYouWon(genericEvent *ev, usefulInfo * Info) //NO FAL
 	return ret;
 }
 
-/*
-genericState* ST_IPlay::on_Timeout(genericEvent *ev, usefulInfo * Info)
+genericState* ST_IPlay::on_Rquit(genericEvent* ev, usefulInfo * Info)
 {
-	genericState *ret = (genericState *) new ST_WaitingAPlay();
-	Info->nextPkg = new Pass();
-	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete PASS
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 
-genericState* ST_IPlay::on_Iquit(genericEvent *ev, usefulInfo * Info)
+genericState* ST_IPlay::on_Quit(genericEvent* ev, usefulInfo * Info)
 {
-	genericState *ret = (genericState *) new ST_WaitingQuitAck();
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Quit();
-	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete QUIT
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
-*/
+
+genericState* ST_IPlay::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_IPlay::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Error_();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
 
 /////////////////////////////// ST_WaitingPlayAck ///////////////////////////////
 
@@ -426,6 +452,50 @@ genericState* ST_WaitingPlayAck::on_RYouWon(genericEvent *ev, usefulInfo * Info)
 	cout << "waiting Play ack: on R YOU WON" << endl;
 	genericState *ret = (genericState *) new ST_WaitingPlayingAgainConfirmation();
 	Info->gameInterface->setIamPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingPlayAck::on_Rquit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingPlayAck::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Quit();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingPlayAck::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingPlayAck::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Error_();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 
@@ -504,6 +574,50 @@ genericState* ST_WaitingAPlay::on_YouWon(genericEvent *ev, usefulInfo * Info) //
 	return ret;
 }
 
+genericState* ST_WaitingAPlay::on_Rquit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingAPlay::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Quit();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingAPlay::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingAPlay::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Error_();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 genericState* ST_WaitingYouWonResponse::on_RplayAgain(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
@@ -518,6 +632,50 @@ genericState* ST_WaitingYouWonResponse::on_RgameOver(genericEvent *ev, usefulInf
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);
 	Info->gameInterface->setYouWantToPlayAgain(false);
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingYouWonResponse::on_Rquit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingYouWonResponse::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Quit();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingYouWonResponse::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingYouWonResponse::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Error_();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
 	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
@@ -539,11 +697,99 @@ genericState* ST_WaitingMyConfirmation::on_GameOver(genericEvent *ev, usefulInfo
 	return ret;
 }
 
+genericState* ST_WaitingMyConfirmation::on_Rquit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingMyConfirmation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Quit();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingMyConfirmation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingMyConfirmation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Error_();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 genericState* ST_WaitingGameOverAck::on_Rack(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
 	genericState *ret = (genericState *) new ST_WaitingConnection(); //PARA MANDARLE EL MAP IS	
 	Info->gameInterface->setEndPlaying(true); //VER SI PONER ESTO ACA O EN EL SIGUIENTE ESTADO!!!!!!!!!!!!!!
+	return ret;
+}
+
+genericState* ST_WaitingGameOverAck::on_Rquit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingGameOverAck::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Quit();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingGameOverAck::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingGameOverAck::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Error_();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 
@@ -569,6 +815,50 @@ genericState* ST_WaitingPlayingAgainConfirmation::on_GameOver(genericEvent *ev, 
 	return ret;
 }
 
+genericState* ST_WaitingPlayingAgainConfirmation::on_Rquit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingPlayingAgainConfirmation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Quit();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingPlayingAgainConfirmation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingPlayingAgainConfirmation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Error_();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 genericState* ST_WaitingYourConfirmation::on_RplayAgain(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
@@ -588,6 +878,50 @@ genericState* ST_WaitingYourConfirmation::on_RgameOver(genericEvent *ev, usefulI
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);
 	Info->gameInterface->setEndPlaying(true); //VER SI PONER ESTO ACA O EN EL SIGUIENTE ESTADO!!!!!!!!!!!!!!
+	return ret;
+}
+
+genericState* ST_WaitingYourConfirmation::on_Rquit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingYourConfirmation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Quit();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingYourConfirmation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingYourConfirmation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Error_();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 
@@ -614,6 +948,50 @@ genericState* ST_WaitingToAttack::on_Attack(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_WaitingAPlay();
 	Info->nextPkg = new Attack(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j, Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j, Info->gameInterface->getDie());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ATTACK
+	return ret;
+}
+
+genericState* ST_WaitingToAttack::on_Rquit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingToAttack::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Quit();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingToAttack::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Ack();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingToAttack::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new Error_();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 

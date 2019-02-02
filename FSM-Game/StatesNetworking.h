@@ -11,7 +11,6 @@ class ST_WaitingConnection :public genericState
 {
 	genericState* on_ConnectedAsServer(genericEvent* ev, usefulInfo * Info);
 	genericState* on_ConnectedAsClient(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info); //ACA CREO QUE NO IRIA EL TIMEOUT
 };
 
 //Estados en caso de ser SERVER:
@@ -104,7 +103,10 @@ public:
 	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
 	genericState* on_TwoHalfMinTimeout(genericEvent* ev, usefulInfo * Info);
 	genericState* on_YouWon(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
 private:
 };
 
@@ -118,7 +120,10 @@ public:
 	genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info);
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Iquit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
 private:
 };
 
@@ -128,6 +133,10 @@ public:
 	genericState* on_Rack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_TwoHalfMinTimeout(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
 private:
 };
 
@@ -153,6 +162,10 @@ class ST_WaitingToAttack : public genericState//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 public:
 	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
 	//genericState* on_Rtimeout(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
 private:
 };
 
@@ -160,29 +173,49 @@ class ST_WaitingPlayingAgainConfirmation: public genericState
 {
 	genericState* on_PlayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
 	genericState* on_GameOver(genericEvent *ev, usefulInfo * Info);
+	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_WaitingYouWonResponse : public genericState
 {
 	genericState* on_RplayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
 	genericState* on_RgameOver(genericEvent *ev, usefulInfo * Info);
+	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_WaitingMyConfirmation : public genericState
 {
 	genericState* on_PlayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
 	genericState* on_GameOver(genericEvent *ev, usefulInfo * Info);
+	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
 };
 
 class  ST_WaitingYourConfirmation : public genericState
 {
 	genericState* on_RplayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
 	genericState* on_RgameOver(genericEvent *ev, usefulInfo * Info);
+	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
 };
 
 class ST_WaitingGameOverAck : public genericState
 {
 	genericState* on_Rack(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
+	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
+	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
 };
 
 

@@ -16,16 +16,7 @@ Networking::Networking(std::string _serverAddress) : serverAddress(_serverAddres
 	justConnected = false;
 	IamClient = true;
 }
-//VA A HABER QUE UNIR EN UNO A LOS DOS SIGUIENTES CONSTRUCTORES
-/*
-Networking::Networking()//PARA SERVER!!!
-{
-	IO_handler = new boost::asio::io_service();
-	mySocket = new boost::asio::ip::tcp::socket(*IO_handler);
-	serverAcceptor = new boost::asio::ip::tcp::acceptor(*IO_handler,
-		boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), CONNECTION_PORT));
-}
-*/
+
 
 Networking::~Networking()//PARA CLIENT
 {

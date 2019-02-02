@@ -14,7 +14,7 @@ GenericTile::~GenericTile()
 	if (currBuilding != NULL)
 		delete currBuilding;
 	if (currUnit != NULL)
-		delete currUnit;
+		delete currUnit; //!!!!!!!!
 	if (currTerrain != NULL)
 		delete currTerrain;
 }

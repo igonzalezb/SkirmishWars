@@ -264,6 +264,14 @@ bool GameEventSource::isThereEvent()
 	{
 		evCode = END_PLAYING;
 	}
+	if (gameInterface->error)
+	{
+		evCode = ERROR_;
+	}
+	if (gameInterface->quit)
+	{
+		evCode = QUIT;
+	}
 
 	return ret;
 }
@@ -651,8 +659,9 @@ bool UserEventSource::isThereEvent()
 				ALLEGRO_MESSAGEBOX_YES_NO
 			)) == 1)
 			{
-				gameInterface->setEndPlaying(true);
-				evCode = END_PLAYING;
+				//gameInterface->setEndPlaying(true);
+				//evCode = END_PLAYING;
+				evCode = QUIT;
 				ret = true;
 			}
 			
