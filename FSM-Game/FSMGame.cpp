@@ -110,7 +110,9 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_YouDidntWin(ev, Info);
 			break;
 		case END_PLAYING: //ver si queda
-			newState = currentState->on_Pass(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+			cout << "dispatch de networking en end playing" << endl;
+
+			newState = currentState->on_Pass(ev, Info); //cualqueir cosa, para probarrrrrrrrrrrc
 			break;
 		case QUIT: //ver si queda
 			newState = currentState->on_Quit(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr

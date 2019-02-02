@@ -408,6 +408,7 @@ genericState* ST_IPlay::on_Quit(genericEvent* ev, usefulInfo * Info)
 
 genericState* ST_IPlay::on_Rerror(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "i play: on r error" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -419,6 +420,7 @@ genericState* ST_IPlay::on_Rerror(genericEvent* ev, usefulInfo * Info)
 
 genericState* ST_IPlay::on_Error(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "i play: on error" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Error_();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -459,6 +461,7 @@ genericState* ST_WaitingPlayAck::on_RYouWon(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_WaitingPlayAck::on_Rquit(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "waiting a play: on r quit" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -470,6 +473,7 @@ genericState* ST_WaitingPlayAck::on_Rquit(genericEvent* ev, usefulInfo * Info)
 
 genericState* ST_WaitingPlayAck::on_Quit(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "waiting play ack: on quit" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Quit();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -481,6 +485,7 @@ genericState* ST_WaitingPlayAck::on_Quit(genericEvent* ev, usefulInfo * Info)
 
 genericState* ST_WaitingPlayAck::on_Rerror(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "waiting play ack: on r error" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -492,6 +497,7 @@ genericState* ST_WaitingPlayAck::on_Rerror(genericEvent* ev, usefulInfo * Info)
 
 genericState* ST_WaitingPlayAck::on_Error(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "waiting play ack: on error" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Error_();
 	Info->networkInterface->sendPackage(Info->nextPkg);
