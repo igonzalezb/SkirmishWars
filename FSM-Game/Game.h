@@ -87,6 +87,9 @@ public:
 	void setAnalyseVictory(bool analyse);
 	bool getAnalyseVictory();
 
+	bool error;
+	bool quit;
+
 
 	
 private:

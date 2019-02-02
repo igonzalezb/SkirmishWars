@@ -313,7 +313,9 @@ void Map::possibleMoves(Unit * currUnit, int i, int j)
 			{
 				matrixCost[p][q] = CANNOT_MOVE;
 			}
-			else if((tilesArray[p][q]->getUnit()) != NULL)
+			else if(((tilesArray[p][q]->getUnit()) != NULL) &&
+				(tilesArray[p][q]->getUnit()->getType().compare("ap1")!=0) &&
+				(tilesArray[p][q]->getUnit()->getType().compare("ap2") != 0))
 			{
 				matrixCost[p][q] = CANNOT_MOVE;
 			}

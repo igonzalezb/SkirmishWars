@@ -41,6 +41,9 @@ Game::Game(ALLEGRO_DISPLAY* display)
 	purchasing = false;
 	boardingAPC = false;
 	unboardingAPC = false;
+
+	error = false;
+	quit = false;
 }
 
 Game::~Game()

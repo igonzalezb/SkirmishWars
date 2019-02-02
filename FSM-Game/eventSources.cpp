@@ -98,6 +98,12 @@ genericEvent * GameEventSource::insertEvent()
 	case R_QUIT:
 		ret = (genericEvent *) new EV_Quit();
 		break;
+	case R_ERROR_:
+		ret = (genericEvent *) new EV_Quit();
+		break;
+	case ERROR_:
+		ret = (genericEvent *) new EV_Quit();
+		break;
 	case BO_PURCHASE:
 		ret = (genericEvent *) new EV_BoPurchase();
 		break;
@@ -262,7 +268,20 @@ bool GameEventSource::isThereEvent()
 	}
 	if (gameInterface->getEndPlaying())
 	{
+		cout << "is there event: end playing esta en trueeee" << endl;
 		evCode = END_PLAYING;
+		gameInterface->setEndPlaying(false);
+		ret = true;
+	}
+	if (gameInterface->error)
+	{
+		evCode = ERROR_;
+		ret = true;
+	}
+	if (gameInterface->quit)
+	{
+		evCode = QUIT;
+		ret = true;
 	}
 
 	return ret;
@@ -651,8 +670,9 @@ bool UserEventSource::isThereEvent()
 				ALLEGRO_MESSAGEBOX_YES_NO
 			)) == 1)
 			{
-				gameInterface->setEndPlaying(true);
-				evCode = END_PLAYING;
+				//gameInterface->setEndPlaying(true);
+				//evCode = END_PLAYING;
+				evCode = QUIT;
 				ret = true;
 			}
 			
@@ -843,6 +863,9 @@ genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 		break;
 	case BO_ATTACK:
 		ret = (genericEvent *) new EV_BoAttack();
+		break;
+	case QUIT:
+		ret = (genericEvent *) new EV_Quit();
 		break;
 
 	default:

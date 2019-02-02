@@ -49,6 +49,35 @@ genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
+genericState* ST_GameIdle::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_GameIdle::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_GameIdle::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
+
 
 /////////////////////////////// ST_Moving ///////////////////////////////
 genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
@@ -105,6 +134,37 @@ genericState* ST_Moving::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) /
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+genericState* ST_Moving::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	cout << "pongo end playing true" << endl;
+	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_Moving::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_Moving::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
 	return ret;
 }
 
@@ -422,7 +482,6 @@ genericState* ST_WaitingDestination::on_Tile(genericEvent* ev, usefulInfo * Info
 
 	cout << "Saliendo..." << endl;
 	return ret;
-
 }
 
 
@@ -465,6 +524,35 @@ genericState* ST_WaitingDestination::on_OneMinTimeout(genericEvent *ev, usefulIn
 	return ret;
 }
 
+genericState* ST_WaitingDestination::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_WaitingDestination::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_WaitingDestination::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////
 genericState* ST_WaitingBoardingConfirmation::on_Move(genericEvent *ev, usefulInfo * Info)
 {
@@ -475,6 +563,69 @@ genericState* ST_WaitingBoardingConfirmation::on_Move(genericEvent *ev, usefulIn
 	return ret;
 }
 
+genericState* ST_WaitingBoardingConfirmation::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) 
+{
+	cout << "G WAITING boarding congirm: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+genericState* ST_WaitingBoardingConfirmation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_WaitingBoardingConfirmation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_WaitingBoardingConfirmation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
+
+genericState* ST_WaitingBoardingConfirmation::on_BoAttack(genericEvent *ev, usefulInfo * Info)//Se entra aca al presionar boton ATTACK en pantalla. Todavia no se hizo el ataque.
+{
+	cout << "G MOVING: ATTACK" << endl;
+	//El ataque se hace despues, una vez que ya se entro a este estado por primera vez.
+	genericState *ret = (genericState *) new ST_Attacking();
+	return ret;
+}
+
+genericState* ST_WaitingBoardingConfirmation::on_BoPurchase(genericEvent *ev, usefulInfo * Info) //VER
+{
+	cout << "G MOVING: ON PURCHASE" << endl;
+	genericState *ret = (genericState *) new ST_Purchasing();
+	return ret;
+}
+
+
+genericState* ST_WaitingBoardingConfirmation::on_Pass(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "G MOVING: ON PASS" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
 /////////////////////////////////////////////////////////////////////////////////////
 genericState* ST_WaitingUnboardingConfirmation::on_Move(genericEvent *ev, usefulInfo * Info)
 {
@@ -483,6 +634,71 @@ genericState* ST_WaitingUnboardingConfirmation::on_Move(genericEvent *ev, useful
 	//Info->timeoutSrc->startTimer1();
 	return ret;
 }
+
+genericState* ST_WaitingUnboardingConfirmation::on_BoAttack(genericEvent *ev, usefulInfo * Info)//Se entra aca al presionar boton ATTACK en pantalla. Todavia no se hizo el ataque.
+{
+	cout << "G MOVING: ATTACK" << endl;
+	//El ataque se hace despues, una vez que ya se entro a este estado por primera vez.
+	genericState *ret = (genericState *) new ST_Attacking();
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingConfirmation::on_BoPurchase(genericEvent *ev, usefulInfo * Info) //VER
+{
+	cout << "G MOVING: ON PURCHASE" << endl;
+	genericState *ret = (genericState *) new ST_Purchasing();
+	return ret;
+}
+
+
+genericState* ST_WaitingUnboardingConfirmation::on_Pass(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "G MOVING: ON PASS" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingConfirmation::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) 
+{
+	cout << "G WAITING unboarding confirm: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingConfirmation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingConfirmation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingConfirmation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 genericState* ST_WaitingUnboardingLocation::on_Tile(genericEvent *ev, usefulInfo * Info)
@@ -782,6 +998,70 @@ genericState* ST_WaitingUnboardingLocation::on_Tile(genericEvent *ev, usefulInfo
 	return ret;
 }
 
+genericState* ST_WaitingUnboardingLocation::on_BoAttack(genericEvent *ev, usefulInfo * Info)//Se entra aca al presionar boton ATTACK en pantalla. Todavia no se hizo el ataque.
+{
+	cout << "G MOVING: ATTACK" << endl;
+	//El ataque se hace despues, una vez que ya se entro a este estado por primera vez.
+	genericState *ret = (genericState *) new ST_Attacking();
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingLocation::on_BoPurchase(genericEvent *ev, usefulInfo * Info) //VER
+{
+	cout << "G MOVING: ON PURCHASE" << endl;
+	genericState *ret = (genericState *) new ST_Purchasing();
+	return ret;
+}
+
+
+genericState* ST_WaitingUnboardingLocation::on_Pass(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "G MOVING: ON PASS" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingLocation::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info)
+{
+	cout << "G WAITING unboarding location: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingLocation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingLocation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingLocation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////
 genericState* ST_WaitingUnboardingLocationConfirmation::on_Move(genericEvent *ev, usefulInfo * Info)
 {
@@ -792,7 +1072,69 @@ genericState* ST_WaitingUnboardingLocationConfirmation::on_Move(genericEvent *ev
 	return ret;
 }
 
+genericState* ST_WaitingUnboardingLocationConfirmation::on_BoAttack(genericEvent *ev, usefulInfo * Info)//Se entra aca al presionar boton ATTACK en pantalla. Todavia no se hizo el ataque.
+{
+	cout << "G MOVING: ATTACK" << endl;
+	//El ataque se hace despues, una vez que ya se entro a este estado por primera vez.
+	genericState *ret = (genericState *) new ST_Attacking();
+	return ret;
+}
 
+genericState* ST_WaitingUnboardingLocationConfirmation::on_BoPurchase(genericEvent *ev, usefulInfo * Info) //VER
+{
+	cout << "G MOVING: ON PURCHASE" << endl;
+	genericState *ret = (genericState *) new ST_Purchasing();
+	return ret;
+}
+
+
+genericState* ST_WaitingUnboardingLocationConfirmation::on_Pass(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
+{
+	cout << "G MOVING: ON PASS" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingLocationConfirmation::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) 
+{
+	cout << "G WAITING unboarding location confirm: ON 1 MIN TIMEOUT" << endl;
+	genericState *ret = (genericState *) new ST_YouMoving();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingLocationConfirmation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingLocationConfirmation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_WaitingUnboardingLocationConfirmation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
 
 /////////////////////////// ST_WaitingMoveConfirmation ///////////////////////////////
 genericState* ST_WaitingMoveConfirmation::on_Move(genericEvent *ev, usefulInfo * Info)
@@ -801,6 +1143,18 @@ genericState* ST_WaitingMoveConfirmation::on_Move(genericEvent *ev, usefulInfo *
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->move();
 	Info->timeoutSrc->startTimer1();
+	return ret;
+}
+
+genericState* ST_WaitingMoveConfirmation::on_BoPurchase(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_Purchasing();
+	return ret;
+}
+
+genericState* ST_WaitingMoveConfirmation::on_BoAttack(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_Attacking();
 	return ret;
 }
 
@@ -824,6 +1178,35 @@ genericState* ST_WaitingMoveConfirmation::on_OneMinTimeout(genericEvent *ev, use
 	return ret;
 }
 
+genericState* ST_WaitingMoveConfirmation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_WaitingMoveConfirmation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_WaitingMoveConfirmation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
+
 /////////////////////////////// ST_Attacking ///////////////////////////////
 genericState* ST_Attacking::on_Tile(genericEvent *ev, usefulInfo * Info)
 {
@@ -832,6 +1215,8 @@ genericState* ST_Attacking::on_Tile(genericEvent *ev, usefulInfo * Info)
 	//HACER: cuando el mouse ve que se toca un tile del mapa,
 	//guardar esa info en la clase game en tileSelected y generar el evento TILE
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
+		(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap1")!=0)  &&
+		(Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getType().compare("ap2") != 0) &&
 		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
 	{
 		Info->gameInterface->setAttacker(Info->gameInterface->getTileSelected());
@@ -888,6 +1273,35 @@ genericState* ST_Attacking::on_RYouWon(genericEvent *ev, usefulInfo * Info) //ES
 	Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+genericState* ST_Attacking::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_Attacking::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_Attacking::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
 	return ret;
 }
 
@@ -961,6 +1375,34 @@ genericState* ST_WaitingDefender::on_RYouWon(genericEvent *ev, usefulInfo * Info
 	return ret;
 }
 
+genericState* ST_WaitingDefender::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_WaitingDefender::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_WaitingDefender::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
 /////////////////////////////// ST_WaitingAttackConfirmation ///////////////////////////////
 genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
@@ -977,6 +1419,12 @@ genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulIn
 	//{
 	//	Info->gameInterface->captureProperty(Info->gameInterface->playerMe, Info->gameInterface->playerYou);
 	//}
+	return ret;
+}
+
+genericState* ST_WaitingAttackConfirmation::on_BoPurchase(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_Purchasing();
 	return ret;
 }
 
@@ -1008,6 +1456,34 @@ genericState* ST_WaitingAttackConfirmation::on_RYouWon(genericEvent *ev, usefulI
 	return ret;
 }
 
+genericState* ST_WaitingAttackConfirmation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_WaitingAttackConfirmation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_WaitingAttackConfirmation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
 
 /////////////////////////////// ST_Purchasing ///////////////////////////////
 genericState* ST_Purchasing::on_NewUnit(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
@@ -1043,6 +1519,7 @@ genericState* ST_Purchasing::on_NoMoney(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -1052,6 +1529,35 @@ genericState* ST_Purchasing::on_OneMinTimeout(genericEvent *ev, usefulInfo * Inf
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
+	return ret;
+}
+
+genericState* ST_Purchasing::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_Purchasing::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_Purchasing::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
 	return ret;
 }
 
@@ -1108,7 +1614,7 @@ genericState* ST_WaitingLocation::on_NoMoney(genericEvent* ev, usefulInfo * Info
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
-
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -1121,6 +1627,34 @@ genericState* ST_WaitingLocation::on_OneMinTimeout(genericEvent *ev, usefulInfo 
 	return ret;
 }
 
+genericState* ST_WaitingLocation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_WaitingLocation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_WaitingLocation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
 /////////////////////////////// ST_WaitingPurchaseConfirmation ///////////////////////////////
 genericState* ST_WaitingPurchaseConfirmation::on_Purchase(genericEvent *ev, usefulInfo * Info)
 {
@@ -1136,63 +1670,8 @@ genericState* ST_WaitingPurchaseConfirmation::on_NoMoney(genericEvent *ev, usefu
 	cout << "G waiting purchase confirm::on_NoMoney" << endl;
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
-	Info->gameInterface->playerYou->setAmmountOfCities(Info->gameInterface->myMap);
-	Info->gameInterface->playerYou->setMoney(((Info->gameInterface->playerYou->getAmmountOfCities()) + 1) * 5);
-
-	for (int i = 0; i < FILA; i++)
-	{
-		for (int j = 0; j < COLUMNA; j++)
-		{
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getTeam()) == Info->gameInterface->playerYou->getTeam()) &&
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
-			{
-
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) + 2);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getHp()) > 8)
-				{
-					Info->gameInterface->myMap->getTile(i, j)->getUnit()->setHp(8);
-				}
-			}
-
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL)) {
-				Info->gameInterface->myMap->getTile(i, j)->getUnit()->resetMp();
-			}
-
-
-			//CAPTURA DE PROPIEDAD
-			//antes de llamar a esta funcion debo setear el attacker con la unidad que este encima de un building que no es propio
-			if (((Info->gameInterface->myMap->getTile(i, j)->getUnit()) != NULL) && ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()) != NULL) &&
-				(((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getType().compare("in")) == 0) ||
-				((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getType().compare("me")) == 0)) &&
-					((Info->gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())) &&
-				(Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getTeam() != (Info->gameInterface->playerYou->getTeam())))
-			{
-				Info->gameInterface->setAttacker(i, j);
-				Info->gameInterface->captureProperty(Info->gameInterface->playerYou);
-				if ((Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getCp()) <= 0)
-				{
-					cout << "SE CAPTURO POR COMPLETO!!!!(I=" << i << "; J=" << j << ")" << endl;
-					cout << "CP DEL BUILDING=" << Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getCp() << endl;
-					//en el tile donde estaba antes el building del oponente, poner el mismo building pero de mi equipo.
-					Info->gameInterface->myMap->getTile(i, j)->getBuilding()->setTeam(Info->gameInterface->playerYou->getTeam());
-					if (Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q1" || Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q2") {
-
-						Info->gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(8);
-					}
-					else
-					{
-						Info->gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(4);
-					}
-				}
-				cout << "CAPTURE PERO NO DEL TODO EN (I=" << i << ";J=" << j << ")" << endl;
-				cout << "CP DEL BUILDING=" << Info->gameInterface->myMap->getTile(i, j)->getBuilding()->getCp() << endl;
-
-			}
-
-		}
-	}
-
+	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
+	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
 }
 
@@ -1216,20 +1695,34 @@ genericState* ST_WaitingPurchaseConfirmation::on_OneMinTimeout(genericEvent *ev,
 	return ret;
 }
 
+genericState* ST_WaitingPurchaseConfirmation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
 
-/////////////////////////////// ST_Purchasing ///////////////////////////////
-//PURCHASING::ON PURCHASE PROBABLEMENTE DESAPAREZCA!!!!!!!
-//genericState* ST_Purchasing::on_Purchase(genericEvent *ev, usefulInfo * Info) //VER SI SE PUEDE COMPRAR MAS DE UNA VEZ
-//{
-//	genericState *ret = (genericState *) new ST_Purchasing();
-//
-//	string newUnit;//HACER: VER SI QUEDA COMO STRING O QUE, Y VER DONDE SE COMPLETA QUIEN ES ESA NEW UNIT!!!!!!!!!!!!!!!!!
-//	Info->gameInterface->purchase(Info->gameInterface->playerMe, newUnit);
-//
-//	//COMPLETAR 
-//
-//	return ret;
-//}
+genericState* ST_WaitingPurchaseConfirmation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_WaitingPurchaseConfirmation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
 
 /////////////////////////////// ST_YouMoving ///////////////////////////////
 
@@ -1268,8 +1761,6 @@ genericState* ST_YouMoving::on_RMove(genericEvent *ev, usefulInfo * Info)
 				((Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit()->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
 			{
 				cout << "attacker es apc" << endl;
-				//Info->gameInterface->unboardUnit()
-				//	que hay q hacer aki?
 				ret = (genericState *) new ST_YouUnboardingUnit();
 			}
 		}
@@ -1281,17 +1772,35 @@ genericState* ST_YouMoving::on_RMove(genericEvent *ev, usefulInfo * Info)
 		}
 
 	}
-
-	//COMPLETAR 
 	return ret;
 }
 
-/////////////////////////////////////////////////////////
-genericState* ST_YouUnboardingUnit::on_RMove(genericEvent *ev, usefulInfo * Info)
+genericState* ST_YouMoving::on_Quit(genericEvent* ev, usefulInfo * Info)
 {
-	//HACER
-	Info->gameInterface->unboardUnit();
-	genericState *ret = (genericState *) new ST_YouMoving();
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_YouMoving::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_YouMoving::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
 	return ret;
 }
 
@@ -1370,6 +1879,45 @@ genericState* ST_YouMoving::on_RYouWon(genericEvent *ev, usefulInfo * Info) //ES
 	return ret;
 }
 
+/////////////////////////////////////////////////////////
+genericState* ST_YouUnboardingUnit::on_RMove(genericEvent *ev, usefulInfo * Info)
+{
+	//HACER
+	Info->gameInterface->unboardUnit();
+	genericState *ret = (genericState *) new ST_YouMoving();
+	return ret;
+}
+
+
+genericState* ST_YouUnboardingUnit::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_YouUnboardingUnit::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_YouUnboardingUnit::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
+
 /////////////////////////////// ST_YouAttacking ///////////////////////////////
 
 genericState* ST_YouAttacking::on_RAttack(genericEvent *ev, usefulInfo * Info)
@@ -1433,18 +1981,40 @@ genericState* ST_YouAttacking::on_RPass(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
+genericState* ST_YouAttacking::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_YouAttacking::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_YouAttacking::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
 
 /////////////////////////////// ST_YouPurchasing ///////////////////////////////
 genericState* ST_YouPurchasing::on_RPurchase(genericEvent *ev, usefulInfo * Info)
 {
-
 	cout << "ST_YouPurchasing::on_RPurchase" << endl;
 	genericState *ret = (genericState *) new ST_YouPurchasing();
-
-
-	
-	
-	
 	
 	cout << "CORDENADAS DEL DEFENDER (PURCHASE):    (i=" << Info->gameInterface->getDefender().i << "  ; j=  " << Info->gameInterface->getDefender().j << "   )" << endl;
 	cout << "BUILDING DEL DEFENDER (PURCHASE):   "<<Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getBuilding()->getName() << endl;
@@ -1457,13 +2027,7 @@ genericState* ST_YouPurchasing::on_RPurchase(genericEvent *ev, usefulInfo * Info
 	{
 		//EL DEFENDER YA ESTA SETEADO cuando se recibe el mensaje de networking
 		Info->gameInterface->purchase(Info->gameInterface->playerYou);	//SI SACAMOS EL IF PARA LA PARTE DEL GENERADOR DE EVENTOS, QUEDARIA ACA SOLO ESTA LINEA
-
 	}
-
-	
-	
-
-
 	//Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->setUnit(Info->gameInterface->getNewUnit());
 	//Info->gameInterface->myMap->getTile(Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j)->getUnit()->setTeam(Info->gameInterface->playerYou->getTeam());
 	//Info->gameInterface->playerYou->setMoney((Info->gameInterface->playerYou->getMoney())-(stoi(Info->gameInterface->getNewUnit()->getCost())));
@@ -1486,6 +2050,34 @@ genericState* ST_YouPurchasing::on_RPass(genericEvent *ev, usefulInfo * Info)
 	return ret;
 }
 
+genericState* ST_YouPurchasing::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_YouPurchasing::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_YouPurchasing::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
 
 /////////////////////////////// ST_AnalysingVictoryHQ ///////////////////////////////
 genericState* ST_AnalysingVictoryHQ::on_YouDidntWin(genericEvent *ev, usefulInfo * Info)
@@ -1505,6 +2097,34 @@ genericState* ST_AnalysingVictoryHQ::on_YouWon(genericEvent *ev, usefulInfo * In
 	return ret;
 }
 
+genericState* ST_AnalysingVictoryHQ::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_AnalysingVictoryHQ::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_AnalysingVictoryHQ::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
 
 /////////////////////////////// ST_AnalysingVictoryUnits ///////////////////////////////
 genericState* ST_AnalysingVictoryUnits::on_YouDidntWin(genericEvent *ev, usefulInfo * Info)
@@ -1523,6 +2143,34 @@ genericState* ST_AnalysingVictoryUnits::on_YouWon(genericEvent *ev, usefulInfo *
 	return ret;
 }
 
+genericState* ST_AnalysingVictoryUnits::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_AnalysingVictoryUnits::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_AnalysingVictoryUnits::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
+}
 ////////////////////////// ST_WaitingPlayingAgainConfirmation /////////////////////////
 genericState* ST_G_WaitingPlayingAgainConfirmation::on_PlayAgain(genericEvent* ev, usefulInfo * Info)
 {
@@ -1538,10 +2186,39 @@ genericState* ST_G_WaitingPlayingAgainConfirmation::on_GameOver(genericEvent* ev
 	genericState *ret = (genericState *) new ST_GameIdle(); //VER
 	Info->gameInterface->setIamPlaying(false);
 	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
-	Info->timeoutSrc->startTimer1(); //CHEQUEAR
+	//Info->timeoutSrc->startTimer1(); //CHEQUEAR
 	return ret;
 
 	//VER SI HACER ALGO MAS!!!!!!!!!!!!!!
+}
+
+genericState* ST_G_WaitingPlayingAgainConfirmation::on_Quit(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->quit = true;
+	return ret;
+}
+
+genericState* ST_G_WaitingPlayingAgainConfirmation::on_Rerror(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	return ret;
+}
+
+genericState* ST_G_WaitingPlayingAgainConfirmation::on_Error(genericEvent* ev, usefulInfo * Info)
+{
+	genericState *ret = (genericState *) new ST_GameIdle();
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer1();
+	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->error = true;
+	return ret;
 }
 
 
@@ -1590,6 +2267,7 @@ void setCaptureProperty(Player* player, Game* gameInterface)
 						((gameInterface->myMap->getTile(i, j)->getUnit()->getTeam()) == (player->getTeam())) &&
 				(gameInterface->myMap->getTile(i, j)->getBuilding()->getTeam() != (player->getTeam())))
 			{
+
 				gameInterface->setAttacker(i, j);
 				gameInterface->captureProperty(player);
 				if ((gameInterface->myMap->getTile(i, j)->getBuilding()->getCp()) <= 0)

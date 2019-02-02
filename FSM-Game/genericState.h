@@ -82,8 +82,10 @@ public:
 	virtual genericState* on_RplayAgain(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_RgameOver(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
-	virtual genericState* on_Rerror_(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_Rerror(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Rquit(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_Error(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_Quit(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	
 	//virtual genericState* on_RTimeout(genericEvent* ev, usefulInfo * Info) { return nullptr; } //se va a recibir error o algo asi. VER BIEN
 
