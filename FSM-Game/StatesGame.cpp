@@ -144,6 +144,8 @@ genericState* ST_Moving::on_Quit(genericEvent* ev, usefulInfo * Info)
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
 	Info->gameInterface->quit = true;
+	cout << "pongo end playing true" << endl;
+	Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 

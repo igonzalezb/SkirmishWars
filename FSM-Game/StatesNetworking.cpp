@@ -384,6 +384,7 @@ genericState* ST_IPlay::on_RYouWon(genericEvent *ev, usefulInfo * Info) //NO FAL
 
 genericState* ST_IPlay::on_Rquit(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "i play: on R quit" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -395,6 +396,7 @@ genericState* ST_IPlay::on_Rquit(genericEvent* ev, usefulInfo * Info)
 
 genericState* ST_IPlay::on_Quit(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "i play: on quit" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Quit();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -576,6 +578,7 @@ genericState* ST_WaitingAPlay::on_YouWon(genericEvent *ev, usefulInfo * Info) //
 
 genericState* ST_WaitingAPlay::on_Rquit(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "waiting a play: on R quit" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -587,6 +590,7 @@ genericState* ST_WaitingAPlay::on_Rquit(genericEvent* ev, usefulInfo * Info)
 
 genericState* ST_WaitingAPlay::on_Quit(genericEvent* ev, usefulInfo * Info)
 {
+	cout << "waiting a play: on quit" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Quit();
 	Info->networkInterface->sendPackage(Info->nextPkg);

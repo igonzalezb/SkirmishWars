@@ -262,6 +262,7 @@ bool GameEventSource::isThereEvent()
 	}
 	if (gameInterface->getEndPlaying())
 	{
+		cout << "is there event: end playing esta en trueeee" << endl;
 		evCode = END_PLAYING;
 	}
 	if (gameInterface->error)
@@ -852,6 +853,9 @@ genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 		break;
 	case BO_ATTACK:
 		ret = (genericEvent *) new EV_BoAttack();
+		break;
+	case QUIT:
+		ret = (genericEvent *) new EV_Quit();
 		break;
 
 	default:

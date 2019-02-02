@@ -132,6 +132,12 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 		case END_PLAYING:
 			newState = currentState->on_Pass(ev, Info); //para probarrrrrrrrrrrrrrrrr
 			break;
+		case QUIT: //ver si queda
+			newState = currentState->on_Quit(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+			break;
+		case ERROR_: //ver si queda
+			newState = currentState->on_Error(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+			break;
 		default:
 			break;
 		}
