@@ -719,7 +719,7 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 				NULL,
 				ALLEGRO_MESSAGEBOX_YES_NO)) == 1)
 			{
-				gameInterface->graphics->setAttackWarningShown(false);
+				gameInterface->graphics->setAttackWarningShown(true);
 				return BO_ATTACK;
 			}
 		}
