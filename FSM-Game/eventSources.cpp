@@ -63,9 +63,11 @@ genericEvent * GameEventSource::insertEvent()
 		ret = (genericEvent *) new EV_GameOver();
 		break;
 	case QUIT:
+		cout << "insert event quit, desde game" << endl;
 		ret = (genericEvent *) new EV_Quit();
 		break;
 	case END_PLAYING:
+		cout << "insert event end playing, desde game" << endl;
 		ret = (genericEvent *) new EV_EndPlaying();
 		break;
 	case ERR_DETECTED:		//VER si este case se deja o si se saca
@@ -96,12 +98,15 @@ genericEvent * GameEventSource::insertEvent()
 		ret = (genericEvent *) new EV_GameOver();
 		break;
 	case R_QUIT:
+		cout << "insert event r quit, desde game" << endl;
 		ret = (genericEvent *) new EV_Quit();
 		break;
 	case R_ERROR_:
+		cout << "insert event r error, desde game" << endl;
 		ret = (genericEvent *) new EV_Quit();
 		break;
 	case ERROR_:
+		cout << "insert event error, desde game" << endl;
 		ret = (genericEvent *) new EV_Quit();
 		break;
 	case BO_PURCHASE:
@@ -276,11 +281,13 @@ bool GameEventSource::isThereEvent()
 	if (gameInterface->error)
 	{
 		evCode = ERROR_;
+		gameInterface->error = false; //Ver
 		ret = true;
 	}
 	if (gameInterface->quit)
 	{
 		evCode = QUIT;
+		gameInterface->quit = false; //Ver
 		ret = true;
 	}
 
@@ -566,10 +573,20 @@ genericEvent * NetworkEventSource::insertEvent()
 		ret = (genericEvent *) new EV_RgameOver();
 		break;
 	case R_ERROR_:
+		cout << "insert event r error, desde networking" << endl;
 		ret = (genericEvent *) new EV_Rerror_();
 		break;
 	case R_QUIT:
+		cout << "insert event r quit, desde networking" << endl;
 		ret = (genericEvent *) new EV_Rquit();
+		break;
+	case ERROR_:
+		cout << "insert event error, desde networking" << endl;
+		ret = (genericEvent *) new EV_Error_();
+		break;
+	case QUIT:
+		cout << "insert event quit, desde networking" << endl;
+		ret = (genericEvent *) new EV_Quit();
 		break;
 	case ERR_DETECTED:		//VER si este case se deja o si se saca
 		ret = (genericEvent *) new EV_ErrDetected();
@@ -591,7 +608,6 @@ genericEvent * NetworkEventSource::insertEvent()
 	default:
 		break;
 	}
-
 	//ret->setEventType(evCode);
 	return ret;
 }
@@ -605,9 +621,7 @@ UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface
 	event_queue = al_create_event_queue();
 	if (!event_queue) {
 		fprintf(stderr, "failed to create event_quieue!\n");
-	}
-
-	
+	}	
 }
 
 UserEventSource::~UserEventSource()
@@ -865,6 +879,8 @@ genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 		ret = (genericEvent *) new EV_BoAttack();
 		break;
 	case QUIT:
+		cout << "insert event quit, desde user" << endl;
+
 		ret = (genericEvent *) new EV_Quit();
 		break;
 

@@ -55,7 +55,7 @@ genericState* ST_GameIdle::on_Quit(genericEvent* ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+//	Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -143,7 +143,7 @@ genericState* ST_Moving::on_Quit(genericEvent* ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	cout << "pongo end playing true" << endl;
 	Info->gameInterface->setEndPlaying(true);
 	return ret;
@@ -530,7 +530,7 @@ genericState* ST_WaitingDestination::on_Quit(genericEvent* ev, usefulInfo * Info
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -578,7 +578,7 @@ genericState* ST_WaitingBoardingConfirmation::on_Quit(genericEvent* ev, usefulIn
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -676,7 +676,7 @@ genericState* ST_WaitingUnboardingConfirmation::on_Quit(genericEvent* ev, useful
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1039,7 +1039,7 @@ genericState* ST_WaitingUnboardingLocation::on_Quit(genericEvent* ev, usefulInfo
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1113,7 +1113,7 @@ genericState* ST_WaitingUnboardingLocationConfirmation::on_Quit(genericEvent* ev
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1184,7 +1184,7 @@ genericState* ST_WaitingMoveConfirmation::on_Quit(genericEvent* ev, usefulInfo *
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1282,7 +1282,7 @@ genericState* ST_Attacking::on_Quit(genericEvent* ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1381,7 +1381,7 @@ genericState* ST_WaitingDefender::on_Quit(genericEvent* ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+//	Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1462,7 +1462,7 @@ genericState* ST_WaitingAttackConfirmation::on_Quit(genericEvent* ev, usefulInfo
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+//	Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1538,7 +1538,7 @@ genericState* ST_Purchasing::on_Quit(genericEvent* ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+//	Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1633,7 +1633,7 @@ genericState* ST_WaitingLocation::on_Quit(genericEvent* ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+//	Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1701,7 +1701,7 @@ genericState* ST_WaitingPurchaseConfirmation::on_Quit(genericEvent* ev, usefulIn
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1781,7 +1781,7 @@ genericState* ST_YouMoving::on_Quit(genericEvent* ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+//	Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1895,7 +1895,7 @@ genericState* ST_YouUnboardingUnit::on_Quit(genericEvent* ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+//	Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -1987,7 +1987,7 @@ genericState* ST_YouAttacking::on_Quit(genericEvent* ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -2056,7 +2056,7 @@ genericState* ST_YouPurchasing::on_Quit(genericEvent* ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -2103,7 +2103,7 @@ genericState* ST_AnalysingVictoryHQ::on_Quit(genericEvent* ev, usefulInfo * Info
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -2149,7 +2149,7 @@ genericState* ST_AnalysingVictoryUnits::on_Quit(genericEvent* ev, usefulInfo * I
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+	//Info->gameInterface->quit = true;
 	return ret;
 }
 
@@ -2198,7 +2198,7 @@ genericState* ST_G_WaitingPlayingAgainConfirmation::on_Quit(genericEvent* ev, us
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1();
 	Info->gameInterface->setYouWinning(false);
-	Info->gameInterface->quit = true;
+//	Info->gameInterface->quit = true;
 	return ret;
 }
 

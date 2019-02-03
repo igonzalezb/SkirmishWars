@@ -307,6 +307,15 @@ private:
 
 };
 
+class EV_Error_ : public genericEvent
+{
+public:
+	EV_Error_() { ev = ERROR_; };
+
+private:
+
+};
+
 class EV_Rquit : public genericEvent
 {
 public:
