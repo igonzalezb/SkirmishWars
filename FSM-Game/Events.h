@@ -2,33 +2,26 @@
 #define EVENTS_H
 
 #define DEBUG true
-
-//#include "Screen.h"
 #include "genericEvent.h"
 
 typedef char MYBYTE;
 
-//GAME EVENTS
-/*
-Eventos que genera la fsm de GAME :
-YOU_START, I_START, MOVE, PURCHASE, ATTACK, PASS, YOU_WON, PLAY_AGAIN,
-GAME_OVER */
 
-class EV_MapOk : public genericEvent //VER QUIEN LO GENERA
+class EV_MapOk : public genericEvent
 {
 public:
 	EV_MapOk() { ev = MAP_OK; };
 private:
 };
 
-class EV_YouStart : public genericEvent //VER QUIEN LO GENERA
+class EV_YouStart : public genericEvent 
 {
 public:
 	EV_YouStart() { ev = YOU_START; };
 private:
 };
 
-class EV_IStart : public genericEvent //VER QUIEN LO GENERA
+class EV_IStart : public genericEvent
 {
 public:
 	EV_IStart() { ev = I_START; };
@@ -114,53 +107,22 @@ private:
 };
 
 
-
-/*
-//USER EVENTS
-
-class EV_Quit : public genericEvent
-{
-public:
-EV_Quit() { ev = QUIT; };
-private:
-
-};
-
-class EV_Clear : public genericEvent
-{
-public:
-EV_Clear() { ev = CLEAR; };
-private:
-
-};
-*/
-
-
-/*
-Eventos que genera la fsm de NETWORKING:
-R_ACK, R_NAME, R_NAME_IS, R_MAP_IS, R_YOU_START, R_I_START,
-R_PASS, R_MOVE, R_PURCHASE, R_ATTACK, R_YOU_WON, R_PLAY_AGAIN,
-R_GAME_OVER, R_ERROR_, R_QUIT,*/
-
-
 //NETWORK EVENTS
 
 class EV_ConnectedAsServer : public genericEvent
 {
 public:
 	EV_ConnectedAsServer() { ev = CONNECTED_AS_SERVER; };
-	//TODO: funciones de cargar el buffer y de obetener la info
 
 private:
-	//unsigned int blockNumber;	//Guardar el numero de bloque aca.
-	//MYBYTE* dataBuffer;
+
 };
 
 class EV_ConnectedAsClient : public genericEvent
 {
 public:
 	EV_ConnectedAsClient() { ev = CONNECTED_AS_CLIENT; };
-	//TODO: funciones de cargar el buffer y de obetener la info
+	
 
 private:
 	//unsigned int blockNumber;	//Guardar el numero de bloque aca.

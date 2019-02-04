@@ -283,22 +283,17 @@ void Viewer::on_OneMinTimeout(genericEvent * ev, usefulInfo * Info)
 void Viewer::on_TwoHalfMinTimeout(genericEvent * ev, usefulInfo * Info)
 {
 	al_clear_to_color(al_color_name("black"));
-	//al_show_native_message_box(Info->gameInterface->graphics->getDisplay(),
-//		"ERROR", "CONNECTION LOST", "The connection with the other player was lost.", NULL, ALLEGRO_MESSAGEBOX_ERROR);
-}
+	}
 
 void Viewer::on_TenSecLeft(genericEvent * ev, usefulInfo * Info)
 {	
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
 
-	//Info->gameInterface->graphics->playTenSecSound();
 }
 
 void Viewer::on_ThirtySecLeft(genericEvent * ev, usefulInfo * Info)
 {
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
-
-	//Info->gameInterface->graphics->playThirtySecSound();
 	
 }
 

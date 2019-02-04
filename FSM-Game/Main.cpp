@@ -6,8 +6,8 @@
 //
 //
 // Gonzalez Bigliardi, Iñaki				 ////////////////////////////////////////////////
-// Lago, Valentina							//		    S K I R M I S H    W A R S
-// Muller, Malena						   //////////////////////////////////////////////////
+// Lago, Valentina					//		    S K I R M I S H    W A R S
+// Muller, Malena					//////////////////////////////////////////////////
 //
 //
 //
@@ -39,18 +39,13 @@ using namespace std;
 
 int main()
 {
-	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+	//::ShowWindow(::GetConsoleWindow(), SW_HIDE);
 	if (allegroStartup())
 	{
 		al_show_native_message_box(NULL, "ERROR", "Failed to Install Allegro", "", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		exit(EXIT_FAILURE);
 	}
 	srand(time(NULL));
-	
-	/////////////////////////////////////////
-	//std::cout << "Por favor ingrese la direccion IP del servidor a traves de la linea de comando.\n Ejemplo: 'Client.exe 192.168.0.50'" << std::endl;
-	//std::cout << "Presione una tecla para salir." << std::endl;
-	//getchar();
 	StartMenu* mainMenu = new StartMenu;
 	mainMenu->openApp();
 
@@ -95,14 +90,10 @@ int main()
 		((networkingFSM.getCurrentState())->getLastEvent() != END_PLAYING));
 
 #ifdef DEBUG
-	cout << "FINNNNNNNNNNNNNNNNNNNNNNN" << endl;
+	cout << "FIN" << endl;
 #endif // DEBUG
 
-	
-
-
-
-	getchar();
+	//getchar();
 
 
 	return EXIT_SUCCESS;
