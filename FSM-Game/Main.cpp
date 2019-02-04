@@ -58,10 +58,6 @@ int main()
 	GameEventSource gameSource(&skirmish);
 	UserEventSource userSource(&user,&skirmish);
 	NetworkEventSource networkSource(&communicator,&skirmish);
-	//SoftwareEventSource Software;
-	//NetworkEventSource networkSource(&Server);
-	//UserEventSource userSource(&Terminal);
-	//usefulInfo Info(&userSource, &Timeout, &networkSource, &fileSystem, &Software);
 	usefulInfo Info(&userSource,&gameSource,&networkSource, &timeoutSource);
 	genericEvent *ev;
 	eventGenerator evGen(&Info);
@@ -72,7 +68,6 @@ int main()
 	cout << "Listening on port 13225..." << endl;
 	communicator.startConnection();
 	communicator.justConnected = 1;
-	//networkSource.evCode = CONNECTED; //VEEEEER COMO MODIFICAR ESE evCode!!!!!!!!!!!!!!!
 	cout << "Connection established" << endl;
 
 	do
@@ -85,24 +80,17 @@ int main()
 			gameFSM.dispatch(ev, &Info);
 			gameviewer.dispatch(ev, &Info);
 		}
-		/*if ((gameFSM.getCurrentState()->getLastEvent() != CONNECTED_AS_CLIENT) || (networkingFSM.getCurrentState()->getLastEvent() != CONNECTED_AS_CLIENT))
-		{
-			cout << "game last event: " << gameFSM.getCurrentState()->getLastEvent() << endl;
-			cout << "networking last event: " << networkingFSM.getCurrentState()->getLastEvent() << endl;
-		}*/
 	} while (((gameFSM.getCurrentState())->getLastEvent() != END_PLAYING) &&
 		((networkingFSM.getCurrentState())->getLastEvent() != END_PLAYING));
-		
-		//(ev->getEventType() != END_PLAYING);// ev->getEventType() != END_PLAYING);
-		
-		//(((gameFSM.getCurrentState())->getLastEvent() != END_PLAYING) &&
-		//((networkingFSM.getCurrentState())->getLastEvent() != END_PLAYING));//VER BIEN ESTO
 
-
-	//while (FSM.getCurrentState()->getLastEvent() != QUIT); //ver bien si este QUIT queda el mismo o si hay que cambiarlo
 
 	cout << "FINNNNNNNNNNNNNNNNNNNNNNN" << endl;
-	getchar();
+
+
+
+	//getchar();
+
+
 	return EXIT_SUCCESS;
 }
 

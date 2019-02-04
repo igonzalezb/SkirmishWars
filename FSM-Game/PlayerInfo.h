@@ -29,8 +29,6 @@ private:
 	TeamColor teamcolor;
 	int ip;
 	bool myTurn;
-
-	//agrego lo siguiente:
 	int cities; // ver si esta en otro lado!!!!!!!!!!!!!!!!!!! VER COMO CONTAR LA CANTIDAD DE CITIES. HACERLO
 	//int hp;
 };

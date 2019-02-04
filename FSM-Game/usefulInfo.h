@@ -9,12 +9,8 @@
 class usefulInfo
 {
 public:
-	//Hay que agrgarle los punteros a las otras fuentes al constructor
-	//y pasar el constructor a un .cpp
-
-	
 	usefulInfo(UserEventSource *UsEvSrc,GameEventSource *GameEvSrc, NetworkEventSource *NETEvSrc, TimeoutEventSource *TOEvSrc) 
-		:networkSrc(NETEvSrc),gameSrc(GameEvSrc),userSrc(UsEvSrc), timeoutSrc(TOEvSrc)//CHEQUEAR
+		:networkSrc(NETEvSrc),gameSrc(GameEvSrc),userSrc(UsEvSrc), timeoutSrc(TOEvSrc)
 	{
 		networkInterface = networkSrc->networkInterface;
 		gameInterface = gameSrc->gameInterface;

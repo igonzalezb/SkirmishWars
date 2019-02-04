@@ -54,27 +54,10 @@ public:
 	genericEvent* insertEvent();
 	Networking *networkInterface;
 	Game* gameInterface;
-
-	//unsigned int expectedBlockNum;
-	//std::string fileRequested;
-	//std::vector<char> data;	//Se almacena la data en caso de recibir DATA
-	//std::string errorMsg;
-	//errorCodes errorCode;
-	//unsigned int blockNumber;
-
-	//agrego esto, despues ver donde meterlo (r de recibido)
 	std::vector<char> r_name;
 	string r_name_string;
 	std::vector<char> r_map;
 	string r_map_string;
-	// VER si dejar las columnas con su valor como MYBYTE que significa char, o si guardarlo como int!!!
-	// las columnas si o si chars porque son letras en mayuscula: A, B, C, D etc
-    /*
-	MYBYTE r_fila_or;
-	MYBYTE r_col_or;
-	MYBYTE r_fila_de;
-	MYBYTE r_col_de;
-	*/
 	std::vector<char>  r_unidad;
 	string r_unidad_string;
 	MYBYTE r_dado;
@@ -89,11 +72,9 @@ public:
 	UserEventSource(userInput* _userInterface , Game*_gameInterface); //VER que recibe aca (A LOS DOS JUGADORES, O UNA CLASE CON TODO EL JUEGO O QUE)
 	~UserEventSource();
 	bool isThereEvent();
-	/*eventCode dispachClick(int x, int y);*/
 	genericEvent* insertEvent();
 	userInput *userInterface;
 	Game *gameInterface;
-	//MapGraphics* graphics;
 	eventCode dispatchClick(int x, int y);
 
 private:

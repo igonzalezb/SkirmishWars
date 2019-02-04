@@ -396,7 +396,7 @@ genericState* ST_IPlay::on_Rquit(genericEvent* ev, usefulInfo * Info)
 
 genericState* ST_IPlay::on_Quit(genericEvent* ev, usefulInfo * Info)
 {
-	cout << "i play: on quit" << endl;
+	cout << "i play: on quit, ENTONCES ENVIO paquete quit" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Quit();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -423,6 +423,7 @@ genericState* ST_IPlay::on_Error(genericEvent* ev, usefulInfo * Info)
 	cout << "i play: on error" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Error_();
+	cout << "I play: on error. ENTONCES envio paquete error" << endl;
 	Info->networkInterface->sendPackage(Info->nextPkg);
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
@@ -584,7 +585,7 @@ genericState* ST_WaitingAPlay::on_YouWon(genericEvent *ev, usefulInfo * Info) //
 
 genericState* ST_WaitingAPlay::on_Rquit(genericEvent* ev, usefulInfo * Info)
 {
-	cout << "waiting a play: on R quit" << endl;
+	cout << "waiting a play: on R quit, ENTONCES envio ack" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Ack();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -596,7 +597,7 @@ genericState* ST_WaitingAPlay::on_Rquit(genericEvent* ev, usefulInfo * Info)
 
 genericState* ST_WaitingAPlay::on_Quit(genericEvent* ev, usefulInfo * Info)
 {
-	cout << "waiting a play: on quit" << endl;
+	cout << "waiting a play: on quit, ENTONCES envio quit" << endl;
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Quit();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -621,6 +622,7 @@ genericState* ST_WaitingAPlay::on_Error(genericEvent* ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_S_WaitingWhoStarts(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new Error_();
+	cout << "waiting a play: on error. ENTONCES envio paquete error" << endl;
 	Info->networkInterface->sendPackage(Info->nextPkg);
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR

@@ -148,6 +148,10 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			delete currentState;
 			currentState = newState;
 			currentState->setLastEvent(ev->getEventType()); //PROBANDO PARA END PLAYING
+			if (ev->getEventType() == END_PLAYING)
+			{
+				cout << "NET: ev getEventType = END_PLAYING!!!!!!!!!!!!!!!" << endl;
+			}
 		}
 
 

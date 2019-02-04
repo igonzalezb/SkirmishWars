@@ -3,9 +3,6 @@
 
 //#include "genericFSM.h"
 
-//probando con esto
-//#include "genericState.h"
-//#include "genericEvent.h"
 #include "StatesNetworking.h"
 
 class FSMNetworking 

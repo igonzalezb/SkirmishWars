@@ -84,18 +84,11 @@ public:
 	GenericTile* getTile(int i, int j);
 	void updateFogOfWar(int myTeam);
 
-	//void attack(coordenadas attacker, coordenadas defender);//ESTA FUNCION SEGURAMENTE HAYA QUE MOVERLA A OTRO ARCHIVO (+ prolijo) Quizas no recibe nada y se usa lo de abajo attacker y defender.
-	//void attack();
-	//void setAttacker(int tile);
-	//void setDefender(int tile);
-
 	void possibleMoves(Unit *currUnit, int i, int j);
 	void possibleAttack(Unit *currUnit, int i, int j, TeamNumber myTeam);
 	void checkPossibleMoves(int matrixCost[FILA][COLUMNA], int i, int j, int MP);
 	void checkPossibleAttacks(int matrixCost[FILA][COLUMNA], int i, int j, int Range, TeamNumber myTeam, bool _canmove);
 
-
-	//void generateDefenseModifiersTable();
 	bool canMove[FILA][COLUMNA];
 	bool canAttack[FILA][COLUMNA];
 	string getMapName();
@@ -110,11 +103,9 @@ public:
 private:
 	string mapName;
 	csvFile* mapFile;
-	//csvFile *defenseModifiers;
 	string matrixDeTerrenoOrFacility[FILA][COLUMNA];
 	unsigned char checksum;
 	unsigned char checksumReceived;
-	//modifiers tableMatrix[14][5];
 
 	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
 	//coordenadas attacker; //HACER: INICIARLAS EN NULL
