@@ -24,9 +24,9 @@ void GenericTile::addUnit(Unit *currUnit)
 	this->currUnit = currUnit;
 }
 
-void GenericTile::removeUnit(Unit *currUnit)
+void GenericTile::removeUnit()
 {
-
+	currUnit = NULL;
 }
 
 void GenericTile::addBuilding(Building *currBuilding)
@@ -34,8 +34,9 @@ void GenericTile::addBuilding(Building *currBuilding)
 	this->currBuilding = currBuilding;
 }
 
-void GenericTile::removeBuilding(Building *currBuilding)
+void GenericTile::removeBuilding()
 {
+	currBuilding = NULL;
 }
 
 void GenericTile::addFog()

@@ -2,19 +2,33 @@
 
 StartMenu::StartMenu()
 {
-	//ALLEGRO_MONITOR_INFO info;
-	//al_get_monitor_info(0, &info);
+	ALLEGRO_MONITOR_INFO info;
+	al_get_monitor_info(0, &info);
 	//printf("%i x %i", info.x2 - info.x1, info.y2 - info.y1);
 
 	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	//al_set_new_display_flags(ALLEGRO_MAXIMIZED);
+	//al_set_new_display_flags(ALLEGRO_MAXIMIZED || ALLEGRO_RESIZABLE);
+	//int min_w, min_h, max_w, max_h;
+	
+	//display = al_create_display(DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	//display = al_create_display(info.x2 - info.x1, info.y2 - info.y1);
 	display = al_create_display(DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	if (!display) {
 		fprintf(stderr, "failed to create display!\n");
 	}
 
+	//al_get_window_constraints(display, &min_w, &min_h, &max_w, &max_h);
+	//al_resize_display(display, min_w, min_h);
+
 	al_set_window_title(display, "SKIRMISH WARS");
 	//al_set_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, true);	//ACORDARSE DE ACTIVAR!!!
+	//al_set_display_flag(display, ALLEGRO_MAXIMIZED, true);	//ACORDARSE DE ACTIVAR!!!
+	//al_acknowledge_resize(display);
+
+
+
+
 	displayIcon = al_load_bitmap("resources/images/icon.png");
 	if (!displayIcon)
 	{
@@ -119,6 +133,7 @@ void StartMenu::MenuEvents()
 				"", NULL, ALLEGRO_MESSAGEBOX_YES_NO))
 			{
 				do_exit = true;
+				exit(EXIT_SUCCESS);
 			}
 			break;
 		case ALLEGRO_EVENT_KEY_CHAR:

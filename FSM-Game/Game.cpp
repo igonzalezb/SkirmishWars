@@ -263,29 +263,38 @@ void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado e
 
 bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE
 {
-	int i, j;
 	int hq = 0, units = 0;
-	for (i = 0; i < FILA; i++)
+	for (int i = 0; i < FILA; i++)
 	{
-		for (j = 0; j < COLUMNA; j++)
+		for (int j = 0; j < COLUMNA; j++)
 		{
-			if (((myMap->getTile(i,j)->getUnit()) != NULL)&&
-				((myMap->getTile(i, j)->getUnit()->getTeam())==(playerMe->getTeam())))
+			if (((myMap->getTile(i,j)->getUnit()) != NULL) &&
+				((myMap->getTile(i, j)->getUnit()->getTeam()) == (playerMe->getTeam())))
 			{
 				units++;
 			}
 			if ((myMap->getTile(i,j)->getBuilding()!=NULL)&&
-				(((myMap->getTile(i, j)->getBuilding()->getType()).compare("q1")) || ((myMap->getTile(i, j)->getBuilding()->getType()).compare("q1"))) &&
+				(((myMap->getTile(i, j)->getBuilding()->getType()).compare("q1")) || ((myMap->getTile(i, j)->getBuilding()->getType()).compare("q2"))) &&
 				((myMap->getTile(i,j)->getBuilding()->getTeam())==playerMe->getTeam()))
 			{
 				hq++;
 			}
 		}
 	}
-	if((units==0)||(hq=0))		//Si no tengo mas unidades o no tengo mas HQ, significa que el otro gana.
+#ifdef DEBUG
+	cout << "Cantidad de HQ: " << hq<< endl;
+	cout << "Cantidad de untis: " << units << endl;
+#endif // DEBUG
+
+	if((units == 0)||(hq == 0))		//Si no tengo mas unidades o no tengo mas HQ, significa que el otro gana.
 	{
+#ifdef DEBUG
+		cout << "Entro al if de didhewin" << endl;
+#endif // DEBUG
+
 		youWinning = true;
 	}
+
 	return youWinning;
 }
 
@@ -465,14 +474,14 @@ void Game::unboardUnit()
 		//esta cargado el arreglo en 1 asiq descargo esa unidad
 		cout << "DESCARGA LA UNIDAD EN [1]" << endl;
 		myMap->getTile(getDefender().i, getDefender().j)->setUnit(myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[1]);
-		myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[1] == NULL;
+		myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[1] = NULL;
 	}
 	else
 	{
 		cout << "DESCARGA LA UNIDAD EN [0]" << endl;
 		//esta cargardo el arreglo en 0 asiq descargo esa unidad
 		myMap->getTile(getDefender().i, getDefender().j)->setUnit(myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[0]);
-		myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[0] != NULL;
+		myMap->getTile(getAttacker().i, getAttacker().j)->getUnit()->arregloNaveAPC[0] = NULL;
 	}
 		
 		

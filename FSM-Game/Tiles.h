@@ -10,11 +10,11 @@ public:
 	GenericTile();
 	~GenericTile();
 	void addBuilding(Building *currBuilding);
-	void removeBuilding(Building *currBuilding);
+	void removeBuilding();
 	void addTerrain(Terrain *currTerrain);
 	void removeTerrain(Terrain *currTerrain);
 	void addUnit(Unit *currUnit);
-	void removeUnit(Unit *currUnit);
+	void removeUnit();
 	void addFog();
 	void removeFog();
 	bool getFog();

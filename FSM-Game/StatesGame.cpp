@@ -11,7 +11,9 @@ void setCaptureProperty(Player* player, Game* gameInterface);
 /////////////////////////////// ST_GameIdle ///////////////////////////////
 genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 {
+#ifdef DEBUG
 	cout << "GAME IDLE: ON I START" << endl;
+#endif // DEBUG
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->setIamPlaying(true);
 	Info->timeoutSrc->startTimer1();
@@ -23,7 +25,9 @@ genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 {
+#ifdef DEBUG
 	cout << "GAME IDLE: ON you START" << endl;
+#endif // DEBUG
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	Info->gameInterface->setYouWinning(false);
@@ -34,7 +38,9 @@ genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_GameIdle::on_RyouStart(genericEvent *ev, usefulInfo * Info)
 {
+#ifdef DEBUG
 	cout << "GAME IDLE: ON R you START" << endl;
+#endif // DEBUG	
 	genericState *ret = (genericState *) new ST_Moving();
 	Info->gameInterface->setIamPlaying(true);
 	Info->timeoutSrc->startTimer1();
@@ -46,7 +52,9 @@ genericState* ST_GameIdle::on_RyouStart(genericEvent *ev, usefulInfo * Info)
 
 genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 {
+#ifdef DEBUG
 	cout << "GAME IDLE: ON R ISTART" << endl;
+#endif // DEBUG	
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	Info->gameInterface->setYouWinning(false);
@@ -88,7 +96,9 @@ genericState* ST_GameIdle::on_Error(genericEvent* ev, usefulInfo * Info)
 /////////////////////////////// ST_Moving ///////////////////////////////
 genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
 {
+#ifdef DEBUG
 	cout << "G MOVING: ON TILE" << endl;
+#endif // DEBUG
 	genericState *ret;
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()) != NULL) &&
 		((Info->gameInterface->myMap->getTile(Info->gameInterface->getTileSelected().i, Info->gameInterface->getTileSelected().j)->getUnit()->getTeam()) == (Info->gameInterface->playerMe->getTeam())))
@@ -97,20 +107,30 @@ genericState* ST_Moving::on_Tile(genericEvent *ev, usefulInfo * Info)
 		//VER si hay que borrar tileSelected (?)
 		Info->gameInterface->moving = false;
 		ret = (genericState *) new ST_WaitingDestination();
+#ifdef DEBUG
 		cout << "ENTRO AL IF DEL ON_TILE" << endl;
+#endif // DEBUG
+
+		
 	}
 	else
 	{
 		ret = (genericState *) new ST_Moving();
 		Info->gameInterface->moving = false;
+#ifdef DEBUG
 		cout << "ENTRO AL else DEL ON_TILE (no apretre ninguna unit)" << endl;
+#endif // DEBUG
+
+		
 	}
 	return ret;
 }
 
 genericState* ST_Moving::on_BoAttack(genericEvent *ev, usefulInfo * Info)//Se entra aca al presionar boton ATTACK en pantalla. Todavia no se hizo el ataque.
 {	
+#ifdef DEBUG
 	cout << "G MOVING: ATTACK" << endl;
+#endif // DEBUG	
 	//El ataque se hace despues, una vez que ya se entro a este estado por primera vez.
 	genericState *ret = (genericState *) new ST_Attacking();
 	return ret;
@@ -118,7 +138,9 @@ genericState* ST_Moving::on_BoAttack(genericEvent *ev, usefulInfo * Info)//Se en
 
 genericState* ST_Moving::on_BoPurchase(genericEvent *ev, usefulInfo * Info) //VER
 {
+#ifdef DEBUG
 	cout << "G MOVING: ON PURCHASE" << endl;
+#endif // DEBUG	
 	genericState *ret = (genericState *) new ST_Purchasing();
 	return ret;
 }
@@ -126,7 +148,9 @@ genericState* ST_Moving::on_BoPurchase(genericEvent *ev, usefulInfo * Info) //VE
 
 genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
+#ifdef DEBUG
 	cout << "G MOVING: ON PASS" << endl;
+#endif // DEBUG	
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	setCaptureProperty(Info->gameInterface->playerYou, Info->gameInterface);
@@ -136,7 +160,9 @@ genericState* ST_Moving::on_Pass(genericEvent *ev, usefulInfo * Info) //ESTO PON
 
 genericState* ST_Moving::on_OneMinTimeout(genericEvent *ev, usefulInfo * Info) //ESTO PONERLO EN TODOS LOS PASS Y EN TODOS LOS NO MONEY
 {
+#ifdef DEBUG
 	cout << "G MOVING: ON 1 MIN TIMEOUT" << endl;
+#endif // DEBUG	
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
@@ -1736,7 +1762,7 @@ genericState* ST_WaitingPurchaseConfirmation::on_Error(genericEvent* ev, usefulI
 genericState* ST_YouMoving::on_RMove(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "ST_YouMoving:: on_RMOVE" << endl;
-	genericState *ret;
+	genericState *ret = (genericState *) new ST_YouMoving();
 
 	if (((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit()) != NULL) &&
 		(((Info->gameInterface->myMap->getTile(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j)->getUnit())->getTeam()) == (Info->gameInterface->playerYou->getTeam())))
@@ -2290,7 +2316,9 @@ void setCaptureProperty(Player* player, Game* gameInterface)
 					gameInterface->myMap->getTile(i, j)->getBuilding()->updatePath();
 					if (gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q1" || gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q2") {
 
-						gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(8);
+						cout << "Entro aca a este iffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" << endl;
+						gameInterface->myMap->getTile(i, j)->removeBuilding();
+						//gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(8);
 					}
 					else
 					{

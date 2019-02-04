@@ -83,12 +83,15 @@ int main()
 	} while (((gameFSM.getCurrentState())->getLastEvent() != END_PLAYING) &&
 		((networkingFSM.getCurrentState())->getLastEvent() != END_PLAYING));
 
-
+#ifdef DEBUG
 	cout << "FINNNNNNNNNNNNNNNNNNNNNNN" << endl;
+#endif // DEBUG
+
+	
 
 
 
-	//getchar();
+	getchar();
 
 
 	return EXIT_SUCCESS;
