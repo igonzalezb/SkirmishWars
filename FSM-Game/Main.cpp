@@ -39,7 +39,7 @@ using namespace std;
 
 int main()
 {
-	
+	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
 	if (allegroStartup())
 	{
 		al_show_native_message_box(NULL, "ERROR", "Failed to Install Allegro", "", NULL, ALLEGRO_MESSAGEBOX_ERROR);
