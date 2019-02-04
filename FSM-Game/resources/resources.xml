@@ -128,8 +128,8 @@
                         <plaincost>2</plaincost>
                         <roadcost>1</roadcost>
                         <forestcost>3</forestcost>
-                        <rivercost>0</rivercost>
-                        <hillscost>0</hillscost>
+                        <rivercost>999</rivercost>
+                        <hillscost>999</hillscost>
 
 
                         <fpnormal>
@@ -153,7 +153,7 @@
                         <name>APC</name>
                         <code>ap</code>
                         <hp>8</hp>
-                        <cost>1</cost>
+                        <cost>5</cost>
                         <mp>6</mp>
                         <defense>4</defense>
                         <symbol>star</symbol>
@@ -162,8 +162,8 @@
                         <plaincost>1</plaincost>
                         <roadcost>1</roadcost>
                         <forestcost>2</forestcost>
-                        <rivercost>0</rivercost>
-                        <hillscost>0</hillscost>
+                        <rivercost>999</rivercost>
+                        <hillscost>999</hillscost>
                         <fpnormal>
                                 <moon>0</moon>
                                 <star>0</star>
@@ -196,8 +196,8 @@
                         <plaincost>1</plaincost>
                         <roadcost>1</roadcost>
                         <forestcost>2</forestcost>
-                        <rivercost>0</rivercost>
-                        <hillscost>0</hillscost>
+                        <rivercost>999</rivercost>
+                        <hillscost>999</hillscost>
 
 
                         <fpnormal>
@@ -233,8 +233,8 @@
                         <plaincost>1</plaincost>
                         <roadcost>1</roadcost>
                         <forestcost>2</forestcost>
-                        <rivercost>0</rivercost>
-                        <hillscost>0</hillscost>
+                        <rivercost>999</rivercost>
+                        <hillscost>999</hillscost>
 
 
                         <fpnormal>
@@ -270,8 +270,8 @@
                                 <plaincost>1</plaincost>
                                 <roadcost>1</roadcost>
                                 <forestcost>2</forestcost>
-                                <rivercost>0</rivercost>
-                                <hillscost>0</hillscost>
+                                <rivercost>999</rivercost>
+                                <hillscost>999</hillscost>
                         
                         
                                 <fpnormal>
@@ -305,8 +305,8 @@
                         <plaincost>2</plaincost>
                         <roadcost>1</roadcost>
                         <forestcost>3</forestcost>
-                        <rivercost>0</rivercost>
-                        <hillscost>0</hillscost>
+                        <rivercost>999</rivercost>
+                        <hillscost>999</hillscost>
 
 
                         <fpnormal>
@@ -342,8 +342,8 @@
                                 <plaincost>1</plaincost>
                                 <roadcost>1</roadcost>
                                 <forestcost>2</forestcost>
-                                <rivercost>0</rivercost>
-                                <hillscost>0</hillscost>
+                                <rivercost>999</rivercost>
+                                <hillscost>999</hillscost>
                         
                         
                                 <fpnormal>

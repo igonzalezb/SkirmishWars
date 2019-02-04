@@ -232,11 +232,9 @@ void startTagCallback(void *userData, const XML_Char *name, const XML_Char **att
 void chararacterDataCallback(void *userData, const XML_Char *s, int len)
 {
 	Resources* myData = (Resources*)userData;
-
+	
 	string d(s, s + len);
-//	cout << d << endl;
-
-
+	
 	switch (myData->getFeedSate())
 	{
 	case B_NAME:

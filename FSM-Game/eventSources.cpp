@@ -23,7 +23,9 @@ genericEvent * GameEventSource::insertEvent()
 	switch (evCode)
 	{
 	case MAP_OK: //ESTE CREO QUE SE BORRA DE ACA
+#ifdef DEBUG
 		cout << "insert event de map ok" << endl;
+#endif //DEBUG
 		ret = (genericEvent *) new EV_MapOk();
 		break;
 	case YOU_START:
@@ -63,11 +65,15 @@ genericEvent * GameEventSource::insertEvent()
 		ret = (genericEvent *) new EV_GameOver();
 		break;
 	case QUIT:
+#ifdef DEBUG
 		cout << "insert event quit, desde game" << endl;
+#endif //_DEBUG
 		ret = (genericEvent *) new EV_Quit();
 		break;
 	case END_PLAYING:
+#ifdef DEBUG
 		cout << "insert event end playing, desde game" << endl;
+#endif //_DEBUG
 		ret = (genericEvent *) new EV_EndPlaying();
 		break;
 	case ERR_DETECTED:		//VER si este case se deja o si se saca
@@ -98,15 +104,21 @@ genericEvent * GameEventSource::insertEvent()
 		ret = (genericEvent *) new EV_GameOver();
 		break;
 	case R_QUIT:
+#ifdef DEBUG
 		cout << "insert event r quit, desde game" << endl;
+#endif //_DEBUG
 		ret = (genericEvent *) new EV_Quit();
 		break;
 	case R_ERROR_:
+#ifdef DEBUG
 		cout << "insert event r error, desde game" << endl;
+#endif //_DEBUG
 		ret = (genericEvent *) new EV_Quit();
 		break;
 	case ERROR_:
+#ifdef DEBUG
 		cout << "insert event error, desde game" << endl;
+#endif //_DEBUG
 		ret = (genericEvent *) new EV_Quit();
 		break;
 	case BO_PURCHASE:
@@ -182,12 +194,16 @@ bool GameEventSource::isThereEvent()
 	{
 		if (gameInterface->getYouWinning())
 		{
+#ifdef DEBUG
 			cout << "GENERA YOU WON" << endl;
+#endif //_DEBUG
 			evCode = YOU_WON;
 		}
 		else
 		{
+#ifdef DEBUG
 			cout << "GENERA YOU didnt win" << endl;
+#endif //_DEBUG
 			evCode = YOU_DIDNT_WIN;
 		}
 		gameInterface->setAnalyseVictory(false);
@@ -273,7 +289,9 @@ bool GameEventSource::isThereEvent()
 	}
 	if (gameInterface->getEndPlaying())
 	{
+#ifdef DEBUG
 		cout << "is there event: end playing esta en trueeee" << endl;
+#endif // DEBUG
 		evCode = END_PLAYING;
 		gameInterface->setEndPlaying(false);
 		ret = true;

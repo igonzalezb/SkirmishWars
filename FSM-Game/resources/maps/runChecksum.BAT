@@ -1,2 +1,2 @@
-mapCheckSum.exe BalancedRing.csv
+mapCheckSum.exe WaterWorld.csv
 pause

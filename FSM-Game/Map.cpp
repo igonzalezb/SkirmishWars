@@ -147,7 +147,6 @@ void Map::randomMap()
 	case 5:
 		mapName = MAP_5;
 		break;
-//////////////////////////////////////////
 	case 6:
 		mapName = MAP_6;
 		break;
@@ -162,7 +161,7 @@ void Map::randomMap()
 		break;
 	}
 
-	//mapName = MAP_1;		//VOVLER A CAMBIAR!!!!!
+	//mapName = MAP_9;		//VOVLER A CAMBIAR!!!!!
 
 #ifdef DEBUG
 	printf("%s\n", mapName.c_str());
@@ -303,10 +302,6 @@ void Map::possibleMoves(Unit * currUnit, int i, int j)
 	{
 		for (int q = 0; q < COLUMNA; q++)
 		{
-#ifdef NOFOG
-			if (false)			//ESTO ES PARA DEBUG
-
-#endif // NOFOG
 #ifndef NOFOG
 			if (getTile(p, q)->getFog())
 #endif // !NOFOG

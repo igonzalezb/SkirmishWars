@@ -245,7 +245,12 @@ void StartMenu::dispatchOption()		//HAY QUE SACAR LOS TEXT Y PONER QUE HAGA LAS 
 		break;
 	case CREDITS:
 		al_clear_to_color(al_map_rgb(0, 0, 0));
-		al_draw_text(menuFont, al_map_rgb(100, 100, 100), 0.0, 0.0, 0.0, "Credits...");
+		al_draw_text(menuFont, al_map_rgb(100, 100, 100), 0.0, 0.0, 0.0, "Credits:");
+		al_draw_text(menuFont, al_map_rgb(100, 100, 100), al_get_text_width(menuFont, "Credits:"), al_get_font_line_height(menuFont), 0.0, "Malena Muller");
+		al_draw_text(menuFont, al_map_rgb(100, 100, 100), al_get_text_width(menuFont, "Credits:"), al_get_font_line_height(menuFont)*2, 0.0, "Valentina Lago");
+		al_draw_text(menuFont, al_map_rgb(100, 100, 100), al_get_text_width(menuFont, "Credits:"), al_get_font_line_height(menuFont)*3, 0.0, "Inaki Gonzalez Bigliardi");
+		al_flip_display();
+		al_rest(3.0);
 		redraw = true;
 		break;
 	case QUIT_GAME:
@@ -256,7 +261,7 @@ void StartMenu::dispatchOption()		//HAY QUE SACAR LOS TEXT Y PONER QUE HAGA LAS 
 		break;
 	}
 
-	al_flip_display();
+	//al_flip_display();
 	
 }
 

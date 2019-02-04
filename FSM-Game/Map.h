@@ -27,13 +27,12 @@
 #define MAP_3	"resources/maps/Nascar.csv"
 #define MAP_4	"resources/maps/SanFranciscoBridge.csv"
 #define MAP_5	"resources/maps/SuperS.csv"
-///////ESTOS DE ABAJO NO ANDAN NO SE PORQUE////////////////////////////////////////////////////////////////////
 #define MAP_6	"resources/maps/WaterWorld.csv"
 #define MAP_7	"resources/maps/SnakeArena.csv"
 #define MAP_8	"resources/maps/MystPi.csv"	
 #define MAP_9	"resources/maps/BlancedCross.csv"
 
-#define MAX_MAPS	6
+#define MAX_MAPS	10
 #define CANNOT_MOVE	100
 
 //#define M_HEIGHT	al_get_display_height(display)
@@ -49,7 +48,7 @@
 
 #define FOG_IMAGE	"resources/images/fog.png"
 #define FONT_MENU	"resources/fonts/BAUHS93.otf"
-#define DICE_FACE_PATH	"resources/images/dice/%d.png"
+#define DICE_FACE_PATH	"resources/images/dice/"
 
 
 enum tabla

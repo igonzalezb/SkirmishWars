@@ -46,9 +46,12 @@ public:
 	ALLEGRO_FONT* getMenuFont();
 	//eventCode dispatchClick(int x, int y, Game *gameInfo);
 	void setBackgroundMusicOnOff(bool a);
+	bool getBackgroundMusicOnOff();
 	void setSoundEffectsOnOff(bool a);
 	void setWarningsOnOff(bool a);
 	bool getWarningsOnOff();
+
+	ALLEGRO_SAMPLE* getBackgroundSample();
 
 
 private:
@@ -63,6 +66,7 @@ private:
 	ALLEGRO_FONT *menuFont = NULL;
 	ALLEGRO_SAMPLE *beep = NULL;
 	ALLEGRO_SAMPLE *gameover = NULL;
+	ALLEGRO_SAMPLE *backgroundMusic = NULL;
 	bool purchaseWarningShown;
 	bool attackWarningShown;
 

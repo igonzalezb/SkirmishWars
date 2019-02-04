@@ -113,6 +113,8 @@ void Viewer::on_IStart(genericEvent * ev, usefulInfo * Info)
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
 	Info->gameInterface->graphics->setAttackWarningShown(false);
 	Info->gameInterface->graphics->setPurchaseWarningShown(false);
+	if(Info->gameInterface->graphics->getBackgroundMusicOnOff())
+		al_play_sample(Info->gameInterface->graphics->getBackgroundSample(), 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 }
 
 void Viewer::on_YouStart(genericEvent * ev, usefulInfo * Info)
@@ -123,6 +125,8 @@ void Viewer::on_YouStart(genericEvent * ev, usefulInfo * Info)
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
 	Info->gameInterface->graphics->setAttackWarningShown(false);
 	Info->gameInterface->graphics->setPurchaseWarningShown(false);
+	if (Info->gameInterface->graphics->getBackgroundMusicOnOff())
+		al_play_sample(Info->gameInterface->graphics->getBackgroundSample(), 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 }
 
 void Viewer::on_RyouStart(genericEvent * ev, usefulInfo * Info)
@@ -133,6 +137,8 @@ void Viewer::on_RyouStart(genericEvent * ev, usefulInfo * Info)
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
 	Info->gameInterface->graphics->setAttackWarningShown(false);
 	Info->gameInterface->graphics->setPurchaseWarningShown(false);
+	if (Info->gameInterface->graphics->getBackgroundMusicOnOff())
+		al_play_sample(Info->gameInterface->graphics->getBackgroundSample(), 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 }
 
 void Viewer::on_RIStart(genericEvent * ev, usefulInfo * Info)
@@ -143,6 +149,8 @@ void Viewer::on_RIStart(genericEvent * ev, usefulInfo * Info)
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
 	Info->gameInterface->graphics->setAttackWarningShown(false);
 	Info->gameInterface->graphics->setPurchaseWarningShown(false);
+	if (Info->gameInterface->graphics->getBackgroundMusicOnOff())
+		al_play_sample(Info->gameInterface->graphics->getBackgroundSample(), 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
 }
 
 void Viewer::on_Tile(genericEvent * ev, usefulInfo * Info)
@@ -283,14 +291,14 @@ void Viewer::on_TenSecLeft(genericEvent * ev, usefulInfo * Info)
 {	
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
 
-	Info->gameInterface->graphics->playTenSecSound();
+	//Info->gameInterface->graphics->playTenSecSound();
 }
 
 void Viewer::on_ThirtySecLeft(genericEvent * ev, usefulInfo * Info)
 {
 	Info->gameInterface->graphics->showMap(Info->gameInterface->data, Info->gameInterface->myMap, Info->gameInterface->playerMe->getMoney(), Info->gameInterface->playerMe->getTeam(), (60 - (Info->timeoutSrc->getTimeoutCount1())));
 
-	Info->gameInterface->graphics->playThirtySecSound();
+	//Info->gameInterface->graphics->playThirtySecSound();
 	
 }
 

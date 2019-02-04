@@ -52,7 +52,11 @@ MapGraphics::MapGraphics(ALLEGRO_DISPLAY * display)
 		printf("Failed to create sound game_over!\n");
 	}
 
+	backgroundMusic = al_load_sample("resources/sounds/backgroundMusic.wav");
 
+	if (!backgroundMusic) {
+		printf("Failed to create background music!\n");
+	}
 
 	for (int i = 0; i < (FILA); i++) {
 		for (int j = 0; j < (COLUMNA); j++) {
@@ -67,6 +71,8 @@ MapGraphics::MapGraphics(ALLEGRO_DISPLAY * display)
 	warningsOnOff = true;
 	soundEffectsOnOff = true;
 	backgroundMusicOnOff = true;
+
+	
 }
 
 MapGraphics::~MapGraphics()
@@ -90,8 +96,11 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, TeamNum
 	al_clear_to_color(al_map_rgb(0.0, 170.0, 0.0));
 
 	//Imprimo en pantalla el dinero y tiempo
-	if((time == 10) || (time == 30) || (time == 0))
+	if((time == 10) || (time == 30) || (time == 0)){
 		al_draw_textf(menuFont, al_color_name("red"), M_WIDTH(display) + 20, 0.0, 0.0, (("Time Left: ") + to_string(time)).c_str());
+		playThirtySecSound();
+	
+	}
 	else
 		al_draw_textf(menuFont, al_color_name("white"), M_WIDTH(display) + 20, 0.0, 0.0, (("Time Left: ") + to_string(time)).c_str());
 		
@@ -270,43 +279,48 @@ void MapGraphics::showDice(int _dice)
 	if (diceFace != NULL) { al_destroy_bitmap(diceFace); }
 
 	string _path = DICE_FACE_PATH;
+	_path += to_string(_dice);
+	_path += ".png";
 	diceFace = al_load_bitmap(_path.c_str());
 	if (!diceFace)
 	{
 		cout << "ERROR loading dice Image" << endl;
 	}
-	int dx = ((al_get_display_width(display) / 2) - (al_get_bitmap_width(diceFace) / 2));
-	int dy = ((al_get_display_height(display) / 2) - (al_get_bitmap_format(diceFace) / 2));
+	else
+	{
+		int dx = ((al_get_display_width(display) / 2) - (al_get_bitmap_width(diceFace) / 8 / 2));
+		int dy = ((al_get_display_height(display) / 2) - (al_get_bitmap_height(diceFace) / 8 / 2));
 
 
-	al_draw_bitmap(diceFace, dx, dy, 0.0);
+		al_draw_scaled_bitmap(diceFace, 0.0, 0.0, al_get_bitmap_width(diceFace), al_get_bitmap_height(diceFace), dx, dy, (al_get_display_width(display) / 8), (al_get_display_height(display) / 8), 0.0);
 
 
-	al_flip_display();
+		al_flip_display();
+	}
 
 }
 
 void MapGraphics::playTenSecSound()
 {
-	if(!soundEffectsOnOff)
+	if(soundEffectsOnOff)
 		al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 void MapGraphics::playThirtySecSound()
 {
-	if (!soundEffectsOnOff)
+	if (soundEffectsOnOff)
 		al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 void MapGraphics::playOneMinSound()
 {
-	if (!soundEffectsOnOff)
+	if (soundEffectsOnOff)
 		al_play_sample(beep, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 void MapGraphics::playGameOverSound()
 {
-	if (!soundEffectsOnOff)
+	if (soundEffectsOnOff)
 		al_play_sample(gameover, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
@@ -361,6 +375,11 @@ void MapGraphics::setBackgroundMusicOnOff(bool a)
 	backgroundMusicOnOff = a;
 }
 
+bool MapGraphics::getBackgroundMusicOnOff()
+{
+	return backgroundMusicOnOff;
+}
+
 void MapGraphics::setSoundEffectsOnOff(bool a)
 {
 	soundEffectsOnOff = a;
@@ -374,4 +393,9 @@ void MapGraphics::setWarningsOnOff(bool a)
 bool MapGraphics::getWarningsOnOff()
 {
 	return warningsOnOff;
+}
+
+ALLEGRO_SAMPLE * MapGraphics::getBackgroundSample()
+{
+	return backgroundMusic;
 }

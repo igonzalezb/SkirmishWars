@@ -7,15 +7,6 @@ eventGenerator::eventGenerator(usefulInfo* _I) :buffer(16) //VER BUFFER 16 QUE O
 
 void eventGenerator::generateEvent()
 {
-
-	/*
-	if (I->softwareSrc->isThereEvent())
-	{
-	buffer.push_back(I->softwareSrc->insertEvent());
-	}*/
-
-	//cout << "entra a generate Event " << endl;
-
 	if (I->networkSrc->isThereEvent())
 	{
 		buffer.push_back(I->networkSrc->insertEvent());

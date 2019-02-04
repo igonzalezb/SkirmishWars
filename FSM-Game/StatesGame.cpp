@@ -16,7 +16,8 @@ genericState* ST_GameIdle::on_IStart(genericEvent *ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(true);
 	Info->timeoutSrc->startTimer1();
 	Info->gameInterface->setYouWinning(false);
-
+	Info->gameInterface->playerMe->setMoney(5);
+	Info->gameInterface->playerYou->setMoney(0);
 	return ret;
 }
 
@@ -26,7 +27,8 @@ genericState* ST_GameIdle::on_YouStart(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	Info->gameInterface->setYouWinning(false);
-
+	Info->gameInterface->playerYou->setMoney(5);
+	Info->gameInterface->playerMe->setMoney(0);
 	return ret;
 }
 
@@ -37,6 +39,8 @@ genericState* ST_GameIdle::on_RyouStart(genericEvent *ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(true);
 	Info->timeoutSrc->startTimer1();
 	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->playerMe->setMoney(5);
+	Info->gameInterface->playerYou->setMoney(0);
 	return ret;
 }
 
@@ -46,6 +50,8 @@ genericState* ST_GameIdle::on_RIStart(genericEvent *ev, usefulInfo * Info)
 	genericState *ret = (genericState *) new ST_YouMoving();
 	Info->gameInterface->setIamPlaying(false);
 	Info->gameInterface->setYouWinning(false);
+	Info->gameInterface->playerYou->setMoney(5);
+	Info->gameInterface->playerMe->setMoney(0);
 	return ret;
 }
 
@@ -1412,6 +1418,7 @@ genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulIn
 	if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getUnit()) != NULL)
 	{
 		Info->gameInterface->setDie(rand() % 6 + 1); //VERIFICAR si esto tira un valor random entre 1 y 6.
+		Info->gameInterface->graphics->showDice(Info->gameInterface->getDie());
 		Info->gameInterface->attack();
 		Info->timeoutSrc->startTimer1();
 	}
@@ -1820,7 +1827,9 @@ genericState* ST_YouMoving::on_RAttack(genericEvent *ev, usefulInfo * Info)
 	{
 		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getUnit()) != NULL)
 		{
+			Info->gameInterface->graphics->showDice(Info->gameInterface->getDie());
 			Info->gameInterface->attack();
+			
 		}
 		//else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getBuilding()) != NULL)
 		//{
@@ -1933,7 +1942,9 @@ genericState* ST_YouAttacking::on_RAttack(genericEvent *ev, usefulInfo * Info)
 	{
 		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getUnit()) != NULL)
 		{
+			Info->gameInterface->graphics->showDice(Info->gameInterface->getDie());
 			Info->gameInterface->attack();
+			
 		}
 		//else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getBuilding()) != NULL)
 		//{
