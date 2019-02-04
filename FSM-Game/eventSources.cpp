@@ -298,12 +298,14 @@ bool GameEventSource::isThereEvent()
 	}
 	if (gameInterface->error)
 	{
+		cout << "is there event: error, desde game" << endl;
 		evCode = ERROR_;
 		gameInterface->error = false; //Ver
 		ret = true;
 	}
 	if (gameInterface->quit)
 	{
+		cout << "is there event: quit, desde game" << endl;
 		evCode = QUIT;
 		gameInterface->quit = false; //Ver
 		ret = true;
@@ -363,169 +365,182 @@ bool NetworkEventSource::isThereEvent()
 	else if (networkInterface->receivePackage())	//verifica si se recibio algo
 	{
 #ifdef DEBUG
-	//	cout << "entra 2 " << endl;
+		//cout << "OP CODE RECIBIDO:  "<< (int)(networkInterface->getInputPackage()[0]) << endl;
+		cout << "OP CODE RECIBIDO: " << (int)(networkInterface->getInputPackage()[0]) << " VS OP CODE QUIT: " << OP_QUIT << endl;
+
 #endif // DEBUG
-		switch (networkInterface->getInputPackage()[0])	//segun el tipo de paquete devuelvo el tipo de evento
+		//CASTEO LO DE ABAJO A CHAR!!!
+
+		if (networkInterface->getInputPackage()[0] == (-1))
 		{
-			
-		case OP_ACK: //sin campo de datos
-			evCode = R_ACK;
-			ret = true;
-			break;
-		case OP_NAME://sin campo de datos
-			evCode = R_NAME;
-			ret = true;
-			break;
-		case OP_NAME_IS: //guarda en r_name el nombre recibido (del oponente) por networking
-			evCode = R_NAME_IS;
-			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
-			i = static_cast<int>(aux[1]);
-			aux.erase(aux.begin());
-			aux.erase(aux.begin());
-			r_name.clear();
-			r_name.insert(r_name.begin(), aux.begin(), aux.end());
+				evCode = R_QUIT;
+				cout << "is there event desde networking: r quit CON EL IFFFF" << endl;
+				ret = true;
+		}
+		else
+		{
+			switch (networkInterface->getInputPackage()[0])	//segun el tipo de paquete devuelvo el tipo de evento
+			{
+			case OP_ACK: //sin campo de datos
+				evCode = R_ACK;
+				ret = true;
+				break;
+			case OP_NAME://sin campo de datos
+				evCode = R_NAME;
+				ret = true;
+				break;
+			case OP_NAME_IS: //guarda en r_name el nombre recibido (del oponente) por networking
+				evCode = R_NAME_IS;
+				aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
+				i = static_cast<int>(aux[1]);
+				aux.erase(aux.begin());
+				aux.erase(aux.begin());
+				r_name.clear();
+				r_name.insert(r_name.begin(), aux.begin(), aux.end());
 
-			//lo pasamos a string y lo guardamos en el nombre del player:
-			for (char c : r_name) {
-				r_name_string.push_back(c);
-			}
-			gameInterface->playerYou->setName(r_name_string);
+				//lo pasamos a string y lo guardamos en el nombre del player:
+				for (char c : r_name) {
+					r_name_string.push_back(c);
+				}
+				gameInterface->playerYou->setName(r_name_string);
 #ifdef DEBUG
-			cout << "Opponent's Name: " << gameInterface->playerYou->getName() << endl;
+				cout << "Opponent's Name: " << gameInterface->playerYou->getName() << endl;
 #endif // DEBUG			
-			ret = true;
-			break;
-		case OP_MAP_IS:
-			evCode = R_MAP_IS;
+				ret = true;
+				break;
+			case OP_MAP_IS:
+				evCode = R_MAP_IS;
 #ifdef	DEBUG
-			cout << "GENERA EL EVENTO MAP IS" << endl;
+				cout << "GENERA EL EVENTO MAP IS" << endl;
 #endif	//DEBUG
-			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
-			i = static_cast<int>(aux[1]);
-			aux.erase(aux.begin());
-			aux.erase(aux.begin());
-			r_map.clear();
-			//r_map.insert(r_map.begin(), aux.begin(), aux.end());
-			r_map.insert(r_map.begin(), aux.begin(), aux.end());
-			//lo pasamos a string y lo guardamos en el nombre del player:
-			r_map_string.clear();
-			for (char c : r_map) {
-				r_map_string.push_back(c);
-			}
-			temp = r_map_string.back(); //el último char es el checksum
-			gameInterface->myMap->setChecksumReceived(temp);
-			r_map_string.pop_back();
-			gameInterface->myMap->setMapName(r_map_string);
-			gameInterface->myMap->generateTilesArray(gameInterface->data->getBuildingList(), gameInterface->data->getTerrainList(), gameInterface->data->getUnitList());
-			ret = true;
-			break;
-		case OP_YOU_START: //sin campo de datos
-			evCode = R_YOU_START;
-			ret = true;
-			break;
-		case OP_I_START: //sin campo de datos
-			evCode = R_I_START;
-			ret = true;
-			break;
-		case OP_PASS: //sin campo de datos
-			evCode = R_PASS;
-			ret = true;
-			break;
-		case OP_MOVE:
-			evCode = R_MOVE;
-			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
+				aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
+				i = static_cast<int>(aux[1]);
+				aux.erase(aux.begin());
+				aux.erase(aux.begin());
+				r_map.clear();
+				//r_map.insert(r_map.begin(), aux.begin(), aux.end());
+				r_map.insert(r_map.begin(), aux.begin(), aux.end());
+				//lo pasamos a string y lo guardamos en el nombre del player:
+				r_map_string.clear();
+				for (char c : r_map) {
+					r_map_string.push_back(c);
+				}
+				temp = r_map_string.back(); //el último char es el checksum
+				gameInterface->myMap->setChecksumReceived(temp);
+				r_map_string.pop_back();
+				gameInterface->myMap->setMapName(r_map_string);
+				gameInterface->myMap->generateTilesArray(gameInterface->data->getBuildingList(), gameInterface->data->getTerrainList(), gameInterface->data->getUnitList());
+				ret = true;
+				break;
+			case OP_YOU_START: //sin campo de datos
+				evCode = R_YOU_START;
+				ret = true;
+				break;
+			case OP_I_START: //sin campo de datos
+				evCode = R_I_START;
+				ret = true;
+				break;
+			case OP_PASS: //sin campo de datos
+				evCode = R_PASS;
+				ret = true;
+				break;
+			case OP_MOVE:
+				evCode = R_MOVE;
+				aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 #ifdef DEBUG
-			cout << "Attacker: i = " << (int)aux[1] << " j= " << (int)(aux[2] - 0x41) << endl;
-			cout << "Defender: i = " << (int)aux[3] << " j= " << (int)(aux[4] - 0x41) << endl;
+				cout << "Attacker: i = " << (int)aux[1] << " j= " << (int)(aux[2] - 0x41) << endl;
+				cout << "Defender: i = " << (int)aux[3] << " j= " << (int)(aux[4] - 0x41) << endl;
 #endif // DEBUG
-			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-0X41));
-			gameInterface->setDefender((int)aux[3], (int)(aux[4]-0X41));
-			ret = true;
-			break;
-		case OP_PURCHASE:
-			evCode = R_PURCHASE;
-			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
-			r_unidad.clear();
-			r_unidad.insert(r_unidad.begin(), aux.begin() + 1, aux.begin() + 3); //para que meta lo que hay en pos 1 y 2 de aux, se pone hasta +3 porque no incluye esa, sino que hasta la anterior.
-			//r_fila_de = aux[1];
-			//r_col_de = aux[2];
-			gameInterface->setDefender((int)aux[3], (int)(aux[4]-0X41));
-		
-			//lo pasamos a string y lo guardamos en el tipo de newUnit adentro de networking:
-			r_unidad_string.clear();
-			for (char c : r_unidad) {
-				r_unidad_string.push_back(c);
-			}
+				gameInterface->setAttacker((int)aux[1], (int)(aux[2] - 0X41));
+				gameInterface->setDefender((int)aux[3], (int)(aux[4] - 0X41));
+				ret = true;
+				break;
+			case OP_PURCHASE:
+				evCode = R_PURCHASE;
+				aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
+				r_unidad.clear();
+				r_unidad.insert(r_unidad.begin(), aux.begin() + 1, aux.begin() + 3); //para que meta lo que hay en pos 1 y 2 de aux, se pone hasta +3 porque no incluye esa, sino que hasta la anterior.
+				//r_fila_de = aux[1];
+				//r_col_de = aux[2];
+				gameInterface->setDefender((int)aux[3], (int)(aux[4] - 0X41));
+
+				//lo pasamos a string y lo guardamos en el tipo de newUnit adentro de networking:
+				r_unidad_string.clear();
+				for (char c : r_unidad) {
+					r_unidad_string.push_back(c);
+				}
 #ifdef DEBUG
-			cout << "UNIT QUE COMPARA EL ITERADOR: " << r_unidad_string.c_str() << endl;
+				cout << "UNIT QUE COMPARA EL ITERADOR: " << r_unidad_string.c_str() << endl;
 #endif // DEBUG
-			for (bool k = true; k && (it4 != gameInterface->data->getUnitList().end()); ++it4) {
+				for (bool k = true; k && (it4 != gameInterface->data->getUnitList().end()); ++it4) {
 
 #ifdef DEBUG
-			cout << "lista con it4: " << it4->getType() << endl;
+					cout << "lista con it4: " << it4->getType() << endl;
 #endif // DEBUG
-				if (strcmp(it4->getType().c_str(), r_unidad_string.c_str()) == false) {
-					
-					k = false;
-					Unit *currUnit = new Unit(it4);
-					currUnit->setTeam(gameInterface->playerYou->getTeam());
-					gameInterface->setNewUnit(currUnit);
+					if (strcmp(it4->getType().c_str(), r_unidad_string.c_str()) == false) {
+
+						k = false;
+						Unit *currUnit = new Unit(it4);
+						currUnit->setTeam(gameInterface->playerYou->getTeam());
+						gameInterface->setNewUnit(currUnit);
 #ifdef DEBUG
-					cout << "ENTRA AL IFFFFFFFFFF DEL ITERATOR, unidad cargada en New Unit: " << gameInterface->getNewUnit()->getName() << endl;
+						cout << "ENTRA AL IFFFFFFFFFF DEL ITERATOR, unidad cargada en New Unit: " << gameInterface->getNewUnit()->getName() << endl;
 
 #endif // DEBUG
 					}
+				}
+#ifdef DEBUG
+				cout << "HOLA! coordenada DEFENDER :  (I= " << (int)aux[1] << "; J=" << (int)(aux[2] - 0X41) << " )" << endl;
+				cout << "UNIDAD COMPRADA " << gameInterface->getNewUnit()->getName() << endl;
+
+#endif // DEBUG
+
+				ret = true;
+				break;
+			case OP_ATTACK:
+				evCode = R_ATTACK;
+				aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
+				/*
+				r_fila_or = aux[1];
+				r_col_or = aux[2];
+				r_fila_de = aux[3];
+				r_col_de = aux[4];
+				r_dado = aux[5];
+				*/
+
+
+				gameInterface->setDie((int)aux[5]);
+				gameInterface->setAttacker((int)aux[1], (int)(aux[2] - 0X41));
+				gameInterface->setDefender((int)aux[3], (int)(aux[4] - 0X41));
+#ifdef DEBUG
+				cout << "Se arma eventio attack" << endl;
+#endif // DEBUG
+				ret = true;
+				break;
+			case OP_YOU_WON: //sin campo de datos
+				evCode = R_YOU_WON;
+				ret = true;
+				break;
+			case OP_PLAY_AGAIN: //sin campo de datos
+				evCode = R_PLAY_AGAIN;
+				ret = true;
+				break;
+			case OP_GAME_OVER: //sin campo de datos
+				evCode = R_GAME_OVER;
+				ret = true;
+				break;
+			case OP_ERROR: //sin campo de datos
+				evCode = R_ERROR_;
+				ret = true;
+				break;
+			case OP_QUIT: //sin campo de datos
+				evCode = R_QUIT;
+				cout << "is there event desde networking: r quit" << endl;
+				ret = true;
+				break;
+			default:
+				break;
 			}
-#ifdef DEBUG
-			cout << "HOLA! coordenada DEFENDER :  (I= " << (int)aux[1] << "; J=" << (int)(aux[2] - 0X41) << " )" << endl;
-			cout << "UNIDAD COMPRADA " << gameInterface->getNewUnit()->getName() << endl;
-
-#endif // DEBUG
-
-			ret = true;
-			break;
-		case OP_ATTACK:
-			evCode = R_ATTACK;
-			aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
-			/*
-			r_fila_or = aux[1];
-			r_col_or = aux[2];
-			r_fila_de = aux[3];
-			r_col_de = aux[4];
-			r_dado = aux[5];
-			*/
-
-			
-			gameInterface->setDie((int)aux[5]);
-			gameInterface->setAttacker((int)aux[1], (int)(aux[2]-0X41));
-			gameInterface->setDefender((int)aux[3], (int)(aux[4]-0X41));
-#ifdef DEBUG
-			cout << "Se arma eventio attack" << endl;
-#endif // DEBUG
-			ret = true;
-			break;
-		case OP_YOU_WON: //sin campo de datos
-			evCode = R_YOU_WON;
-			ret = true;
-			break;
-		case OP_PLAY_AGAIN: //sin campo de datos
-			evCode = R_PLAY_AGAIN;
-			ret = true;
-			break;
-		case OP_GAME_OVER: //sin campo de datos
-			evCode = R_GAME_OVER;
-			ret = true;
-			break;
-		case OP_ERROR: //sin campo de datos
-			evCode = R_ERROR_;
-			ret = true;
-			break;
-		case OP_QUIT: //sin campo de datos
-			evCode = R_QUIT;
-			ret = true;
-			break;
-		default:
-			break;
 		}
 	}
 	return ret;

@@ -27,14 +27,12 @@ class Game
 {
 public:
 	Game(ALLEGRO_DISPLAY* display);
-	~Game(); //Ver cuando llamarlo
+	~Game(); 
 	Player* playerMe;
 	Player* playerYou;
 	Map* myMap;
 	Resources* data;
 	MapGraphics* graphics;
-	//coordinates  attacker; //POR AHORA ESTAS DOS LINEAS ESTAN EN MAP.H. VER SI QUEDAN AHI O SI SE SACAN Y SE PONEN ACA O DONDE!
-	//coordinates defender;
 	
 	void move();
 	void attack();
@@ -43,16 +41,11 @@ public:
 	void setAttacker(int i,int j);
 	void setDefender(coordenadas newDefender);
 	void setDefender(int i, int j);
-	//void setTileSelected(coordenadas newTileSelected);
 	void setTileSelected(int i, int j);
 	coordenadas getAttacker();
 	coordenadas getDefender();
 	coordenadas getTileSelected();
 	void purchase(Player* player);
-	//void setOrigen(coordenadas origen); //USAMOS ATTACKER Y DEFENDER PARA TODO
-	//void setDestino(coordenadas destino);
-	//coordenadas getOrigen();
-	//coordenadas getDestino();
 	void generateDefenseModifiersTable();
 	void setYouWinning(bool winning_);
 	bool didHeWin();
@@ -97,8 +90,6 @@ private:
 	coordenadas defender;
 	coordenadas tileSelected;
 	int die;
-	//coordenadas origen;
-	//coordenadas destino;
 	bool youWinning;
 	csvFile *defenseModifiers;
 	modifiers tableMatrix[14][5];

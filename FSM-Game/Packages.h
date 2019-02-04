@@ -12,20 +12,12 @@ using namespace std;
 
 typedef char MYBYTE;
 
-/*
-typedef enum {
-	ACK = 0x01, NAME = 0x10, NAME_IS = 0x11, MAP_IS = 0x12,
-	YOU_START = 0x20, I_START = 0x21, PASS = 0x30, MOVE = 0x31,
-	PURCHASE = 0x32, ATTACK = 0X33, YOU_WON = 0x40, PLAY_AGAIN = 0x50,
-	GAME_OVER = 0x51, ERROR_ = 0xFE, QUIT = 0xFF
-}opCodes; //VER ERROR (lo cambie por ERROR_)
-*/
 typedef enum {
 	OP_ACK = 0x01, OP_NAME = 0x10, OP_NAME_IS = 0x11, OP_MAP_IS = 0x12,
 	OP_YOU_START = 0x20, OP_I_START = 0x21, OP_PASS = 0x30, OP_MOVE = 0x31,
 	OP_PURCHASE = 0x32, OP_ATTACK = 0X33, OP_YOU_WON = 0x40, OP_PLAY_AGAIN = 0x50,
 	OP_GAME_OVER = 0x51, OP_ERROR = 0xFE, OP_QUIT = 0xFF
-}opCodes; //CAMBIO EL OP_PASS = 0x30 POR 0x01 para probar. el ack que era 0x01 ahora le puse 0x30
+}opCodes; 
 
 class genericPackage
 {
@@ -166,6 +158,8 @@ public:
 	Quit() { code = OP_QUIT; }
 	void setPackage();
 };
+
+
 
 
 #endif // !PACKAGES_H

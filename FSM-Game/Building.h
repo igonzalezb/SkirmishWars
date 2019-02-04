@@ -27,14 +27,11 @@ private:
 
 public:
 	Building();
-	//Building(string cp, string name, string path, string type, string team);
 	Building(int cp, string name, string path, string type, string team);
 	~Building();
-	//void setCp(string cp);
 	void setCp(int cp);
 	void setPath(string path);
 	void setName(string name);
-	//string getCp();
 	int getCp();
 	string getPath();
 	string getName();

@@ -4,15 +4,6 @@
 //#include "genericFSM.h"
 #include "StatesGame.h"
 
-//class FSMGame :public genericFSM 
-//{
-//public:
-//	FSMGame() :genericFSM() {};
-//	~FSMGame();
-//	genericState * getCurrentState();
-//	void dispatch(genericEvent * ev, usefulInfo *Info);	//llama a la funcion del estado al que apunta current state que repsonde al evento recibido	
-//};
-
 class FSMGame
 {
 public:

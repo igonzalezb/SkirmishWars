@@ -20,7 +20,6 @@ public:
 	virtual genericState* on_NoEv(genericEvent* ev) { return nullptr; }
 
 	virtual genericState* on_WaitingConnection(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	//virtual genericState* on_Connected(genericEvent* ev, usefulInfo * Info) { return nullptr; } //Este creo que se borra
 
 	virtual genericState* on_ConnectedAsServer(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_ConnectedAsClient(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -29,7 +28,6 @@ public:
 	virtual genericState* on_MapSelected(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	virtual genericState* on_WaitingMapIs(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	//virtual genericState* on_RMapIs(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	virtual genericState* on_WaitingMapConfirmation(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_MapOk(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -41,7 +39,6 @@ public:
 	virtual genericState* on_YouStart(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	
-	//virtual genericState* on_Iquit(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Move(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Purchase(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Attack(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -57,12 +54,8 @@ public:
 
 	virtual genericState* on_NoMoney(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	
-	//virtual genericState* on_Timeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_TwoHalfMinTimeout(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	//virtual genericState* on_TenSecLeft(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	//virtual genericState* on_ThirtySecLeft(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	//virtual genericState* on_ConnectionFailed(genericEvent* ev, usefulInfo * Info) { return nullptr; } //VER SI QUEDA
 
 	virtual genericState* on_Rack(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Rname(genericEvent* ev, usefulInfo * Info) { return nullptr; }
@@ -87,14 +80,9 @@ public:
 	virtual genericState* on_Error(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Quit(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	
-	//virtual genericState* on_RTimeout(genericEvent* ev, usefulInfo * Info) { return nullptr; } //se va a recibir error o algo asi. VER BIEN
-
 
 	void setLastEvent(eventCode lastEvent) { this->lastEvent = lastEvent; }   //setter
 	eventCode getLastEvent() { return lastEvent; }    //getter de last event
-												  //std::string getSelectedFile() { return fileToTransfer; }
-													  //void setFileToTransfer(std::string selectedFile) { this->fileToTransfer = selectedFile; }
-
 protected:
 	eventCode lastEvent;
 };

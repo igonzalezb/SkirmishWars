@@ -222,6 +222,7 @@ void GameOver::setPackage()
 void Error_::setPackage()
 {
 	//std::vector<char> package;
+	cout << "envio paquete de error!!!!!!!!!" << endl;
 	package.clear();
 	package.push_back((MYBYTE)OP_ERROR);			//byte 1: encabezado
 }

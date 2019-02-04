@@ -111,8 +111,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case END_PLAYING: //ver si queda
 			cout << "dispatch de networking en end playing" << endl;
-
-			newState = currentState->on_Pass(ev, Info); //cualqueir cosa, para probarrrrrrrrrrrc
+			newState = currentState->on_Quit(ev, Info); //cualqueir cosa, para probarrrrrrrrrrrc
 			break;
 		case QUIT: //ver si queda
 			newState = currentState->on_Quit(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
@@ -130,6 +129,10 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			delete currentState;
 			currentState = newState;
 			currentState->setLastEvent(ev->getEventType()); //PROBANDO PARA END PLAYING
+			if (ev->getEventType() == END_PLAYING)
+			{
+				cout << "GAME: ev getEventType = END_PLAYING!!!!!!!!!!!!!!!" << endl;
+			}
 		}
 	}
 }
