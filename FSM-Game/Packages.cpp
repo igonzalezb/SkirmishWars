@@ -200,6 +200,7 @@ void Pass::setPackage()
 
 void YouWon::setPackage()
 {
+	cout << "se envioo el paquete you won" << endl;
 	//std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_YOU_WON);			//byte 1: encabezado
@@ -207,6 +208,7 @@ void YouWon::setPackage()
 
 void PlayAgain::setPackage()
 {
+	cout << "se envioo el paquete play again" << endl;
 	//std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_PLAY_AGAIN);		//byte 1: encabezado
@@ -214,6 +216,7 @@ void PlayAgain::setPackage()
 
 void GameOver::setPackage()
 {
+	cout << "se envioo el paquete gameover" << endl;
 	//std::vector<char> package;
 	package.clear();
 	package.push_back((MYBYTE)OP_GAME_OVER);		//byte 1: encabezado

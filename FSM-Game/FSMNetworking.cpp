@@ -58,9 +58,11 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_RYouWon(ev, Info);
 			break;
 		case R_PLAY_AGAIN:
+			cout << "dispatch de r play again en networking" << endl;
 			newState = currentState->on_RplayAgain(ev, Info);
 			break;
 		case R_GAME_OVER:
+			cout << "dispatch de r game over en networking" << endl;
 			newState = currentState->on_RgameOver(ev, Info);
 			break;
 		case R_ERROR_:
@@ -139,6 +141,12 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case ERROR_: //ver si queda
 			newState = currentState->on_Error(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+			break;
+		case PLAY_AGAIN: //ver si queda
+			newState = currentState->on_PlayAgain(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+			break;
+		case GAME_OVER: //ver si queda
+			newState = currentState->on_GameOver(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
 			break;
 		default:
 			break;

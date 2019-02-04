@@ -26,6 +26,7 @@ Game::Game(ALLEGRO_DISPLAY* display)
 	youWinning = false;
 	IWantToPlayAgain = false;
 	youWantToPlayAgain = false;
+	analysePlayAgain = false;
 	//myMap->generateTilesArray(data->getBuildingList(), data->getTerrainList(), data->getUnitList());
 	
 	
@@ -274,7 +275,7 @@ bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE
 				units++;
 			}
 			if ((myMap->getTile(i,j)->getBuilding()!=NULL)&&
-				(((myMap->getTile(i, j)->getBuilding()->getType()).compare("q1")) || ((myMap->getTile(i, j)->getBuilding()->getType()).compare("q2"))) &&
+				((((myMap->getTile(i, j)->getBuilding()->getType()).compare("q") == 0) || (myMap->getTile(i, j)->getBuilding()->getType()).compare("q1")==0) || ((myMap->getTile(i, j)->getBuilding()->getType()).compare("q2")==0)) &&
 				((myMap->getTile(i,j)->getBuilding()->getTeam())==playerMe->getTeam()))
 			{
 				hq++;
@@ -282,14 +283,14 @@ bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE
 		}
 	}
 #ifdef DEBUG
-	cout << "Cantidad de HQ: " << hq<< endl;
-	cout << "Cantidad de untis: " << units << endl;
+	cout << "Cantidad de HQ: " << hq << endl;
+	cout << "Cantidad de units: " << units << endl;
 #endif // DEBUG
 
 	if((units == 0)||(hq == 0))		//Si no tengo mas unidades o no tengo mas HQ, significa que el otro gana.
 	{
 #ifdef DEBUG
-		cout << "Entro al if de didhewin" << endl;
+		cout << "Entro al if de he won" << endl;
 #endif // DEBUG
 
 		youWinning = true;
@@ -430,6 +431,16 @@ void Game::setYouWantToPlayAgain(bool playAgain)
 bool Game::getYouWantToPlayAgain()
 {
 	return youWantToPlayAgain;
+}
+
+void Game::setAnalysePlayAgain(bool yes_no)
+{
+	this->analysePlayAgain = yes_no;
+}
+
+bool Game::getAnalysePlayAgain()
+{
+	return analysePlayAgain;
 }
 
 void Game::setAnalyseVictory(bool analyse)

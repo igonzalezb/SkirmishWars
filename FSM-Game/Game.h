@@ -76,6 +76,8 @@ public:
 	bool getIWantToPlayAgain();
 	void setYouWantToPlayAgain(bool playAgain);
 	bool getYouWantToPlayAgain();
+	void setAnalysePlayAgain(bool yes_no);
+	bool getAnalysePlayAgain();
 
 	void setAnalyseVictory(bool analyse);
 	bool getAnalyseVictory();
@@ -99,6 +101,6 @@ private:
 	bool IWantToPlayAgain;
 	bool youWantToPlayAgain;
 	bool analyseVictory;
-
+	bool analysePlayAgain;
 };
 //#endif // !GAME_H

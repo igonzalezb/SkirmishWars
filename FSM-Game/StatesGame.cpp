@@ -1303,6 +1303,9 @@ genericState* ST_Attacking::on_RYouWon(genericEvent *ev, usefulInfo * Info) //ES
 	cout << "G ATTACKING: ON r you won" << endl;
 	genericState *ret = (genericState *) new ST_G_WaitingPlayingAgainConfirmation();
 	Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
+	
+	Info->gameInterface->setAnalysePlayAgain(true);
+	
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
@@ -1402,6 +1405,9 @@ genericState* ST_WaitingDefender::on_RYouWon(genericEvent *ev, usefulInfo * Info
 	cout << "G waiting defender: ON r you won" << endl;
 	genericState *ret = (genericState *) new ST_G_WaitingPlayingAgainConfirmation();
 	Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
+	
+	Info->gameInterface->setAnalysePlayAgain(true);
+	
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
@@ -1484,6 +1490,9 @@ genericState* ST_WaitingAttackConfirmation::on_RYouWon(genericEvent *ev, usefulI
 	cout << "G waiting attack confirm: ON r you won" << endl;
 	genericState *ret = (genericState *) new ST_G_WaitingPlayingAgainConfirmation();
 	Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
+	
+	Info->gameInterface->setAnalysePlayAgain(true);
+	
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
@@ -1909,6 +1918,9 @@ genericState* ST_YouMoving::on_RYouWon(genericEvent *ev, usefulInfo * Info) //ES
 	cout << "G you movinG: ON r you won" << endl;
 	genericState *ret = (genericState *) new ST_G_WaitingPlayingAgainConfirmation();
 	Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
+
+	Info->gameInterface->setAnalysePlayAgain(true);
+	
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer1(); //CHEQUEAR
 	return ret;
@@ -2081,7 +2093,7 @@ genericState* ST_YouPurchasing::on_RPass(genericEvent *ev, usefulInfo * Info)
 	//Info->gameInterface->setIamPlaying(true);
 	genericState *ret = (genericState *) new ST_AnalysingVictoryHQ();
 	setCaptureProperty(Info->gameInterface->playerMe, Info->gameInterface);
-	Info->gameInterface->didHeWin();
+	//Info->gameInterface->didHeWin();
 	Info->gameInterface->setAnalyseVictory(true); //agrego esto!!!!!!!!!!!!
 	Info->timeoutSrc->startTimer1(); //CHEQUEAR
 	return ret;
@@ -2314,11 +2326,11 @@ void setCaptureProperty(Player* player, Game* gameInterface)
 					//en el tile donde estaba antes el building del oponente, poner el mismo building pero de mi equipo.
 					gameInterface->myMap->getTile(i, j)->getBuilding()->setTeam(player->getTeam());
 					gameInterface->myMap->getTile(i, j)->getBuilding()->updatePath();
-					if (gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q1" || gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q2") {
+					if (gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q" || gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q1" || gameInterface->myMap->getTile(i, j)->getBuilding()->getType() == "q2") {
 
 						cout << "Entro aca a este iffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" << endl;
-						gameInterface->myMap->getTile(i, j)->removeBuilding();
-						//gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(8);
+						//gameInterface->myMap->getTile(i, j)->removeBuilding();
+						gameInterface->myMap->getTile(i, j)->getBuilding()->setCp(8);
 					}
 					else
 					{

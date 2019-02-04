@@ -333,7 +333,8 @@ genericState* ST_IPlay::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
 	cout << "N ST I PLAY::onIattack" << endl;
 	//genericState *ret = (genericState *) new ST_WaitingCounterAttack(); //SACAMOS EL COUNTERATTACK
-	genericState *ret = (genericState *) new ST_WaitingPlayAck();
+	genericState *ret = (genericState *) new ST_WaitingPlayAck();		//SI NO FUNCIONA COUNTER ATTACK, DESCOMENTAR ESTO Y COMETNAR LA DE ABAJO!!!!!!!!
+
 	Info->nextPkg = new Attack(Info->gameInterface->getAttacker().i, Info->gameInterface->getAttacker().j, Info->gameInterface->getDefender().i, Info->gameInterface->getDefender().j, Info->gameInterface->getDie());
 	Info->networkInterface->sendPackage(Info->nextPkg);	//Envio paquete ATTACK
 	Info->timeoutSrc->startTimer2();
@@ -379,6 +380,7 @@ genericState* ST_IPlay::on_RYouWon(genericEvent *ev, usefulInfo * Info) //NO FAL
 	cout << "I Play: on R YOU WON" << endl;
 	genericState *ret = (genericState *) new ST_WaitingPlayingAgainConfirmation();
 	Info->gameInterface->setIamPlaying(true);
+	//Info->gameInterface->setAnalysePlayAgain(true);
 	return ret;
 }
 
@@ -431,6 +433,21 @@ genericState* ST_IPlay::on_Error(genericEvent* ev, usefulInfo * Info)
 	return ret;
 }
 
+genericState* ST_IPlay::on_YouWon(genericEvent* ev, usefulInfo * Info)
+{
+	cout << "i play: on you won" << endl;
+	genericState *ret = (genericState *) new ST_WaitingYouWonResponse(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new YouWon();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+
+	//Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+
+
 /////////////////////////////// ST_WaitingPlayAck ///////////////////////////////
 
 genericState* ST_WaitingPlayAck::on_Rack(genericEvent *ev, usefulInfo * Info)
@@ -447,6 +464,8 @@ genericState* ST_WaitingPlayAck::on_TwoHalfMinTimeout(genericEvent *ev, usefulIn
 	cout << "N WAITING PLAY ACK: ON 2,5 MIN TIMEOUT" << endl;
 	genericState *ret = (genericState *) new ST_WaitingConnection(); //VER ESTADO!! se perdio comunicacion
 	Info->gameInterface->setIamPlaying(false);
+	Info->nextPkg = new Quit();
+	Info->networkInterface->sendPackage(Info->nextPkg);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
 	Info->gameInterface->setEndPlaying(true);
 	return ret;
@@ -457,6 +476,7 @@ genericState* ST_WaitingPlayAck::on_RYouWon(genericEvent *ev, usefulInfo * Info)
 	cout << "waiting Play ack: on R YOU WON" << endl;
 	genericState *ret = (genericState *) new ST_WaitingPlayingAgainConfirmation();
 	Info->gameInterface->setIamPlaying(true);
+	//Info->gameInterface->setAnalysePlayAgain(true);
 	return ret;
 }
 
@@ -505,6 +525,19 @@ genericState* ST_WaitingPlayAck::on_Error(genericEvent* ev, usefulInfo * Info)
 	Info->gameInterface->setIamPlaying(false);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
 	Info->gameInterface->setEndPlaying(true);
+	return ret;
+}
+
+genericState* ST_WaitingPlayAck::on_YouWon(genericEvent* ev, usefulInfo * Info)
+{
+	cout << "waiting play ack: on you won" << endl;
+	genericState *ret = (genericState *) new ST_WaitingYouWonResponse(); //VER ESTADO!! se perdio comunicacion
+	Info->nextPkg = new YouWon();
+	Info->networkInterface->sendPackage(Info->nextPkg);
+	Info->gameInterface->setIamPlaying(false);
+	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
+
+					//Info->gameInterface->setEndPlaying(true);
 	return ret;
 }
 
@@ -559,6 +592,8 @@ genericState* ST_WaitingAPlay::on_TwoHalfMinTimeout(genericEvent *ev, usefulInfo
 	cout << "N WAITING a PLAY: ON 2,5 MIN TIMEOUT" << endl;
 	genericState *ret = (genericState *) new ST_WaitingConnection(); //VER ESTADO!! se perdio comunicacion
 	Info->gameInterface->setIamPlaying(false);
+	Info->nextPkg = new Quit();
+	Info->networkInterface->sendPackage(Info->nextPkg);
 	Info->timeoutSrc->stopTimer2(); //CHEQUEAR
 	Info->gameInterface->setEndPlaying(true);
 	return ret;
@@ -569,12 +604,14 @@ genericState* ST_WaitingAPlay::on_RYouWon(genericEvent *ev, usefulInfo * Info) /
 	cout << "waitingAPlay: on R YOU WON" << endl;
 	genericState *ret = (genericState *) new ST_WaitingPlayingAgainConfirmation();
 	Info->gameInterface->setIamPlaying(true);
+	//Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
+	//Info->gameInterface->setAnalysePlayAgain(true);
 	return ret;
 }
 
 genericState* ST_WaitingAPlay::on_YouWon(genericEvent *ev, usefulInfo * Info) //NO FALTA ALGO ACA??????????????????
 {
-	cout << "N WAITING a PLAY: ON 2,5 MIN TIMEOUT" << endl;
+	cout << "N WAITING a PLAY: ON you won" << endl;
 	genericState *ret = (genericState *) new ST_WaitingYouWonResponse(); //VER ESTADO!! se perdio comunicacion
 	Info->nextPkg = new YouWon();
 	Info->networkInterface->sendPackage(Info->nextPkg);
@@ -635,6 +672,8 @@ genericState* ST_WaitingYouWonResponse::on_RplayAgain(genericEvent *ev, usefulIn
 {
 	genericState *ret = (genericState *) new ST_WaitingMyConfirmation();
 	Info->gameInterface->setYouWantToPlayAgain(true);
+	Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
+	Info->gameInterface->setAnalysePlayAgain(true);
 	return ret;
 }
 
@@ -698,6 +737,7 @@ genericState* ST_WaitingMyConfirmation::on_PlayAgain(genericEvent *ev, usefulInf
 	genericState *ret = (genericState *) new ST_S_WaitingNameIsAck(); //PARA MANDARLE EL MAP IS
 	Info->nextPkg = new PlayAgain();//CHEQUEAR SI ESTA BIEN ACA MANDAR EL PLAY AGAIN (creo que si)
 	Info->networkInterface->sendPackage(Info->nextPkg);
+	
 	return ret;
 }
 
@@ -813,6 +853,8 @@ genericState* ST_WaitingPlayingAgainConfirmation::on_PlayAgain(genericEvent *ev,
 	Info->gameInterface->setIamPlaying(false);
 	Info->nextPkg = new PlayAgain();
 	Info->networkInterface->sendPackage(Info->nextPkg);
+	//Info->gameInterface->setIWantToPlayAgain(Info->gameInterface->graphics->doIwantToPlayAgain());
+	//Info->gameInterface->setAnalysePlayAgain(true);
 	return ret;
 }
 

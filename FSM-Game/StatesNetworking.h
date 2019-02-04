@@ -124,6 +124,7 @@ public:
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
+	genericState* on_YouWon(genericEvent* ev, usefulInfo * Info);
 private:
 };
 
@@ -137,6 +138,7 @@ public:
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
+	genericState* on_YouWon(genericEvent* ev, usefulInfo * Info);
 private:
 };
 

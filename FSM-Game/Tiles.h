@@ -12,7 +12,7 @@ public:
 	void addBuilding(Building *currBuilding);
 	void removeBuilding();
 	void addTerrain(Terrain *currTerrain);
-	void removeTerrain(Terrain *currTerrain);
+	void removeTerrain();
 	void addUnit(Unit *currUnit);
 	void removeUnit();
 	void addFog();

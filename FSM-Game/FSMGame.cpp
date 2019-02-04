@@ -103,6 +103,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_TwoHalfMinTimeout(ev, Info);
 			break;
 		case YOU_WON:
+			cout << "ENTRO FSMGAME YOU WON" << endl;
 			newState = currentState->on_YouWon(ev, Info);
 			break;
 		case YOU_DIDNT_WIN:
@@ -118,6 +119,12 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case ERROR_: //ver si queda
 			newState = currentState->on_Error(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+			break;
+		case PLAY_AGAIN: //ver si queda
+			newState = currentState->on_PlayAgain(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+			break;
+		case GAME_OVER: //ver si queda
+			newState = currentState->on_GameOver(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
 			break;
 		//	//AGRUEGE ESTO, NO SE SI VA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		default:

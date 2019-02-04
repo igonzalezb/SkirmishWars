@@ -26,6 +26,8 @@ void GenericTile::addUnit(Unit *currUnit)
 
 void GenericTile::removeUnit()
 {
+	if (currUnit != NULL)
+		delete currUnit; //!!!!!!!
 	currUnit = NULL;
 }
 
@@ -36,6 +38,8 @@ void GenericTile::addBuilding(Building *currBuilding)
 
 void GenericTile::removeBuilding()
 {
+	if (currBuilding != NULL)
+		delete currBuilding;
 	currBuilding = NULL;
 }
 
@@ -89,6 +93,9 @@ void GenericTile::addTerrain(Terrain *currTerrain)
 	this->currTerrain = currTerrain;
 }
 
-void GenericTile::removeTerrain(Terrain *currTerrain)
+void GenericTile::removeTerrain()
 {
+	if (currTerrain != NULL)
+		delete currTerrain;
+	currTerrain = NULL;
 }

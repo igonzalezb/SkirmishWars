@@ -332,13 +332,14 @@ ALLEGRO_DISPLAY* MapGraphics::getDisplay()
 bool MapGraphics::doIwantToPlayAgain()
 {
 	int button = al_show_native_message_box(
-		getDisplay(),
+		NULL,
 		"GAME OVER",
 		"Do you want to play again?",
 		NULL, NULL, ALLEGRO_MESSAGEBOX_YES_NO);
 
 	if (button == 1)
 	{
+		
 		return true;
 	}
 	else

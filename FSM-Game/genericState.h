@@ -74,6 +74,8 @@ public:
 
 	virtual genericState* on_RplayAgain(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_RgameOver(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_PlayAgain(genericEvent* ev, usefulInfo * Info) { return nullptr; }
+	virtual genericState* on_GameOver(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
 	virtual genericState* on_Rerror(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_Rquit(genericEvent* ev, usefulInfo * Info) { return nullptr; }

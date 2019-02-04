@@ -59,6 +59,7 @@ genericEvent * GameEventSource::insertEvent()
 		ret = (genericEvent *) new EV_YouDidntWin();
 		break;
 	case PLAY_AGAIN:
+		cout << "inset event play again desde game" << endl;
 		ret = (genericEvent *) new EV_PlayAgain();
 		break;
 	case GAME_OVER:
@@ -192,7 +193,8 @@ bool GameEventSource::isThereEvent()
 	////////////////////////////////////////////////////////////////// CON ESTO DE ACA, SE SACARIA EL IF DE ARRIBA DE ESTAS LINEAS, CON EL YOU WON!
 	if (gameInterface->getAnalyseVictory())
 	{
-		if (gameInterface->getYouWinning())
+		//if (gameInterface->getYouWinning())
+		if(gameInterface->didHeWin())
 		{
 #ifdef DEBUG
 			cout << "GENERA YOU WON" << endl;
@@ -209,12 +211,33 @@ bool GameEventSource::isThereEvent()
 		gameInterface->setAnalyseVictory(false);
 		ret = true;
 	}
-	////////////////////////////////////////////////
-	if (gameInterface->getIWantToPlayAgain())
+
+	if (gameInterface->getAnalysePlayAgain())
 	{
-		evCode = PLAY_AGAIN;
+		//if (gameInterface->getYouWinning())
+		if (gameInterface->getIWantToPlayAgain())
+		{
+#ifdef DEBUG
+			cout << "GENERA PLAY AGAIN" << endl;
+#endif //_DEBUG
+			evCode = PLAY_AGAIN;
+		}
+		else
+		{
+#ifdef DEBUG
+			cout << "GENERA GAME OVER" << endl;
+#endif //_DEBUG
+			evCode = GAME_OVER;
+		}
+		gameInterface->setAnalysePlayAgain(false);
 		ret = true;
 	}
+	////////////////////////////////////////////////
+	//if (gameInterface->getIWantToPlayAgain())
+	//{
+	//	evCode = PLAY_AGAIN;
+	//	ret = true;
+	//}
 
 	if (gameInterface->moving==true)
 	{

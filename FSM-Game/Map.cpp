@@ -175,7 +175,15 @@ void Map::generateTilesArray(list<Building> buildings, list<Terrain> terrains, l
 {
 
 	int pos;
-	
+	for (int i = 0; i < (FILA); i++) {
+		for (int j = 0; j < (COLUMNA); j++) {
+			tilesArray[i][j]->removeTerrain();
+			tilesArray[i][j]->removeBuilding();
+			tilesArray[i][j]->removeUnit();
+			tilesArray[i][j]->addFog();
+		}
+	}
+
 	string matrixEquipoOfFacility[FILA][COLUMNA];
 	string matrixEquipoNave[FILA][COLUMNA];
 	string matrixNave[FILA][COLUMNA];
