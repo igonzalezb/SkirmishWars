@@ -227,6 +227,7 @@ class ST_YouPurchasing :public genericState
 	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
 };
 
+
 class ST_AnalysingVictoryHQ :public genericState
 {
 	genericState* on_YouDidntWin(genericEvent* ev, usefulInfo * Info);

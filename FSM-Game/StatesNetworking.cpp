@@ -543,11 +543,24 @@ genericState* ST_WaitingPlayAck::on_YouWon(genericEvent* ev, usefulInfo * Info)
 
 /////////////////////////////// ST_WaitingCounterAttack ///////////////////////////////
 
-genericState* ST_WaitingCounterAttack::on_RAttack(genericEvent *ev, usefulInfo * Info)
-{
-	genericState *ret = (genericState *) new ST_IPlay();
-	return ret;
-}
+//genericState* ST_WaitingCounterAttack::on_RAttack(genericEvent *ev, usefulInfo * Info)
+//{
+//	genericState *ret = (genericState *) new ST_Attacking();
+//	if ((Info->gameInterface->getAttacker().i != NULL) &&
+//		(Info->gameInterface->getAttacker().j != NULL) &&
+//		(Info->gameInterface->getDefender().i != NULL) &&
+//		(Info->gameInterface->getDefender().j != NULL))
+//	{
+//		if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getUnit()) != NULL)
+//		{
+//			Info->gameInterface->graphics->showDice(Info->gameInterface->getDie());
+//			Info->gameInterface->attack();
+//
+//		}
+//		
+//	}
+//	return ret;
+//}
 
 /////////////////////////////// ST_WaitingAPlay ///////////////////////////////
 

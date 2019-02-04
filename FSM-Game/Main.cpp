@@ -1,21 +1,32 @@
-//PARA PREPROCESSOR EN PROPERTIES: _CRT_SECURE_NO_WARNINGS
-// <package id="Allegro" version="5.2.4.0" targetFramework="native" />
-// <package id="AllegroDeps" version="1.7.0.0" targetFramework="native" />
-//COMENTE TODOS LOS #include "Windows.h". VER SI ERAN IMPORTANTES PARA ALGO!!!!!!!!!
+/////////////////////////////////////////////////////////////////////////////////////////////	
+//
+// Instituto Tecnologico de Buenos Aires						04/02/2019
+//
+// Algoritmos y Estructuras de Datos - Trabajo Práctico Final
+//
+//
+// Gonzalez Bigliardi, Iñaki				 ////////////////////////////////////////////////
+// Lago, Valentina							//		    S K I R M I S H    W A R S
+// Muller, Malena						   //////////////////////////////////////////////////
+//
+//
+//
+// Juego para dos jugadores. A continuación se encuentran las reglas del juego:
+// http://skirmishwars.wikidot.com/start 
+//
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 
 #include "usefulInfo.h"
 #include "eventGenerator.h"
-//#include "genericFSM.h"
 #include "FSMGame.h"
 #include "FSMNetworking.h"
 #include "eventSources.h"
 #include "userInput.h"
-//#include "Networking.h"
-//#include "Game.h"
 #include <string>
 #include <sstream>
 #include <iostream>
-//#include "Windows.h"
+
 
 #include "basicXML.h"
 #include "AllegroSetup.h"
@@ -43,7 +54,7 @@ int main()
 	StartMenu* mainMenu = new StartMenu;
 	mainMenu->openApp();
 
-	std::string opponentsIP = "localhost";//mainMenu->getUserIP();  //"localhost"; //CAMBIAR y ver donde recibirlo y como
+	std::string opponentsIP = mainMenu->getUserIP();  //"localhost"; //CAMBIAR y ver donde recibirlo y como
 	Game skirmish(mainMenu->getDisplay()); //Creo una instancia del juego
 	skirmish.playerMe->setName(mainMenu->getUserName());
 	skirmish.graphics->setBackgroundMusicOnOff(mainMenu->getBackgroundMusicOnOff());

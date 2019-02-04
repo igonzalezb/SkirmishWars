@@ -1444,20 +1444,38 @@ genericState* ST_WaitingDefender::on_Error(genericEvent* ev, usefulInfo * Info)
 /////////////////////////////// ST_WaitingAttackConfirmation ///////////////////////////////
 genericState* ST_WaitingAttackConfirmation::on_Attack(genericEvent *ev, usefulInfo * Info)
 {
+	int temp_i = 0, temp_j = 0;
 	cout << "ST_WaitingAttackConfirmation::on_Attack" << endl;
-	genericState *ret = (genericState *) new ST_Attacking();
-
+	genericState *ret = (genericState *) new ST_Attacking(); //CAMBIO 2: esta linea cambiada por la de abajo
+	//genericState *ret = (genericState *) new ST_();
 	if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getUnit()) != NULL)
 	{
 		Info->gameInterface->setDie(rand() % 6 + 1); //VERIFICAR si esto tira un valor random entre 1 y 6.
 		Info->gameInterface->graphics->showDice(Info->gameInterface->getDie());
 		Info->gameInterface->attack();
 		Info->timeoutSrc->startTimer1();
+
+		if (Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j))->getUnit() != NULL)
+		{
+			Info->gameInterface->myMap->possibleAttack(Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j))->getUnit(), Info->gameInterface->getDefender().i, (Info->gameInterface->getDefender().j), Info->gameInterface->playerYou->getTeam());
+			
+			if (Info->gameInterface->myMap->canAttack[Info->gameInterface->getAttacker().i][Info->gameInterface->getAttacker().j])
+			{
+				temp_i = Info->gameInterface->getAttacker().i;
+				temp_j = Info->gameInterface->getAttacker().j;
+				Info->gameInterface->setAttacker(Info->gameInterface->getDefender());
+				Info->gameInterface->setDefender(temp_i, temp_j);
+				Info->gameInterface->attack();
+				Info->gameInterface->myMap->getTile(temp_i, temp_j)->getUnit()->setHp(Info->gameInterface->myMap->getTile(temp_i, temp_j)->getUnit()->getHp() + 1);
+
+			}
+		}
+		Info->gameInterface->setAttacker(NULL, NULL);
+		Info->gameInterface->setDefender(NULL, NULL);
+		
+	
+	
 	}
-	//else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getBuilding()) != NULL)
-	//{
-	//	Info->gameInterface->captureProperty(Info->gameInterface->playerMe, Info->gameInterface->playerYou);
-	//}
 	return ret;
 }
 
@@ -1852,7 +1870,7 @@ genericState* ST_YouMoving::on_Error(genericEvent* ev, usefulInfo * Info)
 genericState* ST_YouMoving::on_RAttack(genericEvent *ev, usefulInfo * Info)
 {
 	genericState *ret = (genericState *) new ST_YouAttacking();
-
+	int temp_i = 0, temp_j = 0;
 	//HACER: leer el mensaje que me llega del ataque y cargar el tile atacante y el defendido en attacker y defender
 
 	if ((Info->gameInterface->getAttacker().i != NULL) &&
@@ -1864,6 +1882,24 @@ genericState* ST_YouMoving::on_RAttack(genericEvent *ev, usefulInfo * Info)
 		{
 			Info->gameInterface->graphics->showDice(Info->gameInterface->getDie());
 			Info->gameInterface->attack();
+			if (Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j))->getUnit() != NULL)
+			{
+				Info->gameInterface->myMap->possibleAttack(Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j))->getUnit(), Info->gameInterface->getDefender().i, (Info->gameInterface->getDefender().j), Info->gameInterface->playerMe->getTeam());
+
+				if (Info->gameInterface->myMap->canAttack[Info->gameInterface->getAttacker().i][Info->gameInterface->getAttacker().j])
+				{
+					temp_i = Info->gameInterface->getAttacker().i;
+					temp_j = Info->gameInterface->getAttacker().j;
+					Info->gameInterface->setAttacker(Info->gameInterface->getDefender());
+					Info->gameInterface->setDefender(temp_i, temp_j);
+					Info->gameInterface->attack();
+					Info->gameInterface->myMap->getTile(temp_i, temp_j)->getUnit()->setHp(Info->gameInterface->myMap->getTile(temp_i, temp_j)->getUnit()->getHp() + 1);
+
+				}
+			}
+			Info->gameInterface->setAttacker(NULL, NULL);
+			Info->gameInterface->setDefender(NULL, NULL);
+
 			
 		}
 		//else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getBuilding()) != NULL)
@@ -1969,8 +2005,9 @@ genericState* ST_YouUnboardingUnit::on_Error(genericEvent* ev, usefulInfo * Info
 
 genericState* ST_YouAttacking::on_RAttack(genericEvent *ev, usefulInfo * Info)
 {
-	genericState *ret = (genericState *) new ST_YouAttacking();
-
+	//genericState *ret = (genericState *) new ST_YouAttacking(); //CAMBIO 3
+	genericState *ret = (genericState *) new ST_Attacking();
+	int temp_i = 0, temp_j = 0;
 	//HACER EN IS THERE EVENT DE NETWORKING: leer el mensaje que me llega del ataque y cargar el tile atacante y el defendido en attacker y defender
 
 	if ((Info->gameInterface->getAttacker().i != NULL) &&
@@ -1982,6 +2019,26 @@ genericState* ST_YouAttacking::on_RAttack(genericEvent *ev, usefulInfo * Info)
 		{
 			Info->gameInterface->graphics->showDice(Info->gameInterface->getDie());
 			Info->gameInterface->attack();
+
+			if (Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j))->getUnit() != NULL)
+			{
+				Info->gameInterface->myMap->possibleAttack(Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j))->getUnit(), Info->gameInterface->getDefender().i, (Info->gameInterface->getDefender().j), Info->gameInterface->playerMe->getTeam());
+
+				if (Info->gameInterface->myMap->canAttack[Info->gameInterface->getAttacker().i][Info->gameInterface->getAttacker().j])
+				{
+					temp_i = Info->gameInterface->getAttacker().i;
+					temp_j = Info->gameInterface->getAttacker().j;
+					Info->gameInterface->setAttacker(Info->gameInterface->getDefender());
+					Info->gameInterface->setDefender(temp_i, temp_j);
+					Info->gameInterface->attack();
+					Info->gameInterface->myMap->getTile(temp_i, temp_j)->getUnit()->setHp(Info->gameInterface->myMap->getTile(temp_i, temp_j)->getUnit()->getHp() + 1);
+				}
+			}
+
+			Info->gameInterface->setAttacker(NULL, NULL);
+			Info->gameInterface->setDefender(NULL, NULL);
+
+
 			
 		}
 		//else if (((Info->gameInterface->myMap->getTile((Info->gameInterface->getDefender().i), (Info->gameInterface->getDefender().j)))->getBuilding()) != NULL)

@@ -201,15 +201,15 @@ void Game::attack()
 
 	if ((myMap->getTile(defender.i, defender.j)->getUnit()->getHp())<=0)
 	{
-		myMap->getTile(defender.i, defender.j)->setUnit(NULL);
+		myMap->getTile(defender.i, defender.j)->removeUnit();
 	}
 	//mostrar la carta que tenga arriba el HP nuevo del defender, porque cambio su HP.
 	//if HP < 5 : dar vuelta la carta y ahora esta REDUCED.
 
-	attacker.i = NULL;
-	attacker.j = NULL;
-	defender.i = NULL;
-	defender.j = NULL;
+	//attacker.i = NULL;
+	//attacker.j = NULL;
+	//defender.i = NULL;
+	//defender.j = NULL;
 
 
 //	myMap->updateFogOfWar(playerMe->getTeam());

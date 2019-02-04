@@ -142,12 +142,6 @@ public:
 private:
 };
 
-class ST_WaitingCounterAttack : public genericState //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! pending
-{
-public:
-	genericState* on_RAttack(genericEvent* ev, usefulInfo * Info);
-private:
-};
 
 /*
 class ST_WaitingQuitAck : public genericState

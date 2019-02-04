@@ -34,12 +34,8 @@ Networking::~Networking()//PARA CLIENT
 		serverAcceptor->close();
 		serverSocket->close();
 		delete serverSocket;
-		//serverSocket->close();
-		//delete serverSocket;
 		delete s_IO_handler;
 	}
-
-	//delete IO_handler;
 }
 
 
@@ -50,7 +46,7 @@ void Networking::startConnection()
 
 	endpoint = clientResolver->resolve(
 		boost::asio::ip::tcp::resolver::query(serverAddress.c_str(), CONNECTION_PORT_C));
-	int contador = 0; //PROVISORIO!!!!!!!!!!!!! ES PARA SIMULAR UN TIMER
+	int contador = 0; 
 	do
 	{
 		exit = true;
@@ -62,11 +58,9 @@ void Networking::startConnection()
 		{
 			exit = false;
 		}
-		//cout << "HOLA" << endl;
 
-		contador++; //PROVISORIO, DESPUES BORRAR
-	} while ((!exit) && (contador <= 5)); //PROVISORIO!! EN VEZ DE CONTADOR, VA EL TIMER DE 5000milisegundos
-	//cout << "HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
+		contador++; 
+	} while ((!exit) && (contador <= 5)); 
 
 	if (contador<=5) //NO SE CUMPLIO EL TIEMPO, ES CLIENTE
 	{
@@ -206,29 +200,10 @@ bool Networking::receivePackage()
 		inputPackage.insert(inputPackage.end(), buf, buf + len);
 
 #ifdef DEBUG	
-	//	std::cout << "len del recibido: " << len << std::endl;
-		//Paso el vector a string:
-		/*
-		for (int i = 0; i < 10; ++i)
-		inputPackage.push_back('A' + i);*/
+	//	
 
 		string str(inputPackage.begin(), inputPackage.end());
-		//str.c_str();
-		//cout << "Here is strC, which is constructed from a vector:\n";
-	//	cout << str << endl;
-
-		//------------
-		//int n = str.length();
-		//char char_array[n + 1];
-		// copying the contents of the 
-		// string to char array
-		//strcpy_s(char_array, str.c_str());
-
-		//for (int i = 0; i<n; i++)
-		//	cout << char_array;
-		//-------------
-
-		//imprimo el str:
+		
 		std::cout << std::endl << "Server says: " << str << std::endl;
 		char recibi = (char)buf[1];
 	//	char recibi2 = (char)str[2];
