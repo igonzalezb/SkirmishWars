@@ -1,7 +1,7 @@
 #ifndef GENERICEVENTSOURCE_H
 #define GENERICEVENTSOURCE_H
 
-#define DEBUG true
+#define DEBUG
 
 #include "genericEvent.h"
 
@@ -13,7 +13,6 @@ public:
 	eventCode evCode;
 
 protected:
-	//eventCode evCode;
 	genericEvent* event;
 };
 

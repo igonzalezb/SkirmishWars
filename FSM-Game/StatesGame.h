@@ -1,24 +1,11 @@
-//CHEQUEAR TODOS LOS ON...
-
 #ifndef STATESGAME_H
 #define STATESGAME_H
 
 #define DEBUG true
 
 #include "genericState.h"
-//#include "PlayerInfo.h"
-//#include "Map.h"
-
-//VER si usar idle
-/*
-class ST_Idle : public genericState
-{
-public:
-};*/
-
-
  
-class ST_GameIdle :public genericState //FUNCIONAN
+class ST_GameIdle :public genericState 
 {
 	genericState* on_IStart(genericEvent* ev, usefulInfo * Info);
 	genericState* on_YouStart(genericEvent* ev, usefulInfo * Info);
@@ -57,7 +44,7 @@ class ST_WaitingMoveConfirmation :public genericState //ACA se estaria esperando
 {
 	genericState* on_Move(genericEvent* ev, usefulInfo * Info);
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
-	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info); //HACER ESTAS, COPIANDO AL RESTO
+	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
@@ -69,7 +56,7 @@ class ST_WaitingBoardingConfirmation :public genericState
 {
 	genericState* on_Move(genericEvent* ev, usefulInfo * Info); 
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
-	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info); //HACER ESTAS, COPIANDO AL RESTO
+	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
@@ -81,7 +68,7 @@ class ST_WaitingUnboardingConfirmation :public genericState
 {
 	genericState* on_Move(genericEvent* ev, usefulInfo * Info); //se envia paquete move
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
-	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info); //HACER ESTAS, COPIANDO AL RESTO
+	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
@@ -93,7 +80,7 @@ class ST_WaitingUnboardingLocation :public genericState
 {
 	genericState* on_Tile(genericEvent* ev, usefulInfo * Info);
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
-	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info); //HACER ESTAS, COPIANDO AL RESTO
+	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
@@ -105,7 +92,7 @@ class ST_WaitingUnboardingLocationConfirmation :public genericState
 {
 	genericState* on_Move(genericEvent* ev, usefulInfo * Info); //se envia el segundo paquete move
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
-	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info); //HACER ESTAS, COPIANDO AL RESTO
+	genericState* on_BoAttack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_BoPurchase(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
@@ -125,7 +112,6 @@ class ST_Attacking :public genericState
 	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Error(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
 };
 
@@ -143,7 +129,7 @@ class ST_WaitingDefender :public genericState
 
 class ST_WaitingAttackConfirmation :public genericState //ACA se estaria esperando la coordenada de la unidad que se va a mover
 {
-	genericState* on_Attack(genericEvent* ev, usefulInfo * Info); //HACER ESTAS, COPIANDO AL RESTO
+	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
 	genericState* on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RYouWon(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Pass(genericEvent* ev, usefulInfo * Info);

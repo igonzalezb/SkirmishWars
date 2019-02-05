@@ -1,5 +1,3 @@
-//CHEQUEAR TODOS LOS ON...
-
 #ifndef STATESNETWORKING_H
 #define STATESNETWORKING_H
 
@@ -17,7 +15,6 @@ class ST_WaitingConnection :public genericState
 class ST_S_WaitingNameIs :public genericState
 {
 	genericState* on_RnameIs(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_TwoHalfMinTimeout(genericEvent* ev, usefulInfo * Info); //segun consigna no iria
 };
 
 class ST_S_WaitingName :public genericState
@@ -66,7 +63,6 @@ class ST_C_WaitingNameIsAck :public genericState
 class ST_C_WaitingNameIs :public genericState
 {
 	genericState* on_RnameIs(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_TwoHalfMinTimeout(genericEvent* ev, usefulInfo * Info); //segun consigna, no iria
 };
 
 class ST_C_WaitingMapIs : public genericState
@@ -83,14 +79,7 @@ class ST_C_WaitingWhoStarts :public genericState
 {
 	genericState* on_RyouStart(genericEvent* ev, usefulInfo * Info);
 	genericState* on_RIStart(genericEvent* ev, usefulInfo * Info);
-	/*
-	genericState* on_Rmove(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Rpurchase(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Rattack(genericEvent* ev, usefulInfo * Info);
-	genericState* on_Rpass(genericEvent* ev, usefulInfo * Info);
-	*/
-	//genericState* on_Timeout(genericEvent* ev, usefulInfo * Info);
-};
+	};
 
 //Estados en comun para SERVER y CLIENT:
 class ST_WaitingAPlay : public genericState
@@ -142,22 +131,10 @@ public:
 private:
 };
 
-
-/*
-class ST_WaitingQuitAck : public genericState
-{
-public:
-	genericState* on_RAck(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Rtimeout(genericEvent* ev, usefulInfo * Info);
-private:
-};
-*/
-
-class ST_WaitingToAttack : public genericState//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! pending
+class ST_WaitingToAttack : public genericState
 {
 public:
 	genericState* on_Attack(genericEvent* ev, usefulInfo * Info);
-	//genericState* on_Rtimeout(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);
@@ -167,7 +144,7 @@ private:
 
 class ST_WaitingPlayingAgainConfirmation: public genericState
 {
-	genericState* on_PlayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
+	genericState* on_PlayAgain(genericEvent *ev, usefulInfo * Info); 
 	genericState* on_GameOver(genericEvent *ev, usefulInfo * Info);
 	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
@@ -177,7 +154,7 @@ class ST_WaitingPlayingAgainConfirmation: public genericState
 
 class ST_WaitingYouWonResponse : public genericState
 {
-	genericState* on_RplayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
+	genericState* on_RplayAgain(genericEvent *ev, usefulInfo * Info);
 	genericState* on_RgameOver(genericEvent *ev, usefulInfo * Info);
 	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
@@ -187,7 +164,7 @@ class ST_WaitingYouWonResponse : public genericState
 
 class ST_WaitingMyConfirmation : public genericState
 {
-	genericState* on_PlayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
+	genericState* on_PlayAgain(genericEvent *ev, usefulInfo * Info); 
 	genericState* on_GameOver(genericEvent *ev, usefulInfo * Info);
 	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
@@ -197,7 +174,7 @@ class ST_WaitingMyConfirmation : public genericState
 
 class  ST_WaitingYourConfirmation : public genericState
 {
-	genericState* on_RplayAgain(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
+	genericState* on_RplayAgain(genericEvent *ev, usefulInfo * Info);
 	genericState* on_RgameOver(genericEvent *ev, usefulInfo * Info);
 	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
@@ -207,7 +184,7 @@ class  ST_WaitingYourConfirmation : public genericState
 
 class ST_WaitingGameOverAck : public genericState
 {
-	genericState* on_Rack(genericEvent *ev, usefulInfo * Info); //NO FALTA ALGO ACA??????????????????
+	genericState* on_Rack(genericEvent *ev, usefulInfo * Info);
 	genericState* on_Rquit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Quit(genericEvent* ev, usefulInfo * Info);
 	genericState* on_Rerror(genericEvent* ev, usefulInfo * Info);

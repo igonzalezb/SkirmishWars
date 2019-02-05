@@ -31,7 +31,11 @@ Unit::~Unit()
 
 bool Unit::arregloNaveAPChavePlace()
 {
-	cout << "en arreglo have place esta llegando" << arregloNaveAPC[0] <<"||" <<arregloNaveAPC[1] << endl;
+#ifdef DEBUG
+	cout << "en arreglo have place esta llegando" << arregloNaveAPC[0] << "||" << arregloNaveAPC[1] << endl;
+#endif // DEBUG
+
+	
 	if(arregloNaveAPC[0]==NULL|| arregloNaveAPC[1] == NULL)
 	{
 		return true;
@@ -40,15 +44,11 @@ bool Unit::arregloNaveAPChavePlace()
 }
 bool Unit::arregloNaveAPCisEmpty()
 {
-
-	//if (((arregloNaveAPC[0]->getType().compare("in1")==0) || (arregloNaveAPC[0]->getType().compare("in2")==0) || (arregloNaveAPC[0]->getType().compare("me1")==0) || (arregloNaveAPC[0]->getType().compare("me2")==0)) ||
-	//	((arregloNaveAPC[1]->getType().compare("in1")==0) || (arregloNaveAPC[1]->getType().compare("in2")==0) || (arregloNaveAPC[1]->getType().compare("me1")==0) || (arregloNaveAPC[1]->getType().compare("me2")==0)))
-
-	//{
-	//	return false;
-	//}
-	//return true;
+#ifdef DEBUG
 	cout << "en arreglo is empty esta llegando" << arregloNaveAPC[0] << "||" << arregloNaveAPC[1] << endl;
+#endif // DEBUG
+
+	
 		if(arregloNaveAPC[0]==NULL && arregloNaveAPC[1] == NULL)
 	{
 		return true;
@@ -67,9 +67,6 @@ void Unit::setHp(int _hp)
 void Unit::setPath(string path)
 {
 	this->path = path;
-	/*char temp[50];
-	sprintf(temp, path.c_str(), team);
-	this->path = temp;*/
 }
 
 void Unit::setName(string name)
@@ -115,7 +112,7 @@ void Unit::setType(string type)
 void Unit::setTeam(TeamNumber team)
 {
 	this->team = team;
-	type.append(to_string(team));			//PROBAR!!!!
+	type.append(to_string(team));			
 
 	char temp[50];
 	sprintf(temp, path.c_str(), this->team);

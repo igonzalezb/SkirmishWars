@@ -15,8 +15,6 @@
 #include <allegro5\allegro_audio.h>
 #include "Resources.h"
 #include "Map.h"
-//#include "genericEvent.h"
-//#include "Game.h"
 
 #define RESERVED_SAMPLES   6
 
@@ -29,7 +27,6 @@ public:
 	void showMap(Resources* data, Map* myMap, int player_money, TeamNumber my_team, unsigned int time);
 	void loadBitmaps(Map *map);
 	void setDisplayName(string _name);
-	//void setMap(Map *map);
 	void showDice(int _dice);
 	void playTenSecSound();
 	void playThirtySecSound();
@@ -41,10 +38,8 @@ public:
 	void setAttackWarningShown(bool a);
 	bool wasPurchaseWarningShown();
 	bool wasAttackWarningShown();
-	//void showTime(unsigned int time);
 
 	ALLEGRO_FONT* getMenuFont();
-	//eventCode dispatchClick(int x, int y, Game *gameInfo);
 	void setBackgroundMusicOnOff(bool a);
 	bool getBackgroundMusicOnOff();
 	void setSoundEffectsOnOff(bool a);
