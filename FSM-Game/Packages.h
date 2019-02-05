@@ -24,11 +24,9 @@ class genericPackage
 public:
 	genericPackage();
 	~genericPackage();
-	//genericPackage(Game* gameInfo);
 	std::vector<char> package;
 	virtual void setPackage() = 0;
 	opCodes code;
-	//Game* gameInfo;
 };
 
 

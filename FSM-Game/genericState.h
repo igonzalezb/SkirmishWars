@@ -1,4 +1,3 @@
-//Revisar bien los estados, por ejemplo:WaitingWhoStarts y WaitingWhoStartsAndMapAck (ver si se hace uno solo)
 #ifndef GENERICSTATE_H
 #define GENERICSTATE_H
 
@@ -31,9 +30,9 @@ public:
 
 	virtual genericState* on_WaitingMapConfirmation(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_MapOk(genericEvent* ev, usefulInfo * Info) { return nullptr; }
-	virtual genericState* on_ErrDetected(genericEvent* ev, usefulInfo * Info) { return nullptr; } //VER si esto se deja o no.
+	virtual genericState* on_ErrDetected(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 
-	virtual genericState* on_IPlay(genericEvent* ev, usefulInfo * Info) { return nullptr; } //VER si estos dos se usan en la fsm del juego o no.
+	virtual genericState* on_IPlay(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_YouPlay(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_IStart(genericEvent* ev, usefulInfo * Info) { return nullptr; }
 	virtual genericState* on_YouStart(genericEvent* ev, usefulInfo * Info) { return nullptr; }

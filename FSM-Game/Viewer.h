@@ -22,11 +22,6 @@ public:
 	void on_Attack(genericEvent* ev, usefulInfo * Info);
 	void on_Pass(genericEvent* ev, usefulInfo * Info);
 	void on_Tile(genericEvent* ev, usefulInfo * Info);
-	//on_NewUnit(genericEvent* ev, usefulInfo * Info);
-	//void on_BoAttack(genericEvent* ev, usefulInfo * Info);
-	//void on_BoPurchase(genericEvent* ev, usefulInfo * Info);
-	//on_NoMoney(genericEvent* ev, usefulInfo * Info);
-
 	void on_OneMinTimeout(genericEvent* ev, usefulInfo * Info);
 	void on_TwoHalfMinTimeout(genericEvent* ev, usefulInfo * Info);
 	void on_TenSecLeft(genericEvent* ev, usefulInfo * Info);

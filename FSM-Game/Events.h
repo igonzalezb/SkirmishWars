@@ -125,19 +125,17 @@ public:
 	
 
 private:
-	//unsigned int blockNumber;	//Guardar el numero de bloque aca.
-	//MYBYTE* dataBuffer;
+	
 };
 
 class EV_Rack : public genericEvent
 {
 public:
 	EV_Rack() { ev = R_ACK; };
-	//TODO: funciones de cargar el buffer y de obetener la info
+	
 
 private:
-	//unsigned int blockNumber;	//Guardar el numero de bloque aca.
-	//MYBYTE* dataBuffer;
+	
 };
 
 class EV_Rname : public genericEvent
@@ -146,7 +144,7 @@ public:
 	EV_Rname() { ev = R_NAME; };
 
 private:
-	//unsigned int blockNumber;
+	
 };
 
 class EV_RnameIs : public genericEvent
@@ -291,7 +289,7 @@ private:
 /*
 Eventos que genera el usuario con mouse o teclado :
 TILE, NEW_UNIT, PURCHASE, ATTACK, PASS */
-class EV_NoEv : public genericEvent //VER QUIEN LO GENERA
+class EV_NoEv : public genericEvent
 {
 public:
 	EV_NoEv() { ev = NO_EV; };
@@ -330,15 +328,6 @@ private:
 
 //TIMEOUT EVENT
 
-/*class EV_Timeout : public genericEvent
-{
-public:
-EV_Timeout() { ev = TIMEOUT; };
-
-private:
-
-};*/
-
 class EV_OneMinTimeout : public genericEvent
 {
 public:
@@ -373,16 +362,6 @@ public:
 	EV_OneSecTimeout() { ev = ONE_SEC_TIMEOUT; };
 private:
 };
-
-
-//class EV_ConnectionFailed : public genericEvent
-//{
-//public:
-//	EV_ConnectionFailed() { ev = CONNECTION_FAIL; };
-//
-//private:
-//
-//};
 
 
 

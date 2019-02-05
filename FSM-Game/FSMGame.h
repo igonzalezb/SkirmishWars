@@ -1,7 +1,6 @@
 #ifndef FSMGAME_H
 #define FSMGAME
 
-//#include "genericFSM.h"
 #include "StatesGame.h"
 
 class FSMGame

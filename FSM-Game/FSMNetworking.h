@@ -8,11 +8,9 @@
 class FSMNetworking 
 {
 public:
-	//FSMNetworking() :genericFSM() { currentState = (genericState *) new ST_WaitingConnection(); };
 	FSMNetworking();
 	~FSMNetworking(); 
 
-	//genericState* genericFSM::getCurrentState();
 	void dispatch(genericEvent * ev, usefulInfo *Info);	//llama a la funcion del estado al que apunta current state que repsonde al evento recibido	
 	genericState * getCurrentState();
 

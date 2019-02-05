@@ -6,7 +6,6 @@
 using namespace std;
 
 #include "Building.h"
-//typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
 
 struct FP
 {
@@ -35,7 +34,6 @@ struct MovementCost
 class Unit
 {
 private:
-	//string hp;
 	int hp;
 	string name;
 	string path;
@@ -51,10 +49,6 @@ private:
 	MovementCost mcost;
 	TeamNumber team;
 	TeamColor teamColor;
-
-
-
-
 	bool fogOfWar;
 public:
 	Unit();

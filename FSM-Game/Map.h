@@ -8,17 +8,11 @@
 
 #include "Tiles.h"
 #include "csvHandler.h"
-#include "genericEvent.h" //para poder usar el ENUM de los nombres de los tiles
+#include "genericEvent.h"
 
 
 
 //#define NOFOG	//Just for Debug
-
-
-
-
-//typedef enum { WHITE, RED, BLUE, YELLOW, GREEEN } TeamColor;
-
 #define ATTACK_TABLE "resources/terrainDefenseModifiers.csv"
 
 #define MAP_0	"resources/maps/BalancedArena.csv"
@@ -35,15 +29,11 @@
 #define MAX_MAPS	10
 #define CANNOT_MOVE	100
 
-//#define M_HEIGHT	al_get_display_height(display)
 #define M_HEIGHT(x)	al_get_display_height(x)
-//#define M_WIDTH		(al_get_display_width(display)*3.0/4.0)
 #define M_WIDTH(x)	(al_get_display_width(x)*3.0/4.0)
 
 #define R_WIDTH		al_get_display_width(display)/4.0
-//#define T_HEIGHT	M_HEIGHT/FILA
 #define T_HEIGHT(x)	M_HEIGHT(x)/FILA
-//#define T_WIDTH		M_WIDTH/COLUMNA
 #define T_WIDTH(x)	M_WIDTH(x)/COLUMNA
 
 #define FOG_IMAGE	"resources/images/fog.png"
@@ -107,6 +97,4 @@ private:
 	unsigned char checksumReceived;
 
 	GenericTile* tilesArray[FILA][COLUMNA];	//Array de Tiles Genericos
-	//coordenadas attacker; //HACER: INICIARLAS EN NULL
-	//coordenadas defender; //HACER: INICIAR EN NULL
 };
