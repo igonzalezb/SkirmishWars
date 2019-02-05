@@ -1,13 +1,9 @@
 
 #include "Resources.h"
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Resources::Resources()
 {
 	feedState = IDLE;
-	//CurrentNews = &Building.back();
 }
 
 Resources::~Resources()
@@ -56,11 +52,6 @@ Unit & Resources::getLastUnit()
 {
 	return units.back();
 }
-//Unit * Resources::getLastUnit()
-//{
-//	return &units.back();
-//}
-
 
 list<Terrain>& Resources::getTerrainList()
 {
@@ -74,6 +65,5 @@ list<Building>& Resources::getBuildingList()
 
 list<Unit>& Resources::getUnitList()
 {
-	//cout << "get UNIT LIST" << endl;
 	return units;
 }

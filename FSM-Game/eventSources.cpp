@@ -1,5 +1,4 @@
-//HACER DESDE USER EVENT SOURCE: cuando el mouse ve que se toca un tile del mapa,
-//guardar esa info en la clase game en tileSelected y generar el evento TILE
+
 
 #include "eventSources.h"
 #include "Events.h"
@@ -19,7 +18,6 @@ GameEventSource::GameEventSource(Game *_gameInterface):gameInterface(_gameInterf
 genericEvent * GameEventSource::insertEvent()
 {
 	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
-	//ret->setLastEvent(evCode);
 	switch (evCode)
 	{
 	case MAP_OK: //ESTE CREO QUE SE BORRA DE ACA
@@ -77,7 +75,7 @@ genericEvent * GameEventSource::insertEvent()
 #endif //_DEBUG
 		ret = (genericEvent *) new EV_EndPlaying();
 		break;
-	case ERR_DETECTED:		//VER si este case se deja o si se saca
+	case ERR_DETECTED:	
 		ret = (genericEvent *) new EV_ErrDetected();
 		break;
 	case R_YOU_START:
@@ -87,7 +85,7 @@ genericEvent * GameEventSource::insertEvent()
 		ret = (genericEvent *) new EV_IStart();
 		break;
 	case R_MOVE:
-		ret = (genericEvent *) new EV_Rmove();	//PROPBAMOS CON R!!!!!!!!!!!!!!!!!!!!!!!
+		ret = (genericEvent *) new EV_Rmove();	
 		break;
 	case R_PURCHASE:
 		ret = (genericEvent *) new EV_Purchase();
@@ -96,7 +94,7 @@ genericEvent * GameEventSource::insertEvent()
 		ret = (genericEvent *) new EV_Attack();
 		break;
 	case R_PASS:
-		ret = (genericEvent *) new EV_RPass(); //PROPBAMOS CON R!!!!!!!!!!!!!!!!!!!!!!!
+		ret = (genericEvent *) new EV_RPass();
 		break;
 	case R_YOU_WON:
 		ret = (genericEvent *) new EV_YouWon();
@@ -134,10 +132,6 @@ genericEvent * GameEventSource::insertEvent()
 	default:
 		break;
 	}
-	//ret->setEventType(evCode);
-	//genericEvent * ret2 = (genericEvent *) new EV_ErrDetected();
-	//ret2->setEventType(evCode);
-	//setLastEvent(evCode);
 	return ret;
 }
 
@@ -157,7 +151,7 @@ bool GameEventSource::isThereEvent()
 #ifdef DEBUG
 		cout << "IS THERE EVENG:I START o YOU START" << endl;
 #endif // DEBUG
-		gameInterface->playerChosen = false; //probando
+		gameInterface->playerChosen = false; 
 	}
 	if (gameInterface->myMap->isMapReceivedOk)
 	{
@@ -174,26 +168,8 @@ bool GameEventSource::isThereEvent()
 		ret = true;
 	}
 
-	/////////////////////////////////////////////////////////////////
-//	if ((gameInterface->getYouWinning()))
-//	//if (gameInterface->didHeWin())
-//	{
-//#ifdef DEBUG
-//		cout << "entra a you won" << endl;
-//#endif // DEBUG
-//
-//		evCode = YOU_WON; //VER en que parte se setea nuevamente notWinning en true (probablemente cuando arranca el juego)
-//		ret = true;
-//	}
-//	/*else
-//	{
-//		evCode = YOU_DIDNT_WIN;	//IMPORTANTE!! YO NECESITO ESTE EVENTO EN UNA PARTE. PONER UN FLAG
-//		ret = true;
-//	}*/
-	////////////////////////////////////////////////////////////////// CON ESTO DE ACA, SE SACARIA EL IF DE ARRIBA DE ESTAS LINEAS, CON EL YOU WON!
 	if (gameInterface->getAnalyseVictory())
 	{
-		//if (gameInterface->getYouWinning())
 		if(gameInterface->didHeWin())
 		{
 #ifdef DEBUG
@@ -214,7 +190,6 @@ bool GameEventSource::isThereEvent()
 
 	if (gameInterface->getAnalysePlayAgain())
 	{
-		//if (gameInterface->getYouWinning())
 		if (gameInterface->getIWantToPlayAgain())
 		{
 #ifdef DEBUG
@@ -232,41 +207,21 @@ bool GameEventSource::isThereEvent()
 		gameInterface->setAnalysePlayAgain(false);
 		ret = true;
 	}
-	////////////////////////////////////////////////
-	//if (gameInterface->getIWantToPlayAgain())
-	//{
-	//	evCode = PLAY_AGAIN;
-	//	ret = true;
-	//}
 
 	if (gameInterface->moving==true)
 	{
-		//if ((gameInterface->myMap->getTile(gameInterface->getDefender().i,gameInterface->getDefender().j)->getUnit()) == NULL)
-		//{
-		//	if (((gameInterface->myMap->getTile(gameInterface->getAttacker().i, gameInterface->getAttacker().j)->getUnit()) != NULL) &&
-		//		(((gameInterface->myMap->getTile(gameInterface->getAttacker().i, gameInterface->getAttacker().j)->getUnit())->getTeam()) == (gameInterface->playerMe->getTeam())))
-		//		//si el attacker es una unidad mia:
-		//	{
-				//gameInterface->myMap->possibleMoves((gameInterface->myMap->getTile(gameInterface->getAttacker().i,gameInterface->getAttacker().j)->getUnit()), gameInterface->getAttacker().i,gameInterface->getAttacker().j);
-				//if ((gameInterface->myMap->canMove[gameInterface->getDefender().i][gameInterface->getDefender().j]) == true)
-				//{
 					evCode = MOVE;
 					gameInterface->moving = false;
 					ret = true;
-				//}
-			/*}
-		}*/
 	}
 	if (gameInterface->boardingAPC == true)
 	{
-		//Info->gameInterface->boardUnit();
 		evCode = MOVE;
 		gameInterface->boardingAPC = false;
 		ret = true;
 	}
 	if (gameInterface->unboardingAPC == true)
 	{
-		//Info->gameInterface->unboardUnit();
 		evCode = MOVE;
 		gameInterface->unboardingAPC = false;
 		ret = true;
@@ -349,16 +304,12 @@ NetworkEventSource::NetworkEventSource(Networking *_networkInterface,Game* _game
 //Chequea si se recibió algo y se guarda la info correspondiente en r_algo en caso de haberla
 bool NetworkEventSource::isThereEvent()
 {
-	//unsigned char blockLow, blockHigh;
 	bool ret = false;
 	list<Unit>::iterator it4 = gameInterface->data->getUnitList().begin();
-	//std::ifstream fileStream;
 	std::vector<MYBYTE> aux; //en vez de MYBYTE se puede poner char ( que es lo que estaba) pero es lo mismo
 	std::string auxstr; //ver si lo voy a usar o no
 	int i;
 	unsigned char temp;
-
-	//VER COMO HACER PARA QUE APAREZCA UN EVENTO DE CONNECTED!!! CON SERVER. NO SE PUEDE
 
 	if (networkInterface->justConnected)
 	{
@@ -370,7 +321,6 @@ bool NetworkEventSource::isThereEvent()
 		if (networkInterface->IamClient)
 		{
 			evCode = CONNECTED_AS_CLIENT;
-			//gameInterface->Istart = false;//ESTO ACA NO VA
 			gameInterface->playerMe->setTeam(EQUIPO2); //cliente es equipo 2
 			gameInterface->playerYou->setTeam(EQUIPO1); //server es equipo 1
 
@@ -378,7 +328,6 @@ bool NetworkEventSource::isThereEvent()
 		else
 		{
 			evCode = CONNECTED_AS_SERVER;
-			//gameInterface->Istart = true;//ESTO ACA NO VA
 			gameInterface->playerMe->setTeam(EQUIPO1); //server equipo 1
 			gameInterface->playerYou->setTeam(EQUIPO2); //client equipo 2
 		}
@@ -388,11 +337,9 @@ bool NetworkEventSource::isThereEvent()
 	else if (networkInterface->receivePackage())	//verifica si se recibio algo
 	{
 #ifdef DEBUG
-		//cout << "OP CODE RECIBIDO:  "<< (int)(networkInterface->getInputPackage()[0]) << endl;
 		cout << "OP CODE RECIBIDO: " << (int)(networkInterface->getInputPackage()[0]) << " VS OP CODE QUIT: " << OP_QUIT << endl;
 
 #endif // DEBUG
-		//CASTEO LO DE ABAJO A CHAR!!!
 
 		if (networkInterface->getInputPackage()[0] == (-1))
 		{
@@ -441,9 +388,7 @@ bool NetworkEventSource::isThereEvent()
 				aux.erase(aux.begin());
 				aux.erase(aux.begin());
 				r_map.clear();
-				//r_map.insert(r_map.begin(), aux.begin(), aux.end());
 				r_map.insert(r_map.begin(), aux.begin(), aux.end());
-				//lo pasamos a string y lo guardamos en el nombre del player:
 				r_map_string.clear();
 				for (char c : r_map) {
 					r_map_string.push_back(c);
@@ -483,8 +428,6 @@ bool NetworkEventSource::isThereEvent()
 				aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
 				r_unidad.clear();
 				r_unidad.insert(r_unidad.begin(), aux.begin() + 1, aux.begin() + 3); //para que meta lo que hay en pos 1 y 2 de aux, se pone hasta +3 porque no incluye esa, sino que hasta la anterior.
-				//r_fila_de = aux[1];
-				//r_col_de = aux[2];
 				gameInterface->setDefender((int)aux[3], (int)(aux[4] - 0X41));
 
 				//lo pasamos a string y lo guardamos en el tipo de newUnit adentro de networking:
@@ -523,14 +466,6 @@ bool NetworkEventSource::isThereEvent()
 			case OP_ATTACK:
 				evCode = R_ATTACK;
 				aux = std::vector<MYBYTE>(networkInterface->getInputPackage());
-				/*
-				r_fila_or = aux[1];
-				r_col_or = aux[2];
-				r_fila_de = aux[3];
-				r_col_de = aux[4];
-				r_dado = aux[5];
-				*/
-
 
 				gameInterface->setDie((int)aux[5]);
 				gameInterface->setAttacker((int)aux[1], (int)(aux[2] - 0X41));
@@ -644,27 +579,24 @@ genericEvent * NetworkEventSource::insertEvent()
 		cout << "insert event quit, desde networking" << endl;
 		ret = (genericEvent *) new EV_Quit();
 		break;
-	case ERR_DETECTED:		//VER si este case se deja o si se saca
+	case ERR_DETECTED:	
 		ret = (genericEvent *) new EV_ErrDetected();
 		break;
-	case MOVE:		//VER si este case se deja o si se saca
-		//cout << "IMPRIMIO ESTOOOOOOOOOOOOOOOOOOOO" << endl;
+	case MOVE:		
 		ret = (genericEvent *) new EV_Move();
 		break;
-	case PASS:		//VER si este case se deja o si se saca
-		//cout << "INSERT EVENT PASS (networking)" << endl;
+	case PASS:	
 		ret = (genericEvent *) new EV_Pass();
 		break;
-	case PURCHASE:		//VER si este case se deja o si se saca
+	case PURCHASE:		
 		ret = (genericEvent *) new EV_Purchase();
 		break;
-	case ATTACK:		//VER si este case se deja o si se saca
+	case ATTACK:	
 		ret = (genericEvent *) new EV_Attack();
 		break;
 	default:
 		break;
 	}
-	//ret->setEventType(evCode);
 	return ret;
 }
 
@@ -673,7 +605,6 @@ genericEvent * NetworkEventSource::insertEvent()
 /*****  USER EVENT SOURCE  *****/
 UserEventSource::UserEventSource(userInput* _userInterface, Game* _gameInterface):gameInterface(_gameInterface)
 {
-	//graphics = new MapGraphics;
 	event_queue = al_create_event_queue();
 	if (!event_queue) {
 		fprintf(stderr, "failed to create event_quieue!\n");
@@ -691,10 +622,6 @@ bool UserEventSource::isThereEvent()
 	int button;
 	
 #ifdef DEBUG	//MOVERLO!!!!
-	//if(gameInterface->getIamPlaying())
-	//	gameInterface->graphics->setDisplayName("SKIRMISH WARS - YOUR TURN");	//Esto no va aca
-	//else
-	//	gameInterface->graphics->setDisplayName("SKIRMISH WARS - OPPONENT TURN");	//Esto no va aca
 	
 #endif // DEBUG
 
@@ -740,26 +667,17 @@ bool UserEventSource::isThereEvent()
 				ALLEGRO_MESSAGEBOX_YES_NO
 			)) == 1)
 			{
-				//gameInterface->setEndPlaying(true);
-				//evCode = END_PLAYING;
 				evCode = QUIT;
 				ret = true;
 			}
 			
 			break;
-		/*case ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
-			al_flip_display();
-			break;*/
 		default:
 			ret = false;
 			break;
 		}
-
-
 	}
-
 	return ret;
-
 }
 
 eventCode UserEventSource::dispatchClick(int x, int y)
@@ -780,7 +698,6 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 				if (((((T_WIDTH(gameInterface->graphics->getDisplay()) * j) < x) && (x < ((T_WIDTH(gameInterface->graphics->getDisplay()) * j) + T_WIDTH(gameInterface->graphics->getDisplay()))))) &&
 					((((T_HEIGHT(gameInterface->graphics->getDisplay()) * i) < y) && (y < ((T_HEIGHT(gameInterface->graphics->getDisplay()) * i) + T_HEIGHT(gameInterface->graphics->getDisplay()))))))
 				{
-					//Se cliqueo en la posicion ij (i:fila(16). j:col(12))
 #ifdef DEBUG
 					cout << "SE APRETO la fila:" << i << " , columna " << j << endl;
 #endif // DEBUG
@@ -884,8 +801,7 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 				< y) && (y <
 				(al_get_font_line_height(gameInterface->graphics->getMenuFont()) + 
 					(M_HEIGHT(gameInterface->graphics->getDisplay()) / 9.0) * 3) + 
-					(al_get_font_ascent(gameInterface->graphics->getMenuFont()) * (i+1))))) //+ 
-					//al_get_font_line_height(gameInterface->graphics->getMenuFont()))))
+					(al_get_font_ascent(gameInterface->graphics->getMenuFont()) * (i+1))))) 
 		{
 			// Se apreto para comprar la unidad de numero i de la lista
 			advance(it3, i);
@@ -907,7 +823,7 @@ eventCode UserEventSource::dispatchClick(int x, int y)
 	return NO_EV;
 }
 
-genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
+genericEvent * UserEventSource::insertEvent() 
 {
 	genericEvent * ret = (genericEvent *) new EV_ErrDetected();
 	switch (evCode)
@@ -952,12 +868,8 @@ genericEvent * UserEventSource::insertEvent() //COMPLETAR!!!
 TimeoutEventSource::TimeoutEventSource()
 {
 	timeout = false;
-	//timeout1 = false;
-	//timeout2 = false;
 	timerRunning1 = false;
 	timerRunning2 = false;
-	//timeoutsCount1 = 0;
-	//timeoutsCount2 = 0;
 	timeout10s = false;
 	timeout30s = false;
 	timeoutCount1 = false;
@@ -969,16 +881,7 @@ bool TimeoutEventSource::isThereEvent()
 	if (((clock() - tInicial1) >= ONE_MIN * CLOCKS_PER_SEC) && timerRunning1)
 	{
 		timeout = true;
-		//timerRunning = false; //MODIFICARLO DESDE AFUERA CON stopTimer!!!!
-		//timeoutsCount++;
-		//if (timeoutsCount == MAX_TIMEOUTS)
-		//{
-		//	evCode = CONNECTION_FAIL;
-		//}
-		//else
-		//{
 			evCode = ONE_MIN_TIMEOUT;
-		//}
 	}
 	else if (((clock() - tInicial1) >= FIFTY_SEC * CLOCKS_PER_SEC) && timerRunning1 && (timeout10s == false))
 	{
@@ -997,14 +900,12 @@ bool TimeoutEventSource::isThereEvent()
 	else if (((clock() - tInicial2) >= TWO_HALF_MIN * CLOCKS_PER_SEC) && timerRunning2)
 	{
 		timeout = true;
-		//timerRunning = false;
 		timeoutCount1++;
 		evCode = TWO_HALF_MIN_TIMEOUT;
 	}
 	else if (((clock() - tInicial1) >= timeoutCount1 * CLOCKS_PER_SEC) && timerRunning1)
 	{
 	timeout = true;
-	//cout << "1 sec" << endl;
 	evCode = ONE_SEC_TIMEOUT;
 	timeoutCount1++;
 	}
@@ -1018,7 +919,6 @@ bool TimeoutEventSource::isThereEvent()
 
 void TimeoutEventSource::startTimer1()
 {
-	//timeout1 = false;	//Se setea la variable de control en false, indicando que no ha ocurrido timeout
 	tInicial1 = clock();
 	timerRunning1 = true;
 	timeout10s = false;
@@ -1028,10 +928,8 @@ void TimeoutEventSource::startTimer1()
 
 void TimeoutEventSource::startTimer2()
 {
-	//timeout2 = false;	//Se setea la variable de control en false, indicando que no ha ocurrido timeout
 	tInicial2 = clock();
 	timerRunning2 = true;
-	//timeoutCount2 = 0;
 }
 
 void TimeoutEventSource::stopTimer1()
@@ -1043,7 +941,6 @@ void TimeoutEventSource::stopTimer1()
 void TimeoutEventSource::stopTimer2()
 {
 	timerRunning2 = false;
-	//timeoutCount2 = 0;
 }
 
 unsigned int TimeoutEventSource::getTimeoutCount1()
@@ -1061,8 +958,7 @@ genericEvent * TimeoutEventSource::insertEvent()
 		ret = (genericEvent *) new EV_OneMinTimeout;
 		break;
 	case TWO_HALF_MIN_TIMEOUT:
-		//ret = (genericEvent *) new EV_TwoHalfMinTimeout;
-		ret = (genericEvent *) new EV_EndPlaying; //probandooooooooooooooooooooooooooooooooo
+		ret = (genericEvent *) new EV_EndPlaying; 
 		break;
 	case TEN_SEC_LEFT:
 		ret = (genericEvent *) new EV_TenSecLeft;

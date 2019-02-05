@@ -12,8 +12,8 @@ Game::Game(ALLEGRO_DISPLAY* display)
 
 	data = new Resources;
 
-	XML_SetStartElementHandler(P, startTagCallback);	// Función que va a encontrar cuando aparece un Start tag;
-	XML_SetEndElementHandler(P, endTagCallback);		//Función que va a encontrar cuando aparece un End tag;
+	XML_SetStartElementHandler(P, startTagCallback);	
+	XML_SetEndElementHandler(P, endTagCallback);		
 	XML_SetCharacterDataHandler(P, chararacterDataCallback);
 	XML_SetUserData(P, data);
 	readFileToBuffer(P, fp);
@@ -27,7 +27,6 @@ Game::Game(ALLEGRO_DISPLAY* display)
 	IWantToPlayAgain = false;
 	youWantToPlayAgain = false;
 	analysePlayAgain = false;
-	//myMap->generateTilesArray(data->getBuildingList(), data->getTerrainList(), data->getUnitList());
 	
 	
 	defenseModifiers = new csvFile(ATTACK_TABLE, 14, 5);
@@ -53,7 +52,6 @@ Game::~Game()
 	delete playerMe;
 	delete playerYou;
 	delete myMap;
-	//destruir los players;
 }
 
 
@@ -104,24 +102,14 @@ void Game::move()
 			myMap->getTile(getDefender().i, getDefender().j)->getUnit()->setCurrMp(to_string(stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getCurrMp()) - stoi(myMap->getTile(getDefender().i, getDefender().j)->getUnit()->getMc().plain)));
 		}
 	}
-
 	myMap->getTile(getDefender().i, getDefender().j)->toogleIsSelected(false);
-	//myMap->updateFogOfWar(playerMe->getTeam());
-	//graphics->loadBitmaps(myMap);
-	//graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
-
 }
 
-//void Map::attack(coordenadas attacker, coordenadas defender) 
+
 void Game::attack()
 {
 	string symbol = myMap->getTile(defender.i,defender.j)->getUnit()->getSymbol();
 	int firepower, inicialDamage, finalDamage, dieOnChart;
-	//if (stoi(tilesArray[attacker.i][attacker.j]->getUnit()->getHp()) < 5)
-
-	/*if (myMap->getTile(attacker.i, attacker.j)->getUnit() != NULL) {
-		cout << "HP de UNIT attacker:" << myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp() << endl;
-	}*/
 
 	if (myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp() < 5) //menor a 5 significa REDUCED
 	{
@@ -152,14 +140,6 @@ void Game::attack()
 
 
 	inicialDamage = firepower - stoi(myMap->getTile(defender.i, defender.j)->getUnit()->getdefense());
-
-	// HACER aca el crossreference entre el inicial damage y el terreno en el que esta el defender!!!!!!!!!!!!!!!
-	// finalDamage = ...
-	// dieOnChart =.... (ESTAS DOS VARIABLES SALEN DE ENTRAR A LA TABLA ESA CON EL FINAL DAMAGE Y EL TERRENO DEL DEFENDER)
-
-	//die= rand() % 7 + 1; //VERIFICAR si esto tira un valor random entre 1 y 6.
-
-	//cout << "DADO: " << die << endl;
 
 	int columna;
 	string defenderTerrain = myMap->getTile(attacker.i, attacker.j)->getTerrain()->getType();
@@ -193,36 +173,18 @@ void Game::attack()
 	{
 		finalDamage++;
 	}
-	//cout << "final damage = " << finalDamage << endl;
 
 	myMap->getTile(defender.i, defender.j)->getUnit()->setHp((myMap->getTile(defender.i, defender.j)->getUnit()->getHp()) - finalDamage);
-
-	//cout << "HP luego del attack: " << myMap->getTile(defender.i, defender.j)->getUnit()->getHp() << endl;
 
 	if ((myMap->getTile(defender.i, defender.j)->getUnit()->getHp())<=0)
 	{
 		myMap->getTile(defender.i, defender.j)->removeUnit();
 	}
-	//mostrar la carta que tenga arriba el HP nuevo del defender, porque cambio su HP.
-	//if HP < 5 : dar vuelta la carta y ahora esta REDUCED.
-
-	//attacker.i = NULL;
-	//attacker.j = NULL;
-	//defender.i = NULL;
-	//defender.j = NULL;
-
-
-//	myMap->updateFogOfWar(playerMe->getTeam());
-//	graphics->loadBitmaps(myMap);
-//	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
 }
 
 //antes de llamar a esta funcion debo setear el attacker con la unidad que este encima de un building que no es propio 
 void Game::captureProperty(Player* pAttacker)
 {
-	//cout << "ENTROOOOOOOO CAPTURE PROPERTY!!!!!" << endl;
-	//cout <<"Cp original=" <<myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp() << endl;
-	
 		if ((myMap->getTile(attacker.i, attacker.j)->getUnit()->getHp()) < 5)//Si la unidad que conquista esta reducida
 		{
 			myMap->getTile(attacker.i, attacker.j)->getBuilding()->setCp((myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp()) - 1);
@@ -231,25 +193,16 @@ void Game::captureProperty(Player* pAttacker)
 		{
 			myMap->getTile(attacker.i, attacker.j)->getBuilding()->setCp((myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp()) - 2);
 		}
-	//cout << "Cp luego de la captura=" << myMap->getTile(attacker.i, attacker.j)->getBuilding()->getCp() << endl;
-	
-	//HACER: Girar carta de la property o mostrar en algun  lado un contador con el valor nuevo del CP de la property atacada
 
 	attacker.i = NULL;
 	attacker.j = NULL;
 	defender.i = NULL;
 	defender.j = NULL;
-
-
-//	myMap->updateFogOfWar(playerMe->getTeam());
-//	graphics->loadBitmaps(myMap);
-//	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
 }
 
 void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado en defender.i y defender.j las coordenadas del lugar al que quieren poner la unidad nueva.
 {
 	myMap->getTile(defender.i, defender.j)->setUnit(newUnit);
-	//myMap->getTile(defender.i, defender.j)->getUnit()->setTeam(player->getTeam());
 	player->setMoney((player->getMoney())-(stoi(newUnit->getCost())));
 	cout << "SE COMPRO Y SE ESTA COMPARANDO CONNNN:" << newUnit->getType() << endl;
 	if (newUnit->getType().compare("ap1") == 0 || newUnit->getType().compare("ap2") == 0)
@@ -257,12 +210,9 @@ void Game::purchase(Player* player) //!!!PREVIAMENTE tienen que haber guardado e
 		myMap->getTile(defender.i, defender.j)->getUnit()->arregloNaveAPC[0] = NULL;
 		myMap->getTile(defender.i, defender.j)->getUnit()->arregloNaveAPC[1] = NULL;
 	}
-//	myMap->updateFogOfWar(playerMe->getTeam());
-//	graphics->loadBitmaps(myMap);
-//	graphics->showMap(data, myMap, playerMe->getMoney(), playerMe->getTeam());
 }
 
-bool Game::didHeWin() //LLAMARLA DESDE EL GENERADOR DE EVENTOS PROBABLEMENTE
+bool Game::didHeWin() 
 {
 	int hq = 0, units = 0;
 	for (int i = 0; i < FILA; i++)
@@ -309,7 +259,7 @@ bool Game::getYouWinning()
 	return youWinning;
 }
 
-/////////////////////////////////// PASAR LAS SIGUIENTES FUNCIONES ACA
+
 void Game::setAttacker(coordenadas newAttacker)
 {
 	attacker = newAttacker;
@@ -331,11 +281,6 @@ void Game::setDefender(int _i, int _j)
 	defender.i = _i;
 	defender.j = _j;
 }
-
-//void Game::setTileSelected(coordenadas newTileSelected)
-//{
-//	tileSelected = newTileSelected;
-//}
 
 void Game::setTileSelected(int _i, int _j)
 {

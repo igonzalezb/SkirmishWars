@@ -4,30 +4,11 @@ StartMenu::StartMenu()
 {
 	ALLEGRO_MONITOR_INFO info;
 	al_get_monitor_info(0, &info);
-	//printf("%i x %i", info.x2 - info.x1, info.y2 - info.y1);
-
-	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
-	//al_set_new_display_flags(ALLEGRO_MAXIMIZED);
-	//al_set_new_display_flags(ALLEGRO_MAXIMIZED || ALLEGRO_RESIZABLE);
-	//int min_w, min_h, max_w, max_h;
-	
-	//display = al_create_display(DISPLAY_WIDTH, DISPLAY_HEIGHT);
-	//display = al_create_display(info.x2 - info.x1, info.y2 - info.y1);
 	display = al_create_display(DISPLAY_WIDTH, DISPLAY_HEIGHT);
 	if (!display) {
 		fprintf(stderr, "failed to create display!\n");
 	}
-
-	//al_get_window_constraints(display, &min_w, &min_h, &max_w, &max_h);
-	//al_resize_display(display, min_w, min_h);
-
 	al_set_window_title(display, "SKIRMISH WARS");
-	//al_set_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, true);	//ACORDARSE DE ACTIVAR!!!
-	//al_set_display_flag(display, ALLEGRO_MAXIMIZED, true);	//ACORDARSE DE ACTIVAR!!!
-	//al_acknowledge_resize(display);
-
-
-
 
 	displayIcon = al_load_bitmap("resources/images/icon.png");
 	if (!displayIcon)
@@ -150,7 +131,7 @@ void StartMenu::MenuEvents()
 				else
 				{
 					do_exit = true;
-					exit(EXIT_SUCCESS);		//VER DE CAMBIARLO
+					exit(EXIT_SUCCESS);	
 				}
 			}
 			break;
@@ -246,7 +227,7 @@ void StartMenu::updateMenuDisplay()
 	al_flip_display();
 }
 
-void StartMenu::dispatchOption()		//HAY QUE SACAR LOS TEXT Y PONER QUE HAGA LAS ACCIONES
+void StartMenu::dispatchOption()
 {
 	switch (optionClicked)
 	{
@@ -272,12 +253,9 @@ void StartMenu::dispatchOption()		//HAY QUE SACAR LOS TEXT Y PONER QUE HAGA LAS 
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		do_exit = true;
 		redraw = false;
-		exit(EXIT_SUCCESS);		//HACERLO LINDO
+		exit(EXIT_SUCCESS);	
 		break;
 	}
-
-	//al_flip_display();
-	
 }
 
 ALLEGRO_DISPLAY * StartMenu::getDisplay()
@@ -331,7 +309,7 @@ void StartMenu::dispatcherIpNameMenu(ALLEGRO_EVENT ev)
 		{
 			boxInput = IP_BOX;
 			redraw = false;
-			onIpNameInput = false;						//ACA SE TENDRIA QUE ENVIAR LOS DATOS Y SALIR DEL MENU!!!
+			onIpNameInput = false;	
 			do_exit = true;
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 			al_draw_text(menuFont, al_map_rgb(100, 100, 100),

@@ -211,16 +211,11 @@ void MapGraphics::showMap(Resources* data, Map* myMap, int player_money, TeamNum
 						al_draw_text(hpFont, al_color_name("black"),
 							(j*T_WIDTH(display)), i* T_HEIGHT(display), ALLEGRO_ALIGN_LEFT,
 							(to_string(myMap->getTile(i, j)->getUnit()->getHp())).c_str());
-						/*al_draw_text(hpFont, al_color_name("black"),
-						(j*T_WIDTH(display)), i* T_HEIGHT(display) + al_get_font_line_height(hpFont), ALLEGRO_ALIGN_LEFT,
-						("MP " + myMap->getTile(i, j)->getUnit()->getCurrMp()).c_str());*/
 					}
 					
 				}
 				
 			}
-
-			//myMap->getTile(i, j)->toogleIsSelected(false);
 		}
 	}
 

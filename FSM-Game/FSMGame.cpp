@@ -3,7 +3,7 @@
 
 FSMGame::FSMGame()
 {
-	currentState = (genericState *) new ST_GameIdle(); //ver que poner
+	currentState = (genericState *) new ST_GameIdle(); 
 }
 
 FSMGame::~FSMGame()
@@ -16,7 +16,6 @@ genericState * FSMGame::getCurrentState()
 	return currentState;
 }
 
-//HACER: CAMBIAR ESTA FUNCION, ADAPTANDOLA AL DISPATCHER DEL GAME!!!!!!!!!!!!!!!!
 void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 {
 	genericState *newState = nullptr;
@@ -31,7 +30,6 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case MOVE:
 			newState = currentState->on_Move(ev, Info);
-			//cout << "entro al switch de MOVE" << endl;
 			break;
 		case PURCHASE:
 			newState = currentState->on_Purchase(ev, Info);
@@ -40,7 +38,6 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_Attack(ev, Info);
 			break;
 		case PASS:
-			//cout << "DISPATCH DE PASS, EN GAME FSM" << endl;
 			newState = currentState->on_Pass(ev, Info);
 			break;
 		case TILE:
@@ -50,7 +47,6 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_NewUnit(ev, Info);
 			break;
 		case NO_MONEY:
-			//cout << "DISPATCH DE no money, EN GAME FSM" << endl;
 			newState = currentState->on_NoMoney(ev, Info);
 			break;
 		case R_YOU_START:
@@ -69,7 +65,6 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_RPurchase(ev, Info);
 			break;
 		case R_ATTACK:
-			//cout << "DISPATCH R_ATTACK" << endl;
 			newState = currentState->on_RAttack(ev, Info);
 			break;
 		case R_YOU_WON:
@@ -94,7 +89,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_BoPurchase(ev, Info);
 			break;
 		case ERR_DETECTED:
-			newState = currentState->on_ErrDetected(ev, Info); //VER si este caso se deja o no 
+			newState = currentState->on_ErrDetected(ev, Info); 
 			break;
 		case ONE_MIN_TIMEOUT:
 			newState = currentState->on_OneMinTimeout(ev, Info);
@@ -110,23 +105,22 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 			cout << "DISPATCHER G YOU DIDNT WIN" << endl;
 			newState = currentState->on_YouDidntWin(ev, Info);
 			break;
-		case END_PLAYING: //ver si queda
+		case END_PLAYING: 
 			cout << "dispatch de networking en end playing" << endl;
-			newState = currentState->on_Quit(ev, Info); //cualqueir cosa, para probarrrrrrrrrrrc
+			newState = currentState->on_Quit(ev, Info); 
 			break;
-		case QUIT: //ver si queda
-			newState = currentState->on_Quit(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+		case QUIT: 
+			newState = currentState->on_Quit(ev, Info); 
 			break;
-		case ERROR_: //ver si queda
-			newState = currentState->on_Error(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+		case ERROR_: 
+			newState = currentState->on_Error(ev, Info); 
 			break;
-		case PLAY_AGAIN: //ver si queda
-			newState = currentState->on_PlayAgain(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+		case PLAY_AGAIN: 
+			newState = currentState->on_PlayAgain(ev, Info); 
 			break;
-		case GAME_OVER: //ver si queda
-			newState = currentState->on_GameOver(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+		case GAME_OVER: 
+			newState = currentState->on_GameOver(ev, Info); 
 			break;
-		//	//AGRUEGE ESTO, NO SE SI VA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		default:
 			break;
 		}
@@ -135,7 +129,7 @@ void FSMGame::dispatch(genericEvent *ev, usefulInfo *Info)
 		{
 			delete currentState;
 			currentState = newState;
-			currentState->setLastEvent(ev->getEventType()); //PROBANDO PARA END PLAYING
+			currentState->setLastEvent(ev->getEventType());
 			if (ev->getEventType() == END_PLAYING)
 			{
 				cout << "GAME: ev getEventType = END_PLAYING!!!!!!!!!!!!!!!" << endl;

@@ -1,6 +1,6 @@
 #include "eventGenerator.h"
 
-eventGenerator::eventGenerator(usefulInfo* _I) :buffer(16) //VER BUFFER 16 QUE ONDA
+eventGenerator::eventGenerator(usefulInfo* _I) :buffer(16) 
 {
 	I = _I;
 }
@@ -36,12 +36,12 @@ genericEvent * eventGenerator::getNextEvent()
 	genericEvent * ret;
 	if (buffer.size() != 0)
 	{
-		ret = buffer.front();	//carga en re t el primer elemento del buffer
-		buffer.pop_front();	//elimina el ultimo elemento del buffer
+		ret = buffer.front();		//carga en ret el primer elemento del buffer
+		buffer.pop_front();			//elimina el ultimo elemento del buffer
 	}
 	else
 	{
-		ret = nullptr;	//Si no hay eventos en el buffer devuelve nullptr
+		ret = nullptr;				//Si no hay eventos en el buffer devuelve nullptr
 	}
 	return ret;
 }

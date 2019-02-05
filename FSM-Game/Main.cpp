@@ -49,8 +49,8 @@ int main()
 	StartMenu* mainMenu = new StartMenu;
 	mainMenu->openApp();
 
-	std::string opponentsIP = mainMenu->getUserIP();  //"localhost"; //CAMBIAR y ver donde recibirlo y como
-	Game skirmish(mainMenu->getDisplay()); //Creo una instancia del juego
+	std::string opponentsIP = mainMenu->getUserIP();					
+	Game skirmish(mainMenu->getDisplay());												//Creo una instancia del juego
 	skirmish.playerMe->setName(mainMenu->getUserName());
 	skirmish.graphics->setBackgroundMusicOnOff(mainMenu->getBackgroundMusicOnOff());
 	skirmish.graphics->setSoundEffectsOnOff(mainMenu->getSoundEffectsOnOff());
@@ -94,7 +94,6 @@ int main()
 #endif // DEBUG
 
 	//getchar();
-
 
 	return EXIT_SUCCESS;
 }

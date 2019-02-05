@@ -6,7 +6,7 @@ Building::Building()
 	team = NEUTRO;	
 }
 
-//Building::Building(string cp, string name, string path, string type, string team)
+
 Building::Building(int cp, string name, string path, string type, string team)
 {
 	
@@ -40,9 +40,6 @@ void Building::setCp(int cp)
 void Building::setPath(string path)
 {
 	this->path = path;
-	/*char temp[50];
-	sprintf(temp, path.c_str(),  this->team);
-	this->path = temp;*/
 }
 
 string Building::getPath()
@@ -62,8 +59,6 @@ string Building::getName()
 
 void Building::setTeam(TeamNumber team)
 {
-	/*if(type.size() > 2)
-		type += to_string(team);	*/		//PROBAR!!!!
 	this->team = team;
 }
 

@@ -2,7 +2,7 @@
 
 FSMNetworking::FSMNetworking()
 {
-	currentState = (genericState *) new ST_WaitingConnection(); //ver que poner
+	currentState = (genericState *) new ST_WaitingConnection(); 
 }
 
 FSMNetworking::~FSMNetworking()
@@ -43,7 +43,6 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case R_PASS:
 			newState = currentState->on_RPass(ev, Info);
-			//cout << "DISPATCHER DE NETWORKING EN R PASS" << endl;
 			break;
 		case R_MOVE:
 			newState = currentState->on_RMove(ev, Info);
@@ -72,22 +71,18 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			newState = currentState->on_Rquit(ev, Info);
 			break;
 		case ERR_DETECTED:
-			newState = currentState->on_ErrDetected(ev, Info); //VER si este caso se deja o no 
-				   //si lo saco, sacar tambien de generic_states.h, genericEvent.h
-				   // se se deja, VER donde agregar en States.h
+			newState = currentState->on_ErrDetected(ev, Info); 
 			break;
 		case CONNECTED_AS_SERVER:
 #ifdef DEBUG
-			//cout << "entra 6: dispatcher en CONNECTED as server" << endl;
+			cout << "entra 6: dispatcher en CONNECTED as server" << endl;
 #endif // DEBUG
-			//newState = currentState->on_Connected(ev, Info);
 			newState = currentState->on_ConnectedAsServer(ev, Info);
 			break;
 		case CONNECTED_AS_CLIENT:
 #ifdef DEBUG
-			//cout << "entra 6: dispatcher en CONNECTED as client" << endl;
+			cout << "entra 6: dispatcher en CONNECTED as client" << endl;
 #endif // DEBUG
-			//newState = currentState->on_Connected(ev, Info);
 			newState = currentState->on_ConnectedAsClient(ev, Info);
 			break;
 		case MAP_OK:
@@ -96,30 +91,23 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case I_START:
 			newState = currentState->on_IStart(ev, Info);
-			//cout << "DISPATCH DE I START" << endl;
 			break;
 		case YOU_START:
 			newState = currentState->on_YouStart(ev, Info);
-			//cout << "DISPATCH DE YOU START" << endl;
 			break;
 		case PASS:
 			newState = currentState->on_Pass(ev, Info);
-			//cout << "DISPATCH DE PASS, en NETWORKING FSM" << endl;
 			break;
 		case MOVE:
 			newState = currentState->on_Move(ev, Info);
-			//cout << "DISPATCH DE MOVE" << endl;
 			break;
 		case PURCHASE:
 			newState = currentState->on_Purchase(ev, Info);
-			//cout << "DISPATCH DE PURCHASE" << endl;
 			break;
 		case ATTACK:
 			newState = currentState->on_Attack(ev, Info);
-			//cout << "DISPATCH DE ATTACK" << endl;
 			break;
 		case NO_MONEY:
-			//cout << "n: DISPATCH DE NO MONEY" << endl;
 			newState = currentState->on_NoMoney(ev, Info);
 			break;
 		case ONE_MIN_TIMEOUT:
@@ -133,20 +121,19 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 			break;
 		case END_PLAYING:
 			cout << "dispatch de networking en end playing" << endl;
-			//newState = currentState->on_Quit(ev, Info); //para probarrrrrrrrrrrrrrrrr
-			newState = currentState->on_Pass(ev, Info); //para probarrrrrrrrrrrrrrrrr
+			newState = currentState->on_Pass(ev, Info); 
 			break;
-		case QUIT: //ver si queda
-			newState = currentState->on_Quit(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+		case QUIT: 
+			newState = currentState->on_Quit(ev, Info); 
 			break;
-		case ERROR_: //ver si queda
-			newState = currentState->on_Error(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+		case ERROR_: 
+			newState = currentState->on_Error(ev, Info); 
 			break;
-		case PLAY_AGAIN: //ver si queda
-			newState = currentState->on_PlayAgain(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+		case PLAY_AGAIN: 
+			newState = currentState->on_PlayAgain(ev, Info); 
 			break;
-		case GAME_OVER: //ver si queda
-			newState = currentState->on_GameOver(ev, Info); //cualqueir cosa, para probarrrrrrrrrrr
+		case GAME_OVER: 
+			newState = currentState->on_GameOver(ev, Info); 
 			break;
 		default:
 			break;
@@ -155,7 +142,7 @@ void FSMNetworking::dispatch(genericEvent *ev, usefulInfo *Info)
 		{
 			delete currentState;
 			currentState = newState;
-			currentState->setLastEvent(ev->getEventType()); //PROBANDO PARA END PLAYING
+			currentState->setLastEvent(ev->getEventType()); 
 			if (ev->getEventType() == END_PLAYING)
 			{
 				cout << "NET: ev getEventType = END_PLAYING!!!!!!!!!!!!!!!" << endl;
