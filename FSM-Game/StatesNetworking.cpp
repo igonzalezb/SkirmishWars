@@ -792,6 +792,7 @@ genericState* ST_WaitingGameOverAck::on_Error(genericEvent* ev, usefulInfo * Inf
 }
 
 genericState* ST_WaitingPlayingAgainConfirmation::on_PlayAgain(genericEvent *ev, usefulInfo * Info) 
+{
 	cout << "waiting playing again confirm: on play again" << endl;
 	genericState *ret = (genericState *) new ST_WaitingYourConfirmation();
 	Info->gameInterface->setIamPlaying(false);
